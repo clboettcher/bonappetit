@@ -1,0 +1,72 @@
+####################################################
+#IntelliJ
+####################################################
+target/
+*.ipr
+*.iml
+*.iws
+*.ids
+.idea/
+out
+
+####################################################
+# Created by http://www.gitignore.io
+### Grails ###
+####################################################
+# .gitignore for Grails 1.2 and 1.3
+
+# web application files
+/web-app/WEB-INF/classes
+
+# default HSQL database files for production mode
+/prodDb.*
+
+# general HSQL database files
+*Db.properties
+*Db.script
+
+# logs
+/stacktrace.log
+/test/reports
+*/logs
+
+# project release file
+/*.war
+
+# plugin release files
+/*.zip
+/plugin.xml
+
+# older plugin install locations
+*/plugins
+/web-app/plugins
+
+# "temporary" build files
+/target
+
+####################################################
+# From Android.gitignore
+####################################################
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+*/gen-external-apklibs
+
+# navigation XML
+.navigation
+
+
+
+
+
+
