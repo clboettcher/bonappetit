@@ -8,6 +8,12 @@ repositories {
 }
 
 dependencies {
+    // BonAppetit Modules
+    compile project(':bonappetit-ng-core')
+
+    // Utils
     compile "com.google.guava:guava:${guavaVersion}"
+
+    // Test
     testCompile "junit:junit:${junitVersion}"
 }

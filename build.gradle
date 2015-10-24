@@ -1,9 +1,9 @@
 ext {
     // External dependency versions (sorted alphabetically)
     // g
-    guavaVersion = 18.0
+    guavaVersion = '18.0'
     // j
-    junitVersion = 4.12
+    junitVersion = '4.12'
 }
 
 // Config for all subprojects
