@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+dependencies {
+
+    // Spring
+    compile("org.springframework:spring-context:${springVersion}") {
+        exclude(group: 'commons-logging', module: 'commons-logging')
+    }
+
+    // Utils
+    compile "com.google.guava:guava:${guavaVersion}"
+    testCompile "junit:junit:${junitVersion}"
+}

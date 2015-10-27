@@ -1,0 +1,38 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // BonAppetit Modules
+    compile project(':bonappetit-ng-core')
+
+    // Spring
+    compile("org.springframework:spring-context:${springVersion}") {
+        exclude(group: 'commons-logging', module: 'commons-logging')
+    }
+    compile "org.springframework:spring-core:${springVersion}"
+
+    // Jersey
+    compile "org.glassfish.jersey.containers:jersey-container-servlet-core:${jerseyVersion}"
+    compile("org.glassfish.jersey.ext:jersey-spring3:${jerseyVersion}") {
+        exclude(group: 'org.springframework', module: 'spring-beans')
+    }
+
+    // Logging
+    compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    compile "org.slf4j:jcl-over-slf4j:${jclOverSlf4jVersion}"
+
+    // Utils
+    compile "com.google.guava:guava:${guavaVersion}"
+    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+
+    // Testing
+    testCompile "junit:junit:${junitVersion}"
+    testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+    testCompile "org.springframework:spring-test:${springVersion}"
+}

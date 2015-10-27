@@ -1,9 +1,24 @@
 ext {
     // External dependency versions (sorted alphabetically)
+    // c
+    commonsLang3Version = '3.3'
+
     // g
     guavaVersion = '18.0'
+
+    // h
+    hamcrestVersion = '1.3'
+
     // j
     junitVersion = '4.12'
+    jclOverSlf4jVersion = '1.7.12'
+    jerseyVersion = '2.17'
+
+    // l
+    logbackVersion = '1.1.3'
+
+    // s
+    springVersion = '4.1.6.RELEASE'
 }
 
 // Config for all subprojects
