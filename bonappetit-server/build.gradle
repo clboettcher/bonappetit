@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
     // BonAppetit Modules
-    compile project(':bonappetit-ng-core')
+    compile project(':bonappetit-core')
 
     // Spring
     compile("org.springframework:spring-context:${springVersion}") {
