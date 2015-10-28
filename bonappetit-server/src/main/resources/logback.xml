@@ -1,56 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
-            </Pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>TRACE</level>
-        </filter>
-    </appender>
-
-    <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${SERVER_BASE}/log/server.log</File>
+    <appender name="SERVERLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_BASE}/log/bonappetit-server.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <!--<FileNamePattern>${SERVER_BASE}/log/server.%d{yyyy-MM-dd}.log</FileNamePattern>-->
-            <FileNamePattern>${SERVER_BASE}/log/server.%d{yyyy-MM-dd}.log</FileNamePattern>
-
-            <!-- keep 30 days' worth of history -->
+            <fileNamePattern>${SERVER_BASE}/log/bonappetit-server-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
-
         <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+            <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS"} [T:%.30thread, C:%.30X{clientId}] %-5level %.40logger{30} | %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!--<appender name="hourlyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-            <!--&lt;!&ndash; rollover every minute &ndash;&gt;-->
-            <!--<FileNamePattern>${SERVER_BASE}/server.%d{yyyy-MM-dd_HH}.log</FileNamePattern>-->
 
-            <!--&lt;!&ndash; keep 30 minutes' worth of history &ndash;&gt;-->
-            <!--<maxHistory>30</maxHistory>-->
-        <!--</rollingPolicy>-->
-
-        <!--<encoder>-->
-            <!--<Pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</Pattern>-->
-        <!--</encoder>-->
-    <!--</appender>-->
-
-    <logger name="org.codingpedia" additivity="false">
-        <level value="DEBUG"/>
-        <appender-ref ref="dailyRollingFileAppender"/>
-        <!--<appender-ref ref="hourlyRollingFileAppender"/>-->
-        <!--<appender-ref ref="consoleAppender" />-->
-    </logger>
-
-    <root>
-        <level value="INFO"/>
-        <appender-ref ref="dailyRollingFileAppender"/>
-        <!--<appender-ref ref="hourlyRollingFileAppender"/>-->
-        <!--<appender-ref ref="consoleAppender" />-->
+    <root level="INFO">
+        <appender-ref ref="SERVERLOG"/>
     </root>
 </configuration>
