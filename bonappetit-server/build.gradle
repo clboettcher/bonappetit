@@ -1,38 +1,38 @@
 apply plugin: 'java'
+apply plugin: 'war'
 
 sourceCompatibility = 1.7
 version = '1.0'
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     // BonAppetit Modules
     compile project(':bonappetit-core')
 
     // Spring
-    compile("org.springframework:spring-context:${springVersion}") {
-        exclude(group: 'commons-logging', module: 'commons-logging')
+    compile(libs.'spring-context') {
+        // We replace commons logging with logback over slf4j
+        exclude(excludes.'spring-context->commons-logging')
     }
-    compile "org.springframework:spring-core:${springVersion}"
+    compile libs.'spring-core'
+    compile libs.'spring-web'
 
     // Jersey
-    compile "org.glassfish.jersey.containers:jersey-container-servlet-core:${jerseyVersion}"
-    compile("org.glassfish.jersey.ext:jersey-spring3:${jerseyVersion}") {
-        exclude(group: 'org.springframework', module: 'spring-beans')
+    compile libs.'jersey-servlet-core'
+    compile(libs.'jersey-spring3') {
+        exclude(excludes.'jersey-spring3->spring-beans')
     }
 
     // Logging
-    compile "ch.qos.logback:logback-classic:${logbackVersion}"
-    compile "org.slf4j:jcl-over-slf4j:${jclOverSlf4jVersion}"
+    compile libs.logback
+    compile libs.'slf4j-api'
+    compile libs.'jcl-over-slf4j'
 
     // Utils
-    compile "com.google.guava:guava:${guavaVersion}"
-    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    compile libs.guava
+    compile libs.'commons-lang3'
 
     // Testing
-    testCompile "junit:junit:${junitVersion}"
-    testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
-    testCompile "org.springframework:spring-test:${springVersion}"
+    testCompile libs.'spring-test'
+    testCompile libs.junit
+    testCompile libs.hamcrest
 }

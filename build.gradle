@@ -11,7 +11,7 @@ ext {
 
     // j
     junitVersion = '4.12'
-    jclOverSlf4jVersion = '1.7.12'
+    sl4fjVersion = '1.7.12'
     jerseyVersion = '2.17'
 
     // l
@@ -19,6 +19,37 @@ ext {
 
     // s
     springVersion = '4.1.6.RELEASE'
+
+    // External dependencies that can be included by short name, see also excludes
+    libs = [
+            // Spring
+            'spring-context'     : "org.springframework:spring-context:${springVersion}",
+            'spring-core'        : "org.springframework:spring-core:${springVersion}",
+            'spring-web'         : "org.springframework:spring-web:${springVersion}",
+            'spring-test'        : "org.springframework:spring-test:${springVersion}",
+
+            // Jersey
+            'jersey-servlet-core': "org.glassfish.jersey.containers:jersey-container-servlet-core:${jerseyVersion}",
+            'jersey-spring3'     : "org.glassfish.jersey.ext:jersey-spring3:${jerseyVersion}",
+
+            // Logging
+            logback              : "ch.qos.logback:logback-classic:${logbackVersion}",
+            'slf4j-api'          : "org.slf4j:slf4j-api:${sl4fjVersion}",
+            'jcl-over-slf4j'     : "org.slf4j:jcl-over-slf4j:${sl4fjVersion}",
+
+            // Utils
+            guava                : "com.google.guava:guava:${guavaVersion}",
+            'commons-lang3'      : "org.apache.commons:commons-lang3:${commonsLang3Version}",
+
+            // Testing
+            junit                : "junit:junit:${junitVersion}",
+            hamcrest             : "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+
+    ]
+    excludes = [
+            'jersey-spring3->spring-beans'   : [group: 'org.springframework', module: 'spring-beans'],
+            'spring-context->commons-logging': [group: 'commons-logging', module: 'commons-logging']
+    ]
 }
 
 // Config for all subprojects
