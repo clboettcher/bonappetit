@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2015 Claudius Boettcher (claudius.boettcher@gmail.com)
+* Copyright (c) 2015 Claudius Boettcher (pos.bonappetit@gmail.com)
 *
 * This file is part of BonAppetit. BonAppetit is an Android based
 * Point-of-Sale client-server application for small restaurants.
