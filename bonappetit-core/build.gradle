@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+dependencies {
+    // Utils
+    compile libs.guava
+
+    // Testing
+    testCompile libs.junit
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="SERVERLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${SERVER_BASE}/log/bonappetit-server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${SERVER_BASE}/log/bonappetit-server-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS"} [T:%.30thread, C:%.30X{clientId}] %-5level %.40logger{30} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="SERVERLOG"/>
+    </root>
+</configuration>

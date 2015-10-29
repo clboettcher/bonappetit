@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+dependencies {
+    // BonAppetit Modules
+    compile project(':bonappetit-core')
+
+    // Spring
+    compile(libs.'spring-context') {
+        // We replace commons logging with logback over slf4j
+        exclude(excludes.'spring-context->commons-logging')
+    }
+    compile libs.'spring-core'
+    compile libs.'spring-web'
+
+    // Jersey
+    compile libs.'jersey-servlet-core'
+    compile(libs.'jersey-spring3') {
+        exclude(excludes.'jersey-spring3->spring-beans')
+    }
+
+    // Logging
+    compile libs.logback
+    compile libs.'slf4j-api'
+    compile libs.'jcl-over-slf4j'
+
+    // Utils
+    compile libs.guava
+    compile libs.'commons-lang3'
+
+    // Testing
+    testCompile libs.'spring-test'
+    testCompile libs.junit
+    testCompile libs.hamcrest
+}
