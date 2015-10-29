@@ -1,12 +1,12 @@
 # BonAppetit
 
-BonAppetit is a Point-of-Sale application. It consists of a a android client and a Java server application.
+BonAppetit is a Point-of-Sale application. It consists of a Android client and a Java server application.
 
-This project is being refactored and moved to github. More stuff coming soon. Stay tuned.
+This project is being refactored, modernized and moved to github. More stuff coming soon. Stay tuned.
 
 ## Server
 
-The `:bonappetit-server` module generates a war file which can be deployed to any application server
+The `:bonappetit-server` project generates a war file which can be deployed to any application server
 (like tomcat, jetty, jboss, etc.).
 
 Run the following command to generate the war file from the root directory of the project in your favorite shell:
