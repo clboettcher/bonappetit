@@ -1,12 +1,12 @@
 # BonAppetit
 
-Android based Point-of-Sale Client-Server Application for small restaurants
+BonAppetit is a Point-of-Sale application. It consists of a an android client and a Java server application.
 
-This project is being refactored and moved to github. Stay tuned.
+This project is being refactored and moved to github. More stuff coming soon. Stay tuned.
 
 ## Maintainer
 
-Claudius Boettcher, <claudius.boettcher@qaware.de>
+Claudius Boettcher, <pos.bonappetit@gmail.com>
 
 ## License
 
