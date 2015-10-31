@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+dependencies {
+    // BonAppetit modules
+    compile project(':bonappetit-core')
+    // Utils
+    compile libs.guava
+    compile libs.'commons-lang3'
+
+    // Testing
+    testCompile libs.junit
+}
