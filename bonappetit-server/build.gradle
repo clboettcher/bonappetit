@@ -6,7 +6,7 @@ version = '1.0'
 
 dependencies {
     // BonAppetit Modules
-    compile project(':bonappetit-core')
+    compile project(':bonappetit-common')
     compile project(':bonappetit-server-entities')
 
     // Spring

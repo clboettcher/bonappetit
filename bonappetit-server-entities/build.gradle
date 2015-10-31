@@ -5,7 +5,7 @@ version = '1.0'
 
 dependencies {
     // BonAppetit modules
-    compile project(':bonappetit-core')
+    compile project(':bonappetit-common')
     // Utils
     compile libs.guava
     compile libs.'commons-lang3'
