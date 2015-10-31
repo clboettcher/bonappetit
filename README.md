@@ -1,11 +1,14 @@
 # BonAppetit
 
 BonAppetit is a free Point-of-Sale solution for small and medium restaurants. It consists of an Android client and a Java
-server application connected to a receipt printer. The client app provides the ability to record, edit and delete
-orders for menu items configured in the server. Orders are transferred to the server via WLAN. The server saves the
-recorded orders to a database and prints receipts using a thermal receipt printer. The receipts contain all information
-required to further process the order consisting of table number, item name, options, additional free text notes as well as
-the service member who took the order and the time the order was registered.
+server application connected to a receipt printer.
+
+The client app provides the ability to record, edit and delete
+orders for menu items configured in the server. Orders are transferred to the server via WLAN.
+
+The server saves the recorded orders to a database and prints receipts using a thermal receipt printer. The receipts
+contain all information required to further process the order consisting of table number, item name, options,
+additional free text notes as well as the service member who took the order and the time the order was registered.
 
 This project is being refactored, modernized and moved to github. More stuff coming soon. Stay tuned.
 
