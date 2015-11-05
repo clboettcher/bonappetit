@@ -1,5 +1,7 @@
 # BonAppetit
 
+[![Build Status](https://travis-ci.org/clboettcher/bonappetit.svg?branch=develop)](https://travis-ci.org/clboettcher/bonappetit)
+
 BonAppetit is a free Point-of-Sale solution for small and medium restaurants. It consists of an Android client and a Java
 server application connected to a receipt printer.
 
