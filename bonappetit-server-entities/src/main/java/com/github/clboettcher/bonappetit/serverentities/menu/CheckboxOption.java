@@ -21,29 +21,28 @@ package com.github.clboettcher.bonappetit.serverentities.menu;
 
 import com.github.clboettcher.bonappetit.core.printing.PrintStrategy;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 
 /**
- * An option that consists of a single integer value.
+ * An option consisting of a boolean checkbox.
  */
-public class IntegerOption extends Option {
+public class CheckboxOption extends Option {
 
     /**
      * See {@link #getPriceDiff()}.
      */
-    private BigDecimal priceDiff = BigDecimal.ZERO;
-
-    /**
-     * See {@link #getDefaultValue()}.
-     */
-    private Integer defaultValue = 0;
+    private BigDecimal priceDiff = new BigDecimal("0.00");
 
     /**
      * See {@link #getPrintStrategy()}.
      */
     private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
+
+    /**
+     * See {@link #getDefaultChecked()}.
+     */
+    Boolean defaultChecked = false;
 
     /**
      * Returns the price difference of this option.
@@ -65,20 +64,6 @@ public class IntegerOption extends Option {
     }
 
     /**
-     * @return The value that is set when this an item containing this option is ordered.
-     */
-    public Integer getDefaultValue() {
-        return defaultValue;
-    }
-
-    /**
-     * @param defaultValue see {@link #getDefaultValue()}.
-     */
-    public void setDefaultValue(Integer defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
-    /**
      * @return The strategy that determines how this option should be printed.
      */
     public PrintStrategy getPrintStrategy() {
@@ -92,13 +77,26 @@ public class IntegerOption extends Option {
         this.printStrategy = printStrategy;
     }
 
+    /**
+     * @return The default value to set when this option is ordered.
+     */
+    public Boolean getDefaultChecked() {
+        return defaultChecked;
+    }
+
+    /**
+     * @param defaultChecked see {@link #getDefaultChecked()}.
+     */
+    public void setDefaultChecked(Boolean defaultChecked) {
+        this.defaultChecked = defaultChecked;
+    }
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("Option#toString()", super.toString())
+        return new ToStringBuilder(this)
                 .append("priceDiff", priceDiff)
-                .append("defaultValue", defaultValue)
                 .append("printStrategy", printStrategy)
+                .append("defaultChecked", defaultChecked)
                 .toString();
     }
 }
