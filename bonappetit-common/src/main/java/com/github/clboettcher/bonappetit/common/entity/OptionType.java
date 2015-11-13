@@ -17,28 +17,30 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.core.printing;
+package com.github.clboettcher.bonappetit.common.entity;
 
 /**
- * Enumerates strategies that determine how entities are printed.
+ * The type of an item option.
  */
-public enum PrintStrategy {
+public enum OptionType {
 
     /**
-     * Indicates the corresponding entity should be printed
-     * in a way that emphasises it.
-     * <p/>
-     * Implies that the entity is printed.
+     * An option that contains multiple choices of which exactly one must be selected.
      */
-    EMPHASISE,
+    RADIO,
 
     /**
-     * Indicates the corresponding entity should be printed normally.
+     * An option that consists of a single integer value.
      */
-    DEFAULT,
+    INTEGER,
 
     /**
-     * Indicates the corresponding entity should not be printed at all.
+     * An option that consists of a boolean checkbox value.
      */
-    NOT_PRINTED
+    CHECKBOX,
+
+    /**
+     * An option similar to {@link #RADIO} that should be displayed in a dropdown window.
+     */
+    RADIO_DROPDOWN
 }

@@ -19,7 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
-import com.github.clboettcher.bonappetit.core.printing.PrintStrategy;
+import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

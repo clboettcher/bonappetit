@@ -17,7 +17,7 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.core.entity;
+package com.github.clboettcher.bonappetit.common.entity;
 
 /**
  * Enumerates different types of menu items.
