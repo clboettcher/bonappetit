@@ -10,18 +10,13 @@ dependencies {
     compile project(':bonappetit-server-entities')
 
     // Spring
-    compile(libs.'spring-context') {
-        // We replace commons logging with logback over slf4j
-        exclude(excludes.'spring-context->commons-logging')
-    }
+    compile libs.'spring-context'
     compile libs.'spring-core'
     compile libs.'spring-web'
 
     // Jersey
     compile libs.'jersey-servlet-core'
-    compile(libs.'jersey-spring3') {
-        exclude(excludes.'jersey-spring3->spring-beans')
-    }
+    compile libs.'jersey-spring3'
 
     // Logging
     compile libs.logback
