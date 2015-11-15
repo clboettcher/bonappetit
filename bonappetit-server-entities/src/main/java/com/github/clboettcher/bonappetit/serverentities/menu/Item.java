@@ -19,17 +19,28 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
-import com.github.clboettcher.bonappetit.core.entity.ItemType;
+import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Set;
 
 /**
  * A menu item.
  */
+@Entity
 public class Item {
+
+    /**
+     * See {@link #getId()}.
+     */
+    @Id
+    @GeneratedValue
+    private long id;
 
     /**
      * See {@link #getTitle()}.
@@ -50,6 +61,13 @@ public class Item {
      * See {@link #getOptions()}.
      */
     private Set<Option> options;
+
+    /**
+     * @return The ID of this item.
+     */
+    public long getId() {
+        return id;
+    }
 
     /**
      * @return The title / name of this item, e.g. "Cola".

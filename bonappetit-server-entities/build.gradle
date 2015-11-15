@@ -6,6 +6,13 @@ version = '1.0'
 dependencies {
     // BonAppetit modules
     compile project(':bonappetit-common')
+
+    // Spring
+    compile libs.'spring-data-jpa'
+
+    // Data access
+    compile libs.'hibernate-jpa-2.0-api'
+
     // Utils
     compile libs.guava
     compile libs.'commons-lang3'

@@ -24,10 +24,24 @@ import com.github.clboettcher.bonappetit.serverentities.staff.StaffListing;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * An event consisting of staff members and a menu.
  */
+@Entity
+@XmlRootElement
 public class Event {
+
+    /**
+     * See {@link #getId()}.
+     */
+    @Id
+    @GeneratedValue
+    private long id;
 
     /**
      * See {@link #getTitle()}.
@@ -43,6 +57,13 @@ public class Event {
      * See {@link #getStaffListing()}.
      */
     private StaffListing staffListing;
+
+    /**
+     * @return The ID of this event.
+     */
+    public long getId() {
+        return id;
+    }
 
     /**
      * @return The unique title / name of this event.
