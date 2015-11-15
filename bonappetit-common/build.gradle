@@ -6,6 +6,7 @@ version = '1.0'
 dependencies {
     // Utils
     compile libs.guava
+    compile libs.'commons-lang3'
 
     // Testing
     testCompile libs.junit

@@ -17,6 +17,7 @@ dependencies {
     // Jersey
     compile libs.'jersey-servlet-core'
     compile libs.'jersey-spring3'
+    compile libs.'jersey-media-moxy'
 
     // Logging
     compile libs.logback

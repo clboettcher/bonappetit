@@ -19,12 +19,18 @@
 */
 package com.github.clboettcher.bonappetit.server.jersey;
 
+import com.github.clboettcher.bonappetit.server.api.EventsService;
 import com.github.clboettcher.bonappetit.server.api.HeartbeatService;
+import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.ws.rs.ext.ContextResolver;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Jersey config.
@@ -35,7 +41,24 @@ public class ServerApplication extends ResourceConfig {
 
     public ServerApplication() {
         LOGGER.info(String.format("Initializing Jersey application."));
+        LOGGER.info(String.format("foobar"));
         final WebApplicationContext ctx = ContextLoader.getCurrentWebApplicationContext();
         register(ctx.getBean(HeartbeatService.class));
+        register(ctx.getBean(EventsService.class));
+        register(createMoxyJsonConfigContextResolver());
+        LOGGER.info(String.format("Jersey properties: %s", this.getProperties()));
+    }
+
+    /**
+     * @return The {@link javax.ws.rs.ext.ContextResolver} that handles JSON message body writing.
+     */
+    private ContextResolver<MoxyJsonConfig> createMoxyJsonConfigContextResolver() {
+        final MoxyJsonConfig moxyJsonConfig = new MoxyJsonConfig();
+
+        Map<String, String> namespacePrefixMapper = new HashMap<>();
+        namespacePrefixMapper.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+        moxyJsonConfig.setNamespacePrefixMapper(namespacePrefixMapper).setNamespaceSeparator(':');
+
+        return moxyJsonConfig.resolver();
     }
 }

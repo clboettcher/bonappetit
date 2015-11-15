@@ -40,5 +40,5 @@
     <!-- Do not scan any third party packages (e.g. Jersey) for additional components. This prevents the
     JerseyServletContainerInitializer from being called which is buggy (assigns incorrect resource config
     to servlets which leads to servlets that answer to the wrong paths. -->
-    <absolute-ordering/>
+    <!--<absolute-ordering/>-->
 </web-app>
