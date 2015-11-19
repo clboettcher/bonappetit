@@ -32,4 +32,5 @@ dependencies {
     testCompile libs.'spring-test'
     testCompile libs.junit
     testCompile libs.hamcrest
+    testCompile libs.mockito
 }

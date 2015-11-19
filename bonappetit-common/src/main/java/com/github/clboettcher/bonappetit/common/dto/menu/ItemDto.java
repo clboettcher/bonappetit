@@ -20,6 +20,8 @@
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -34,7 +36,7 @@ public class ItemDto {
     /**
      * See {@link #getId()}.
      */
-    private long id;
+    private Long id;
 
     /**
      * See {@link #getTitle()}.
@@ -56,14 +58,18 @@ public class ItemDto {
      */
     private Set<OptionDto> optionDtos;
 
+    /**
+     * No-op no-args constructor.
+     */
     public ItemDto() {
     }
 
     private ItemDto(Builder builder) {
+        id = builder.id;
         setTitle(builder.title);
         setPrice(builder.price);
         setType(builder.type);
-        setOptionDtos(builder.optionDtos);
+        optionDtos = builder.optionDtos;
     }
 
     public static Builder newBuilder() {
@@ -71,9 +77,23 @@ public class ItemDto {
     }
 
     /**
+     * @param id see {@link #getId()}.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @param optionDtos see {@link #getOptionDtos()}.
+     */
+    public void setOptionDtos(Set<OptionDto> optionDtos) {
+        this.optionDtos = optionDtos;
+    }
+
+    /**
      * @return The ID of this item.
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -131,33 +151,71 @@ public class ItemDto {
         return optionDtos;
     }
 
-    /**
-     * @param optionDtos see {@link #getOptionDtos()}.
-     */
-    public void setOptionDtos(Set<OptionDto> optionDtos) {
-        this.optionDtos = optionDtos;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        ItemDto rhs = (ItemDto) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.title, rhs.title)
+                .append(this.optionDtos, rhs.optionDtos)
+                .append(this.price, rhs.price)
+                .append(this.type, rhs.type)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.id)
+                .append(this.title)
+                .append(this.optionDtos)
+                .append(this.price)
+                .append(this.type)
+                .hashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("title", title)
                 .append("price", price)
                 .append("type", type)
-                .append("options", optionDtos)
+                .append("optionDtos", optionDtos)
                 .toString();
     }
 
     /**
-     * {@code Item} builder static inner class.
+     * {@code ItemDto} builder static inner class.
      */
     public static final class Builder {
+        private Long id;
         private String title;
         private BigDecimal price;
         private ItemType type;
         private Set<OptionDto> optionDtos;
 
         private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(Long val) {
+            id = val;
+            return this;
         }
 
         /**
@@ -194,20 +252,20 @@ public class ItemDto {
         }
 
         /**
-         * Sets the {@code options} and returns a reference to this Builder so that the methods can be chained together.
+         * Sets the {@code optionDtos} and returns a reference to this Builder so that the methods can be chained together.
          *
-         * @param val the {@code options} to set
+         * @param val the {@code optionDtos} to set
          * @return a reference to this Builder
          */
-        public Builder options(Set<OptionDto> val) {
+        public Builder optionDtos(Set<OptionDto> val) {
             optionDtos = val;
             return this;
         }
 
         /**
-         * Returns a {@code Item} built from the parameters previously set.
+         * Returns a {@code ItemDto} built from the parameters previously set.
          *
-         * @return a {@code Item} built with parameters of this {@code Item.Builder}
+         * @return a {@code ItemDto} built with parameters of this {@code ItemDto.Builder}
          */
         public ItemDto build() {
             return new ItemDto(this);

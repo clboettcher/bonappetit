@@ -19,22 +19,28 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * Abstract base class for menu item options.
  */
+@XmlSeeAlso({IntegerOptionDto.class, CheckboxOptionDto.class, RadioOptionDto.class})
 public abstract class OptionDto {
+
+    /**
+     * See {@link #getId()}.
+     */
+    private Long id;
 
     /**
      * See {@link #getTitle()}.
      */
     private String title;
-
-    /**
-     * See {@link #getIndex()}.
-     */
-    private Integer index;
 
     /**
      * @return The title / name of this option.
@@ -51,26 +57,51 @@ public abstract class OptionDto {
     }
 
     /**
-     * @return The zero based index that this item should be displayed at.
+     * @return The ID of this option.
      */
-    public Integer getIndex() {
-        return index;
+    public Long getId() {
+        return id;
     }
 
     /**
-     * @param index see {@link #getIndex()}.
+     * @param id see {@link #getId()}.
      */
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setId(Long id) {
+        this.id = id;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        OptionDto rhs = (OptionDto) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.title, rhs.title)
+                .isEquals();
+    }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.id)
+                .append(this.title)
+                .hashCode();
+    }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("title", title)
-                .append("index", index)
                 .toString();
     }
+
 }

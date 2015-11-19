@@ -27,13 +27,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * An event consisting of staff members and a menu.
  */
 @Entity
-@XmlRootElement
 public class Event {
 
     /**
@@ -57,6 +55,20 @@ public class Event {
      * See {@link #getStaffListing()}.
      */
     private StaffListing staffListing;
+
+    public Event() {
+    }
+
+    private Event(Builder builder) {
+        id = builder.id;
+        setTitle(builder.title);
+        setMenu(builder.menu);
+        setStaffListing(builder.staffListing);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     /**
      * @return The ID of this event.
@@ -114,5 +126,72 @@ public class Event {
                 .append("menu", menu)
                 .append("staffListing", staffListing)
                 .toString();
+    }
+
+
+    /**
+     * {@code Event} builder static inner class.
+     */
+    public static final class Builder {
+        private long id;
+        private String title;
+        private Menu menu;
+        private StaffListing staffListing;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(long val) {
+            id = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code title} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code title} to set
+         * @return a reference to this Builder
+         */
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code menu} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code menu} to set
+         * @return a reference to this Builder
+         */
+        public Builder menu(Menu val) {
+            menu = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code staffListing} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code staffListing} to set
+         * @return a reference to this Builder
+         */
+        public Builder staffListing(StaffListing val) {
+            staffListing = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Event} built from the parameters previously set.
+         *
+         * @return a {@code Event} built with parameters of this {@code Event.Builder}
+         */
+        public Event build() {
+            return new Event(this);
+        }
     }
 }

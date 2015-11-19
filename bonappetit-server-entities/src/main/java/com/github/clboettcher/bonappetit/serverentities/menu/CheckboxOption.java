@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.serverentities.menu;
 
 import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 
@@ -39,10 +40,20 @@ public class CheckboxOption extends Option {
      */
     private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("priceDiff", priceDiff)
+                .append("printStrategy", printStrategy)
+                .append("defaultChecked", defaultChecked)
+                .toString();
+    }
+
     /**
      * See {@link #getDefaultChecked()}.
      */
-    Boolean defaultChecked = false;
+    private Boolean defaultChecked = false;
 
     /**
      * Returns the price difference of this option.
@@ -91,12 +102,4 @@ public class CheckboxOption extends Option {
         this.defaultChecked = defaultChecked;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("priceDiff", priceDiff)
-                .append("printStrategy", printStrategy)
-                .append("defaultChecked", defaultChecked)
-                .toString();
-    }
 }

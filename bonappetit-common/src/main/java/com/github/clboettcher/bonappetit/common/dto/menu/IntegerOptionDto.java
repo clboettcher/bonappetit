@@ -19,7 +19,8 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
-import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -33,30 +34,12 @@ public class IntegerOptionDto extends OptionDto {
     /**
      * See {@link #getPriceDiff()}.
      */
-    private BigDecimal priceDiff = BigDecimal.ZERO;
+    private BigDecimal priceDiff;
 
     /**
      * See {@link #getDefaultValue()}.
      */
-    private Integer defaultValue = 0;
-
-    /**
-     * See {@link #getPrintStrategy()}.
-     */
-    private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
-
-    public IntegerOptionDto() {
-    }
-
-    private IntegerOptionDto(Builder builder) {
-        setPriceDiff(builder.priceDiff);
-        setDefaultValue(builder.defaultValue);
-        setPrintStrategy(builder.printStrategy);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
+    private Integer defaultValue;
 
     /**
      * Returns the price difference of this option.
@@ -91,81 +74,40 @@ public class IntegerOptionDto extends OptionDto {
         this.defaultValue = defaultValue;
     }
 
-    /**
-     * @return The strategy that determines how this option should be printed.
-     */
-    public PrintStrategy getPrintStrategy() {
-        return printStrategy;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        IntegerOptionDto rhs = (IntegerOptionDto) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.defaultValue, rhs.defaultValue)
+                .append(this.priceDiff, rhs.priceDiff)
+                .isEquals();
     }
 
-    /**
-     * @param printStrategy see {@link #getPrintStrategy()}.
-     */
-    public void setPrintStrategy(PrintStrategy printStrategy) {
-        this.printStrategy = printStrategy;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(this.defaultValue)
+                .append(this.priceDiff)
+                .hashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("Option#toString()", super.toString())
+                .appendSuper(super.toString())
                 .append("priceDiff", priceDiff)
                 .append("defaultValue", defaultValue)
-                .append("printStrategy", printStrategy)
                 .toString();
-    }
-
-    /**
-     * {@code IntegerOptionDto} builder static inner class.
-     */
-    public static final class Builder {
-        private BigDecimal priceDiff;
-        private Integer defaultValue;
-        private PrintStrategy printStrategy;
-
-        private Builder() {
-        }
-
-        /**
-         * Sets the {@code priceDiff} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code priceDiff} to set
-         * @return a reference to this Builder
-         */
-        public Builder priceDiff(BigDecimal val) {
-            priceDiff = val;
-            return this;
-        }
-
-        /**
-         * Sets the {@code defaultValue} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code defaultValue} to set
-         * @return a reference to this Builder
-         */
-        public Builder defaultValue(Integer val) {
-            defaultValue = val;
-            return this;
-        }
-
-        /**
-         * Sets the {@code printStrategy} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code printStrategy} to set
-         * @return a reference to this Builder
-         */
-        public Builder printStrategy(PrintStrategy val) {
-            printStrategy = val;
-            return this;
-        }
-
-        /**
-         * Returns a {@code IntegerOptionDto} built from the parameters previously set.
-         *
-         * @return a {@code IntegerOptionDto} built with parameters of this {@code IntegerOptionDto.Builder}
-         */
-        public IntegerOptionDto build() {
-            return new IntegerOptionDto(this);
-        }
     }
 }

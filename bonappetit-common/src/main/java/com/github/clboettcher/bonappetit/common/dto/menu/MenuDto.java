@@ -19,6 +19,8 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -28,16 +30,26 @@ import java.util.Set;
  * The menu represents the items that can be ordered.
  */
 public class MenuDto {
+
+    /**
+     * See {@link #getId()}.
+     */
+    private Long id;
+
     /**
      * See {@link #getItemDtos()}.
      */
     private Set<ItemDto> itemDtos;
 
+    /**
+     * No-op no-args constructor.
+     */
     public MenuDto() {
     }
 
     private MenuDto(Builder builder) {
-        setItemDtos(builder.itemDtos);
+        setId(builder.id);
+        itemDtos = builder.itemDtos;
     }
 
     public static Builder newBuilder() {
@@ -58,10 +70,51 @@ public class MenuDto {
         this.itemDtos = itemDtos;
     }
 
+    /**
+     * @return The ID of this entity.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id See {@link #getId()}.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        MenuDto rhs = (MenuDto) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.itemDtos, rhs.itemDtos)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.id)
+                .append(this.itemDtos)
+                .hashCode();
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("items", itemDtos)
+                .append("id", id)
+                .append("itemDtos", itemDtos)
                 .toString();
     }
 
@@ -69,18 +122,30 @@ public class MenuDto {
      * {@code MenuDto} builder static inner class.
      */
     public static final class Builder {
+        private Long id;
         private Set<ItemDto> itemDtos;
 
         private Builder() {
         }
 
         /**
-         * Sets the {@code items} and returns a reference to this Builder so that the methods can be chained together.
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
          *
-         * @param val the {@code items} to set
+         * @param val the {@code id} to set
          * @return a reference to this Builder
          */
-        public Builder items(Set<ItemDto> val) {
+        public Builder id(Long val) {
+            id = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code itemDtos} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code itemDtos} to set
+         * @return a reference to this Builder
+         */
+        public Builder itemDtos(Set<ItemDto> val) {
             itemDtos = val;
             return this;
         }

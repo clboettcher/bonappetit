@@ -19,8 +19,10 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
-import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 
@@ -32,30 +34,12 @@ public class CheckboxOptionDto extends OptionDto {
     /**
      * See {@link #getPriceDiff()}.
      */
-    private BigDecimal priceDiff = new BigDecimal("0.00");
-
-    /**
-     * See {@link #getPrintStrategy()}.
-     */
-    private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
+    private BigDecimal priceDiff;
 
     /**
      * See {@link #getDefaultChecked()}.
      */
-    Boolean defaultChecked = false;
-
-    public CheckboxOptionDto() {
-    }
-
-    private CheckboxOptionDto(Builder builder) {
-        setPriceDiff(builder.priceDiff);
-        setPrintStrategy(builder.printStrategy);
-        setDefaultChecked(builder.defaultChecked);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
+    private Boolean defaultChecked;
 
     /**
      * Returns the price difference of this option.
@@ -77,20 +61,6 @@ public class CheckboxOptionDto extends OptionDto {
     }
 
     /**
-     * @return The strategy that determines how this option should be printed.
-     */
-    public PrintStrategy getPrintStrategy() {
-        return printStrategy;
-    }
-
-    /**
-     * @param printStrategy see {@link #getPrintStrategy()}.
-     */
-    public void setPrintStrategy(PrintStrategy printStrategy) {
-        this.printStrategy = printStrategy;
-    }
-
-    /**
      * @return The default value to set when this option is ordered.
      */
     public Boolean getDefaultChecked() {
@@ -105,65 +75,40 @@ public class CheckboxOptionDto extends OptionDto {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        CheckboxOptionDto rhs = (CheckboxOptionDto) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.priceDiff, rhs.priceDiff)
+                .append(this.defaultChecked, rhs.defaultChecked)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(this.priceDiff)
+                .append(this.defaultChecked)
+                .hashCode();
+    }
+
+    @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
                 .append("priceDiff", priceDiff)
-                .append("printStrategy", printStrategy)
                 .append("defaultChecked", defaultChecked)
                 .toString();
     }
 
-    /**
-     * {@code CheckboxOptionDto} builder static inner class.
-     */
-    public static final class Builder {
-        private BigDecimal priceDiff;
-        private PrintStrategy printStrategy;
-        private Boolean defaultChecked;
-
-        private Builder() {
-        }
-
-        /**
-         * Sets the {@code priceDiff} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code priceDiff} to set
-         * @return a reference to this Builder
-         */
-        public Builder priceDiff(BigDecimal val) {
-            priceDiff = val;
-            return this;
-        }
-
-        /**
-         * Sets the {@code printStrategy} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code printStrategy} to set
-         * @return a reference to this Builder
-         */
-        public Builder printStrategy(PrintStrategy val) {
-            printStrategy = val;
-            return this;
-        }
-
-        /**
-         * Sets the {@code defaultChecked} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code defaultChecked} to set
-         * @return a reference to this Builder
-         */
-        public Builder defaultChecked(Boolean val) {
-            defaultChecked = val;
-            return this;
-        }
-
-        /**
-         * Returns a {@code CheckboxOptionDto} built from the parameters previously set.
-         *
-         * @return a {@code CheckboxOptionDto} built with parameters of this {@code CheckboxOptionDto.Builder}
-         */
-        public CheckboxOptionDto build() {
-            return new CheckboxOptionDto(this);
-        }
-    }
 }

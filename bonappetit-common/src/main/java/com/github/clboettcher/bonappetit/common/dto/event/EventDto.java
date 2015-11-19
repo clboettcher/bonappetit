@@ -21,6 +21,8 @@ package com.github.clboettcher.bonappetit.common.dto.event;
 
 import com.github.clboettcher.bonappetit.common.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.common.dto.staff.StaffListingDto;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -52,6 +54,9 @@ public class EventDto {
      */
     private StaffListingDto staffListingDto;
 
+    /**
+     * No-op no-args constructor.
+     */
     public EventDto() {
     }
 
@@ -123,11 +128,42 @@ public class EventDto {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        EventDto rhs = (EventDto) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.title, rhs.title)
+                .append(this.menuDto, rhs.menuDto)
+                .append(this.staffListingDto, rhs.staffListingDto)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.id)
+                .append(this.title)
+                .append(this.menuDto)
+                .append(this.staffListingDto)
+                .hashCode();
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("title", title)
-                .append("menu", menuDto)
-                .append("staffListing", staffListingDto)
+                .append("menuDto", menuDto)
+                .append("staffListingDto", staffListingDto)
                 .toString();
     }
 
@@ -196,4 +232,5 @@ public class EventDto {
             return new EventDto(this);
         }
     }
+
 }

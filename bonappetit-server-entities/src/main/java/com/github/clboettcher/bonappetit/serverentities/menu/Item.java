@@ -63,6 +63,24 @@ public class Item {
     private Set<Option> options;
 
     /**
+     * No-op no-args constructor.
+     */
+    public Item() {
+    }
+
+    private Item(Builder builder) {
+        id = builder.id;
+        setTitle(builder.title);
+        setPrice(builder.price);
+        setType(builder.type);
+        setOptions(builder.options);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    /**
      * @return The ID of this item.
      */
     public long getId() {
@@ -138,5 +156,83 @@ public class Item {
                 .append("type", type)
                 .append("options", options)
                 .toString();
+    }
+
+    /**
+     * {@code Item} builder static inner class.
+     */
+    public static final class Builder {
+        private long id;
+        private String title;
+        private BigDecimal price;
+        private ItemType type;
+        private Set<Option> options;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(long val) {
+            id = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code title} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code title} to set
+         * @return a reference to this Builder
+         */
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code price} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code price} to set
+         * @return a reference to this Builder
+         */
+        public Builder price(BigDecimal val) {
+            price = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code type} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code type} to set
+         * @return a reference to this Builder
+         */
+        public Builder type(ItemType val) {
+            type = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code options} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code options} to set
+         * @return a reference to this Builder
+         */
+        public Builder options(Set<Option> val) {
+            options = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Item} built from the parameters previously set.
+         *
+         * @return a {@code Item} built with parameters of this {@code Item.Builder}
+         */
+        public Item build() {
+            return new Item(this);
+        }
     }
 }

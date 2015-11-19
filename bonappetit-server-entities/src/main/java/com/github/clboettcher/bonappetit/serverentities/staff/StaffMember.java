@@ -28,9 +28,26 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class StaffMember {
 
     /**
+     * See {@link #getId()}.
+     */
+    private long id;
+
+    /**
      * See {@link #getName()}.
      */
     private String name;
+
+    private StaffMember(Builder builder) {
+        id = builder.id;
+        setName(builder.name);
+    }
+
+    public StaffMember() {
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     /**
      * @return The name of this staff member.
@@ -49,7 +66,57 @@ public class StaffMember {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("name", name)
                 .toString();
+    }
+
+    /**
+     * @return The ID of this entity.
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * {@code StaffMember} builder static inner class.
+     */
+    public static final class Builder {
+        private String name;
+        private long id;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code name} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code name} to set
+         * @return a reference to this Builder
+         */
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code StaffMember} built from the parameters previously set.
+         *
+         * @return a {@code StaffMember} built with parameters of this {@code StaffMember.Builder}
+         */
+        public StaffMember build() {
+            return new StaffMember(this);
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(long val) {
+            id = val;
+            return this;
+        }
     }
 }

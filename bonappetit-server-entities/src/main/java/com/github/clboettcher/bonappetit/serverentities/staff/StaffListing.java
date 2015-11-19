@@ -30,9 +30,26 @@ import java.util.Set;
 public class StaffListing {
 
     /**
+     * See {@link #getId()}.
+     */
+    private long id;
+
+    /**
      * See {@link #getStaffMembers()}.
      */
     private Set<StaffMember> staffMembers;
+
+    public StaffListing() {
+    }
+
+    private StaffListing(Builder builder) {
+        id = builder.id;
+        setStaffMembers(builder.staffMembers);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     /**
      * @return The members that correspond to this listing.
@@ -51,7 +68,57 @@ public class StaffListing {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("staffMembers", staffMembers)
                 .toString();
+    }
+
+    /**
+     * @return The ID of this entity.
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * {@code StaffListing} builder static inner class.
+     */
+    public static final class Builder {
+        private Set<StaffMember> staffMembers;
+        private long id;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code staffMembers} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code staffMembers} to set
+         * @return a reference to this Builder
+         */
+        public Builder staffMembers(Set<StaffMember> val) {
+            staffMembers = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code StaffListing} built from the parameters previously set.
+         *
+         * @return a {@code StaffListing} built with parameters of this {@code StaffListing.Builder}
+         */
+        public StaffListing build() {
+            return new StaffListing(this);
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(long val) {
+            id = val;
+            return this;
+        }
     }
 }
