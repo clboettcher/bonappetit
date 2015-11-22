@@ -51,7 +51,7 @@ public class EventsDaoImpl implements EventsDao {
                                 ItemDto.newBuilder()
                                         .title("Augustinger")
                                         .price(new BigDecimal("2.2"))
-                                        .type(ItemType.DRINK_ALCOHOLIC) // TODO add radio options
+                                        .type(ItemType.DRINK_ALCOHOLIC)
                                         .optionDtos(Sets.<OptionDto>newLinkedHashSet(Arrays.asList(
                                                 createRadioOption()
                                         )))
