@@ -40,6 +40,7 @@ public class StaffListingDto {
      * No-op no-args constructor.
      */
     public StaffListingDto() {
+        // No-op.
     }
 
     private StaffListingDto(Builder builder) {

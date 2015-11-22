@@ -50,6 +50,7 @@ public class Menu {
      * No-op no-args constructor.
      */
     public Menu() {
+        // No-op.
     }
 
     private Menu(Builder builder) {

@@ -50,7 +50,11 @@ public class StaffMember {
         setName(builder.name);
     }
 
+    /**
+     * No-op no-args constructor.
+     */
     public StaffMember() {
+        // No-op.
     }
 
     public static Builder newBuilder() {

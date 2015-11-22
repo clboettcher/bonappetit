@@ -46,6 +46,7 @@ public class RadioItem {
      * No-op no-args constructor.
      */
     public RadioItem() {
+        // No-op.
     }
 
     private RadioItem(Builder builder) {

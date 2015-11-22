@@ -31,6 +31,7 @@ public class RadioItemDto {
      * No-op no-args constructor.
      */
     public RadioItemDto() {
+        // No-op.
     }
 
     private RadioItemDto(Builder builder) {

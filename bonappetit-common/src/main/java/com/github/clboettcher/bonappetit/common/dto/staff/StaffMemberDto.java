@@ -38,6 +38,7 @@ public class StaffMemberDto {
      * No-op no-args constructor.
      */
     public StaffMemberDto() {
+        // No-op.
     }
 
     private StaffMemberDto(Builder builder) {

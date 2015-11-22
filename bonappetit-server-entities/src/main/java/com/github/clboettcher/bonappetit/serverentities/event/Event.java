@@ -56,7 +56,11 @@ public class Event {
      */
     private StaffListing staffListing;
 
+    /**
+     * No-op no-args constructor.
+     */
     public Event() {
+        // No-op.
     }
 
     private Event(Builder builder) {

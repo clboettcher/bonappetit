@@ -58,6 +58,7 @@ public class EventDto {
      * No-op no-args constructor.
      */
     public EventDto() {
+        // no-op
     }
 
     private EventDto(Builder builder) {

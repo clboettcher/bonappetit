@@ -45,6 +45,7 @@ public class MenuDto {
      * No-op no-args constructor.
      */
     public MenuDto() {
+        // No-op.
     }
 
     private MenuDto(Builder builder) {

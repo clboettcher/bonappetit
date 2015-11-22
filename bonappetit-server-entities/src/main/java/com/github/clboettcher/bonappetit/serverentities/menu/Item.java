@@ -66,6 +66,7 @@ public class Item {
      * No-op no-args constructor.
      */
     public Item() {
+        // No-op.
     }
 
     private Item(Builder builder) {

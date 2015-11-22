@@ -46,7 +46,11 @@ public class StaffListing {
      */
     private Set<StaffMember> staffMembers;
 
+    /**
+     * No-op no-args constructor.
+     */
     public StaffListing() {
+        // No-op.
     }
 
     private StaffListing(Builder builder) {

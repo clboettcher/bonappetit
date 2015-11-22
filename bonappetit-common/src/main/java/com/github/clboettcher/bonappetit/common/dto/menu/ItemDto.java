@@ -62,6 +62,7 @@ public class ItemDto {
      * No-op no-args constructor.
      */
     public ItemDto() {
+        // No-op.
     }
 
     private ItemDto(Builder builder) {
