@@ -50,7 +50,7 @@ public class ServerApplication extends ResourceConfig {
     /**
      * @return The {@link javax.ws.rs.ext.ContextResolver} that handles JSON message body writing.
      */
-    private ContextResolver<MoxyJsonConfig> createMoxyJsonConfigContextResolver() {
+    private static ContextResolver<MoxyJsonConfig> createMoxyJsonConfigContextResolver() {
         final MoxyJsonConfig moxyJsonConfig = new MoxyJsonConfig();
 
         Map<String, String> namespacePrefixMapper = new HashMap<>();

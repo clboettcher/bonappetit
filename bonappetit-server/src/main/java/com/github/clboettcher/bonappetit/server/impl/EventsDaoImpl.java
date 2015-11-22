@@ -67,16 +67,16 @@ public class EventsDaoImpl implements EventsDao {
                 .build();
     }
 
-    private CheckboxOptionDto createCheckboxOption(String title, boolean defaultChecked, BigDecimal priceDiff) {
+    private static CheckboxOptionDto createCheckboxOption(String title, boolean defaultChecked, BigDecimal priceDiff) {
         CheckboxOptionDto result = new CheckboxOptionDto();
-        result.setId(1l);
+        result.setId(1L);
         result.setTitle(title);
         result.setDefaultChecked(defaultChecked);
         result.setPriceDiff(priceDiff);
         return result;
     }
 
-    private RadioOptionDto createRadioOption() {
+    private static RadioOptionDto createRadioOption() {
         RadioOptionDto result = new RadioOptionDto();
         result.setId(1L);
         result.setTitle("Größe");
@@ -88,7 +88,7 @@ public class EventsDaoImpl implements EventsDao {
         return result;
     }
 
-    private RadioItemDto createRadioItemDto(long id, String title, BigDecimal priceDiff) {
+    private static RadioItemDto createRadioItemDto(long id, String title, BigDecimal priceDiff) {
         return RadioItemDto.newBuilder()
                 .id(id)
                 .title(title)
@@ -96,7 +96,7 @@ public class EventsDaoImpl implements EventsDao {
                 .build();
     }
 
-    private IntegerOptionDto createIntegerOption(String title, int defaultValue, BigDecimal priceDiff) {
+    private static IntegerOptionDto createIntegerOption(String title, int defaultValue, BigDecimal priceDiff) {
         IntegerOptionDto result = new IntegerOptionDto();
         result.setDefaultValue(defaultValue);
         result.setPriceDiff(priceDiff);

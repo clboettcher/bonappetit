@@ -48,7 +48,7 @@ public class RadioItemsConverter {
      * @param radioItem The {@link RadioItem} to convert.
      * @return The resulting {@link RadioItemDto}.
      */
-    private RadioItemDto convert(RadioItem radioItem) {
+    private static RadioItemDto convert(RadioItem radioItem) {
         return RadioItemDto.newBuilder()
                 .id(radioItem.getId())
                 .title(radioItem.getTitle())

@@ -71,7 +71,7 @@ public class OptionsConverter {
      * @param checkboxOption The {@link CheckboxOption} to convert.
      * @return The resulting {@link CheckboxOptionDto}.
      */
-    private CheckboxOptionDto convertToCheckboxOptionDto(CheckboxOption checkboxOption) {
+    private static CheckboxOptionDto convertToCheckboxOptionDto(CheckboxOption checkboxOption) {
         CheckboxOptionDto result = new CheckboxOptionDto();
         result.setId(checkboxOption.getId());
         result.setDefaultChecked(checkboxOption.getDefaultChecked());
@@ -86,7 +86,7 @@ public class OptionsConverter {
      * @param integerOption The {@link IntegerOption} to convert.
      * @return The resulting {@link IntegerOptionDto}.
      */
-    private IntegerOptionDto convertToIntegerOptionDto(IntegerOption integerOption) {
+    private static IntegerOptionDto convertToIntegerOptionDto(IntegerOption integerOption) {
         IntegerOptionDto result = new IntegerOptionDto();
         result.setId(integerOption.getId());
         result.setDefaultValue(integerOption.getDefaultValue());

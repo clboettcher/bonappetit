@@ -48,7 +48,7 @@ public class StaffListingsConverter {
      * @param staffMember The {@link StaffMember} to convert.
      * @return The resulting {@link StaffMemberDto}.
      */
-    private StaffMemberDto convertToDto(StaffMember staffMember) {
+    private static StaffMemberDto convertToDto(StaffMember staffMember) {
         return StaffMemberDto.newBuilder()
                 .name(staffMember.getName())
                 .build();
