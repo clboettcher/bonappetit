@@ -3,11 +3,13 @@ package com.github.clboettcher.bonappetit.serverentities.menu;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Entity;
 import java.util.Set;
 
 /**
  * An option that consists of multiple items of which one must be selected.
  */
+@Entity
 public class RadioOption extends Option {
 
     /**

@@ -60,8 +60,8 @@ public class EventsDaoImpl implements EventsDao {
                         .build())
                 .staffListingDto(StaffListingDto.newBuilder()
                         .staffMembers(Sets.newHashSet(
-                                StaffMemberDto.newBuilder().name("Ranjid").build(),
-                                StaffMemberDto.newBuilder().name("Sieglinde").build()
+                                StaffMemberDto.newBuilder().id(1L).name("Ranjid").build(),
+                                StaffMemberDto.newBuilder().id(2L).name("Sieglinde").build()
                         ))
                         .build())
                 .build();

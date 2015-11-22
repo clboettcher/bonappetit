@@ -19,27 +19,19 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.event;
 
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import com.github.clboettcher.bonappetit.serverentities.menu.Menu;
 import com.github.clboettcher.bonappetit.serverentities.staff.StaffListing;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * An event consisting of staff members and a menu.
  */
 @Entity
-public class Event {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue
-    private long id;
+public class Event extends AbstractEntity {
 
     /**
      * See {@link #getTitle()}.
@@ -64,7 +56,7 @@ public class Event {
     }
 
     private Event(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setTitle(builder.title);
         setMenu(builder.menu);
         setStaffListing(builder.staffListing);
@@ -72,13 +64,6 @@ public class Event {
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
     }
 
     /**
@@ -126,6 +111,7 @@ public class Event {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("menu", menu)
                 .append("staffListing", staffListing)

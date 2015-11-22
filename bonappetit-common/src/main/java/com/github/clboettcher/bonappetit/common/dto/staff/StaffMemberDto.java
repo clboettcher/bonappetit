@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.staff;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,7 +28,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * Represents a staff member of the restaurant.
  */
-public class StaffMemberDto {
+public class StaffMemberDto extends AbstractEntityDto {
 
     /**
      * See {@link #getName()}.
@@ -42,7 +43,8 @@ public class StaffMemberDto {
     }
 
     private StaffMemberDto(Builder builder) {
-        setName(builder.name);
+        this.setId(builder.id);
+        this.setName(builder.name);
     }
 
     public static Builder newBuilder() {
@@ -64,13 +66,6 @@ public class StaffMemberDto {
     }
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("name", name)
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -83,6 +78,7 @@ public class StaffMemberDto {
         }
         StaffMemberDto rhs = (StaffMemberDto) obj;
         return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
                 .append(this.name, rhs.name)
                 .isEquals();
     }
@@ -90,8 +86,17 @@ public class StaffMemberDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
                 .append(name)
                 .hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("name", name)
+                .toString();
     }
 
     /**
@@ -99,8 +104,20 @@ public class StaffMemberDto {
      */
     public static final class Builder {
         private String name;
+        private Long id;
 
         private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(Long val) {
+            id = val;
+            return this;
         }
 
         /**

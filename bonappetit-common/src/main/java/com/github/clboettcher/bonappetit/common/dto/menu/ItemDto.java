@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -31,12 +32,7 @@ import java.util.Set;
 /**
  * A menu item.
  */
-public class ItemDto {
-
-    /**
-     * See {@link #getId()}.
-     */
-    private Long id;
+public class ItemDto extends AbstractEntityDto {
 
     /**
      * See {@link #getTitle()}.
@@ -66,7 +62,7 @@ public class ItemDto {
     }
 
     private ItemDto(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setTitle(builder.title);
         setPrice(builder.price);
         setType(builder.type);
@@ -78,24 +74,10 @@ public class ItemDto {
     }
 
     /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * @param optionDtos see {@link #getOptionDtos()}.
      */
     public void setOptionDtos(Set<OptionDto> optionDtos) {
         this.optionDtos = optionDtos;
-    }
-
-    /**
-     * @return The ID of this item.
-     */
-    public Long getId() {
-        return id;
     }
 
     /**
@@ -165,7 +147,7 @@ public class ItemDto {
         }
         ItemDto rhs = (ItemDto) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .appendSuper(super.equals(obj))
                 .append(this.title, rhs.title)
                 .append(this.optionDtos, rhs.optionDtos)
                 .append(this.price, rhs.price)
@@ -176,7 +158,7 @@ public class ItemDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(this.id)
+                .appendSuper(super.hashCode())
                 .append(this.title)
                 .append(this.optionDtos)
                 .append(this.price)
@@ -187,7 +169,7 @@ public class ItemDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("price", price)
                 .append("type", type)

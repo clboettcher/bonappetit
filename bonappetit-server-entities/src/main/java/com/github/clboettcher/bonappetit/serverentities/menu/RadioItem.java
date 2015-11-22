@@ -1,26 +1,18 @@
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
 import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 
 /**
  * A single item of a {@link RadioOption}.
  */
 @Entity
-public class RadioItem {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue
-    private long id;
+public class RadioItem extends AbstractEntity {
 
     /**
      * See {@link #getTitle()}.
@@ -50,7 +42,7 @@ public class RadioItem {
     }
 
     private RadioItem(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setTitle(builder.title);
         setIndex(builder.index);
         setPriceDiff(builder.priceDiff);
@@ -122,17 +114,10 @@ public class RadioItem {
         this.printStrategy = printStrategy;
     }
 
-    /**
-     * @return The ID of this entity.
-     */
-    public long getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("index", index)
                 .append("priceDiff", priceDiff)

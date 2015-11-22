@@ -23,11 +23,13 @@ import com.github.clboettcher.bonappetit.common.printing.PrintStrategy;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
  * An option consisting of a boolean checkbox.
  */
+@Entity
 public class CheckboxOption extends Option {
 
     /**

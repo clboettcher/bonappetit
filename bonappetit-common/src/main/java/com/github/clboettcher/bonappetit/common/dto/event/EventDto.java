@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.event;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.common.dto.staff.StaffListingDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -32,12 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * An event consisting of staff members and a menu.
  */
 @XmlRootElement
-public class EventDto {
-
-    /**
-     * See {@link #getId()}.
-     */
-    private long id;
+public class EventDto extends AbstractEntityDto {
 
     /**
      * See {@link #getTitle()}.
@@ -70,20 +66,6 @@ public class EventDto {
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
     }
 
     /**
@@ -141,7 +123,7 @@ public class EventDto {
         }
         EventDto rhs = (EventDto) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .appendSuper(super.equals(obj))
                 .append(this.title, rhs.title)
                 .append(this.menuDto, rhs.menuDto)
                 .append(this.staffListingDto, rhs.staffListingDto)
@@ -151,7 +133,7 @@ public class EventDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(this.id)
+                .appendSuper(super.hashCode())
                 .append(this.title)
                 .append(this.menuDto)
                 .append(this.staffListingDto)
@@ -161,7 +143,7 @@ public class EventDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("menuDto", menuDto)
                 .append("staffListingDto", staffListingDto)

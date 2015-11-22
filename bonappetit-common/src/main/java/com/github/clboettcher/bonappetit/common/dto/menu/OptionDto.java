@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,12 +31,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Abstract base class for menu item options.
  */
 @XmlSeeAlso({IntegerOptionDto.class, CheckboxOptionDto.class, RadioOptionDto.class})
-public abstract class OptionDto {
-
-    /**
-     * See {@link #getId()}.
-     */
-    private Long id;
+public abstract class OptionDto extends AbstractEntityDto {
 
     /**
      * See {@link #getTitle()}.
@@ -56,20 +52,6 @@ public abstract class OptionDto {
         this.title = title;
     }
 
-    /**
-     * @return The ID of this option.
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -83,7 +65,7 @@ public abstract class OptionDto {
         }
         OptionDto rhs = (OptionDto) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .appendSuper(super.equals(obj))
                 .append(this.title, rhs.title)
                 .isEquals();
     }
@@ -91,7 +73,7 @@ public abstract class OptionDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(this.id)
+                .appendSuper(super.hashCode())
                 .append(this.title)
                 .hashCode();
     }
@@ -99,7 +81,7 @@ public abstract class OptionDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .toString();
     }

@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.staff;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -29,7 +30,7 @@ import java.util.Set;
 /**
  * A collection of staff members.
  */
-public class StaffListingDto {
+public class StaffListingDto extends AbstractEntityDto {
 
     /**
      * See {@link #getStaffMemberDtos()}.
@@ -44,7 +45,8 @@ public class StaffListingDto {
     }
 
     private StaffListingDto(Builder builder) {
-        setStaffMemberDtos(builder.staffMemberDtos);
+        this.setId(builder.id);
+        this.setStaffMemberDtos(builder.staffMemberDtos);
     }
 
     public static Builder newBuilder() {
@@ -66,13 +68,6 @@ public class StaffListingDto {
     }
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("staffMembers", staffMemberDtos)
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -85,6 +80,7 @@ public class StaffListingDto {
         }
         StaffListingDto rhs = (StaffListingDto) obj;
         return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
                 .append(this.staffMemberDtos, rhs.staffMemberDtos)
                 .isEquals();
     }
@@ -92,8 +88,17 @@ public class StaffListingDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
                 .append(this.staffMemberDtos)
                 .hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("staffMemberDtos", staffMemberDtos)
+                .toString();
     }
 
     /**
@@ -101,8 +106,20 @@ public class StaffListingDto {
      */
     public static final class Builder {
         private Set<StaffMemberDto> staffMemberDtos;
+        private Long id;
 
         private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param id the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
         }
 
         /**

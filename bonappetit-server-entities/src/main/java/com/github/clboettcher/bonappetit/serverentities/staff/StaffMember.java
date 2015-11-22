@@ -19,42 +19,33 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.staff;
 
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * Represents a staff member of the restaurant.
  */
 @Entity
-public class StaffMember {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class StaffMember extends AbstractEntity {
 
     /**
      * See {@link #getName()}.
      */
     private String name;
 
-    private StaffMember(Builder builder) {
-        id = builder.id;
-        setName(builder.name);
-    }
-
     /**
      * No-op no-args constructor.
      */
     public StaffMember() {
         // No-op.
+    }
+
+    private StaffMember(Builder builder) {
+        this.setId(builder.id);
+        setName(builder.name);
     }
 
     public static Builder newBuilder() {
@@ -78,16 +69,9 @@ public class StaffMember {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("name", name)
                 .toString();
-    }
-
-    /**
-     * @return The ID of this entity.
-     */
-    public long getId() {
-        return id;
     }
 
     /**

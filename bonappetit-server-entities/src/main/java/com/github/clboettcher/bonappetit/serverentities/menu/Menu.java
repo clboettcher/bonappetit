@@ -19,27 +19,18 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Set;
 
 /**
  * The menu represents the items that can be ordered.
  */
 @Entity
-public class Menu {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Menu extends AbstractEntity {
 
     /**
      * See {@link #getItems()}.
@@ -54,7 +45,7 @@ public class Menu {
     }
 
     private Menu(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setItems(builder.items);
     }
 
@@ -79,16 +70,9 @@ public class Menu {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("items", items)
                 .toString();
-    }
-
-    /**
-     * @return The ID of this entity.
-     */
-    public long getId() {
-        return id;
     }
 
     /**

@@ -20,12 +20,11 @@
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -33,14 +32,7 @@ import java.util.Set;
  * A menu item.
  */
 @Entity
-public class Item {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue
-    private long id;
+public class Item extends AbstractEntity {
 
     /**
      * See {@link #getTitle()}.
@@ -70,7 +62,7 @@ public class Item {
     }
 
     private Item(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setTitle(builder.title);
         setPrice(builder.price);
         setType(builder.type);
@@ -79,13 +71,6 @@ public class Item {
 
     public static Builder newBuilder() {
         return new Builder();
-    }
-
-    /**
-     * @return The ID of this item.
-     */
-    public long getId() {
-        return id;
     }
 
     /**
@@ -152,6 +137,7 @@ public class Item {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("price", price)
                 .append("type", type)

@@ -1,5 +1,6 @@
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,12 +11,7 @@ import java.math.BigDecimal;
 /**
  * A single item of a {@link RadioOptionDto}.
  */
-public class RadioItemDto {
-
-    /**
-     * See {@link #getId()}.
-     */
-    private Long id;
+public class RadioItemDto extends AbstractEntityDto {
 
     /**
      * See {@link #getTitle()}.
@@ -35,7 +31,7 @@ public class RadioItemDto {
     }
 
     private RadioItemDto(Builder builder) {
-        id = builder.id;
+        this.setId(builder.id);
         setTitle(builder.title);
         setPriceDiff(builder.priceDiff);
     }
@@ -77,20 +73,6 @@ public class RadioItemDto {
         this.priceDiff = priceDiff;
     }
 
-    /**
-     * @return The ID of this entity.
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -104,7 +86,7 @@ public class RadioItemDto {
         }
         RadioItemDto rhs = (RadioItemDto) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .appendSuper(super.equals(obj))
                 .append(this.title, rhs.title)
                 .append(this.priceDiff, rhs.priceDiff)
                 .isEquals();
@@ -113,7 +95,7 @@ public class RadioItemDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(this.id)
+                .appendSuper(super.hashCode())
                 .append(this.title)
                 .append(this.priceDiff)
                 .hashCode();
@@ -122,7 +104,7 @@ public class RadioItemDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("priceDiff", priceDiff)
                 .toString();

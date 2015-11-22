@@ -19,26 +19,14 @@
 */
 package com.github.clboettcher.bonappetit.serverentities.menu;
 
+import com.github.clboettcher.bonappetit.serverentities.AbstractEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * Abstract base class for menu item options.
  */
-@Entity
-public abstract class Option {
-
-    /**
-     * See {@link #getId()}.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public abstract class Option extends AbstractEntity {
 
     /**
      * See {@link #getTitle()}.
@@ -81,24 +69,9 @@ public abstract class Option {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("index", index)
                 .toString();
     }
-
-    /**
-     * @return The ID of this option.
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
 }

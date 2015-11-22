@@ -19,6 +19,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -29,12 +30,7 @@ import java.util.Set;
 /**
  * The menu represents the items that can be ordered.
  */
-public class MenuDto {
-
-    /**
-     * See {@link #getId()}.
-     */
-    private Long id;
+public class MenuDto extends AbstractEntityDto {
 
     /**
      * See {@link #getItemDtos()}.
@@ -71,20 +67,6 @@ public class MenuDto {
         this.itemDtos = itemDtos;
     }
 
-    /**
-     * @return The ID of this entity.
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id See {@link #getId()}.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -98,7 +80,7 @@ public class MenuDto {
         }
         MenuDto rhs = (MenuDto) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .appendSuper(super.equals(obj))
                 .append(this.itemDtos, rhs.itemDtos)
                 .isEquals();
     }
@@ -106,7 +88,7 @@ public class MenuDto {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(this.id)
+                .appendSuper(super.hashCode())
                 .append(this.itemDtos)
                 .hashCode();
     }
@@ -114,7 +96,7 @@ public class MenuDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("itemDtos", itemDtos)
                 .toString();
     }
