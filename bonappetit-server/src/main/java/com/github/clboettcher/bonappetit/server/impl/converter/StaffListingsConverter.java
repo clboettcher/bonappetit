@@ -33,7 +33,7 @@ public class StaffListingsConverter {
      * @param staffMembers The {@link StaffMember}s to convert.
      * @return The resulting {@link StaffMemberDto}s.
      */
-    private Set<StaffMemberDto> convertToDto(Set<StaffMember> staffMembers) {
+    private static Set<StaffMemberDto> convertToDto(Set<StaffMember> staffMembers) {
         Set<StaffMemberDto> staffMemberDtos = new HashSet<>(staffMembers.size());
         for (StaffMember staffMember : staffMembers) {
             staffMemberDtos.add(convertToDto(staffMember));
