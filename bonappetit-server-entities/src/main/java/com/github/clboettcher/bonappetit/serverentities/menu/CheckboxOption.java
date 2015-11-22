@@ -40,6 +40,11 @@ public class CheckboxOption extends Option {
      */
     private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
 
+    /**
+     * See {@link #getDefaultChecked()}.
+     */
+    private Boolean defaultChecked = false;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -49,11 +54,6 @@ public class CheckboxOption extends Option {
                 .append("defaultChecked", defaultChecked)
                 .toString();
     }
-
-    /**
-     * See {@link #getDefaultChecked()}.
-     */
-    private Boolean defaultChecked = false;
 
     /**
      * Returns the price difference of this option.

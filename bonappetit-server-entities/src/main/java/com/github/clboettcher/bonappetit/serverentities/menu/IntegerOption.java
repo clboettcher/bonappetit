@@ -35,16 +35,6 @@ public class IntegerOption extends Option {
      */
     private BigDecimal priceDiff = BigDecimal.ZERO;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("priceDiff", priceDiff)
-                .append("defaultValue", defaultValue)
-                .append("printStrategy", printStrategy)
-                .toString();
-    }
-
     /**
      * See {@link #getDefaultValue()}.
      */
@@ -54,6 +44,16 @@ public class IntegerOption extends Option {
      * See {@link #getPrintStrategy()}.
      */
     private PrintStrategy printStrategy = PrintStrategy.DEFAULT;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("priceDiff", priceDiff)
+                .append("defaultValue", defaultValue)
+                .append("printStrategy", printStrategy)
+                .toString();
+    }
 
     /**
      * Returns the price difference of this option.
