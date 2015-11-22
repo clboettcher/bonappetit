@@ -40,13 +40,11 @@ public class ServerApplication extends ResourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerApplication.class);
 
     public ServerApplication() {
-        LOGGER.info(String.format("Initializing Jersey application."));
-        LOGGER.info(String.format("foobar"));
+        LOGGER.info("Initializing Jersey application.");
         final WebApplicationContext ctx = ContextLoader.getCurrentWebApplicationContext();
         register(ctx.getBean(HeartbeatService.class));
         register(ctx.getBean(EventsService.class));
         register(createMoxyJsonConfigContextResolver());
-        LOGGER.info(String.format("Jersey properties: %s", this.getProperties()));
     }
 
     /**
