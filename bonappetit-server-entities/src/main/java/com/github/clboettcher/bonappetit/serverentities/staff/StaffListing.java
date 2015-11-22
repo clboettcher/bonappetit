@@ -22,16 +22,23 @@ package com.github.clboettcher.bonappetit.serverentities.staff;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Set;
 
 /**
  * A collection of staff members.
  */
+@Entity
 public class StaffListing {
 
     /**
      * See {@link #getId()}.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     /**

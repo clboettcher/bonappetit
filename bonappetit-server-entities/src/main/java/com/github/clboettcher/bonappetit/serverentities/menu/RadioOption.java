@@ -20,15 +20,6 @@ public class RadioOption extends Option {
      */
     private Set<RadioItem> radioItems;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("defaultSelected", defaultSelected)
-                .append("radioItems", radioItems)
-                .toString();
-    }
-
     /**
      * Returns the default selected item.
      * <p/>
@@ -59,6 +50,15 @@ public class RadioOption extends Option {
      */
     public void setRadioItems(Set<RadioItem> radioItems) {
         this.radioItems = radioItems;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("defaultSelected", defaultSelected)
+                .append("radioItems", radioItems)
+                .toString();
     }
 
 }
