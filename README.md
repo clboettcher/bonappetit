@@ -16,16 +16,36 @@ This project is being refactored, modernized and moved to github. More stuff com
 
 ## Server
 
-The `:bonappetit-server` project generates a war file which can be deployed to any application server
-(like tomcat, jetty, jboss, etc.).
+The `:bonappetit-server` project contains the server application that provides the data via RESTful APIs.
 
-Run the following command to generate the war file from the root directory of the project in your favorite shell:
+### Endpoints
+
+To get started working with the server have a look at the following endpoints.
+
+| URL                                       | Description                            |
+|-------------------------------------------|----------------------------------------|
+| `/v1/doc/index.html`                      | Shows an interactive API documentation |
+| `/health`                                 | Shows application health information   |
+
+### Running the server application
+
+The `:bonappetit-server` project contains a spring-boot application that can be started in an embedded application server via 
 
 ```bash
-gradlew war
+./gradlew bootRun
 ```
 
-You find the archive at `/bonappetit-server/build/libs/bonappetit-server-${X.Y.Z}.war`
+Per default the application is deployed on `http://localhost:8080`
+
+In addition to running the server embedded you can create a war file which can be deployed to any application server (like tomcat, jetty, jboss, etc.).
+
+Run the following command to generate the war
+
+```bash
+./gradlew war
+```
+
+You find the archive at `/bonappetit-server/build/libs/bonappetit-server-${major.minor.bugfix}.war`
 
 ## Maintainer
 
