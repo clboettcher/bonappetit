@@ -8,7 +8,7 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'com.github.hierynomus.license'
     group = 'com.github.clboettcher.bonappetit'
-    version = '1.0.0'
+    version = '0.0.1-SNAPSHOT'
 }
 
 // Config for all bonappetit subprojects
