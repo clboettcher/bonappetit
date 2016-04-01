@@ -35,7 +35,6 @@ import javax.ws.rs.ApplicationPath;
 /**
  * Jersey application config.
  */
-//@Configuration
 @ApplicationPath("/v1/api")
 @Component
 public class JerseyConfig extends ResourceConfig {
