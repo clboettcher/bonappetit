@@ -1,22 +1,15 @@
-apply plugin: 'java'
-
-sourceCompatibility = 1.7
-version = '1.0'
+sourceCompatibility = 1.8
 
 dependencies {
     // BonAppetit modules
     compile project(':bonappetit-common')
 
     // Spring
-    compile libs.'spring-data-jpa'
+    compile 'org.springframework.data:spring-data-jpa:1.9.4.RELEASE'
 
     // Data access
-    compile libs.'hibernate-jpa-2.0-api'
-
-    // Utils
-    compile libs.guava
-    compile libs.'commons-lang3'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
 
     // Testing
-    testCompile libs.junit
+    testCompile 'junit:junit:4.12'
 }

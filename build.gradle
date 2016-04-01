@@ -2,13 +2,22 @@ plugins {
     id "org.sonarqube" version "1.1"
 }
 
-// Import common dependency declarations
-apply from: 'scripts/dependencies.gradle'
+allprojects {
+    apply plugin: 'java'
+    group = 'com.github.clboettcher.bonappetit'
+    version = '1.0.0'
+}
 
-// Config for all subprojects
+// Config for all bonappetit (sub)projects
 subprojects {
     repositories {
         mavenCentral()
+    }
+
+    dependencies {
+        // Utils
+        compile 'com.google.guava:guava:19.0'
+        compile 'org.apache.commons:commons-lang3:3.0'
     }
 
     // Tasks that adds the GPL license header info to all *.java files.
@@ -25,7 +34,6 @@ subprojects {
         }
     }
 }
-
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
