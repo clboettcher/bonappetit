@@ -3,6 +3,7 @@ plugins {
     id "com.github.hierynomus.license" version "0.12.1"
 }
 
+// Config for all bonappetit projects
 allprojects {
     apply plugin: 'java'
     apply plugin: 'com.github.hierynomus.license'
@@ -10,7 +11,7 @@ allprojects {
     version = '1.0.0'
 }
 
-// Config for all bonappetit (sub)projects
+// Config for all bonappetit subprojects
 subprojects {
     repositories {
         mavenCentral()
