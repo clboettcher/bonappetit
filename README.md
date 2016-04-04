@@ -37,7 +37,7 @@ The `:bonappetit-server` project contains a spring-boot application that can be 
 
 Per default the application is deployed on `http://localhost:8080`
 
-In addition to running the server embedded you can create a war file which can be deployed to any application server (like tomcat, jetty, jboss, etc.).
+In addition to running the server as a standalone application you can create a traditional war file for deployment to an external application server
 
 Run the following command to generate the war
 
