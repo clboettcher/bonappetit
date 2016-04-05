@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.resository;
+package com.github.clboettcher.bonappetit.server.rest;
 
 import com.github.clboettcher.bonappetit.server.BonappetitServerApplication;
 import com.github.clboettcher.bonappetit.server.entity.builder.StaffListingBuilder;
@@ -25,30 +25,39 @@ import com.github.clboettcher.bonappetit.server.entity.builder.StaffMemberBuilde
 import com.github.clboettcher.bonappetit.server.entity.staff.StaffListing;
 import com.github.clboettcher.bonappetit.server.repository.StaffListingRepository;
 import com.google.common.collect.Sets;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for {@link StaffListingRepository}.
+ * Tests the rest access for {@link com.github.clboettcher.bonappetit.server.entity.staff.StaffListing}.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
-@ContextConfiguration(classes = BonappetitServerApplication.class)
-public class StaffListingRepositoryTests {
+@SpringApplicationConfiguration(classes = BonappetitServerApplication.class)
+@WebIntegrationTest
+public class StaffListingTests {
 
     @Autowired
     private StaffListingRepository staffListingRepository;
 
-    @Test
-    public void testSave() throws Exception {
-        StaffListing staffListing = StaffListingBuilder.aStaffListing()
+    private TestRestTemplate restTemplate;
+    private StaffListing staffListing;
+
+    @Before
+    public void setUp() throws Exception {
+        staffListing = StaffListingBuilder.aStaffListing()
                 .withStaffMembers(Sets.newHashSet(
                         StaffMemberBuilder.aStaffMember()
                                 .withFirstName("John")
@@ -61,10 +70,18 @@ public class StaffListingRepositoryTests {
                 ))
                 .build();
         staffListingRepository.save(staffListing);
+        restTemplate = new TestRestTemplate("user", "s3cret");
+    }
 
-        StaffListing dbStaffListing = staffListingRepository.findOne(staffListing.getId());
-        assertThat(dbStaffListing.getStaffMembers().size(), is(2));
-        assertThat(dbStaffListing.getStaffMembers().iterator().next().getFirstName(), not(isEmptyOrNullString()));
-        assertThat(dbStaffListing.getStaffMembers().iterator().next().getLastName(), not(isEmptyOrNullString()));
+    @Test
+    public void testGetStaffLising() throws Exception {
+        String url = String.format("http://localhost:8080/staffListings/%s", staffListing.getId());
+        ParameterizedTypeReference<Resource<StaffListing>> responseType = new ParameterizedTypeReference<Resource<StaffListing>>() {
+        };
+
+        ResponseEntity<Resource<StaffListing>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
+
+        StaffListing actual = responseEntity.getBody().getContent();
+        assertThat(actual.getStaffMembers().size(), is(2));
     }
 }

@@ -22,11 +22,12 @@ package com.github.clboettcher.bonappetit.server;
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import com.github.clboettcher.bonappetit.server.entity.builder.*;
 import com.github.clboettcher.bonappetit.server.entity.event.Event;
-import com.github.clboettcher.bonappetit.server.entity.menu.*;
+import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
+import com.github.clboettcher.bonappetit.server.entity.menu.Option;
+import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
+import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
 import com.github.clboettcher.bonappetit.server.entity.staff.StaffListing;
 import com.github.clboettcher.bonappetit.server.repository.EventRepository;
-import com.github.clboettcher.bonappetit.server.repository.MenuRepository;
-import com.github.clboettcher.bonappetit.server.repository.StaffListingRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -35,8 +36,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * This class bootstraps some testdata and will be deleted at some point.
@@ -47,39 +48,20 @@ public class Bootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
 
     @Autowired
-    public Bootstrap(EventRepository eventRepository,
-                     MenuRepository menuRepository,
-                     StaffListingRepository staffListingRepository) {
+    public Bootstrap(EventRepository eventRepository) {
         LOGGER.info("Bootstrapping db");
 
-        // Staff
-//        StaffListing staffListing = createStaffListing();
-//        staffListingRepository.save(staffListing);
+        Menu menu = createMenu();
+        StaffListing staffListing = createStaffListing();
 
-        // Menu
-//        Menu menu = createMenu();
-//        menuRepository.save(menu);
+        Event event = EventBuilder.anEvent()
+                .withTitle("Test Event")
+                .withCreated(new Date())
+                .withMenu(menu)
+                .withStaffListing(staffListing)
+                .build();
 
-//        Item testItem = ItemBuilder.anItem()
-//                .withTitle("Title")
-//                .withPrice(new BigDecimal("1.9"))
-//                .withType(ItemType.DRINK_NON_ALCOHOLIC)
-//                .build();
-//
-//        itemRepository.save(testItem);
-
-        // Event
-//        Event event = createEvent(staffListing, menu);
-
-//        eventRepository.save(event);
-
-//        StaffMember staffMember = new StaffMember();
-//        staffMember.setFirstName("Max");
-//        staffMember.setLastName("Musterman");
-//
-//        staffMemberRepository.save(staffMember);
-//
-//        LOGGER.info(String.format("Saved %s", staffMember));
+        eventRepository.save(event);
     }
 
     private Menu createMenu() {
@@ -90,9 +72,24 @@ public class Bootstrap {
                                 .withPrice(new BigDecimal("2.5"))
                                 .withType(ItemType.FOOD)
                                 .withOptions(Sets.newLinkedHashSet(Lists.newArrayList(
-                                        createIntegerOption("Ketchup", 2, new BigDecimal("0.5"), 0),
-                                        createIntegerOption("Mayonnaise", 0, new BigDecimal("0.8"), 1),
-                                        createCheckboxOption("Extra Salz", false, BigDecimal.ZERO)
+                                        IntegerOptionBuilder.anIntegerOption()
+                                                .withIndex(0)
+                                                .withDefaultValue(2)
+                                                .withPriceDiff(new BigDecimal("0.5"))
+                                                .withTitle("Ketchup")
+                                                .build(),
+                                        IntegerOptionBuilder.anIntegerOption()
+                                                .withIndex(1)
+                                                .withDefaultValue(0)
+                                                .withPriceDiff(new BigDecimal("0.8"))
+                                                .withTitle("Mayonnaise")
+                                                .build(),
+                                        CheckboxOptionBuilder.aCheckboxOption()
+                                                .withTitle("Extra Salz")
+                                                .withIndex(2)
+                                                .withDefaultChecked(false)
+                                                .withPriceDiff(BigDecimal.ZERO)
+                                                .build()
                                 )))
                                 .build(),
                         ItemBuilder.anItem()
@@ -100,7 +97,12 @@ public class Bootstrap {
                                 .withPrice(new BigDecimal("2.0"))
                                 .withType(ItemType.FOOD)
                                 .withOptions(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        createCheckboxOption("Käsesoße", true, new BigDecimal("0.5"))
+                                        CheckboxOptionBuilder.aCheckboxOption()
+                                                .withTitle("Käsesoße")
+                                                .withIndex(0)
+                                                .withDefaultChecked(true)
+                                                .withPriceDiff(new BigDecimal("0.5"))
+                                                .build()
                                 )))
                                 .build(),
                         ItemBuilder.anItem()
@@ -112,9 +114,19 @@ public class Bootstrap {
                                 .withTitle("Augustinger")
                                 .withPrice(new BigDecimal("2.2"))
                                 .withType(ItemType.DRINK_ALCOHOLIC)
-                                .withOptions(Sets.<Option>newLinkedHashSet(Collections.singletonList(
-                                        createRadioOption()
-                                )))
+                                .withOptions(Sets.<Option>newHashSet(
+                                        createRadioOption("Größe", 0,
+                                                RadioItemBuilder.aRadioItem()
+                                                        .withTitle("groß")
+                                                        .withIndex(0)
+                                                        .withPriceDiff(BigDecimal.ZERO)
+                                                        .build(),
+                                                RadioItemBuilder.aRadioItem()
+                                                        .withTitle("klein")
+                                                        .withIndex(1)
+                                                        .withPriceDiff(new BigDecimal("0.5"))
+                                                        .build())
+                                ))
                                 .build()
                 )))
                 .build();
@@ -135,51 +147,15 @@ public class Bootstrap {
                 .build();
     }
 
-    public static Event createEvent(StaffListing staffListing, Menu menu) {
-        return EventBuilder.anEvent()
-                .withTitle("My awesome Event")
-                .withMenu(menu)
-                .withStaffListing(staffListing)
-                .build();
-    }
+    private static RadioOption createRadioOption(String title, int index, RadioItem defaultSelected, RadioItem... otherItems) {
+        Set<RadioItem> items = Sets.newHashSet(otherItems);
+        items.add(defaultSelected);
 
-    private static CheckboxOption createCheckboxOption(String withTitle, boolean defaultChecked, BigDecimal withPriceDiff) {
-
-//        return CheckboxOptionBuilder.aCheckboxOption()
-//                .build();
-
-        CheckboxOption result = new CheckboxOption();
-        result.setTitle(withTitle);
-        result.setDefaultChecked(defaultChecked);
-        result.setPriceDiff(withPriceDiff);
-        return result;
-    }
-
-    private static RadioOption createRadioOption() {
-        RadioOption result = new RadioOption();
-        result.setTitle("Größe");
-        RadioItem defaultSelected = createRadioItem("groß", BigDecimal.ZERO);
-        result.setRadioItems(Sets.newLinkedHashSet(Arrays.asList(
-                defaultSelected,
-                createRadioItem("klein", new BigDecimal("0.5"))
-        )));
-        result.setDefaultSelected(defaultSelected);
-        return result;
-    }
-
-    private static RadioItem createRadioItem(String withTitle, BigDecimal withPriceDiff) {
-        return RadioItemBuilder.aRadioItem()
-                .withTitle(withTitle)
-                .withPriceDiff(withPriceDiff)
-                .build();
-    }
-
-    private static IntegerOption createIntegerOption(String withTitle, int defaultValue, BigDecimal withPriceDiff, Integer index) {
-        return IntegerOptionBuilder.anIntegerOption()
+        return RadioOptionBuilder.aRadioOption()
                 .withIndex(index)
-                .withDefaultValue(defaultValue)
-                .withPriceDiff(withPriceDiff)
-                .withTitle(withTitle)
+                .withDefaultSelected(defaultSelected)
+                .withTitle(title)
+                .withRadioItems(items)
                 .build();
     }
 }
