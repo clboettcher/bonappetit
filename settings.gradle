@@ -1,3 +1,3 @@
 rootProject.name = 'BonAppetit'
-include 'bonappetit-common', 'bonappetit-server', 'bonappetit-server-entities', 'bonappetit-server-plain'
+include 'bonappetit-common', 'bonappetit-server', 'bonappetit-server-entities'
 

@@ -27,13 +27,11 @@ configurations {
 }
 
 dependencies {
-    // Data access
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile project(':bonappetit-server-entities')
 
-    // REST
-    compile('org.springframework.boot:spring-boot-starter-hateoas')
-    compile('org.springframework.boot:spring-boot-starter-jersey')
+    // API
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile 'org.springframework.data:spring-data-rest-hal-browser'
 
     // Security
     compile('org.springframework.boot:spring-boot-starter-security')
@@ -45,6 +43,10 @@ dependencies {
     compile('io.swagger:swagger-jersey2-jaxrs:1.5.8')
 
     // Data access
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile 'javax.el:javax.el-api:3.0.0'
+    compile 'org.glassfish:javax.el:3.0.0'
+
     runtime('com.h2database:h2')
     runtime('mysql:mysql-connector-java')
 
