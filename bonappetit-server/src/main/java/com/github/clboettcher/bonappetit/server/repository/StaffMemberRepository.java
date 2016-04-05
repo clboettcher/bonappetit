@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.data;
+package com.github.clboettcher.bonappetit.server.repository;
 
 import com.github.clboettcher.bonappetit.server.entity.staff.StaffMember;
 import org.springframework.data.repository.CrudRepository;

@@ -48,16 +48,16 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
- * An option that consists of a single integer value.
+ * An option consisting of a boolean checkbox.
  */
 @Entity
-public class IntegerOption extends Option {
+public class CheckboxOption extends Option {
 
-    @Column(name = "PRICE_DIFF", nullable = false)
+    @Column(name = "PRICE_DIFF")
     private BigDecimal priceDiff = BigDecimal.ZERO;
 
-    @Column(name="DEFAULT_VALUE",nullable = false)
-    private Integer defaultValue = 0;
+    @Column(name = "DEFAULT_CHECKED")
+    private Boolean defaultChecked;
 
     /**
      * Returns the price difference of this option.
@@ -76,15 +76,19 @@ public class IntegerOption extends Option {
     }
 
     /**
-     * @return The value that is set when this an item containing this option is ordered.
+     * @return The default value to set when this option is ordered.
      */
-    public Integer getDefaultValue() {
-        return defaultValue;
+    public Boolean getDefaultChecked() {
+        return defaultChecked;
     }
 
-    public void setDefaultValue(Integer defaultValue) {
-        this.defaultValue = defaultValue;
+    /**
+     * @param defaultChecked see {@link #getDefaultChecked()}.
+     */
+    public void setDefaultChecked(Boolean defaultChecked) {
+        this.defaultChecked = defaultChecked;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -97,11 +101,11 @@ public class IntegerOption extends Option {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        IntegerOption rhs = (IntegerOption) obj;
+        CheckboxOption rhs = (CheckboxOption) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(this.priceDiff, rhs.priceDiff)
-                .append(this.defaultValue, rhs.defaultValue)
+                .append(this.defaultChecked, rhs.defaultChecked)
                 .isEquals();
     }
 
@@ -110,7 +114,7 @@ public class IntegerOption extends Option {
         return new HashCodeBuilder()
                 .appendSuper(super.hashCode())
                 .append(priceDiff)
-                .append(defaultValue)
+                .append(defaultChecked)
                 .toHashCode();
     }
 
@@ -118,7 +122,7 @@ public class IntegerOption extends Option {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("priceDiff", priceDiff)
-                .append("defaultValue", defaultValue)
+                .append("defaultChecked", defaultChecked)
                 .toString();
     }
 }

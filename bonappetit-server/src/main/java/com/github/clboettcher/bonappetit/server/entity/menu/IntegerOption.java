@@ -36,98 +36,54 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.entity.event;
+package com.github.clboettcher.bonappetit.server.entity.menu;
 
-import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
-import com.github.clboettcher.bonappetit.server.entity.staff.StaffListing;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import java.math.BigDecimal;
 
 /**
- * An event consisting of staff members and a menu.
+ * An option that consists of a single integer value.
  */
 @Entity
-@Table(name = "EVENT")
-public class Event {
+public class IntegerOption extends Option {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "EVENT_ID")
-    private long id;
+    @Column(name = "PRICE_DIFF")
+    private BigDecimal priceDiff = BigDecimal.ZERO;
 
-    @Column(name = "TITLE", nullable = false)
-    private String title;
-
-    @Column(updatable = false, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "MENU_ID", nullable = false)
-    private Menu menu;
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "STAFF_LISTING_ID", nullable = false)
-    private StaffListing staffListing;
+    @Column(name = "DEFAULT_VALUE")
+    private Integer defaultValue = 0;
 
     /**
-     * @return The unique title / name of this event.
+     * Returns the price difference of this option.
+     * <p>
+     * The total price of an order for an item can be calculated
+     * using the items price and the price diff of all options.
+     *
+     * @return The price difference.
      */
-    public String getTitle() {
-        return title;
+    public BigDecimal getPriceDiff() {
+        return priceDiff;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPriceDiff(BigDecimal priceDiff) {
+        this.priceDiff = priceDiff;
     }
 
     /**
-     * @return The menu that is served during this event.
+     * @return The value that is set when this an item containing this option is ordered.
      */
-    public Menu getMenu() {
-        return menu;
+    public Integer getDefaultValue() {
+        return defaultValue;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    /**
-     * @return The listing of staff members that work in this event.
-     */
-    public StaffListing getStaffListing() {
-        return staffListing;
-    }
-
-    public void setStaffListing(StaffListing staffListing) {
-        this.staffListing = staffListing;
-    }
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The created timestamp.
-     */
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setDefaultValue(Integer defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     @Override
@@ -141,35 +97,28 @@ public class Event {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Event rhs = (Event) obj;
+        IntegerOption rhs = (IntegerOption) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.title, rhs.title)
-                .append(this.created, rhs.created)
-                .append(this.menu, rhs.menu)
-                .append(this.staffListing, rhs.staffListing)
+                .appendSuper(super.equals(obj))
+                .append(this.priceDiff, rhs.priceDiff)
+                .append(this.defaultValue, rhs.defaultValue)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(id)
-                .append(title)
-                .append(created)
-                .append(menu)
-                .append(staffListing)
+                .appendSuper(super.hashCode())
+                .append(priceDiff)
+                .append(defaultValue)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("title", title)
-                .append("created", created)
-                .append("menu", menu)
-                .append("staffListing", staffListing)
+                .append("priceDiff", priceDiff)
+                .append("defaultValue", defaultValue)
                 .toString();
     }
 }

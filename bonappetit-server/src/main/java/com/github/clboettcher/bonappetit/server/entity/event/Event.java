@@ -36,59 +36,99 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.entity.menu;
+package com.github.clboettcher.bonappetit.server.entity.event;
 
+import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
+import com.github.clboettcher.bonappetit.server.entity.staff.StaffListing;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import java.math.BigDecimal;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
- * An option consisting of a boolean checkbox.
+ * An event consisting of staff members and a menu.
  */
 @Entity
-public class CheckboxOption extends Option {
+@Table(name = "EVENT")
+public class Event {
 
-    @Column(name = "PRICE_DIFF", nullable = false)
-    private BigDecimal priceDiff = BigDecimal.ZERO;
+    @Id
+    @GeneratedValue
+    @Column(name = "EVENT_ID")
+    private long id;
 
-    @Column(name = "DEFAULT_CHECKED", nullable = false)
-    private Boolean defaultChecked = false;
+    @Column(name = "TITLE", nullable = false)
+    private String title;
 
-    /**
-     * Returns the price difference of this option.
-     * <p>
-     * The total price of an order for an item can be calculated
-     * using the items price and the price diff of all options.
-     *
-     * @return The price difference.
-     */
-    public BigDecimal getPriceDiff() {
-        return priceDiff;
-    }
+    @Column(updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
-    public void setPriceDiff(BigDecimal priceDiff) {
-        this.priceDiff = priceDiff;
-    }
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MENU_ID", nullable = false)
+    private Menu menu;
 
-    /**
-     * @return The default value to set when this option is ordered.
-     */
-    public Boolean getDefaultChecked() {
-        return defaultChecked;
-    }
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "STAFF_LISTING_ID", nullable = false)
+    private StaffListing staffListing;
 
     /**
-     * @param defaultChecked see {@link #getDefaultChecked()}.
+     * @return The unique title / name of this event.
      */
-    public void setDefaultChecked(Boolean defaultChecked) {
-        this.defaultChecked = defaultChecked;
+    public String getTitle() {
+        return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return The menu that is served during this event.
+     */
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    /**
+     * @return The listing of staff members that work in this event.
+     */
+    public StaffListing getStaffListing() {
+        return staffListing;
+    }
+
+    public void setStaffListing(StaffListing staffListing) {
+        this.staffListing = staffListing;
+    }
+
+    /**
+     * @return The ID of this event.
+     */
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return The created timestamp.
+     */
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -101,28 +141,35 @@ public class CheckboxOption extends Option {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        CheckboxOption rhs = (CheckboxOption) obj;
+        Event rhs = (Event) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.priceDiff, rhs.priceDiff)
-                .append(this.defaultChecked, rhs.defaultChecked)
+                .append(this.id, rhs.id)
+                .append(this.title, rhs.title)
+                .append(this.created, rhs.created)
+                .append(this.menu, rhs.menu)
+                .append(this.staffListing, rhs.staffListing)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(priceDiff)
-                .append(defaultChecked)
+                .append(id)
+                .append(title)
+                .append(created)
+                .append(menu)
+                .append(staffListing)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("priceDiff", priceDiff)
-                .append("defaultChecked", defaultChecked)
+                .append("id", id)
+                .append("title", title)
+                .append("created", created)
+                .append("menu", menu)
+                .append("staffListing", staffListing)
                 .toString();
     }
 }

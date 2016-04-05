@@ -33,8 +33,8 @@ import java.util.Set;
 @Entity
 public class RadioOption extends Option {
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "OPTION_ID")
+    @OneToOne
+    @JoinColumn(name = "RADIO_ITEM_ID")
     private RadioItem defaultSelected;
 
     @OneToMany(cascade = CascadeType.ALL)

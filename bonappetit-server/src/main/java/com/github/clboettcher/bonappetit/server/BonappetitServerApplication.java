@@ -19,43 +19,37 @@
  */
 package com.github.clboettcher.bonappetit.server;
 
-import com.github.clboettcher.bonappetit.server.data.StaffMemberRepository;
-import com.github.clboettcher.bonappetit.server.entity.staff.StaffMember;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@EnableJpaRepositories
 public class BonappetitServerApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BonappetitServerApplication.class);
 
-    @Autowired
-    private StaffMemberRepository staffMemberRepository;
+//    @Autowired
+//    private StaffMemberRepository staffMemberRepository;
 
-    @PostConstruct
-    private void bootstrapDb() {
-        LOGGER.info("Bootstrapping db");
-
-        StaffMember staffMember = new StaffMember();
-        staffMember.setFirstName("Max");
-        staffMember.setLastName("Musterman");
-
-        staffMemberRepository.save(staffMember);
-
-        LOGGER.info(String.format("Saved %s", staffMember));
-    }
+//    @PostConstruct
+//    private void bootstrapDb() {
+//        LOGGER.info("Bootstrapping db");
+//
+//        StaffMember staffMember = new StaffMember();
+//        staffMember.setFirstName("Max");
+//        staffMember.setLastName("Musterman");
+//
+//        staffMemberRepository.save(staffMember);
+//
+//        LOGGER.info(String.format("Saved %s", staffMember));
+//    }
 
     @Bean
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
