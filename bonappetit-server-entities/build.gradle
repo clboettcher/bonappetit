@@ -1,14 +1,12 @@
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     // BonAppetit modules
     compile project(':bonappetit-common')
 
-    // Spring
-    compile 'org.springframework.data:spring-data-jpa:1.9.4.RELEASE'
-
     // Data access
-    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
     // Testing
     testCompile 'junit:junit:4.12'
