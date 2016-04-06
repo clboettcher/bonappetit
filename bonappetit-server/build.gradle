@@ -30,6 +30,8 @@ dependencies {
     compile project(':bonappetit-server-entities')
 
     // API
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.springframework.boot:spring-boot-starter-jersey')
 
     // Security
     compile('org.springframework.boot:spring-boot-starter-security')
