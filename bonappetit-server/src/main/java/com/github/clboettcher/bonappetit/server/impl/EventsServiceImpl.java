@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.impl;
 import com.github.clboettcher.bonappetit.common.dto.event.EventDto;
 import com.github.clboettcher.bonappetit.server.api.EventsService;
 import com.github.clboettcher.bonappetit.server.entity.event.Event;
+import com.github.clboettcher.bonappetit.server.impl.converter.api.EventsConverter;
 import com.github.clboettcher.bonappetit.server.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 
 /**
  * Default impl of {@link com.github.clboettcher.bonappetit.server.api.EventsService}.
@@ -40,6 +42,9 @@ public class EventsServiceImpl implements EventsService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private EventsConverter eventsConverter;
 
     @Override
     public EventDto getEventById(Long id) {
@@ -54,6 +59,6 @@ public class EventsServiceImpl implements EventsService {
 
         LOGGER.info(String.format("Returning event with ID %d", id));
 
-        return event;
+        return eventsConverter.convertToDto(event);
     }
 }
