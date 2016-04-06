@@ -5,6 +5,7 @@ dependencies {
 
     // Object mapping
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.7.3'
 
     // Testing
     testCompile 'junit:junit:4.12'
