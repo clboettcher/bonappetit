@@ -58,7 +58,7 @@ public class Menu {
     @Column(name = "MENU_ID")
     private long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Set<Item> items;
 

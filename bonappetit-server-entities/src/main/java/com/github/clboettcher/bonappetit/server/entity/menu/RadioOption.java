@@ -37,7 +37,7 @@ public class RadioOption extends Option {
     @JoinColumn(name = "RADIO_ITEM_ID")
     private RadioItem defaultSelected;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "OPTION_ID", nullable = false)
     private Set<RadioItem> radioItems;
 
@@ -52,9 +52,6 @@ public class RadioOption extends Option {
         return defaultSelected;
     }
 
-    /**
-     * @param defaultSelected see {@link #getDefaultSelected()}.
-     */
     public void setDefaultSelected(RadioItem defaultSelected) {
         this.defaultSelected = defaultSelected;
     }

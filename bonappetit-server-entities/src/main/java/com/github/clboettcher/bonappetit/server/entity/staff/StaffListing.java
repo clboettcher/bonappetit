@@ -58,7 +58,7 @@ public class StaffListing {
     @Column(name = "STAFF_LISTING_ID")
     private long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "STAFF_LISTING_STAFF_MEMBER", joinColumns = @JoinColumn(name = "STAFF_LISTING_ID"),
             inverseJoinColumns = @JoinColumn(name = "STAFF_MEMBER_ID"))
     private Set<StaffMember> staffMembers;

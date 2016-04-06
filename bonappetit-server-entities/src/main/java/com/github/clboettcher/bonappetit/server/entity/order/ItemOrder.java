@@ -43,7 +43,7 @@ public class ItemOrder {
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private Item item;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ORDER_ID")
     private Set<OptionOrder> optionOrders;
 

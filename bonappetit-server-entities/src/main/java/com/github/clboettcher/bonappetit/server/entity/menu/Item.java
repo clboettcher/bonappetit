@@ -69,7 +69,7 @@ public class Item {
     @Column(name = "TYPE", nullable = false)
     private ItemType type;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID")
     private Set<Option> options;
 
