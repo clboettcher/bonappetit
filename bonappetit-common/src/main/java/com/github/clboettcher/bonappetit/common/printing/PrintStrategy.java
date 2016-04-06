@@ -40,7 +40,10 @@ package com.github.clboettcher.bonappetit.common.printing;
 
 /**
  * Enumerates strategies that determine how entities are printed.
+ *
+ * @deprecated Handle different prining options configuratively rather than in the data model.
  */
+@Deprecated
 public enum PrintStrategy {
 
     /**
