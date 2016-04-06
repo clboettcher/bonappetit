@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.common.dto.builder;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDtoTmp;
 
 import java.math.BigDecimal;
 
@@ -60,8 +60,8 @@ public class CheckboxOptionDtoBuilder {
         return aCheckboxOptionDto().withPriceDiff(priceDiff).withDefaultChecked(defaultChecked).withTitle(title).withId(id);
     }
 
-    public CheckboxOptionDto build() {
-        CheckboxOptionDto checkboxOptionDto = new CheckboxOptionDto();
+    public CheckboxOptionDtoTmp build() {
+        CheckboxOptionDtoTmp checkboxOptionDto = new CheckboxOptionDtoTmp();
         checkboxOptionDto.setPriceDiff(priceDiff);
         checkboxOptionDto.setDefaultChecked(defaultChecked);
         checkboxOptionDto.setTitle(title);

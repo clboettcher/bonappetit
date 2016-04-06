@@ -29,7 +29,7 @@ import java.math.BigDecimal;
 /**
  * An option consisting of a boolean checkbox.
  */
-public class CheckboxOptionDto extends OptionDto {
+public class CheckboxOptionDtoTmp extends OptionDto {
 
     private BigDecimal priceDiff;
 
@@ -81,7 +81,7 @@ public class CheckboxOptionDto extends OptionDto {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        CheckboxOptionDto rhs = (CheckboxOptionDto) obj;
+        CheckboxOptionDtoTmp rhs = (CheckboxOptionDtoTmp) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(this.priceDiff, rhs.priceDiff)

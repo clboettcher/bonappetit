@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDtoTmp;
 import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
@@ -35,7 +35,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -86,7 +85,7 @@ public class OptionsConverterTest {
         input.setIndex(5);
         input.setTitle("Test Checkbox-Option");
 
-        CheckboxOptionDto expected = new CheckboxOptionDto();
+        CheckboxOptionDtoTmp expected = new CheckboxOptionDtoTmp();
         expected.setId(1337L);
         expected.setDefaultChecked(true);
         expected.setPriceDiff(new BigDecimal("2.5"));
