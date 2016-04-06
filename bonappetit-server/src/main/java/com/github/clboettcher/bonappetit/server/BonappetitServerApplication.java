@@ -21,42 +21,11 @@ package com.github.clboettcher.bonappetit.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.orm.jpa.EntityScan;
 
+@EntityScan("com.github.clboettcher.bonappetit.server.entity")
 @SpringBootApplication
 public class BonappetitServerApplication {
-
-//    private static final Logger LOGGER = LoggerFactory.getLogger(BonappetitServerApplication.class);
-
-//    @Autowired
-//    private StaffMemberRepository staffMemberRepository;
-
-//    @PostConstruct
-//    private void bootstrapDb() {
-//        LOGGER.info("Bootstrapping db");
-//
-//        StaffMember staffMember = new StaffMember();
-//        staffMember.setFirstName("Max");
-//        staffMember.setLastName("Musterman");
-//
-//        staffMemberRepository.save(staffMember);
-//
-//        LOGGER.info(String.format("Saved %s", staffMember));
-//    }
-
-//    @Bean
-//    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        vendorAdapter.setGenerateDdl(true);
-//        vendorAdapter.setShowSql(true);
-//
-//        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-//        factory.setJpaVendorAdapter(vendorAdapter);
-//        factory.setPackagesToScan("com.github.clboettcher.bonappetit.server.entity");
-//        factory.setDataSource(dataSource);
-//        factory.afterPropertiesSet();
-//
-//        return factory.getObject();
-//    }
 
     public static void main(String[] args) {
         SpringApplication.run(BonappetitServerApplication.class, args);
