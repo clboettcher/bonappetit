@@ -20,6 +20,8 @@
 package com.github.clboettcher.bonappetit.server.api;
 
 import com.github.clboettcher.bonappetit.common.dto.event.EventDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
