@@ -45,6 +45,9 @@ dependencies {
     compile 'org.glassfish:javax.el:3.0.0'
     compile("com.h2database:h2")
 
+    // Documentation
+    compile 'io.swagger:swagger-jersey2-jaxrs:1.5.8'
+
     // Testing
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
