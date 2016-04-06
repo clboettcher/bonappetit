@@ -49,7 +49,7 @@ public class RadioItemDto extends AbstractEntityDto {
 
     /**
      * Returns the price difference of this radio item.
-     * <p/>
+     * <p>
      * The total price of an order for an item can be calculated
      * using the items price and the price diff of all options.
      *
@@ -66,6 +66,7 @@ public class RadioItemDto extends AbstractEntityDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("priceDiff", priceDiff)
                 .toString();
