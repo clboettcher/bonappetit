@@ -103,7 +103,6 @@ public class OptionsConverterTest {
         optionsConverter.convert(Sets.<Option>newHashSet(new UnknownOption()));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public OptionsConverter optionsConverter() {

@@ -27,7 +27,7 @@ public class RadioItemBuilder {
     private long id;
     private String title;
     private Integer index;
-    private BigDecimal priceDiff = new BigDecimal("0.00");
+    private BigDecimal priceDiff;
 
     private RadioItemBuilder() {
     }

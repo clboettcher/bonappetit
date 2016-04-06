@@ -19,14 +19,16 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
+import com.github.clboettcher.bonappetit.common.dto.builder.RadioItemDtoBuilder;
 import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.RadioOptionDto;
+import com.github.clboettcher.bonappetit.server.entity.builder.RadioItemBuilder;
+import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
+import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
-import com.github.clboettcher.bonappetit.server.impl.converter.impl.OptionsConverterImpl;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioOptionsConverter;
+import com.github.clboettcher.bonappetit.server.impl.converter.impl.OptionsConverterImpl;
 import com.github.clboettcher.bonappetit.server.impl.converter.impl.RadioOptionsConverterImpl;
-import com.github.clboettcher.bonappetit.serverentities.menu.RadioItem;
-import com.github.clboettcher.bonappetit.serverentities.menu.RadioOption;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.After;
@@ -35,7 +37,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -67,14 +68,14 @@ public class RadioOptionsConverterTest {
     @Test
     public void testConvertRadioOption() throws Exception {
         // Setup radio items
-        RadioItem itemIdx2 = RadioItem.newBuilder().id(10).index(2).title("Test Radio-Item 01").build();
-        RadioItem itemIdx0 = RadioItem.newBuilder().id(15).index(0).title("Test Radio-Item 02").build(); // Selected
-        RadioItem itemIdx1 = RadioItem.newBuilder().id(20).index(1).title("Test Radio-Item 03").build();
+        RadioItem itemIdx2 = RadioItemBuilder.aRadioItem().withId(10).withIndex(2).withTitle("Test Radio-Item 01").build();
+        RadioItem itemIdx0 = RadioItemBuilder.aRadioItem().withId(15).withIndex(0).withTitle("Test Radio-Item 02").build(); // Selected
+        RadioItem itemIdx1 = RadioItemBuilder.aRadioItem().withId(20).withIndex(1).withTitle("Test Radio-Item 03").build();
         final HashSet<RadioItem> inputItems = Sets.newHashSet(itemIdx2, itemIdx0, itemIdx1);
 
-        RadioItemDto outputIdx2 = RadioItemDto.newBuilder().id(10L).title("Test Radio-Item 01").build();
-        RadioItemDto outputIdx0 = RadioItemDto.newBuilder().id(10L).title("Test Radio-Item 01").build();
-        RadioItemDto outputIdx1 = RadioItemDto.newBuilder().id(10L).title("Test Radio-Item 01").build();
+        RadioItemDto outputIdx2 = RadioItemDtoBuilder.aRadioItemDto().withId(10L).withTitle("Test Radio-Item 01").build();
+        RadioItemDto outputIdx0 = RadioItemDtoBuilder.aRadioItemDto().withId(10L).withTitle("Test Radio-Item 01").build();
+        RadioItemDto outputIdx1 = RadioItemDtoBuilder.aRadioItemDto().withId(10L).withTitle("Test Radio-Item 01").build();
         LinkedHashSet<RadioItemDto> outputItems = Sets.newLinkedHashSet(Lists.newArrayList(outputIdx0, outputIdx1, outputIdx2));
 
         when(radioItemsConverterMock.convert(inputItems)).thenReturn(outputItems);
@@ -94,7 +95,6 @@ public class RadioOptionsConverterTest {
         assertThat(radioOptionsConverter.convert(input), is(expected));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public RadioOptionsConverter optionsConverter(RadioItemsConverter radioItemsConverter) {

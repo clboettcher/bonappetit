@@ -96,7 +96,6 @@ public class MenusConverterTest {
         assertThat(menusConverter.convertToDto(inputMenu), is(expectedMenuDto));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public MenusConverter menusConverter(ItemsConverter itemsConverter) {

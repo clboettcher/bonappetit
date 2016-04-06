@@ -106,7 +106,6 @@ public class EventsConverterTest {
         assertThat(eventsConverter.convertToDto(input), is(expected));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public EventsConverter eventsConverter(StaffListingsConverter staffListingsConverter, MenusConverter menusConverter) {

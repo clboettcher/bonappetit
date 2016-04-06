@@ -68,7 +68,6 @@ public class ManagementServiceImplTest {
         assertThat(service.ping(), is("pong"));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public ManagementServiceImpl heartbeatServiceImpl() {

@@ -80,7 +80,6 @@ public class StaffListingsConverterTest {
         assertThat(converter.convertToDto(input), is(expected));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public StaffListingsConverter staffListingsConverter() {

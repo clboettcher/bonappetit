@@ -118,7 +118,6 @@ public class ItemsConverterTest {
         assertThat(itemsConverter.convertToItemDtos(inputItems), is(expectedItemDtos));
     }
 
-    @Configuration
     static class Context {
         @Bean
         public ItemsConverter itemsConverter(OptionsConverter optionsConverter) {
