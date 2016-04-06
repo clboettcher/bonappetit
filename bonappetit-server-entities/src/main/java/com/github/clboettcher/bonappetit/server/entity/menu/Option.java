@@ -38,6 +38,7 @@
 */
 package com.github.clboettcher.bonappetit.server.entity.menu;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -52,6 +53,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_TYPE")
 @Table(name = "ITEM_OPTION") // 'option' is reserved in mysql
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class Option {
 
     @Id
@@ -98,6 +100,10 @@ public abstract class Option {
     public void setId(long id) {
         this.id = id;
     }
+
+//    public String getOptionType() {
+//        return this.getClass().getSimpleName();
+//    }
 
     @Override
     public String toString() {

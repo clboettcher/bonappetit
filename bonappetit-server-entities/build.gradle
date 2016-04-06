@@ -5,6 +5,9 @@ dependencies {
     // BonAppetit modules
     compile project(':bonappetit-common')
 
+    // Object mapping
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
+
     // Data access
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
