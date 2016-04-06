@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 /**
  * Abstract base class for menu item options.
  */
-@XmlSeeAlso({IntegerOptionDto.class, CheckboxOptionDtoTmp.class, RadioOptionDto.class})
+@XmlSeeAlso({IntegerOptionDto.class, CheckboxOptionDto.class, RadioOptionDto.class})
 public abstract class OptionDto extends AbstractEntityDto {
 
     private String title;

@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDtoTmp;
+import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
@@ -82,13 +82,13 @@ public class OptionsConverterImpl implements OptionsConverter {
     }
 
     /**
-     * Converts a {@link CheckboxOption} to a {@link CheckboxOptionDtoTmp}.
+     * Converts a {@link CheckboxOption} to a {@link CheckboxOptionDto}.
      *
      * @param checkboxOption The {@link CheckboxOption} to convert.
-     * @return The resulting {@link CheckboxOptionDtoTmp}.
+     * @return The resulting {@link CheckboxOptionDto}.
      */
-    private static CheckboxOptionDtoTmp convertToCheckboxOptionDto(CheckboxOption checkboxOption) {
-        CheckboxOptionDtoTmp result = new CheckboxOptionDtoTmp();
+    private static CheckboxOptionDto convertToCheckboxOptionDto(CheckboxOption checkboxOption) {
+        CheckboxOptionDto result = new CheckboxOptionDto();
         result.setId(checkboxOption.getId());
         result.setDefaultChecked(checkboxOption.getDefaultChecked());
         result.setPriceDiff(checkboxOption.getPriceDiff());

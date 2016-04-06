@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDtoTmp;
+import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
@@ -85,7 +85,7 @@ public class OptionsConverterTest {
         input.setIndex(5);
         input.setTitle("Test Checkbox-Option");
 
-        CheckboxOptionDtoTmp expected = new CheckboxOptionDtoTmp();
+        CheckboxOptionDto expected = new CheckboxOptionDto();
         expected.setId(1337L);
         expected.setDefaultChecked(true);
         expected.setPriceDiff(new BigDecimal("2.5"));
