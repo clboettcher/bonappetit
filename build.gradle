@@ -5,7 +5,6 @@ plugins {
 
 // Config for all bonappetit projects
 allprojects {
-    apply plugin: 'java'
     apply plugin: 'com.github.hierynomus.license'
     group = 'com.github.clboettcher.bonappetit'
     version = '0.0.1-SNAPSHOT'
@@ -15,13 +14,6 @@ allprojects {
 subprojects {
     repositories {
         mavenCentral()
-    }
-
-    dependencies {
-        // Utils
-        compile 'com.google.guava:guava:19.0'
-        compile 'org.apache.commons:commons-lang3:3.0'
-        compile 'commons-io:commons-io:2.4'
     }
 
     license {

@@ -1,3 +1,7 @@
 rootProject.name = 'BonAppetit'
-include 'bonappetit-common', 'bonappetit-server', 'bonappetit-server-entities'
 
+// Subprojects
+include 'bonappetit-common'
+include 'bonappetit-server'
+include 'bonappetit-server-entities'
+include 'androidannotations-example'
