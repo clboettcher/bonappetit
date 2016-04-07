@@ -21,22 +21,17 @@ package com.github.clboettcher.bonappetit.server;
 
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import com.github.clboettcher.bonappetit.server.entity.builder.*;
-import com.github.clboettcher.bonappetit.server.entity.event.Event;
 import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
 import com.github.clboettcher.bonappetit.server.entity.menu.Option;
 import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
 import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
-import com.github.clboettcher.bonappetit.server.entity.staff.StaffListing;
-import com.github.clboettcher.bonappetit.server.repository.EventRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -46,23 +41,6 @@ import java.util.Set;
 public class Bootstrap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
-
-    @Autowired
-    public Bootstrap(EventRepository eventRepository) {
-        LOGGER.info("Bootstrapping db");
-
-        Menu menu = createMenu();
-        StaffListing staffListing = createStaffListing();
-
-        Event event = EventBuilder.anEvent()
-                .withTitle("Test Event")
-                .withCreated(new Date())
-                .withMenu(menu)
-                .withStaffListing(staffListing)
-                .build();
-
-        eventRepository.save(event);
-    }
 
     private Menu createMenu() {
         return MenuBuilder.aMenu()
@@ -117,21 +95,6 @@ public class Bootstrap {
                                 ))
                                 .build()
                 )))
-                .build();
-    }
-
-    private StaffListing createStaffListing() {
-        return StaffListingBuilder.aStaffListing()
-                .withStaffMembers(Sets.newHashSet(
-                        StaffMemberBuilder.aStaffMember()
-                                .withFirstName("John")
-                                .withLastName("Smith")
-                                .build(),
-                        StaffMemberBuilder.aStaffMember()
-                                .withFirstName("Agathe")
-                                .withLastName("Bauer")
-                                .build()
-                ))
                 .build();
     }
 
