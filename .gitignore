@@ -21,7 +21,8 @@ target/
 *.iml
 *.iws
 *.ids
-.idea/
+**/.idea/*
+!.idea/runConfigurations/
 out
 classes
 
