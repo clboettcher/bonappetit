@@ -84,7 +84,7 @@ public class Bootstrap {
                                                 .withPriceDiff(new BigDecimal("0.8"))
                                                 .withTitle("Mayonnaise")
                                                 .build(),
-                                        CheckboxOptionBuilder.aCheckboxOption()
+                                        ValueOptionBuilder.aValueOption()
                                                 .withTitle("Extra Salz")
                                                 .withIndex(2)
                                                 .withDefaultChecked(false)
@@ -97,7 +97,7 @@ public class Bootstrap {
                                 .withPrice(new BigDecimal("2.0"))
                                 .withType(ItemType.FOOD)
                                 .withOptions(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        CheckboxOptionBuilder.aCheckboxOption()
+                                        ValueOptionBuilder.aValueOption()
                                                 .withTitle("Käsesoße")
                                                 .withIndex(0)
                                                 .withDefaultChecked(true)

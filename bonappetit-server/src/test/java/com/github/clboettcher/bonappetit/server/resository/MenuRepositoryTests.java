@@ -113,15 +113,15 @@ public class MenuRepositoryTests {
     }
 
     @Test
-    public void testSaveItemWithCheckboxOption() throws Exception {
+    public void testSaveItemWithValueOption() throws Exception {
         // Setup
         Item item = ItemBuilder.anItem()
                 .withTitle("Item Title")
                 .withPrice(new BigDecimal("1.9"))
                 .withType(ItemType.DRINK_NON_ALCOHOLIC)
                 .withOptions(Sets.<Option>newHashSet(
-                        CheckboxOptionBuilder.aCheckboxOption()
-                                .withTitle("Checkbox Option")
+                        ValueOptionBuilder.aValueOption()
+                                .withTitle("Value Option")
                                 .withIndex(17)
                                 .withDefaultChecked(true)
                                 .withPriceDiff(BigDecimal.ONE)
@@ -141,12 +141,12 @@ public class MenuRepositoryTests {
         Item dbItem = dbMenu.getItems().iterator().next();
         assertThat(dbItem.getOptions(), not(empty()));
         Option dbOption = dbItem.getOptions().iterator().next();
-        assertThat(dbOption, is(instanceOf(CheckboxOption.class)));
-        CheckboxOption dbCheckboxOption = (CheckboxOption) dbOption;
-        assertThat(dbCheckboxOption.getTitle(), is("Checkbox Option"));
-        assertThat(dbCheckboxOption.getIndex(), is(17));
-        assertThat(dbCheckboxOption.getDefaultChecked(), is(true));
-        assertThat(dbCheckboxOption.getPriceDiff(), is(BigDecimal.ONE));
+        assertThat(dbOption, is(instanceOf(ValueOption.class)));
+        ValueOption dbValueOption = (ValueOption) dbOption;
+        assertThat(dbValueOption.getTitle(), is("Value Option"));
+        assertThat(dbValueOption.getIndex(), is(17));
+        assertThat(dbValueOption.getDefaultChecked(), is(true));
+        assertThat(dbValueOption.getPriceDiff(), is(BigDecimal.ONE));
     }
 
     @Test

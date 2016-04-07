@@ -19,60 +19,66 @@
  */
 package com.github.clboettcher.bonappetit.server.entity.builder;
 
-import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
+import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
 
 import java.math.BigDecimal;
 
-public class CheckboxOptionBuilder {
+public class ValueOptionBuilder {
     private BigDecimal priceDiff = BigDecimal.ZERO;
     private Boolean defaultChecked = false;
+    private int defaultValue = 1;
     private long id;
     private String title;
     private Integer index;
 
-    private CheckboxOptionBuilder() {
+    private ValueOptionBuilder() {
     }
 
-    public static CheckboxOptionBuilder aCheckboxOption() {
-        return new CheckboxOptionBuilder();
+    public static ValueOptionBuilder aValueOption() {
+        return new ValueOptionBuilder();
     }
 
-    public CheckboxOptionBuilder withPriceDiff(BigDecimal priceDiff) {
+    public ValueOptionBuilder withPriceDiff(BigDecimal priceDiff) {
         this.priceDiff = priceDiff;
         return this;
     }
 
-    public CheckboxOptionBuilder withDefaultChecked(Boolean defaultChecked) {
+    public ValueOptionBuilder withDefaultChecked(Boolean defaultChecked) {
         this.defaultChecked = defaultChecked;
         return this;
     }
 
-    public CheckboxOptionBuilder withId(long id) {
+    public ValueOptionBuilder withDefaultValue(int defaultValue) {
+        this.defaultValue = defaultValue;
+        return this;
+    }
+
+    public ValueOptionBuilder withId(long id) {
         this.id = id;
         return this;
     }
 
-    public CheckboxOptionBuilder withTitle(String title) {
+    public ValueOptionBuilder withTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public CheckboxOptionBuilder withIndex(Integer index) {
+    public ValueOptionBuilder withIndex(Integer index) {
         this.index = index;
         return this;
     }
 
-    public CheckboxOptionBuilder but() {
-        return aCheckboxOption().withPriceDiff(priceDiff).withDefaultChecked(defaultChecked).withId(id).withTitle(title).withIndex(index);
+    public ValueOptionBuilder but() {
+        return aValueOption().withPriceDiff(priceDiff).withDefaultChecked(defaultChecked).withId(id).withTitle(title).withIndex(index);
     }
 
-    public CheckboxOption build() {
-        CheckboxOption checkboxOption = new CheckboxOption();
-        checkboxOption.setPriceDiff(priceDiff);
-        checkboxOption.setDefaultChecked(defaultChecked);
-        checkboxOption.setId(id);
-        checkboxOption.setTitle(title);
-        checkboxOption.setIndex(index);
-        return checkboxOption;
+    public ValueOption build() {
+        ValueOption valueOption = new ValueOption();
+        valueOption.setPriceDiff(priceDiff);
+        valueOption.setDefaultChecked(defaultChecked);
+        valueOption.setId(id);
+        valueOption.setTitle(title);
+        valueOption.setIndex(index);
+        return valueOption;
     }
 }

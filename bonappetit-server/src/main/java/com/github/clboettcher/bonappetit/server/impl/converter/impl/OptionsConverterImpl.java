@@ -19,10 +19,10 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
+import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
 import com.github.clboettcher.bonappetit.server.entity.menu.IntegerOption;
 import com.github.clboettcher.bonappetit.server.entity.menu.Option;
 import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
@@ -70,8 +70,8 @@ public class OptionsConverterImpl implements OptionsConverter {
     private OptionDto convert(Option option) {
         if (option instanceof RadioOption) {
             return radioOptionsConverter.convert((RadioOption) option);
-        } else if (option instanceof CheckboxOption) {
-            return convertToCheckboxOptionDto((CheckboxOption) option);
+        } else if (option instanceof ValueOption) {
+            return convertToValueOptionDto((ValueOption) option);
         } else if (option instanceof IntegerOption) {
             return convertToIntegerOptionDto((IntegerOption) option);
         } else {
@@ -82,17 +82,17 @@ public class OptionsConverterImpl implements OptionsConverter {
     }
 
     /**
-     * Converts a {@link CheckboxOption} to a {@link CheckboxOptionDto}.
+     * Converts a {@link ValueOption} to a {@link ValueOptionDto}.
      *
-     * @param checkboxOption The {@link CheckboxOption} to convert.
-     * @return The resulting {@link CheckboxOptionDto}.
+     * @param valueOption The {@link ValueOption} to convert.
+     * @return The resulting {@link ValueOptionDto}.
      */
-    private static CheckboxOptionDto convertToCheckboxOptionDto(CheckboxOption checkboxOption) {
-        CheckboxOptionDto result = new CheckboxOptionDto();
-        result.setId(checkboxOption.getId());
-        result.setDefaultChecked(checkboxOption.getDefaultChecked());
-        result.setPriceDiff(checkboxOption.getPriceDiff());
-        result.setTitle(checkboxOption.getTitle());
+    private static ValueOptionDto convertToValueOptionDto(ValueOption valueOption) {
+        ValueOptionDto result = new ValueOptionDto();
+        result.setId(valueOption.getId());
+        result.setDefaultChecked(valueOption.getDefaultChecked());
+        result.setPriceDiff(valueOption.getPriceDiff());
+        result.setTitle(valueOption.getTitle());
         return result;
     }
 

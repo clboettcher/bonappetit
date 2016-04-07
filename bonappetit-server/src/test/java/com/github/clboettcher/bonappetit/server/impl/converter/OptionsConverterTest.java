@@ -19,12 +19,12 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
+import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
 import com.github.clboettcher.bonappetit.server.entity.menu.IntegerOption;
 import com.github.clboettcher.bonappetit.server.entity.menu.Option;
+import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.impl.OptionsConverterImpl;
 import com.google.common.collect.Lists;
@@ -35,6 +35,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -77,19 +78,19 @@ public class OptionsConverterTest {
     }
 
     @Test
-    public void testConvertCheckboxOption() throws Exception {
-        CheckboxOption input = new CheckboxOption();
+    public void testConvertValueOption() throws Exception {
+        ValueOption input = new ValueOption();
         input.setId(1337);
         input.setDefaultChecked(true);
         input.setPriceDiff(new BigDecimal("2.5"));
         input.setIndex(5);
-        input.setTitle("Test Checkbox-Option");
+        input.setTitle("Test Value-Option");
 
-        CheckboxOptionDto expected = new CheckboxOptionDto();
+        ValueOptionDto expected = new ValueOptionDto();
         expected.setId(1337L);
         expected.setDefaultChecked(true);
         expected.setPriceDiff(new BigDecimal("2.5"));
-        expected.setTitle("Test Checkbox-Option");
+        expected.setTitle("Test Value-Option");
 
         Set<OptionDto> expectedOutput = Sets.<OptionDto>newLinkedHashSet(Lists.newArrayList(expected));
         assertThat(optionsConverter.convert(Sets.<Option>newHashSet(input)), is(expectedOutput));
