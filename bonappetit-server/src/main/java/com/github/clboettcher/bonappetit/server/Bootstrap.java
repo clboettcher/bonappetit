@@ -71,19 +71,7 @@ public class Bootstrap {
                                 .withTitle("Pommes")
                                 .withPrice(new BigDecimal("2.5"))
                                 .withType(ItemType.FOOD)
-                                .withOptions(Sets.newLinkedHashSet(Lists.newArrayList(
-                                        IntegerOptionBuilder.anIntegerOption()
-                                                .withIndex(0)
-                                                .withDefaultValue(2)
-                                                .withPriceDiff(new BigDecimal("0.5"))
-                                                .withTitle("Ketchup")
-                                                .build(),
-                                        IntegerOptionBuilder.anIntegerOption()
-                                                .withIndex(1)
-                                                .withDefaultValue(0)
-                                                .withPriceDiff(new BigDecimal("0.8"))
-                                                .withTitle("Mayonnaise")
-                                                .build(),
+                                .withOptions(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
                                         ValueOptionBuilder.aValueOption()
                                                 .withTitle("Extra Salz")
                                                 .withIndex(2)

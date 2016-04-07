@@ -20,10 +20,8 @@
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
 import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
-import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
-import com.github.clboettcher.bonappetit.server.entity.menu.IntegerOption;
 import com.github.clboettcher.bonappetit.server.entity.menu.Option;
 import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
@@ -72,8 +70,6 @@ public class OptionsConverterImpl implements OptionsConverter {
             return radioOptionsConverter.convert((RadioOption) option);
         } else if (option instanceof ValueOption) {
             return convertToValueOptionDto((ValueOption) option);
-        } else if (option instanceof IntegerOption) {
-            return convertToIntegerOptionDto((IntegerOption) option);
         } else {
             throw new IllegalArgumentException(String.format("Unknown subtype of %s: %s",
                     Option.class.getName(),
@@ -91,23 +87,9 @@ public class OptionsConverterImpl implements OptionsConverter {
         ValueOptionDto result = new ValueOptionDto();
         result.setId(valueOption.getId());
         result.setDefaultChecked(valueOption.getDefaultChecked());
+        result.setDefaultValue(valueOption.getDefaultValue());
         result.setPriceDiff(valueOption.getPriceDiff());
         result.setTitle(valueOption.getTitle());
-        return result;
-    }
-
-    /**
-     * Converts an {@link IntegerOption} to an {@link IntegerOptionDto}.
-     *
-     * @param integerOption The {@link IntegerOption} to convert.
-     * @return The resulting {@link IntegerOptionDto}.
-     */
-    private static IntegerOptionDto convertToIntegerOptionDto(IntegerOption integerOption) {
-        IntegerOptionDto result = new IntegerOptionDto();
-        result.setId(integerOption.getId());
-        result.setDefaultValue(integerOption.getDefaultValue());
-        result.setPriceDiff(integerOption.getPriceDiff());
-        result.setTitle(integerOption.getTitle());
         return result;
     }
 }

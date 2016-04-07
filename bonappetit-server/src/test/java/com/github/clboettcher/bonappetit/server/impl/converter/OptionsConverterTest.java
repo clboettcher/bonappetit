@@ -19,10 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.IntegerOptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.IntegerOption;
 import com.github.clboettcher.bonappetit.server.entity.menu.Option;
 import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
@@ -35,7 +33,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -57,25 +54,6 @@ public class OptionsConverterTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
-
-    @Test
-    public void testConvertIntegerOption() throws Exception {
-        IntegerOption input = new IntegerOption();
-        input.setId(1);
-        input.setDefaultValue(5);
-        input.setPriceDiff(new BigDecimal("2.5"));
-        input.setIndex(2);
-        input.setTitle("Test Integer-Option");
-
-        IntegerOptionDto expected = new IntegerOptionDto();
-        expected.setId(1L);
-        expected.setDefaultValue(5);
-        expected.setPriceDiff(new BigDecimal("2.5"));
-        expected.setTitle("Test Integer-Option");
-
-        final Set<OptionDto> expectedResult = Sets.<OptionDto>newHashSet(expected);
-        assertThat(optionsConverter.convert(Sets.<Option>newHashSet(input)), is(expectedResult));
-    }
 
     @Test
     public void testConvertValueOption() throws Exception {
