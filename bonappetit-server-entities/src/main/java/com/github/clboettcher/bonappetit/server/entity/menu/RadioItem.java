@@ -46,7 +46,7 @@ public class RadioItem {
     private Integer index;
 
     @Column(name = "PRICE_DIFF", nullable = false)
-    private BigDecimal priceDiff = new BigDecimal("0.00");
+    private BigDecimal priceDiff = BigDecimal.ZERO;
 
     /**
      * @return The ID of this event.
