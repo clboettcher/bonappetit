@@ -69,9 +69,15 @@ public class Item {
     @Column(name = "TYPE", nullable = false)
     private ItemType type;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID")
     private Set<Option> options;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "ITEM_SIDE_DISH",
+            joinColumns = @JoinColumn(name = "ITEM_ID"),
+            inverseJoinColumns = @JoinColumn(name = "SIDE_DISH_ID", referencedColumnName = "ITEM_ID"))
+    private Set<Item> sideDishes;
 
     /**
      * @return The title / name of this item, e.g. "Cola".
@@ -86,7 +92,7 @@ public class Item {
 
     /**
      * Returns the price of this item.
-     * <p>
+     * <p/>
      * This is the 'raw' price of the item, not consisting any options which
      * might have effects on the total price.
      *

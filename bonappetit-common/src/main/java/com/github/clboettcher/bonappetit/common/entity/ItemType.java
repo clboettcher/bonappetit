@@ -60,4 +60,9 @@ public enum ItemType {
      * E.g. juice.
      */
     DRINK_NON_ALCOHOLIC,
+
+    /**
+     *
+     */
+    SIDE_DISH
 }
