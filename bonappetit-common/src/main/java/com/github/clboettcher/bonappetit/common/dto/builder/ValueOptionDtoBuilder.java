@@ -19,53 +19,53 @@
  */
 package com.github.clboettcher.bonappetit.common.dto.builder;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
 
 import java.math.BigDecimal;
 
-public class CheckboxOptionDtoBuilder {
+public class ValueOptionDtoBuilder {
     private BigDecimal priceDiff;
     private Boolean defaultChecked;
     private String title;
     private Long id;
 
-    private CheckboxOptionDtoBuilder() {
+    private ValueOptionDtoBuilder() {
     }
 
-    public static CheckboxOptionDtoBuilder aCheckboxOptionDto() {
-        return new CheckboxOptionDtoBuilder();
+    public static ValueOptionDtoBuilder aValueOptionDto() {
+        return new ValueOptionDtoBuilder();
     }
 
-    public CheckboxOptionDtoBuilder withPriceDiff(BigDecimal priceDiff) {
+    public ValueOptionDtoBuilder withPriceDiff(BigDecimal priceDiff) {
         this.priceDiff = priceDiff;
         return this;
     }
 
-    public CheckboxOptionDtoBuilder withDefaultChecked(Boolean defaultChecked) {
+    public ValueOptionDtoBuilder withDefaultChecked(Boolean defaultChecked) {
         this.defaultChecked = defaultChecked;
         return this;
     }
 
-    public CheckboxOptionDtoBuilder withTitle(String title) {
+    public ValueOptionDtoBuilder withTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public CheckboxOptionDtoBuilder withId(Long id) {
+    public ValueOptionDtoBuilder withId(Long id) {
         this.id = id;
         return this;
     }
 
-    public CheckboxOptionDtoBuilder but() {
-        return aCheckboxOptionDto().withPriceDiff(priceDiff).withDefaultChecked(defaultChecked).withTitle(title).withId(id);
+    public ValueOptionDtoBuilder but() {
+        return aValueOptionDto().withPriceDiff(priceDiff).withDefaultChecked(defaultChecked).withTitle(title).withId(id);
     }
 
-    public CheckboxOptionDto build() {
-        CheckboxOptionDto checkboxOptionDto = new CheckboxOptionDto();
-        checkboxOptionDto.setPriceDiff(priceDiff);
-        checkboxOptionDto.setDefaultChecked(defaultChecked);
-        checkboxOptionDto.setTitle(title);
-        checkboxOptionDto.setId(id);
-        return checkboxOptionDto;
+    public ValueOptionDto build() {
+        ValueOptionDto valueOptionDto = new ValueOptionDto();
+        valueOptionDto.setPriceDiff(priceDiff);
+        valueOptionDto.setDefaultChecked(defaultChecked);
+        valueOptionDto.setTitle(title);
+        valueOptionDto.setId(id);
+        return valueOptionDto;
     }
 }

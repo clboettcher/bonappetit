@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.entity.order;
 
-import com.github.clboettcher.bonappetit.server.entity.menu.CheckboxOption;
+import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,14 +27,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class CheckboxOptionOrder extends OptionOrder {
+public class ValueOptionOrder extends OptionOrder {
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "CHECKBOX_OPTION_ID", referencedColumnName = "OPTION_ID")
-    private CheckboxOption option;
+    @JoinColumn(name = "VALUE_OPTION_ID", referencedColumnName = "OPTION_ID")
+    private ValueOption option;
 
     @Column(name = "CHECKED", nullable = false)
     private Boolean checked;
+
+    @Column(name = "VALUE", nullable = false)
+    private int value;
 
     /**
      * @return Whether the option has been checked or not.
@@ -50,11 +53,19 @@ public class CheckboxOptionOrder extends OptionOrder {
     /**
      * @return The ordered option.
      */
-    public CheckboxOption getOption() {
+    public ValueOption getOption() {
         return option;
     }
 
-    public void setOption(CheckboxOption option) {
+    public void setOption(ValueOption option) {
         this.option = option;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }
