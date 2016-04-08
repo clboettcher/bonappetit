@@ -36,64 +36,30 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.common.dto.staff;
-
-import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.util.Set;
+package com.github.clboettcher.bonappetit.common.entity;
 
 /**
- * A collection of staff members.
+ * Enumerates different types of menu items.
  */
-public class StaffListingDto extends AbstractEntityDto {
-
-    private Set<StaffMemberDto> staffMemberDtos;
+public enum OrderStatus {
 
     /**
-     * @return The members that correspond to this listing.
+     * The server has received the order
      */
-    public Set<StaffMemberDto> getStaffMemberDtos() {
-        return staffMemberDtos;
-    }
+    ORDERED,
 
-    public void setStaffMemberDtos(Set<StaffMemberDto> staffMemberDtos) {
-        this.staffMemberDtos = staffMemberDtos;
-    }
+    /**
+     * The order has been printed
+     */
+    PRINTED,
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("staffMemberDtos", staffMemberDtos)
-                .toString();
-    }
+    /**
+     * The order has been paid
+     */
+    PAID,
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        StaffListingDto rhs = (StaffListingDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.staffMemberDtos, rhs.staffMemberDtos)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(staffMemberDtos)
-                .toHashCode();
-    }
+    /**
+     * The order has been canceled
+     */
+    CANCELED
 }

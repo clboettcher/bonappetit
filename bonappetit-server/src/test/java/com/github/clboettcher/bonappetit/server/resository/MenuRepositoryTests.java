@@ -76,43 +76,6 @@ public class MenuRepositoryTests {
     }
 
     @Test
-    public void testSaveMenuItemWithIntegerOption() throws Exception {
-        // Setup
-        Item item = ItemBuilder.anItem()
-                .withTitle("Item Title")
-                .withPrice(new BigDecimal("1.9"))
-                .withType(ItemType.DRINK_NON_ALCOHOLIC)
-                .withOptions(Sets.<Option>newHashSet(
-                        IntegerOptionBuilder.anIntegerOption()
-                                .withTitle("Integer Option")
-                                .withIndex(17)
-                                .withPriceDiff(BigDecimal.ONE)
-                                .withDefaultValue(1337)
-                                .build()
-                ))
-                .build();
-
-        Menu menu = MenuBuilder.aMenu()
-                .withItems(Sets.newHashSet(item))
-                .build();
-
-        // Test
-        menuRepository.save(menu);
-
-        // Verify
-        Menu dbMenu = menuRepository.findOne(menu.getId());
-        Item dbItem = dbMenu.getItems().iterator().next();
-        assertThat(dbItem.getOptions(), not(empty()));
-        Option dbOption = dbItem.getOptions().iterator().next();
-        assertThat(dbOption, is(instanceOf(IntegerOption.class)));
-        IntegerOption dbIntegerOption = (IntegerOption) dbOption;
-        assertThat(dbIntegerOption.getTitle(), is("Integer Option"));
-        assertThat(dbIntegerOption.getDefaultValue(), is(1337));
-        assertThat(dbIntegerOption.getPriceDiff(), is(BigDecimal.ONE));
-        assertThat(dbIntegerOption.getIndex(), is(17));
-    }
-
-    @Test
     public void testSaveItemWithValueOption() throws Exception {
         // Setup
         Item item = ItemBuilder.anItem()

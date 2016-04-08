@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.entity.order;
 
+import com.github.clboettcher.bonappetit.common.entity.OrderStatus;
 import com.github.clboettcher.bonappetit.server.entity.menu.Item;
 import com.github.clboettcher.bonappetit.server.entity.staff.StaffMember;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,6 +28,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -47,8 +49,8 @@ public class ItemOrder {
     @JoinColumn(name = "ITEM_ORDER_ID")
     private Set<OptionOrder> optionOrders;
 
-    @Column(name = "CUSTOMER", nullable = false)
-    private String customer;
+    @Column(name = "DELIVER_TO", nullable = false)
+    private String deliverTo;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "STAFF_MEMBER_ID", nullable = false)
@@ -60,6 +62,24 @@ public class ItemOrder {
 
     @Column(name = "NOTE")
     private String note;
+
+    @Column(name = "STATUS", nullable = false)
+    private OrderStatus status;
+
+    /**
+     * The discount in percent.
+     * discount = 10
+     * means a 10% discount
+     */
+    @Column(name = "DISCOUNT", nullable = false)
+    private int discount;
+
+    /**
+     * The price of the item and the chosen options.
+     * Does NOT contain the discount from the discount variable.
+     */
+    @Column(name = "PRICE", nullable = false)
+    private BigDecimal price;
 
     /**
      * @return The ID.
@@ -80,12 +100,12 @@ public class ItemOrder {
         this.item = item;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getDeliverTo() {
+        return deliverTo;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setDeliverTo(String deliverTo) {
+        this.deliverTo = deliverTo;
     }
 
     public StaffMember getStaffMember() {
@@ -120,16 +140,43 @@ public class ItemOrder {
         this.optionOrders = optionOrders;
     }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("item", item)
-                .append("customer", customer)
+                .append("optionOrders", optionOrders)
+                .append("deliverTo", deliverTo)
                 .append("staffMember", staffMember)
                 .append("orderTime", orderTime)
                 .append("note", note)
-                .append("optionOrders", optionOrders)
+                .append("status", status)
+                .append("discount", discount)
+                .append("price", price)
                 .toString();
     }
 
@@ -148,11 +195,14 @@ public class ItemOrder {
         return new EqualsBuilder()
                 .append(this.id, rhs.id)
                 .append(this.item, rhs.item)
-                .append(this.customer, rhs.customer)
+                .append(this.optionOrders, rhs.optionOrders)
+                .append(this.deliverTo, rhs.deliverTo)
                 .append(this.staffMember, rhs.staffMember)
                 .append(this.orderTime, rhs.orderTime)
                 .append(this.note, rhs.note)
-                .append(this.optionOrders, rhs.optionOrders)
+                .append(this.status, rhs.status)
+                .append(this.discount, rhs.discount)
+                .append(this.price, rhs.price)
                 .isEquals();
     }
 
@@ -161,11 +211,14 @@ public class ItemOrder {
         return new HashCodeBuilder()
                 .append(id)
                 .append(item)
-                .append(customer)
+                .append(optionOrders)
+                .append(deliverTo)
                 .append(staffMember)
                 .append(orderTime)
                 .append(note)
-                .append(optionOrders)
+                .append(status)
+                .append(discount)
+                .append(price)
                 .toHashCode();
     }
 }
