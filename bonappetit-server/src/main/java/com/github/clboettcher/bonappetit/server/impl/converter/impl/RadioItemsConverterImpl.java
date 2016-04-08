@@ -45,9 +45,9 @@ public class RadioItemsConverterImpl implements RadioItemsConverter {
 
     @Override
     public Set<RadioItemDto> convert(Set<RadioItem> radioItems) {
-        List<RadioItem> inputSorted = new ArrayList<>(radioItems);
+        List<RadioItem> inputSorted = new ArrayList<RadioItem>(radioItems);
         Collections.sort(inputSorted, indexComparator);
-        LinkedHashSet<RadioItemDto> result = new LinkedHashSet<>(inputSorted.size());
+        LinkedHashSet<RadioItemDto> result = new LinkedHashSet<RadioItemDto>(inputSorted.size());
         for (RadioItem radioItem : inputSorted) {
             result.add(convert(radioItem));
         }
