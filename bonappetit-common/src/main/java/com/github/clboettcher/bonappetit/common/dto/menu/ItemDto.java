@@ -38,6 +38,7 @@
 */
 package com.github.clboettcher.bonappetit.common.dto.menu;
 
+import com.github.clboettcher.bonappetit.common.domain.menu.Item;
 import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -60,6 +61,8 @@ public class ItemDto extends AbstractEntityDto {
     private ItemType type;
 
     private Set<OptionDto> optionDtos;
+
+    private Set<Item> sideDishes;
 
     /**
      * @return The title / name of this item, e.g. "Cola".
@@ -110,9 +113,19 @@ public class ItemDto extends AbstractEntityDto {
         this.optionDtos = optionDtos;
     }
 
+    public Set<Item> getSideDishes() {
+        return sideDishes;
+    }
+
+    public void setSideDishes(Set<Item> sideDishes) {
+        this.sideDishes = sideDishes;
+    }
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
                 .append("title", title)
                 .append("price", price)
                 .append("type", type)
@@ -138,6 +151,7 @@ public class ItemDto extends AbstractEntityDto {
                 .append(this.price, rhs.price)
                 .append(this.type, rhs.type)
                 .append(this.optionDtos, rhs.optionDtos)
+                .append(this.sideDishes, rhs.sideDishes)
                 .isEquals();
     }
 
@@ -149,6 +163,7 @@ public class ItemDto extends AbstractEntityDto {
                 .append(price)
                 .append(type)
                 .append(optionDtos)
+                .append(sideDishes)
                 .toHashCode();
     }
 }
