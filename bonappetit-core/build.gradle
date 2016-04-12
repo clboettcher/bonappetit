@@ -7,4 +7,8 @@ dependencies {
     // Object mapping
     compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jacksonVersion}"
+
+    // Utils
+    compile "com.google.guava:guava:${guavaVersion}"
+    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
 }

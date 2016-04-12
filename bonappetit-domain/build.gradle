@@ -5,9 +5,5 @@ targetCompatibility = 1.7
 
 
 dependencies {
-    // Utils
-    compile "com.google.guava:guava:${guavaVersion}"
-    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
-
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile project(':bonappetit-core')
 }
