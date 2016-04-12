@@ -6,8 +6,8 @@ include 'bonappetit-common'
 include 'bonappetit-domain'
 include 'bonappetit-dto'
 
-include 'bonappetit-server'
+include 'bonappetit-server-app'
 include 'bonappetit-server-persistence'
 
-include 'bonappetit-app'
+include 'bonappetit-android-app'
 include 'androidannotations-example'
