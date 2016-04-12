@@ -19,9 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.RadioItemDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
+import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import com.github.clboettcher.bonappetit.dto.builder.RadioItemDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ import java.util.*;
 public class RadioItemsConverterImpl implements RadioItemsConverter {
 
     /**
-     * Compares {@link RadioItem}s by {@link RadioItem#getIndex()}.
+     * Compares {@link RadioItemDto}s by {@link RadioItem#getIndex()}.
      */
     private Comparator<RadioItem> indexComparator = new Comparator<RadioItem>() {
         @Override
@@ -45,21 +45,15 @@ public class RadioItemsConverterImpl implements RadioItemsConverter {
 
     @Override
     public Set<RadioItemDto> convert(Set<RadioItem> radioItems) {
-        List<RadioItem> inputSorted = new ArrayList<RadioItem>(radioItems);
+        List<RadioItem> inputSorted = new ArrayList<>(radioItems);
         Collections.sort(inputSorted, indexComparator);
-        LinkedHashSet<RadioItemDto> result = new LinkedHashSet<RadioItemDto>(inputSorted.size());
+        LinkedHashSet<RadioItemDto> result = new LinkedHashSet<>(inputSorted.size());
         for (RadioItem radioItem : inputSorted) {
             result.add(convert(radioItem));
         }
         return result;
     }
 
-    /**
-     * Converts the given {@link RadioItem} to a {@link RadioItemDto}.
-     *
-     * @param radioItem The {@link RadioItem} to convert.
-     * @return The resulting {@link RadioItemDto}.
-     */
     private static RadioItemDto convert(RadioItem radioItem) {
         return RadioItemDtoBuilder.aRadioItemDto()
                 .withId(radioItem.getId())

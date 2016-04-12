@@ -19,13 +19,14 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.ItemDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
-import com.github.clboettcher.bonappetit.common.entity.ItemType;
-import com.github.clboettcher.bonappetit.server.entity.builder.ItemBuilder;
-import com.github.clboettcher.bonappetit.server.entity.menu.Item;
-import com.github.clboettcher.bonappetit.server.entity.menu.Option;
+import com.github.clboettcher.bonappetit.domain.builder.ItemBuilder;
+import com.github.clboettcher.bonappetit.domain.menu.Item;
+import com.github.clboettcher.bonappetit.domain.menu.ItemType;
+import com.github.clboettcher.bonappetit.domain.menu.Option;
+import com.github.clboettcher.bonappetit.dto.builder.ItemDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDtoType;
+import com.github.clboettcher.bonappetit.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.impl.ItemsConverterImpl;
@@ -39,7 +40,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -103,14 +103,14 @@ public class ItemsConverterTest {
                         .withId(1L)
                         .withTitle("Test Item w/ options")
                         .withPrice(new BigDecimal("1.5"))
-                        .withType(ItemType.FOOD)
+                        .withType(ItemDtoType.FOOD)
                         .withOptionDtos(expectedOptionDtos)
                         .build(),
                 ItemDtoBuilder.anItemDto()
                         .withId(2L)
                         .withTitle("Test Item w/o options")
                         .withPrice(new BigDecimal("2.5"))
-                        .withType(ItemType.DRINK_ALCOHOLIC)
+                        .withType(ItemDtoType.DRINK_ALCOHOLIC)
                         .withOptionDtos(null)
                         .build()
         );

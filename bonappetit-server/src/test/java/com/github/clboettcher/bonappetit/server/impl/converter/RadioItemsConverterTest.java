@@ -19,10 +19,10 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.RadioItemDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.server.entity.builder.RadioItemBuilder;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
+import com.github.clboettcher.bonappetit.domain.builder.RadioItemBuilder;
+import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import com.github.clboettcher.bonappetit.dto.builder.RadioItemDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.impl.RadioItemsConverterImpl;
 import com.google.common.collect.Sets;
@@ -72,7 +72,8 @@ public class RadioItemsConverterTest {
                 .build();
 
         final Set<RadioItemDto> expectedDtos = Sets.newHashSet(expected01);
-        assertThat(radioItemsConverter.convert(Sets.newLinkedHashSet(Collections.singletonList(input01))), is(expectedDtos));
+        assertThat(radioItemsConverter.convert(Sets.newLinkedHashSet(
+                Collections.singletonList(input01))), is(expectedDtos));
     }
 
     /**
@@ -89,7 +90,8 @@ public class RadioItemsConverterTest {
         RadioItemDto expectedIdx0 = RadioItemDtoBuilder.aRadioItemDto().withId(15L).build();
         RadioItemDto expectedIdx1 = RadioItemDtoBuilder.aRadioItemDto().withId(20L).build();
 
-        final ArrayList<RadioItemDto> outputAsList = newArrayList(radioItemsConverter.convert(inputItems));
+        final ArrayList<RadioItemDto> outputAsList = newArrayList(
+                radioItemsConverter.convert(inputItems));
         assertThat(outputAsList.get(0), is(expectedIdx0));
         assertThat(outputAsList.get(1), is(expectedIdx1));
         assertThat(outputAsList.get(2), is(expectedIdx2));

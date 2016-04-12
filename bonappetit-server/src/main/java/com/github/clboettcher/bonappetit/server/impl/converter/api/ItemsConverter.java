@@ -19,8 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.api;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.Item;
+import com.github.clboettcher.bonappetit.domain.menu.Item;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
 
 import java.util.Set;
 

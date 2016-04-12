@@ -19,11 +19,11 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.ValueOptionDto;
-import com.github.clboettcher.bonappetit.common.dto.menu.OptionDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.ValueOption;
-import com.github.clboettcher.bonappetit.server.entity.menu.Option;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
+import com.github.clboettcher.bonappetit.domain.menu.Option;
+import com.github.clboettcher.bonappetit.domain.menu.RadioOption;
+import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
+import com.github.clboettcher.bonappetit.dto.menu.OptionDto;
+import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioOptionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;

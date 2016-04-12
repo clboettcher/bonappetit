@@ -1,11 +1,15 @@
 buildscript {
 //    System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
     repositories {
+        mavenCentral()
         jcenter()
     }
     dependencies {
+        // Android
         classpath 'com.android.tools.build:gradle:2.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        // Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1"
     }
 }
 
@@ -20,6 +24,9 @@ ext {
     commonsIoVersion = "2.4"
     commonsLang3Version = "3.0"
     guavaVersion = "19.0"
+    jacksonVersion = "2.7.3"
+    junitVersion = "4.12"
+    kotlinStdLibVersion = "1.0.1"
 }
 
 // Config for all bonappetit projects

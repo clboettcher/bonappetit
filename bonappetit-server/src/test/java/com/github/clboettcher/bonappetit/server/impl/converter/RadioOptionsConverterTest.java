@@ -19,12 +19,12 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.RadioItemDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioOptionDto;
-import com.github.clboettcher.bonappetit.server.entity.builder.RadioItemBuilder;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
+import com.github.clboettcher.bonappetit.domain.builder.RadioItemBuilder;
+import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import com.github.clboettcher.bonappetit.domain.menu.RadioOption;
+import com.github.clboettcher.bonappetit.dto.builder.RadioItemDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
+import com.github.clboettcher.bonappetit.dto.menu.RadioOptionDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioOptionsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.impl.OptionsConverterImpl;

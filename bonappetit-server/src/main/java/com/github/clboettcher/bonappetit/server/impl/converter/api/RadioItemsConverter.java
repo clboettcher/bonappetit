@@ -19,8 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.api;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
+import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

@@ -19,9 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.MenuDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.MenuDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
+import com.github.clboettcher.bonappetit.domain.menu.Menu;
+import com.github.clboettcher.bonappetit.dto.builder.MenuDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.MenusConverter;
 import org.springframework.beans.factory.annotation.Autowired;

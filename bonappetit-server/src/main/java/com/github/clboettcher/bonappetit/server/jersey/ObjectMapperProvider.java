@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.jersey;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.clboettcher.bonappetit.common.databind.ObjectMapperFactory;
+import com.github.clboettcher.bonappetit.core.ObjectMapperFactory;
 
 import javax.ws.rs.ext.ContextResolver;
 

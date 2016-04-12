@@ -28,7 +28,9 @@ configurations {
 }
 
 dependencies {
-    compile project(':bonappetit-server-entities')
+    compile project(':bonappetit-core')
+    compile project(':bonappetit-domain')
+    compile project(':bonappetit-dto')
 
     // API
     compile 'org.springframework.boot:spring-boot-starter-web'
@@ -44,7 +46,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile 'javax.el:javax.el-api:3.0.0'
     compile 'org.glassfish:javax.el:3.0.0'
-    compile("com.h2database:h2")
+    compile "com.h2database:h2"
 
     // Documentation
     compile 'io.swagger:swagger-jersey2-jaxrs:1.5.8'

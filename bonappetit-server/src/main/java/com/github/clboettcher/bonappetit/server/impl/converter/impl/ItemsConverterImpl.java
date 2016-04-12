@@ -19,10 +19,11 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.builder.ItemDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.Item;
-import com.github.clboettcher.bonappetit.server.entity.menu.Option;
+import com.github.clboettcher.bonappetit.domain.menu.Item;
+import com.github.clboettcher.bonappetit.domain.menu.Option;
+import com.github.clboettcher.bonappetit.dto.builder.ItemDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDtoType;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class ItemsConverterImpl implements ItemsConverter {
         return ItemDtoBuilder.anItemDto()
                 .withId(item.getId())
                 .withTitle(item.getTitle())
-                .withType(item.getType())
+                .withType(ItemDtoType.valueOf(item.getType().name()))
                 .withPrice(item.getPrice())
                 .withOptionDtos(CollectionUtils.isEmpty(options)
                         ? null

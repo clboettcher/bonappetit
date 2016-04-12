@@ -23,12 +23,12 @@ package com.github.clboettcher.bonappetit.server.impl.converter;
  * Tests for {@link com.github.clboettcher.bonappetit.server.impl.converter.impl.MenusConverterImpl}.
  */
 
-import com.github.clboettcher.bonappetit.common.dto.builder.MenuDtoBuilder;
-import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.common.dto.menu.MenuDto;
-import com.github.clboettcher.bonappetit.server.entity.builder.MenuBuilder;
-import com.github.clboettcher.bonappetit.server.entity.menu.Item;
-import com.github.clboettcher.bonappetit.server.entity.menu.Menu;
+import com.github.clboettcher.bonappetit.domain.builder.MenuBuilder;
+import com.github.clboettcher.bonappetit.domain.menu.Item;
+import com.github.clboettcher.bonappetit.domain.menu.Menu;
+import com.github.clboettcher.bonappetit.dto.builder.MenuDtoBuilder;
+import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
+import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.MenusConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
@@ -45,7 +45,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

@@ -19,9 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.converter.impl;
 
-import com.github.clboettcher.bonappetit.common.dto.menu.RadioOptionDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioOption;
+import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import com.github.clboettcher.bonappetit.domain.menu.RadioOption;
+import com.github.clboettcher.bonappetit.dto.menu.RadioOptionDto;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioOptionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;

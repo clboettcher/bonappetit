@@ -4,17 +4,12 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 dependencies {
-
     // Utils
     compile "com.google.guava:guava:${guavaVersion}"
     compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
     compile "commons-io:commons-io:${commonsIoVersion}"
     compile "org.apache.commons:commons-collections4:${commonsCollections4Version}"
 
-    // Object mapping
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.7.3'
-
     // Testing
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:${junitVersion}"
 }
