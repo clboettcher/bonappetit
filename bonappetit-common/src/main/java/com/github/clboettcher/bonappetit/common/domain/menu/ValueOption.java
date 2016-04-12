@@ -36,102 +36,73 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.common.dto.menu;
+package com.github.clboettcher.bonappetit.common.domain.menu;
 
-import com.github.clboettcher.bonappetit.common.domain.menu.Item;
-import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
-import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 /**
- * A menu item.
+ * An option consisting of a boolean checkbox and (optionally) a integer.
+ * Example:
+ * French fries with the option for ketchup for. The int value is the number of ketchup packages.
+ * Example:
+ * A hamburger with the option for bacon. The "defaultValue" is 0 since this is a yes-or-no option and has no int value.
  */
-public class ItemDto extends AbstractEntityDto {
+public class ValueOption extends Option {
 
-    private String title;
+    private BigDecimal priceDiff = BigDecimal.ZERO;
 
-    private BigDecimal price;
-
-    private ItemType type;
-
-    private Set<OptionDto> optionDtos;
-
-    private Set<Item> sideDishes;
+    private Boolean defaultChecked;
 
     /**
-     * @return The title / name of this item, e.g. "Cola".
+     * The default value for this option.
+     * A defaultValue of zero indicates that this option is only a yes/no option and no number is required.
      */
-    public String getTitle() {
-        return title;
-    }
+    private int defaultValue;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     /**
-     * Returns the price of this item.
+     * Returns the price difference of this option.
      * <p/>
-     * This is the 'raw' price of the item, not consisting any options which
-     * might have effects on the total price.
+     * The total price of an order for an item can be calculated
+     * using the items price and the price diff of all options.
      *
-     * @return The price of this item.
+     * @return The price difference.
      */
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getPriceDiff() {
+        return priceDiff;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPriceDiff(BigDecimal priceDiff) {
+        this.priceDiff = priceDiff;
     }
 
     /**
-     * @return The type of this item.
+     * @return The default value to set when this option is ordered.
      */
-    public ItemType getType() {
-        return type;
-    }
-
-    public void setType(ItemType type) {
-        this.type = type;
+    public Boolean getDefaultChecked() {
+        return defaultChecked;
     }
 
     /**
-     * @return The options available for this item (optional).
+     * @param defaultChecked see {@link #getDefaultChecked()}.
      */
-    public Set<OptionDto> getOptionDtos() {
-        return optionDtos;
+    public void setDefaultChecked(Boolean defaultChecked) {
+        this.defaultChecked = defaultChecked;
     }
 
-    public void setOptionDtos(Set<OptionDto> optionDtos) {
-        this.optionDtos = optionDtos;
+    public int getDefaultValue() {
+        return defaultValue;
     }
 
-    public Set<Item> getSideDishes() {
-        return sideDishes;
+    public void setDefaultValue(int defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
-    public void setSideDishes(Set<Item> sideDishes) {
-        this.sideDishes = sideDishes;
-    }
-
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("title", title)
-                .append("price", price)
-                .append("type", type)
-                .append("optionDtos", optionDtos)
-                .toString();
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -144,14 +115,12 @@ public class ItemDto extends AbstractEntityDto {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        ItemDto rhs = (ItemDto) obj;
+        ValueOption rhs = (ValueOption) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
-                .append(this.title, rhs.title)
-                .append(this.price, rhs.price)
-                .append(this.type, rhs.type)
-                .append(this.optionDtos, rhs.optionDtos)
-                .append(this.sideDishes, rhs.sideDishes)
+                .append(this.priceDiff, rhs.priceDiff)
+                .append(this.defaultChecked, rhs.defaultChecked)
+                .append(this.defaultValue, rhs.defaultValue)
                 .isEquals();
     }
 
@@ -159,11 +128,19 @@ public class ItemDto extends AbstractEntityDto {
     public int hashCode() {
         return new HashCodeBuilder()
                 .appendSuper(super.hashCode())
-                .append(title)
-                .append(price)
-                .append(type)
-                .append(optionDtos)
-                .append(sideDishes)
+                .append(priceDiff)
+                .append(defaultChecked)
+                .append(defaultValue)
                 .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("priceDiff", priceDiff)
+                .append("defaultChecked", defaultChecked)
+                .append("defaultValue", defaultValue)
+                .toString();
     }
 }

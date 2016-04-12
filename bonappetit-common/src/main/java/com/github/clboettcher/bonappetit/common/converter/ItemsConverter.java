@@ -17,41 +17,20 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter.impl;
+package com.github.clboettcher.bonappetit.common.converter;
 
+import com.github.clboettcher.bonappetit.common.domain.menu.Item;
+import com.github.clboettcher.bonappetit.common.domain.menu.Option;
 import com.github.clboettcher.bonappetit.common.dto.builder.ItemDtoBuilder;
 import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.Item;
-import com.github.clboettcher.bonappetit.server.entity.menu.Option;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * Default impl of {@link ItemsConverter}.
- */
-@Component
-public class ItemsConverterImpl implements ItemsConverter {
+public class ItemsConverter{
 
-    private OptionsConverter optionsConverter;
-
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param optionsConverter The converter for {@link Option}s.
-     */
-    @Autowired
-    public ItemsConverterImpl(OptionsConverter optionsConverter) {
-        this.optionsConverter = optionsConverter;
-    }
-
-    @Override
-    public Set<ItemDto> convertToItemDtos(Set<Item> items) {
+    public static Set<ItemDto> convertItemsToItemDtos(Set<Item> items) {
         Set<ItemDto> itemDtos = new LinkedHashSet<ItemDto>(items.size());
         for (Item item : items) {
             itemDtos.add(convertToDto(item));
@@ -65,7 +44,7 @@ public class ItemsConverterImpl implements ItemsConverter {
      * @param item The {@link Item} to convert.
      * @return The resulting {@link ItemDto}.
      */
-    private ItemDto convertToDto(Item item) {
+    private static ItemDto convertToDto(Item item) {
         final Set<Option> options = item.getOptions();
         return ItemDtoBuilder.anItemDto()
                 .withId(item.getId())
@@ -74,7 +53,7 @@ public class ItemsConverterImpl implements ItemsConverter {
                 .withPrice(item.getPrice())
                 .withOptionDtos(CollectionUtils.isEmpty(options)
                         ? null
-                        : optionsConverter.convert(options))
+                        : OptionsConverter.convert(options))
                 .build();
     }
 }

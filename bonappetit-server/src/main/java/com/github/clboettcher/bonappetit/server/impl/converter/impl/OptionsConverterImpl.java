@@ -52,7 +52,7 @@ public class OptionsConverterImpl implements OptionsConverter {
 
     @Override
     public Set<OptionDto> convert(Set<Option> options) {
-        LinkedHashSet<OptionDto> optionDtos = new LinkedHashSet<>(options.size());
+        LinkedHashSet<OptionDto> optionDtos = new LinkedHashSet<OptionDto>(options.size());
         for (Option option : options) {
             optionDtos.add(convert(option));
         }

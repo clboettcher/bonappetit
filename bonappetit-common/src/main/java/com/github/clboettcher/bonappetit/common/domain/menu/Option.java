@@ -36,36 +36,27 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.common.dto.menu;
+package com.github.clboettcher.bonappetit.common.domain.menu;
 
-import com.github.clboettcher.bonappetit.common.domain.menu.Item;
-import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
-import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.math.BigDecimal;
-import java.util.Set;
-
 /**
- * A menu item.
+ * Abstract base class for menu item options.
  */
-public class ItemDto extends AbstractEntityDto {
+public abstract class Option {
+
+    private long id;
 
     private String title;
 
-    private BigDecimal price;
-
-    private ItemType type;
-
-    private Set<OptionDto> optionDtos;
-
-    private Set<Item> sideDishes;
+    // 'index' is reserved in mysql
+    private Integer index;
 
     /**
-     * @return The title / name of this item, e.g. "Cola".
+     * @return The title / name of this option.
      */
     public String getTitle() {
         return title;
@@ -76,60 +67,33 @@ public class ItemDto extends AbstractEntityDto {
     }
 
     /**
-     * Returns the price of this item.
-     * <p/>
-     * This is the 'raw' price of the item, not consisting any options which
-     * might have effects on the total price.
-     *
-     * @return The price of this item.
+     * @return The zero based index that this item should be displayed at.
      */
-    public BigDecimal getPrice() {
-        return price;
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     /**
-     * @return The type of this item.
+     * @return The ID.
      */
-    public ItemType getType() {
-        return type;
+    public long getId() {
+        return id;
     }
 
-    public void setType(ItemType type) {
-        this.type = type;
+    public void setId(long id) {
+        this.id = id;
     }
-
-    /**
-     * @return The options available for this item (optional).
-     */
-    public Set<OptionDto> getOptionDtos() {
-        return optionDtos;
-    }
-
-    public void setOptionDtos(Set<OptionDto> optionDtos) {
-        this.optionDtos = optionDtos;
-    }
-
-    public Set<Item> getSideDishes() {
-        return sideDishes;
-    }
-
-    public void setSideDishes(Set<Item> sideDishes) {
-        this.sideDishes = sideDishes;
-    }
-
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
+                .append("id", id)
                 .append("title", title)
-                .append("price", price)
-                .append("type", type)
-                .append("optionDtos", optionDtos)
+                .append("index", index)
                 .toString();
     }
 
@@ -144,26 +108,20 @@ public class ItemDto extends AbstractEntityDto {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        ItemDto rhs = (ItemDto) obj;
+        Option rhs = (Option) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
+                .append(this.id, rhs.id)
                 .append(this.title, rhs.title)
-                .append(this.price, rhs.price)
-                .append(this.type, rhs.type)
-                .append(this.optionDtos, rhs.optionDtos)
-                .append(this.sideDishes, rhs.sideDishes)
+                .append(this.index, rhs.index)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
+                .append(id)
                 .append(title)
-                .append(price)
-                .append(type)
-                .append(optionDtos)
-                .append(sideDishes)
+                .append(index)
                 .toHashCode();
     }
 }

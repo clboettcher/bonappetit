@@ -36,10 +36,8 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.common.dto.menu;
+package com.github.clboettcher.bonappetit.common.domain.menu;
 
-import com.github.clboettcher.bonappetit.common.domain.menu.Item;
-import com.github.clboettcher.bonappetit.common.dto.AbstractEntityDto;
 import com.github.clboettcher.bonappetit.common.entity.ItemType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -52,7 +50,9 @@ import java.util.Set;
 /**
  * A menu item.
  */
-public class ItemDto extends AbstractEntityDto {
+public class Item {
+
+    private long id;
 
     private String title;
 
@@ -60,7 +60,7 @@ public class ItemDto extends AbstractEntityDto {
 
     private ItemType type;
 
-    private Set<OptionDto> optionDtos;
+    private Set<Option> options;
 
     private Set<Item> sideDishes;
 
@@ -105,31 +105,36 @@ public class ItemDto extends AbstractEntityDto {
     /**
      * @return The options available for this item (optional).
      */
-    public Set<OptionDto> getOptionDtos() {
-        return optionDtos;
+    public Set<Option> getOptions() {
+        return options;
     }
 
-    public void setOptionDtos(Set<OptionDto> optionDtos) {
-        this.optionDtos = optionDtos;
+    public void setOptions(Set<Option> options) {
+        this.options = options;
     }
 
-    public Set<Item> getSideDishes() {
-        return sideDishes;
+    /**
+     * @return The ID of this event.
+     */
+    public long getId() {
+        return id;
     }
 
-    public void setSideDishes(Set<Item> sideDishes) {
-        this.sideDishes = sideDishes;
+    /**
+     * @param id see {@link #getId()}.
+     */
+    public void setId(long id) {
+        this.id = id;
     }
-
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("title", title)
+                .append("id", id)
+                .append("options", options)
                 .append("price", price)
+                .append("title", title)
                 .append("type", type)
-                .append("optionDtos", optionDtos)
                 .toString();
     }
 
@@ -144,26 +149,24 @@ public class ItemDto extends AbstractEntityDto {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        ItemDto rhs = (ItemDto) obj;
+        Item rhs = (Item) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
+                .append(this.id, rhs.id)
                 .append(this.title, rhs.title)
                 .append(this.price, rhs.price)
                 .append(this.type, rhs.type)
-                .append(this.optionDtos, rhs.optionDtos)
-                .append(this.sideDishes, rhs.sideDishes)
+                .append(this.options, rhs.options)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
+                .append(id)
                 .append(title)
                 .append(price)
                 .append(type)
-                .append(optionDtos)
-                .append(sideDishes)
+                .append(options)
                 .toHashCode();
     }
 }

@@ -17,34 +17,30 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter.impl;
+package com.github.clboettcher.bonappetit.common.converter;
 
+import com.github.clboettcher.bonappetit.common.domain.menu.RadioItem;
 import com.github.clboettcher.bonappetit.common.dto.builder.RadioItemDtoBuilder;
 import com.github.clboettcher.bonappetit.common.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.server.entity.menu.RadioItem;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.RadioItemsConverter;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
  * Default impl of {@link RadioItemsConverter}.
  */
-@Component
-public class RadioItemsConverterImpl implements RadioItemsConverter {
+public class RadioItemsConverter {
 
     /**
      * Compares {@link RadioItem}s by {@link RadioItem#getIndex()}.
      */
-    private Comparator<RadioItem> indexComparator = new Comparator<RadioItem>() {
+    private static Comparator<RadioItem> indexComparator = new Comparator<RadioItem>() {
         @Override
         public int compare(RadioItem o1, RadioItem o2) {
             return o1.getIndex().compareTo(o2.getIndex());
         }
     };
 
-    @Override
-    public Set<RadioItemDto> convert(Set<RadioItem> radioItems) {
+    public static Set<RadioItemDto> convert(Set<RadioItem> radioItems) {
         List<RadioItem> inputSorted = new ArrayList<RadioItem>(radioItems);
         Collections.sort(inputSorted, indexComparator);
         LinkedHashSet<RadioItemDto> result = new LinkedHashSet<RadioItemDto>(inputSorted.size());

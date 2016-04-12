@@ -36,31 +36,77 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.common.printing;
+package com.github.clboettcher.bonappetit.common.domain.menu;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Set;
 
 /**
- * Enumerates strategies that determine how entities are printed.
- *
- * @deprecated Handle different prining options configuratively rather than in the data model.
+ * The menu represents the items that can be ordered.
  */
-@Deprecated
-public enum PrintStrategy {
+public class Menu {
+
+    private long id;
+
+    private Set<Item> items;
 
     /**
-     * Indicates the corresponding entity should be printed
-     * in a way that emphasises it.
-     * <p/>
-     * Implies that the entity is printed.
+     * @return The ID of this event.
      */
-    EMPHASISE,
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     /**
-     * Indicates the corresponding entity should be printed normally.
+     * @return The menu items that this menu consists of.
      */
-    DEFAULT,
+    public Set<Item> getItems() {
+        return items;
+    }
 
-    /**
-     * Indicates the corresponding entity should not be printed at all.
-     */
-    NOT_PRINTED
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Menu rhs = (Menu) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.items, rhs.items)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .append(items)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
+                .append("items", items)
+                .toString();
+    }
 }
