@@ -47,6 +47,14 @@ Run the following command to generate the war
 
 You find the archive at `/bonappetit-server/build/libs/bonappetit-server-${major.minor.bugfix}.war`
 
+## Contributors
+
+In order of appearance.
+
+<!--* [Christine Böttcher]()-->
+* [Manuel Huber](https://github.com/nelo112)
+* [Alexander Lannes](https://github.com/alexander-lannes)
+
 ## Maintainer
 
 Claudius Boettcher, <pos.bonappetit@gmail.com>.
