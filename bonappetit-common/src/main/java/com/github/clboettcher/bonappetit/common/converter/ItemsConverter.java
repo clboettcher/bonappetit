@@ -23,7 +23,7 @@ import com.github.clboettcher.bonappetit.common.domain.menu.Item;
 import com.github.clboettcher.bonappetit.common.domain.menu.Option;
 import com.github.clboettcher.bonappetit.common.dto.builder.ItemDtoBuilder;
 import com.github.clboettcher.bonappetit.common.dto.menu.ItemDto;
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
