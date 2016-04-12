@@ -1,4 +1,4 @@
-rootProject.name = 'BonAppetit'
+rootProject.name = 'bonappetit'
 
 // Subprojects
 include 'bonappetit-core'
