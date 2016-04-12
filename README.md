@@ -52,6 +52,7 @@ You find the archive at `/bonappetit-server/build/libs/bonappetit-server-${major
 In order of appearance.
 
 * [Christine Böttcher](https://github.com/ChristineBoettcher)
+* Sybille Steinberger
 * [Manuel Huber](https://github.com/nelo112)
 * [Alexander Lannes](https://github.com/alexander-lannes)
 
