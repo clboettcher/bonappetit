@@ -3,6 +3,9 @@ jdk:
   - oraclejdk8
 before_install:
  - chmod +x gradlew
+script:
+    # Override default ./gradlew build connectedCheck tasks for now until we setup tests correctly
+     - ./gradlew build
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
