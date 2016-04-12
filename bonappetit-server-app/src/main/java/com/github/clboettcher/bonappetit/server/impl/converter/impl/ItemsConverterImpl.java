@@ -53,7 +53,7 @@ public class ItemsConverterImpl implements ItemsConverter {
 
     @Override
     public Set<ItemDto> convertToItemDtos(Set<Item> items) {
-        Set<ItemDto> itemDtos = new LinkedHashSet<ItemDto>(items.size());
+        Set<ItemDto> itemDtos = new LinkedHashSet<>(items.size());
         for (Item item : items) {
             itemDtos.add(convertToDto(item));
         }

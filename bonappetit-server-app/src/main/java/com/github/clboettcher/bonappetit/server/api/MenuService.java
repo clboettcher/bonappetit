@@ -17,20 +17,28 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server;
+package com.github.clboettcher.bonappetit.server.api;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = BonappetitServerApplication.class)
-@WebAppConfiguration
-public class BonappetitServerApplicationTests {
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
-    @Test
-    public void contextLoads() {
-    }
+/**
+ * Provides access to the menu.
+ */
+@Path("/menus")
+@Api(value = "menu")
+public interface MenuService {
+
+    @GET
+    @Path("/current")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the currently active menu.")
+    MenuDto getCurrentMenu();
+
 }

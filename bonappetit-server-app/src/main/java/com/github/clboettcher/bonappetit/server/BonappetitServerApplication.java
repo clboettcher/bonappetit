@@ -20,12 +20,14 @@
 package com.github.clboettcher.bonappetit.server;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-@EntityScan("com.github.clboettcher.bonappetit.server.entity")
-@SpringBootApplication
-public class BonappetitServerApplication{
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan(basePackages = "com.github.clboettcher.bonappetit")
+public class BonappetitServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BonappetitServerApplication.class, args);

@@ -1,26 +1,28 @@
 apply plugin: 'java'
+apply plugin: "io.spring.dependency-management"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.data:spring-data-releasetrain:Hopper-SR1'
+    }
+}
+
 dependencies {
     // BonAppetit modules
     compile project(':bonappetit-common')
-
-    // Spring
-    compile "org.springframework:spring-context:${springVersion}"
-    compile "org.springframework:spring-tx:${springVersion}"
-    compile "org.springframework:spring-core:${springVersion}"
-    compile "org.springframework:spring-beans:${springVersion}"
-
-    // Object mapping
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
+    compile project(':bonappetit-domain')
 
     // Data access
+    compile 'org.springframework.data:spring-data-jpa'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compile 'org.springframework.data:spring-data-commons:1.11.4.RELEASE'
-    compile 'javax.el:javax.el-api:3.0.0'
-    compile 'org.glassfish:javax.el:3.0.0'
+    compile "org.hibernate:hibernate-core:${hibernateVersion}"
+    compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+    compile "javax.el:javax.el-api:${javaxElVersion}"
+    compile "org.glassfish:javax.el:${javaxElVersion}"
+    compile "com.h2database:h2:${h2Version}"
 
     // Testing
     testCompile "org.springframework:spring-test:${springVersion}"

@@ -17,20 +17,19 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server;
+package com.github.clboettcher.bonappetit.server.persistence.api;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import com.github.clboettcher.bonappetit.domain.menu.Menu;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = BonappetitServerApplication.class)
-@WebAppConfiguration
-public class BonappetitServerApplicationTests {
+/**
+ * Provides access to stored {@link Menu}s.
+ */
+public interface MenuDao {
 
-    @Test
-    public void contextLoads() {
-    }
+    /**
+     * Returns the current {@link Menu}.
+     *
+     * @return The current {@link Menu}.
+     */
+    Menu getCurrentMenu();
 }
