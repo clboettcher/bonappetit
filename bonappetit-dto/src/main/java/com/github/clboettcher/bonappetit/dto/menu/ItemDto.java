@@ -58,7 +58,7 @@ public class ItemDto extends AbstractEntityDto {
 
     private ItemDtoType type;
 
-    private Set<OptionDto> optionDtos;
+    private Set<OptionDto> options;
 
     private Set<ItemDto> sideDishes;
 
@@ -75,7 +75,7 @@ public class ItemDto extends AbstractEntityDto {
 
     /**
      * Returns the price of this item.
-     * <p/>
+     * <p>
      * This is the 'raw' price of the item, not consisting any options which
      * might have effects on the total price.
      *
@@ -103,12 +103,12 @@ public class ItemDto extends AbstractEntityDto {
     /**
      * @return The options available for this item (optional).
      */
-    public Set<OptionDto> getOptionDtos() {
-        return optionDtos;
+    public Set<OptionDto> getOptions() {
+        return options;
     }
 
-    public void setOptionDtos(Set<OptionDto> optionDtos) {
-        this.optionDtos = optionDtos;
+    public void setOptions(Set<OptionDto> options) {
+        this.options = options;
     }
 
     public Set<ItemDto> getSideDishes() {
@@ -127,7 +127,7 @@ public class ItemDto extends AbstractEntityDto {
                 .append("title", title)
                 .append("price", price)
                 .append("type", type)
-                .append("optionDtos", optionDtos)
+                .append("options", options)
                 .toString();
     }
 
@@ -148,7 +148,7 @@ public class ItemDto extends AbstractEntityDto {
                 .append(this.title, rhs.title)
                 .append(this.price, rhs.price)
                 .append(this.type, rhs.type)
-                .append(this.optionDtos, rhs.optionDtos)
+                .append(this.options, rhs.options)
                 .append(this.sideDishes, rhs.sideDishes)
                 .isEquals();
     }
@@ -160,7 +160,7 @@ public class ItemDto extends AbstractEntityDto {
                 .append(title)
                 .append(price)
                 .append(type)
-                .append(optionDtos)
+                .append(options)
                 .append(sideDishes)
                 .toHashCode();
     }

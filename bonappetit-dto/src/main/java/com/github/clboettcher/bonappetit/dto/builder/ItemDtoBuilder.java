@@ -80,7 +80,7 @@ public class ItemDtoBuilder {
         itemDto.setTitle(title);
         itemDto.setPrice(price);
         itemDto.setType(type);
-        itemDto.setOptionDtos(optionDtos);
+        itemDto.setOptions(optionDtos);
         itemDto.setSideDishes(sideDishes);
         itemDto.setId(id);
         return itemDto;
