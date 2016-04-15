@@ -6,4 +6,7 @@ targetCompatibility = 1.7
 
 dependencies {
     compile project(':bonappetit-core')
+    // Documentation
+    compile "io.swagger:swagger-annotations:${swaggerVersion}"
+    compileOnly "org.projectlombok:lombok:1.16.8"
 }

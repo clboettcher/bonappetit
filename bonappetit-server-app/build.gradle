@@ -44,7 +44,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
     // Documentation
-    compile 'io.swagger:swagger-jersey2-jaxrs:1.5.8'
+    compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
 
     // Testing
     testCompile('org.springframework.boot:spring-boot-starter-test')

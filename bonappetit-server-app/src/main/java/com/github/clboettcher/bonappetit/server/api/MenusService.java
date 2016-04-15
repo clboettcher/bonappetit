@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/menus")
 @Api(value = "menu")
-public interface MenuService {
+public interface MenusService {
 
     @GET
     @Path("/current")

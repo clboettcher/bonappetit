@@ -17,14 +17,23 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto;
+package com.github.clboettcher.bonappetit.server.impl;
 
-import lombok.Data;
+import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
+import com.google.common.collect.Sets;
+import org.springframework.stereotype.Component;
 
-/**
- * Abstract base class for all DTOs.
- */
-@Data
-public abstract class AbstractEntityDto {
-    private final Long id;
+import java.util.Set;
+
+@Component
+public class StaffMembersServiceImpl implements StaffMembersService {
+    @Override
+    public Set<StaffMemberDto> getStaffMembers() {
+        return Sets.newHashSet(StaffMemberDto.builder()
+                .id(12354L)
+                .firstName("Foo")
+                .lastName("Bar")
+                .build());
+    }
 }

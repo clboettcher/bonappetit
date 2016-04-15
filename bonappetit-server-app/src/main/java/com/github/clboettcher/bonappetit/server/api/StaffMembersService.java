@@ -17,14 +17,25 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto;
+package com.github.clboettcher.bonappetit.server.api;
 
-import lombok.Data;
+import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
-/**
- * Abstract base class for all DTOs.
- */
-@Data
-public abstract class AbstractEntityDto {
-    private final Long id;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.Set;
+
+@Path("/staffMembers")
+@Api(value = "staffMembers")
+public interface StaffMembersService {
+
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns a list of staff members.")
+    Set<StaffMemberDto> getStaffMembers();
 }

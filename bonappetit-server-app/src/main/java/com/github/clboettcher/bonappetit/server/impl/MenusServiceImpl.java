@@ -21,17 +21,17 @@ package com.github.clboettcher.bonappetit.server.impl;
 
 import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
-import com.github.clboettcher.bonappetit.server.api.MenuService;
+import com.github.clboettcher.bonappetit.server.api.MenusService;
 import com.github.clboettcher.bonappetit.server.impl.converter.api.MenusConverter;
 import com.github.clboettcher.bonappetit.server.persistence.api.MenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Default impl of the {@link MenuService}.
+ * Default impl of the {@link MenusService}.
  */
 @Component
-public class MenuServiceImpl implements MenuService {
+public class MenusServiceImpl implements MenusService {
 
     /**
      * The DAO for stored menus.
@@ -50,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
      * @param menusConverter see {@link #menusConverter}.
      */
     @Autowired
-    public MenuServiceImpl(MenuDao menuDao, MenusConverter menusConverter) {
+    public MenusServiceImpl(MenuDao menuDao, MenusConverter menusConverter) {
         this.menuDao = menuDao;
         this.menusConverter = menusConverter;
     }

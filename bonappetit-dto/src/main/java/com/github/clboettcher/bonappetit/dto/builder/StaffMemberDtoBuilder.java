@@ -53,10 +53,12 @@ public class StaffMemberDtoBuilder {
     }
 
     public StaffMemberDto build() {
-        StaffMemberDto staffMemberDto = new StaffMemberDto();
-        staffMemberDto.setFirstName(firstName);
-        staffMemberDto.setLastName(lastName);
-        staffMemberDto.setId(id);
+        StaffMemberDto staffMemberDto = StaffMemberDto.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .build();
+        ;
+
         return staffMemberDto;
     }
 }
