@@ -20,30 +20,40 @@
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.RadioItemEntity;
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.RadioOptionEntity;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 /**
- * An order for a {@link RadioOptionEntity}.
+ * An order for a {@link RadioItemEntity}.
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class RadioOptionOrderEntity extends AbstractOptionOrderEntity {
 
+    /**
+     * The radio item that was selected.
+     */
     @OneToOne(optional = false)
     @JoinColumn(name = "SELECTED_RADIO_ITEM_ID", nullable = false)
     private RadioItemEntity selectedItem;
 
     /**
-     * @return The radio item that was selected.
+     * Constructor setting the specified properties.
+     *
+     * @param id           see {@link #getId()}.
+     * @param selectedItem see {@link #getSelectedItem()}.
      */
-    public RadioItemEntity getSelectedItem() {
-        return selectedItem;
-    }
-
-    public void setSelectedItem(RadioItemEntity selectedItem) {
+    @Builder
+    public RadioOptionOrderEntity(long id, RadioItemEntity selectedItem) {
+        super(id);
         this.selectedItem = selectedItem;
     }
 }

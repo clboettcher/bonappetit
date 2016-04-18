@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.persistence.impl.converter;
 
-import com.github.clboettcher.bonappetit.domain.builder.MenuBuilder;
 import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.MenuEntity;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,8 @@ import org.springframework.stereotype.Component;
 public class MenuConverterImpl implements MenuConverter {
     @Override
     public Menu convert(MenuEntity menuEntity) {
-        return MenuBuilder.aMenu()
-                .withId(menuEntity.getId())
+        return Menu.builder()
+                .id(menuEntity.getId())
                 .build();
     }
 }

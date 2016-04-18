@@ -38,75 +38,25 @@
 */
 package com.github.clboettcher.bonappetit.domain.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.Set;
 
 /**
  * The menu represents the items that can be ordered.
  */
+@Data
+@Builder
 public class Menu {
 
+    /**
+     * The ID.
+     */
     private long id;
 
+    /**
+     * The items that this menu consists of.
+     */
     private Set<Item> items;
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The menu items that this menu consists of.
-     */
-    public Set<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Menu rhs = (Menu) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.items, rhs.items)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(items)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("items", items)
-                .toString();
-    }
 }

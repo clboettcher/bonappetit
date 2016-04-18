@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '1.3.3.RELEASE'
+        generatedMapperSourcesDir = "${buildDir}/generated-src/mapstruct/main"
     }
     repositories {
         mavenCentral()
@@ -26,6 +27,7 @@ targetCompatibility = 1.8
 
 configurations {
     providedRuntime
+    mapstruct
 }
 
 dependencies {
@@ -49,6 +51,10 @@ dependencies {
     // Documentation
     compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
 
+    // Object mapping
+    compile("org.mapstruct:mapstruct:${mapstructVersion}")
+    mapstruct("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
     // Testing
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
@@ -61,5 +67,40 @@ eclipse {
 }
 
 sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
+    main {
+        java.srcDirs += 'src/main/kotlin'
+        ext.originalJavaSrcDirs = java.srcDirs
+        java.srcDir "${generatedMapperSourcesDir}"
+    }
 }
+
+task generateMainMapperClasses(type: JavaCompile) {
+    ext.aptDumpDir = file("${buildDir}/tmp/apt/mapstruct")
+    destinationDir = aptDumpDir
+
+    classpath = compileJava.classpath + configurations.mapstruct
+    source = sourceSets.main.originalJavaSrcDirs
+    ext.sourceDestDir = file("$generatedMapperSourcesDir")
+
+    options.define(
+            compilerArgs: [
+                    "-nowarn",
+                    "-proc:only",
+                    "-encoding", "UTF-8",
+                    "-processor", "org.mapstruct.ap.MappingProcessor",
+                    "-s", sourceDestDir.absolutePath,
+                    "-source", sourceCompatibility,
+                    "-target", targetCompatibility,
+            ]
+    );
+
+    inputs.dir source
+    outputs.dir generatedMapperSourcesDir;
+    doFirst {
+        sourceDestDir.mkdirs()
+    }
+    doLast {
+        aptDumpDir.delete()
+    }
+}
+compileJava.dependsOn generateMainMapperClasses

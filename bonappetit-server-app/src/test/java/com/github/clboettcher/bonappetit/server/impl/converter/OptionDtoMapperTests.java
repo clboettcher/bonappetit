@@ -23,18 +23,12 @@ import com.github.clboettcher.bonappetit.domain.menu.Option;
 import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
 import com.github.clboettcher.bonappetit.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.OptionsConverter;
-import com.github.clboettcher.bonappetit.server.impl.converter.impl.OptionsConverterImpl;
+import com.github.clboettcher.bonappetit.server.impl.mapping.OptionDtoMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -43,14 +37,9 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for {@link OptionsConverterImpl}.
+ * Tests for {@link OptionDtoMapper}.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = OptionsConverterTest.Context.class)
-public class OptionsConverterTest {
-
-    @Autowired
-    private OptionsConverter optionsConverter;
+public class OptionDtoMapperTests {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -71,21 +60,14 @@ public class OptionsConverterTest {
         expected.setTitle("Test Value-Option");
 
         Set<OptionDto> expectedOutput = Sets.<OptionDto>newLinkedHashSet(Lists.newArrayList(expected));
-        assertThat(optionsConverter.convert(Sets.<Option>newHashSet(input)), is(expectedOutput));
+        assertThat(OptionDtoMapper.INSTANCE.mapToOptionDtos(Sets.<Option>newHashSet(input)), is(expectedOutput));
     }
 
     @Test
     public void testFailOnUnknownOptionType() throws Exception {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("Unknown");
-        optionsConverter.convert(Sets.<Option>newHashSet(new UnknownOption()));
-    }
-
-    static class Context {
-        @Bean
-        public OptionsConverter optionsConverter() {
-            return new OptionsConverterImpl(null);
-        }
+        OptionDtoMapper.INSTANCE.mapToOptionDtos(Sets.<Option>newHashSet(new UnknownOption()));
     }
 
     /**

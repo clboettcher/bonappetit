@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.persistence.impl;
 
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.builder.*;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.config.MenuConfig;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.*;
 import com.github.clboettcher.bonappetit.server.persistence.impl.repository.MenuConfigRepository;
@@ -60,54 +59,54 @@ public class Bootstrap {
     }
 
     private MenuEntity createMenu() {
-        return MenuEntityBuilder.aMenuEntity()
-                .withItems(Sets.newLinkedHashSet(Lists.newArrayList(
-                        ItemEntityBuilder.anItemEntity()
-                                .withTitle("Pommes")
-                                .withPrice(new BigDecimal("2.5"))
-                                .withType(ItemEntityType.FOOD)
-                                .withOptions(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionEntityBuilder.aValueOptionEntity()
-                                                .withTitle("Extra Salz")
-                                                .withIndex(2)
-                                                .withDefaultChecked(false)
-                                                .withPriceDiff(BigDecimal.ZERO)
+        return MenuEntity.builder()
+                .items(Sets.newLinkedHashSet(Lists.newArrayList(
+                        ItemEntity.builder()
+                                .title("Pommes")
+                                .price(new BigDecimal("2.5"))
+                                .type(ItemEntityType.FOOD)
+                                .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
+                                        ValueOptionEntity.builder()
+                                                .title("Extra Salz")
+                                                .index(2)
+                                                .defaultChecked(false)
+                                                .priceDiff(BigDecimal.ZERO)
                                                 .build()
                                 )))
                                 .build(),
-                        ItemEntityBuilder.anItemEntity()
-                                .withTitle("Nachos")
-                                .withPrice(new BigDecimal("2.0"))
-                                .withType(ItemEntityType.FOOD)
-                                .withOptions(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionEntityBuilder.aValueOptionEntity()
-                                                .withTitle("Käsesoße")
-                                                .withIndex(0)
-                                                .withDefaultChecked(true)
-                                                .withPriceDiff(new BigDecimal("0.5"))
+                        ItemEntity.builder()
+                                .title("Nachos")
+                                .price(new BigDecimal("2.0"))
+                                .type(ItemEntityType.FOOD)
+                                .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
+                                        ValueOptionEntity.builder()
+                                                .title("Käsesoße")
+                                                .index(0)
+                                                .defaultChecked(true)
+                                                .priceDiff(new BigDecimal("0.5"))
                                                 .build()
                                 )))
                                 .build(),
-                        ItemEntityBuilder.anItemEntity()
-                                .withTitle("Mineralwasser")
-                                .withPrice(new BigDecimal("1.9"))
-                                .withType(ItemEntityType.DRINK_NON_ALCOHOLIC)
+                        ItemEntity.builder()
+                                .title("Mineralwasser")
+                                .price(new BigDecimal("1.9"))
+                                .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
                                 .build(),
-                        ItemEntityBuilder.anItemEntity()
-                                .withTitle("Augustinger")
-                                .withPrice(new BigDecimal("2.2"))
-                                .withType(ItemEntityType.DRINK_ALCOHOLIC)
-                                .withOptions(Sets.<AbstractOptionEntity>newHashSet(
+                        ItemEntity.builder()
+                                .title("Augustinger")
+                                .price(new BigDecimal("2.2"))
+                                .type(ItemEntityType.DRINK_ALCOHOLIC)
+                                .options(Sets.<AbstractOptionEntity>newHashSet(
                                         createRadioOption("Größe", 0,
-                                                RadioItemEntityBuilder.aRadioItemEntity()
-                                                        .withTitle("groß")
-                                                        .withIndex(0)
-                                                        .withPriceDiff(BigDecimal.ZERO)
+                                                RadioItemEntity.builder()
+                                                        .title("groß")
+                                                        .index(0)
+                                                        .priceDiff(BigDecimal.ZERO)
                                                         .build(),
-                                                RadioItemEntityBuilder.aRadioItemEntity()
-                                                        .withTitle("klein")
-                                                        .withIndex(1)
-                                                        .withPriceDiff(new BigDecimal("0.5"))
+                                                RadioItemEntity.builder()
+                                                        .title("klein")
+                                                        .index(1)
+                                                        .priceDiff(new BigDecimal("0.5"))
                                                         .build())
                                 ))
                                 .build()
@@ -119,11 +118,11 @@ public class Bootstrap {
         Set<RadioItemEntity> items = Sets.newHashSet(otherItems);
         items.add(defaultSelected);
 
-        return RadioOptionEntityBuilder.aRadioOptionEntity()
-                .withIndex(index)
-                .withDefaultSelected(defaultSelected)
-                .withTitle(title)
-                .withRadioItems(items)
+        return RadioOptionEntity.builder()
+                .index(index)
+                .defaultSelected(defaultSelected)
+                .title(title)
+                .radioItems(items)
                 .build();
     }
 }

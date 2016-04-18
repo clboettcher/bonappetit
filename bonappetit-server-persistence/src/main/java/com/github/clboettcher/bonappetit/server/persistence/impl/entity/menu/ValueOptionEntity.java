@@ -38,10 +38,10 @@
 */
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,11 +55,23 @@ import java.math.BigDecimal;
  * A hamburger with the option for bacon. The "defaultValue" is 0 since this is a yes-or-no option and has no int value.
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ValueOptionEntity extends AbstractOptionEntity {
 
+    /**
+     * The price difference of this option.
+     * <p/>
+     * The total price of an order for an item can be calculated
+     * using the items price and the price diff of all options.
+     */
     @Column(name = "PRICE_DIFF")
     private BigDecimal priceDiff = BigDecimal.ZERO;
 
+    /**
+     * The default value to set when this option is ordered.
+     */
     @Column(name = "DEFAULT_CHECKED")
     private Boolean defaultChecked;
 
@@ -70,83 +82,21 @@ public class ValueOptionEntity extends AbstractOptionEntity {
     @Column(name = "DEFAULT_VALUE")
     private int defaultValue;
 
-
     /**
-     * Returns the price difference of this option.
-     * <p/>
-     * The total price of an order for an item can be calculated
-     * using the items price and the price diff of all options.
+     * Constructor setting the specified properties.
      *
-     * @return The price difference.
-     */
-    public BigDecimal getPriceDiff() {
-        return priceDiff;
-    }
-
-    public void setPriceDiff(BigDecimal priceDiff) {
-        this.priceDiff = priceDiff;
-    }
-
-    /**
-     * @return The default value to set when this option is ordered.
-     */
-    public Boolean getDefaultChecked() {
-        return defaultChecked;
-    }
-
-    /**
+     * @param id             see {@link #getId()}.
+     * @param title          see {@link #getTitle()}.
+     * @param index          see {@link #getIndex()}.
+     * @param priceDiff      see {@link #getPriceDiff()}.
      * @param defaultChecked see {@link #getDefaultChecked()}.
+     * @param defaultValue   see {@link #getDefaultValue()}.
      */
-    public void setDefaultChecked(Boolean defaultChecked) {
+    @Builder
+    public ValueOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked, int defaultValue) {
+        super(id, title, index);
+        this.priceDiff = priceDiff;
         this.defaultChecked = defaultChecked;
-    }
-
-    public int getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ValueOptionEntity rhs = (ValueOptionEntity) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.priceDiff, rhs.priceDiff)
-                .append(this.defaultChecked, rhs.defaultChecked)
-                .append(this.defaultValue, rhs.defaultValue)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(priceDiff)
-                .append(defaultChecked)
-                .append(defaultValue)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("priceDiff", priceDiff)
-                .append("defaultChecked", defaultChecked)
-                .append("defaultValue", defaultValue)
-                .toString();
     }
 }

@@ -38,130 +38,46 @@
 */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-/**
- * A menu item.
- */
-public class ItemDto extends AbstractEntityDto {
+@Data
+@NoArgsConstructor
+@ApiModel(description = "A menu item")
+public class ItemDto {
 
+    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    private Long id;
+
+    @ApiModelProperty(value = "The title / name of this item", required = true, example = "Cola")
     private String title;
 
+    @ApiModelProperty(value = "The price of this item. This is the 'raw' price of the item, not consisting " +
+            "any options which might have effects on the total price.", required = true, example = "2.50")
     private BigDecimal price;
 
+    @ApiModelProperty(value = "The type of this item", required = true)
     private ItemDtoType type;
 
+    @ApiModelProperty(value = "The options available for this item")
     private Set<OptionDto> options;
 
+    @ApiModelProperty(value = "The side dishes available for this item")
     private Set<ItemDto> sideDishes;
 
-    /**
-     * @return The title / name of this item, e.g. "Cola".
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
+    @Builder
+    public ItemDto(Long id, String title, BigDecimal price, ItemDtoType type, Set<OptionDto> options, Set<ItemDto> sideDishes) {
+        this.id = id;
         this.title = title;
-    }
-
-    /**
-     * Returns the price of this item.
-     * <p>
-     * This is the 'raw' price of the item, not consisting any options which
-     * might have effects on the total price.
-     *
-     * @return The price of this item.
-     */
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    /**
-     * @return The type of this item.
-     */
-    public ItemDtoType getType() {
-        return type;
-    }
-
-    public void setType(ItemDtoType type) {
         this.type = type;
-    }
-
-    /**
-     * @return The options available for this item (optional).
-     */
-    public Set<OptionDto> getOptions() {
-        return options;
-    }
-
-    public void setOptions(Set<OptionDto> options) {
         this.options = options;
-    }
-
-    public Set<ItemDto> getSideDishes() {
-        return sideDishes;
-    }
-
-    public void setSideDishes(Set<ItemDto> sideDishes) {
         this.sideDishes = sideDishes;
-    }
-
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("title", title)
-                .append("price", price)
-                .append("type", type)
-                .append("options", options)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ItemDto rhs = (ItemDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.title, rhs.title)
-                .append(this.price, rhs.price)
-                .append(this.type, rhs.type)
-                .append(this.options, rhs.options)
-                .append(this.sideDishes, rhs.sideDishes)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(title)
-                .append(price)
-                .append(type)
-                .append(options)
-                .append(sideDishes)
-                .toHashCode();
     }
 }

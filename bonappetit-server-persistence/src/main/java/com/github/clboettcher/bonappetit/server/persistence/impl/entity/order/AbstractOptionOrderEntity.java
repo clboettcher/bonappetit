@@ -19,10 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -33,55 +32,16 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_ORDER_TYPE")
 @Table(name = "OPTION_ORDER")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class AbstractOptionOrderEntity {
 
+    /**
+     * The ID.
+     */
     @Id
     @GeneratedValue
     @Column(name = "OPTION_ORDER_ID")
     private long id;
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        AbstractOptionOrderEntity rhs = (AbstractOptionOrderEntity) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .toHashCode();
-    }
 }

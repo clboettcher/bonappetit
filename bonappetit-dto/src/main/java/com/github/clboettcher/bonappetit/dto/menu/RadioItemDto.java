@@ -19,84 +19,40 @@
  */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 /**
  * A single item of a {@link RadioOptionDto}.
  */
-public class RadioItemDto extends AbstractEntityDto {
+@Data
+@NoArgsConstructor
+@ApiModel(description = "A single item of a radio option")
+public class RadioItemDto {
 
+    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    private Long id;
+
+    @ApiModelProperty(value = "The title / name of this item", required = true, example = "small")
     private String title;
 
+    @ApiModelProperty(value = "The price difference of this radio item. The total price of an order for an item " +
+            "can be calculated using the items price and the price diff of all options.", required = true, example = "2.50")
     private BigDecimal priceDiff;
 
-    /**
-     * @return The title / name of this item, e.g. "klein".
-     */
-    public String getTitle() {
-        return title;
-    }
+    @ApiModelProperty(value = "The index this item should be displayed at", required = true, example = "0")
+    private Integer index;
 
-    public void setTitle(String title) {
+    @Builder
+    public RadioItemDto(Long id, String title, BigDecimal priceDiff, Integer index) {
+        this.id = id;
         this.title = title;
-    }
-
-    /**
-     * Returns the price difference of this radio item.
-     * <p>
-     * The total price of an order for an item can be calculated
-     * using the items price and the price diff of all options.
-     *
-     * @return The price difference.
-     */
-    public BigDecimal getPriceDiff() {
-        return priceDiff;
-    }
-
-    public void setPriceDiff(BigDecimal priceDiff) {
         this.priceDiff = priceDiff;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("title", title)
-                .append("priceDiff", priceDiff)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RadioItemDto rhs = (RadioItemDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.title, rhs.title)
-                .append(this.priceDiff, rhs.priceDiff)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(title)
-                .append(priceDiff)
-                .toHashCode();
+        this.index = index;
     }
 }

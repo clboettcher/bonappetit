@@ -19,95 +19,46 @@
  */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-/**
- * An option consisting of a boolean checkbox.
- */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@ApiModel(description = "An option consisting of a boolean checkbox")
 public class ValueOptionDto extends OptionDto {
 
+    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
+            "using the items price and the price diff of all options.", required = true, example = "2.50")
     private BigDecimal priceDiff;
 
+    @ApiModelProperty(value = "The default value to set when this option is ordered", required = true)
     private Boolean defaultChecked;
 
+    @ApiModelProperty(value = "The default value for this option. A defaultValue of zero indicates that " +
+            "this option is only a yes/no option and no number is required", required = true, example = "2")
     private int defaultValue;
 
     /**
-     * Returns the price difference of this option.
-     * <p/>
-     * The total price of an order for an item can be calculated
-     * using the items price and the price diff of all options.
+     * Constructor setting the specified properties.
      *
-     * @return The price difference.
+     * @param id             see {@link #getId()}.
+     * @param title          see {@link #getTitle()}.
+     * @param priceDiff      see {@link #getPriceDiff()}.
+     * @param defaultChecked see {@link #getDefaultChecked()}.
+     * @param defaultValue   see {@link  #getDefaultValue()}.
      */
-    public BigDecimal getPriceDiff() {
-        return priceDiff;
-    }
-
-    public void setPriceDiff(BigDecimal priceDiff) {
+    @Builder
+    public ValueOptionDto(Long id, String title, BigDecimal priceDiff, Boolean defaultChecked, int defaultValue) {
+        super(id, title);
         this.priceDiff = priceDiff;
-    }
-
-    /**
-     * @return The default value to set when this option is ordered.
-     */
-    public Boolean getDefaultChecked() {
-        return defaultChecked;
-    }
-
-    public void setDefaultChecked(Boolean defaultChecked) {
         this.defaultChecked = defaultChecked;
-    }
-
-    public int getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("priceDiff", priceDiff)
-                .append("defaultChecked", defaultChecked)
-                .append("defaultValue", defaultValue)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ValueOptionDto rhs = (ValueOptionDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.priceDiff, rhs.priceDiff)
-                .append(this.defaultChecked, rhs.defaultChecked)
-                .append(this.defaultValue, rhs.defaultValue)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(priceDiff)
-                .append(defaultChecked)
-                .append(defaultValue)
-                .toHashCode();
     }
 }

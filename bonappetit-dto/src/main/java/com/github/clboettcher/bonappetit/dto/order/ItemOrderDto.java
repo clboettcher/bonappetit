@@ -19,178 +19,48 @@
  */
 package com.github.clboettcher.bonappetit.dto.order;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
 import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
 import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-public class ItemOrderDto extends AbstractEntityDto {
+@Data
+@NoArgsConstructor
+@ApiModel(description = "An order for an item")
+public class ItemOrderDto {
 
+    @ApiModelProperty(value = "The ordered item", required = true)
     private ItemDto item;
 
+    @ApiModelProperty(value = "The ordered options of the ordered item")
     private Set<OptionOrderDto> optionOrders;
 
+    @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
+            example = "Table 4")
     private String deliverTo;
 
+    @ApiModelProperty(value = "The staff member who took this order", required = true)
     private StaffMemberDto staffMember;
 
+    @ApiModelProperty(value = "The time this order was taken", required = true)
     private Date orderTime;
 
+    @ApiModelProperty(value = "A note further describing this order", example = "Without onions")
     private String note;
 
-    private OrderDtoStatus status;
-
-    /**
-     * The discount in percent.
-     * discount = 10
-     * means a 10% discount
-     */
-    private int discount;
-
-    /**
-     * The price of the item and the chosen options.
-     * Does NOT contain the discount from the discount variable.
-     */
-    private BigDecimal price;
-
-    /**
-     * @return The ID.
-     */
-
-    public ItemDto getItem() {
-        return item;
-    }
-
-    public void setItem(ItemDto item) {
+    @Builder
+    public ItemOrderDto(ItemDto item, Set<OptionOrderDto> optionOrders, String deliverTo, StaffMemberDto staffMember, Date orderTime, String note) {
         this.item = item;
-    }
-
-    public String getDeliverTo() {
-        return deliverTo;
-    }
-
-    public void setDeliverTo(String deliverTo) {
-        this.deliverTo = deliverTo;
-    }
-
-    public StaffMemberDto getStaffMember() {
-        return staffMember;
-    }
-
-    public void setStaffMember(StaffMemberDto staffMember) {
-        this.staffMember = staffMember;
-    }
-
-    public Date getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Set<OptionOrderDto> getOptionOrders() {
-        return optionOrders;
-    }
-
-    public void setOptionOrders(Set<OptionOrderDto> optionOrders) {
         this.optionOrders = optionOrders;
-    }
-
-    public OrderDtoStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderDtoStatus status) {
-        this.status = status;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("item", item)
-                .append("optionOrders", optionOrders)
-                .append("deliverTo", deliverTo)
-                .append("staffMember", staffMember)
-                .append("orderTime", orderTime)
-                .append("note", note)
-                .append("status", status)
-                .append("discount", discount)
-                .append("price", price)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ItemOrderDto rhs = (ItemOrderDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.item, rhs.item)
-                .append(this.optionOrders, rhs.optionOrders)
-                .append(this.deliverTo, rhs.deliverTo)
-                .append(this.staffMember, rhs.staffMember)
-                .append(this.orderTime, rhs.orderTime)
-                .append(this.note, rhs.note)
-                .append(this.status, rhs.status)
-                .append(this.discount, rhs.discount)
-                .append(this.price, rhs.price)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(item)
-                .append(optionOrders)
-                .append(deliverTo)
-                .append(staffMember)
-                .append(orderTime)
-                .append(note)
-                .append(status)
-                .append(discount)
-                .append(price)
-                .toHashCode();
+        this.deliverTo = deliverTo;
+        this.staffMember = staffMember;
+        this.orderTime = orderTime;
+        this.note = note;
     }
 }

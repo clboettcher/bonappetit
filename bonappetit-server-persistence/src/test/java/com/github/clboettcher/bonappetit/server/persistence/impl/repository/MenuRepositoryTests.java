@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.persistence.impl.repository;
 
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.builder.*;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.*;
 import com.google.common.collect.Sets;
 import org.hamcrest.CoreMatchers;
@@ -47,14 +46,14 @@ public class MenuRepositoryTests {
     @Test
     public void testSaveMenuItemWithoutOptions() throws Exception {
         // Setup
-        ItemEntity item = ItemEntityBuilder.anItemEntity()
-                .withTitle("Item Title")
-                .withPrice(new BigDecimal("1.9"))
-                .withType(ItemEntityType.DRINK_NON_ALCOHOLIC)
+        ItemEntity item = ItemEntity.builder()
+                .title("Item Title")
+                .price(new BigDecimal("1.9"))
+                .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
                 .build();
 
-        MenuEntity menu = MenuEntityBuilder.aMenuEntity()
-                .withItems(Sets.newHashSet(item))
+        MenuEntity menu = MenuEntity.builder()
+                .items(Sets.newHashSet(item))
                 .build();
 
         // Test
@@ -74,22 +73,22 @@ public class MenuRepositoryTests {
     @Test
     public void testSaveItemWithValueOption() throws Exception {
         // Setup
-        ItemEntity item = ItemEntityBuilder.anItemEntity()
-                .withTitle("Item Title")
-                .withPrice(new BigDecimal("1.9"))
-                .withType(ItemEntityType.DRINK_NON_ALCOHOLIC)
-                .withOptions(Sets.<AbstractOptionEntity>newHashSet(
-                        ValueOptionEntityBuilder.aValueOptionEntity()
-                                .withTitle("Value Option")
-                                .withIndex(17)
-                                .withDefaultChecked(true)
-                                .withPriceDiff(BigDecimal.ONE)
+        ItemEntity item = ItemEntity.builder()
+                .title("Item Title")
+                .price(new BigDecimal("1.9"))
+                .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
+                .options(Sets.<AbstractOptionEntity>newHashSet(
+                        ValueOptionEntity.builder()
+                                .title("Value Option")
+                                .index(17)
+                                .defaultChecked(true)
+                                .priceDiff(BigDecimal.ONE)
                                 .build()
                 ))
                 .build();
 
-        MenuEntity menu = MenuEntityBuilder.aMenuEntity()
-                .withItems(Sets.newHashSet(item))
+        MenuEntity menu = MenuEntity.builder()
+                .items(Sets.newHashSet(item))
                 .build();
 
         // Test
@@ -110,35 +109,35 @@ public class MenuRepositoryTests {
 
     @Test
     public void testSaveItemWithRadioOptions() throws Exception {
-        RadioItemEntity defaultSelected = RadioItemEntityBuilder.aRadioItemEntity()
-                .withTitle("Default selected")
-                .withIndex(0)
-                .withPriceDiff(BigDecimal.ONE)
+        RadioItemEntity defaultSelected = RadioItemEntity.builder()
+                .title("Default selected")
+                .index(0)
+                .priceDiff(BigDecimal.ONE)
                 .build();
 
-        ItemEntity item = ItemEntityBuilder.anItemEntity()
-                .withTitle("Item Title")
-                .withPrice(new BigDecimal("1.9"))
-                .withType(ItemEntityType.DRINK_NON_ALCOHOLIC)
-                .withOptions(Sets.<AbstractOptionEntity>newHashSet(
-                        RadioOptionEntityBuilder.aRadioOptionEntity()
-                                .withTitle("Radio Option")
-                                .withIndex(17)
-                                .withDefaultSelected(defaultSelected)
-                                .withRadioItems(Sets.newHashSet(
+        ItemEntity item = ItemEntity.builder()
+                .title("Item Title")
+                .price(new BigDecimal("1.9"))
+                .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
+                .options(Sets.<AbstractOptionEntity>newHashSet(
+                        RadioOptionEntity.builder()
+                                .title("Radio Option")
+                                .index(17)
+                                .defaultSelected(defaultSelected)
+                                .radioItems(Sets.newHashSet(
                                         defaultSelected,
-                                        RadioItemEntityBuilder.aRadioItemEntity()
-                                                .withTitle("Radio Item 2")
-                                                .withIndex(1)
-                                                .withPriceDiff(BigDecimal.ONE)
+                                        RadioItemEntity.builder()
+                                                .title("Radio Item 2")
+                                                .index(1)
+                                                .priceDiff(BigDecimal.ONE)
                                                 .build()
                                 ))
                                 .build()
                 ))
                 .build();
 
-        MenuEntity menu = MenuEntityBuilder.aMenuEntity()
-                .withItems(Sets.newHashSet(item))
+        MenuEntity menu = MenuEntity.builder()
+                .items(Sets.newHashSet(item))
                 .build();
 
         menuRepository.save(menu);

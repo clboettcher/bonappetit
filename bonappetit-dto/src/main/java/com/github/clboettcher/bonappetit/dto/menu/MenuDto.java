@@ -38,62 +38,31 @@
 */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 /**
  * The menu represents the items that can be ordered.
  */
-public class MenuDto extends AbstractEntityDto {
+@Data
+@NoArgsConstructor
+@ApiModel(description = "The menu contains the items that can be ordered")
+public class MenuDto {
 
-    private Set<ItemDto> itemDtos;
+    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    private Long id;
 
-    /**
-     * @return The menu items that this menu consists of.
-     */
-    public Set<ItemDto> getItemDtos() {
-        return itemDtos;
-    }
+    @ApiModelProperty(value = "The items that this menu consists of")
+    private Set<ItemDto> items;
 
-    public void setItemDtos(Set<ItemDto> itemDtos) {
-        this.itemDtos = itemDtos;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("itemDtos", itemDtos)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        MenuDto rhs = (MenuDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.itemDtos, rhs.itemDtos)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(itemDtos)
-                .toHashCode();
+    @Builder
+    public MenuDto(Long id, Set<ItemDto> items) {
+        this.id = id;
+        this.items = items;
     }
 }

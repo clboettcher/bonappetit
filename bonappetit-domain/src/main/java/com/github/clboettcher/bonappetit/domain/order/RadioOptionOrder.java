@@ -20,22 +20,33 @@
 package com.github.clboettcher.bonappetit.domain.order;
 
 import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
- * An order for a {@link RadioOption}.
+ * An order for a {@link RadioItem}.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class RadioOptionOrder extends OptionOrder {
 
+    /**
+     * The radio item that was selected.
+     */
     private RadioItem selectedItem;
 
     /**
-     * @return The radio item that was selected.
+     * Constructor setting the specified properties.
+     *
+     * @param id           see {@link #getId()}.
+     * @param selectedItem see {@link #getSelectedItem()}.
      */
-    public RadioItem getSelectedItem() {
-        return selectedItem;
-    }
-
-    public void setSelectedItem(RadioItem selectedItem) {
+    @Builder
+    public RadioOptionOrder(long id, RadioItem selectedItem) {
+        super(id);
         this.selectedItem = selectedItem;
     }
 }

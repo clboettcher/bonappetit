@@ -19,20 +19,16 @@
  */
 package com.github.clboettcher.bonappetit.dto.staff;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-/**
- * Represents a staff member of the restaurant.
- */
-@ApiModel(description = "Represents a staff member of the restaurant")
+@ApiModel(description = "A staff member of the restaurant")
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class StaffMemberDto extends AbstractEntityDto {
+@NoArgsConstructor
+public class StaffMemberDto {
 
     @ApiModelProperty(value = "The first name", required = true, example = "John")
     private String firstName;
@@ -41,8 +37,7 @@ public class StaffMemberDto extends AbstractEntityDto {
     private String lastName;
 
     @Builder
-    public StaffMemberDto(Long id, String firstName, String lastName) {
-        super(id);
+    public StaffMemberDto(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

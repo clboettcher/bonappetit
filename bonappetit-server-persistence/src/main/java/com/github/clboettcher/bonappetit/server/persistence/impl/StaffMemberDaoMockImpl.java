@@ -17,28 +17,36 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl;
+package com.github.clboettcher.bonappetit.server.persistence.impl;
 
 import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
-import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
-import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
 import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
+import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/**
+ * Impl of {@link StaffMemberDao} that returns static testdata.
+ */
 @Component
-public class StaffMembersServiceImpl implements StaffMembersService {
-
-    /**
-     * The bean providing access to stored staff members.
-     */
-    private StaffMemberDao staffMemberDao;
+@Profile("mock")
+public class StaffMemberDaoMockImpl implements StaffMemberDao {
 
     @Override
-    public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMember> result = staffMemberDao.getStaffMembers();
-        return StaffMemberDtoMapper.INSTANCE.convert(result);
+    public Set<StaffMember> getStaffMembers() {
+        return Sets.newHashSet(
+                StaffMember.builder()
+                        .id(1)
+                        .firstName("John")
+                        .lastName("Smith")
+                        .build(),
+                StaffMember.builder()
+                        .id(2)
+                        .firstName("Jane")
+                        .lastName("Smith")
+                        .build()
+        );
     }
 }

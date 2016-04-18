@@ -17,34 +17,29 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter.impl;
+package com.github.clboettcher.bonappetit.server.impl.mapping;
 
 import com.github.clboettcher.bonappetit.domain.menu.Menu;
-import com.github.clboettcher.bonappetit.dto.builder.MenuDtoBuilder;
 import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.ItemsConverter;
-import com.github.clboettcher.bonappetit.server.impl.converter.api.MenusConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 /**
- * Default impl of {@link MenusConverter}.
+ * Maps {@link Menu}s to {@link MenuDto}s.
  */
-@Component
-public class MenusConverterImpl implements MenusConverter {
+@Mapper(uses = ItemDtoMapper.class)
+public interface MenuDtoMapper {
 
-    private ItemsConverter itemsConverter;
+    /**
+     * The mapper instance.
+     */
+    MenuDtoMapper INSTANCE = Mappers.getMapper(MenuDtoMapper.class);
 
-    @Autowired
-    public MenusConverterImpl(ItemsConverter itemsConverter) {
-        this.itemsConverter = itemsConverter;
-    }
-
-    @Override
-    public MenuDto convertToDto(Menu menu) {
-        return MenuDtoBuilder.aMenuDto()
-                .withId(menu.getId())
-                .withItemDtos(itemsConverter.convertToItemDtos(menu.getItems()))
-                .build();
-    }
+    /**
+     * Maps the given {@link Menu} to a {@link MenuDto}.
+     *
+     * @param menu The {@link Menu} to convert.
+     * @return The resulting {@link MenuDto}.
+     */
+    MenuDto mapToMenuDto(Menu menu);
 }

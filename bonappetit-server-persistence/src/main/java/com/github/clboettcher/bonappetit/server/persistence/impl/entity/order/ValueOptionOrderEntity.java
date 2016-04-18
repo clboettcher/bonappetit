@@ -20,52 +20,57 @@
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.ValueOptionEntity;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+/**
+ * An order for a {@link ValueOptionEntity}.
+ */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
 
+    /**
+     * The ordered option.
+     */
     @OneToOne(optional = false)
     @JoinColumn(name = "VALUE_OPTION_ID", referencedColumnName = "OPTION_ID")
     private ValueOptionEntity option;
 
+    /**
+     * Whether the option has been checked or not.
+     */
     @Column(name = "CHECKED", nullable = false)
     private Boolean checked;
 
+    /**
+     * The value describing how often the option was ordered.
+     */
     @Column(name = "VALUE", nullable = false)
     private int value;
 
     /**
-     * @return Whether the option has been checked or not.
+     * Constructor setting the specified properties.
+     *
+     * @param id      see {@link #getId()}.
+     * @param option  see {@link #getOption()}.
+     * @param checked see {@link #getChecked()}.
+     * @param value   see {@link #getValue()}.
      */
-    public Boolean getChecked() {
-        return checked;
-    }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
-    }
-
-    /**
-     * @return The ordered option.
-     */
-    public ValueOptionEntity getOption() {
-        return option;
-    }
-
-    public void setOption(ValueOptionEntity option) {
+    @Builder
+    public ValueOptionOrderEntity(long id, ValueOptionEntity option, Boolean checked, int value) {
+        super(id);
         this.option = option;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
+        this.checked = checked;
         this.value = value;
     }
 }

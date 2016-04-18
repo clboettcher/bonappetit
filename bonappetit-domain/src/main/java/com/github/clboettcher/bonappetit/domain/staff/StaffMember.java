@@ -38,91 +38,28 @@
 */
 package com.github.clboettcher.bonappetit.domain.staff;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * Represents a staff member of the restaurant.
  */
+@Data
+@Builder
 public class StaffMember {
 
+    /**
+     * The ID.
+     */
     private long id;
 
+    /**
+     * The first name.
+     */
     private String firstName;
 
+    /**
+     * The last name.
+     */
     private String lastName;
-
-    /**
-     * @return The ID.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The first name.
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return The last name.
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        StaffMember rhs = (StaffMember) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.firstName, rhs.firstName)
-                .append(this.lastName, rhs.lastName)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(firstName)
-                .append(lastName)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .toString();
-    }
-
 }

@@ -38,10 +38,8 @@
 */
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -50,88 +48,27 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STAFF_MEMBER")
+@Data
+@Builder
 public class StaffMemberEntity {
 
+    /**
+     * The ID.
+     */
     @Id
     @GeneratedValue
     @Column(name = "STAFF_MEMBER_ID")
     private long id;
 
+    /**
+     * The first name.
+     */
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
+    /**
+     * The last name.
+     */
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
-
-    /**
-     * @return The ID.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The first name.
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return The last name.
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        StaffMemberEntity rhs = (StaffMemberEntity) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.firstName, rhs.firstName)
-                .append(this.lastName, rhs.lastName)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(firstName)
-                .append(lastName)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .toString();
-    }
-
 }

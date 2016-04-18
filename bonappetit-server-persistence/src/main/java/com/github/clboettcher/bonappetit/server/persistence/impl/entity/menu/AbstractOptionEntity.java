@@ -38,10 +38,9 @@
 */
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -52,87 +51,29 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_TYPE")
 @Table(name = "ITEM_OPTION") // 'option' is reserved in mysql
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class AbstractOptionEntity {
 
+    /**
+     * The ID.
+     */
     @Id
     @GeneratedValue
     @Column(name = "OPTION_ID")
     private long id;
 
+    /**
+     * The title / name of this option, e.g. 'Size'.
+     */
     @Column(name = "TITLE", nullable = false)
     private String title;
 
+    /**
+     * The zero based index that this item should be displayed at.
+     */
     // 'index' is reserved in mysql
     @Column(name = "OPTION_INDEX", nullable = false)
     private Integer index;
-
-    /**
-     * @return The title / name of this option.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * @return The zero based index that this item should be displayed at.
-     */
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
-    /**
-     * @return The ID.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("title", title)
-                .append("index", index)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        AbstractOptionEntity rhs = (AbstractOptionEntity) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.title, rhs.title)
-                .append(this.index, rhs.index)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(title)
-                .append(index)
-                .toHashCode();
-    }
 }

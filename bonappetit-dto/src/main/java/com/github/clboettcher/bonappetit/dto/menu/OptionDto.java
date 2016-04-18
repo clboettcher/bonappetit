@@ -38,60 +38,25 @@
 */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import com.github.clboettcher.bonappetit.dto.AbstractEntityDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * Abstract base class for menu item options.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class})
-public abstract class OptionDto extends AbstractEntityDto {
+public abstract class OptionDto {
 
+    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    private Long id;
+
+    @ApiModelProperty(value = "The title / name of this option", required = true, example = "Size")
     private String title;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("title", title)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        OptionDto rhs = (OptionDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.title, rhs.title)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(title)
-                .toHashCode();
-    }
 }

@@ -24,6 +24,9 @@ dependencies {
     compile "org.glassfish:javax.el:${javaxElVersion}"
     compile "com.h2database:h2:${h2Version}"
 
+    // Utils
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
     // Testing
     testCompile "org.springframework:spring-test:${springVersion}"
     testCompile "junit:junit:${junitVersion}"

@@ -19,81 +19,48 @@
  */
 package com.github.clboettcher.bonappetit.domain.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 /**
  * An option that consists of multiple items of which one must be selected.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class RadioOption extends Option {
 
+    /**
+     * The default selected item.
+     * <p/>
+     * This is the item that should be selected per default when this option is available.
+     * <p/>
+     * Must be contained ind the list of items as returned by {@link #getRadioItems()}.
+     */
     private RadioItem defaultSelected;
 
+    /**
+     * The items that this option consists of.
+     */
     private Set<RadioItem> radioItems;
 
     /**
-     * Returns the default selected item.
-     * <p>
-     * Must be contained ind the list of items as returned by {@link #getRadioItems()}.
+     * Constructor setting the specified properties.
      *
-     * @return The item that should be selected per default when this option is available.
+     * @param id              see {@link #getId()}.
+     * @param title           see {@link #getTitle()}.
+     * @param index           see {@link #getIndex()}.
+     * @param defaultSelected see {@link #getDefaultSelected()}.
+     * @param radioItems      see {@link #getRadioItems()}.
      */
-    public RadioItem getDefaultSelected() {
-        return defaultSelected;
-    }
-
-    public void setDefaultSelected(RadioItem defaultSelected) {
+    @Builder
+    public RadioOption(long id, String title, Integer index, RadioItem defaultSelected, Set<RadioItem> radioItems) {
+        super(id, title, index);
         this.defaultSelected = defaultSelected;
-    }
-
-    /**
-     * @return The items that this option consists of.
-     */
-    public Set<RadioItem> getRadioItems() {
-        return radioItems;
-    }
-
-    public void setRadioItems(Set<RadioItem> radioItems) {
         this.radioItems = radioItems;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RadioOption rhs = (RadioOption) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.defaultSelected, rhs.defaultSelected)
-                .append(this.radioItems, rhs.radioItems)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(defaultSelected)
-                .append(radioItems)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("defaultSelected", defaultSelected)
-                .append("radioItems", radioItems)
-                .toString();
     }
 }

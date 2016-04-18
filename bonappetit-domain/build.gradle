@@ -8,4 +8,5 @@ targetCompatibility = 1.7
 dependencies {
     compile project(':bonappetit-core')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinStdLibVersion"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
 }

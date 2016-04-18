@@ -17,28 +17,40 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl;
+package com.github.clboettcher.bonappetit.server.impl.converter;
 
 import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
-import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
 import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
-import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
-import org.springframework.stereotype.Component;
+import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
+import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Set;
 
-@Component
-public class StaffMembersServiceImpl implements StaffMembersService {
+/**
+ * Tests for {@link StaffMemberDtoMapper}.
+ */
+public class StaffMemberDtoMapperTests {
 
-    /**
-     * The bean providing access to stored staff members.
-     */
-    private StaffMemberDao staffMemberDao;
+    @Test
+    public void testConverter() throws Exception {
+        HashSet<StaffMember> input = Sets.newHashSet(
+                StaffMember.builder()
+                        .id(1)
+                        .firstName("John")
+                        .lastName("Smith")
+                        .build(),
+                StaffMember.builder()
+                        .id(2)
+                        .firstName("Jane")
+                        .lastName("Smith")
+                        .build()
+        );
+        Set<StaffMemberDto> actual = StaffMemberDtoMapper.INSTANCE.convert(input);
 
-    @Override
-    public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMember> result = staffMemberDao.getStaffMembers();
-        return StaffMemberDtoMapper.INSTANCE.convert(result);
+        Assert.assertThat(actual.size(), Matchers.is(2));
     }
 }

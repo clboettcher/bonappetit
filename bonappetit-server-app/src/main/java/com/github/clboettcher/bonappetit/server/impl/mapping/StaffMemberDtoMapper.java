@@ -17,18 +17,22 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto;
+package com.github.clboettcher.bonappetit.server.impl.mapping;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
+import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-/**
- * Abstract base class for all DTOs.
- */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public abstract class AbstractEntityDto {
-    private Long id;
+import java.util.Set;
+
+@Mapper
+public interface StaffMemberDtoMapper {
+
+    StaffMemberDtoMapper INSTANCE = Mappers.getMapper(StaffMemberDtoMapper.class);
+
+    StaffMemberDto convert(StaffMember staffMember);
+
+    Set<StaffMemberDto> convert(Set<StaffMember> staffMembers);
+
 }

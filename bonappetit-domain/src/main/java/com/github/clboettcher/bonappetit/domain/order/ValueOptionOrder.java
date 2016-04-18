@@ -20,42 +20,45 @@
 package com.github.clboettcher.bonappetit.domain.order;
 
 import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ValueOptionOrder extends OptionOrder {
 
+    /**
+     * The ordered option.
+     */
     private ValueOption option;
 
+    /**
+     * Whether the option has been checked or not.
+     */
     private Boolean checked;
 
+    /**
+     * The ordered value.
+     */
     private int value;
 
-    /**
-     * @return Whether the option has been checked or not.
-     */
-    public Boolean getChecked() {
-        return checked;
-    }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
-    }
 
     /**
-     * @return The ordered option.
+     * Constructor setting the specified properties.
+     *
+     * @param id      see {@link #getId()}.
+     * @param option  see {@link #getOption()}.
+     * @param checked see {@link #getChecked()}.
+     * @param value   see {@link #getValue()}.
      */
-    public ValueOption getOption() {
-        return option;
-    }
-
-    public void setOption(ValueOption option) {
+    @Builder
+    public ValueOptionOrder(long id, ValueOption option, Boolean checked, int value) {
+        super(id);
         this.option = option;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
+        this.checked = checked;
         this.value = value;
     }
 }

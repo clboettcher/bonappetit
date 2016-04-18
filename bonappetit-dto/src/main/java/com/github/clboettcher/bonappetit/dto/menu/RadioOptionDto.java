@@ -19,78 +19,39 @@
  */
 package com.github.clboettcher.bonappetit.dto.menu;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-/**
- * An option that consists of multiple items of which one must be selected.
- */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@ApiModel(description = "An option that consists of multiple items of which one must be selected")
 public class RadioOptionDto extends OptionDto {
 
-    private Long defaultSelectedId;
+    @ApiModelProperty(value = "The raiod itme that should be selected per default.", required = true)
+    private RadioItemDto defaultSelected;
 
-    private Set<RadioItemDto> radioItemDtos;
-
-    /**
-     * @return The ID of the {@link RadioItemDto} (contained by {@link #getRadioItemDtos()}) that should be
-     * selected per default.
-     */
-    public Long getDefaultSelectedId() {
-        return defaultSelectedId;
-    }
-
-    public void setDefaultSelectedId(Long defaultSelectedId) {
-        this.defaultSelectedId = defaultSelectedId;
-    }
+    @ApiModelProperty(value = "The items that this option consists of.", required = true)
+    private Set<RadioItemDto> radioItems;
 
     /**
-     * @return The items that this option consists of.
+     * Constructor setting the specified properties.
+     *
+     * @param id              see {@link #getId()}.
+     * @param title           see {@link #getTitle()}.
+     * @param defaultSelected see {@link #getDefaultSelected()}.
+     * @param radioItems      see {@link #getRadioItems()}.
      */
-    public Set<RadioItemDto> getRadioItemDtos() {
-        return radioItemDtos;
-    }
-
-    public void setRadioItemDtos(Set<RadioItemDto> radioItemDtos) {
-        this.radioItemDtos = radioItemDtos;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("defaultSelectedId", defaultSelectedId)
-                .append("radioItemDtos", radioItemDtos)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RadioOptionDto rhs = (RadioOptionDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.defaultSelectedId, rhs.defaultSelectedId)
-                .append(this.radioItemDtos, rhs.radioItemDtos)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(defaultSelectedId)
-                .append(radioItemDtos)
-                .toHashCode();
+    @Builder
+    public RadioOptionDto(Long id, String title, RadioItemDto defaultSelected, Set<RadioItemDto> radioItems) {
+        super(id, title);
+        this.defaultSelected = defaultSelected;
+        this.radioItems = radioItems;
     }
 }

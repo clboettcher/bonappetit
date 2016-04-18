@@ -17,21 +17,31 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter.api;
+package com.github.clboettcher.bonappetit.server.impl.converter;
 
-import com.github.clboettcher.bonappetit.domain.menu.RadioOption;
-import com.github.clboettcher.bonappetit.dto.menu.RadioOptionDto;
+import com.github.clboettcher.bonappetit.domain.menu.Menu;
+import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
+import com.github.clboettcher.bonappetit.server.impl.mapping.MenuDtoMapper;
+import org.junit.Test;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
- * Converts {@link RadioOption}s to {@link RadioOptionDto}s.
+ * Tests for {@link MenuDtoMapper}.
  */
-public interface RadioOptionsConverter {
+public class MenuDtoMapperTests {
 
-    /**
-     * Converts a {@link RadioOption} to a {@link RadioOptionDto}.
-     *
-     * @param option The {@link RadioOption} to convert.
-     * @return The resulting {@link RadioOptionDto}.
-     */
-    RadioOptionDto convert(RadioOption option);
+    @Test
+    public void testConversion() throws Exception {
+        Menu inputMenu = Menu.builder()
+                .id(1)
+                .build();
+
+        MenuDto expectedMenuDto = MenuDto.builder()
+                .id(1L)
+                .build();
+
+        assertThat(MenuDtoMapper.INSTANCE.mapToMenuDto(inputMenu), is(expectedMenuDto));
+    }
 }

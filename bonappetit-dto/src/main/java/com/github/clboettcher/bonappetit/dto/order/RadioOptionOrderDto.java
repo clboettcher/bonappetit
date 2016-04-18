@@ -21,62 +21,33 @@ package com.github.clboettcher.bonappetit.dto.order;
 
 import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
 import com.github.clboettcher.bonappetit.dto.menu.RadioOptionDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * An order for a {@link RadioOptionDto}.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@ApiModel("An order for a radio option")
 public class RadioOptionOrderDto extends OptionOrderDto {
 
+    @ApiModelProperty(value = "The radio item that was selected", required = true)
     private RadioItemDto selectedItem;
 
     /**
-     * @return The radio item that was selected.
+     * Constructor setting the specified properties.
+     *
+     * @param selectedItem see {@link #selectedItem}.
      */
-    public RadioItemDto getSelectedItem() {
-        return selectedItem;
-    }
-
-    public void setSelectedItem(RadioItemDto selectedItem) {
+    @Builder
+    public RadioOptionOrderDto(RadioItemDto selectedItem) {
         this.selectedItem = selectedItem;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RadioOptionOrderDto rhs = (RadioOptionOrderDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.selectedItem, rhs.selectedItem)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(selectedItem)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("selectedItem", selectedItem)
-                .toString();
     }
 
 }

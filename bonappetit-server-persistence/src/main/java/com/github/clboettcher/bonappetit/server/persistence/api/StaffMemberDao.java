@@ -17,42 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.domain.builder;
+package com.github.clboettcher.bonappetit.server.persistence.api;
 
-import com.github.clboettcher.bonappetit.domain.menu.Item;
-import com.github.clboettcher.bonappetit.domain.menu.Menu;
+import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 
 import java.util.Set;
 
-public class MenuBuilder {
-    private long id;
-    private Set<Item> items;
+/**
+ * Provides access to stored {@link StaffMember}s.
+ */
+public interface StaffMemberDao {
 
-    private MenuBuilder() {
-    }
-
-    public static MenuBuilder aMenu() {
-        return new MenuBuilder();
-    }
-
-    public MenuBuilder withId(long id) {
-        this.id = id;
-        return this;
-    }
-
-    public MenuBuilder withItems(Set<Item> items) {
-        this.items = items;
-        return this;
-    }
-
-    public MenuBuilder but() {
-        return aMenu().withId(id).withItems(items);
-    }
-
-    public Menu build() {
-        Menu menu = new Menu();
-        menu.setId(id);
-        menu.setItems(items);
-        return menu;
-    }
+    /**
+     * Returns all stored staff members.
+     *
+     * @return All stored {@link StaffMember}s. May be null or empty.
+     */
+    Set<StaffMember> getStaffMembers();
 }

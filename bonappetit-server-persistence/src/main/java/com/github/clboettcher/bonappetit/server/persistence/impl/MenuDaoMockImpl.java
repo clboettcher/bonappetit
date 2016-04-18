@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.persistence.impl;
 
-import com.github.clboettcher.bonappetit.domain.builder.*;
 import com.github.clboettcher.bonappetit.domain.menu.*;
 import com.github.clboettcher.bonappetit.server.persistence.api.MenuDao;
 import com.google.common.collect.Lists;
@@ -55,54 +54,54 @@ public class MenuDaoMockImpl implements MenuDao {
     }
 
     private Menu createMenu() {
-        return MenuBuilder.aMenu()
-                .withItems(Sets.newLinkedHashSet(Lists.newArrayList(
-                        ItemBuilder.anItem()
-                                .withTitle("Pommes")
-                                .withPrice(new BigDecimal("2.5"))
-                                .withType(ItemType.FOOD)
-                                .withOptions(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionBuilder.aValueOption()
-                                                .withTitle("Extra Salz")
-                                                .withIndex(2)
-                                                .withDefaultChecked(false)
-                                                .withPriceDiff(BigDecimal.ZERO)
+        return Menu.builder()
+                .items(Sets.newLinkedHashSet(Lists.newArrayList(
+                        Item.builder()
+                                .title("Pommes")
+                                .price(new BigDecimal("2.5"))
+                                .type(ItemType.FOOD)
+                                .options(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
+                                        ValueOption.builder()
+                                                .title("Extra Salz")
+                                                .index(2)
+                                                .defaultChecked(false)
+                                                .priceDiff(BigDecimal.ZERO)
                                                 .build()
                                 )))
                                 .build(),
-                        ItemBuilder.anItem()
-                                .withTitle("Nachos")
-                                .withPrice(new BigDecimal("2.0"))
-                                .withType(ItemType.FOOD)
-                                .withOptions(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionBuilder.aValueOption()
-                                                .withTitle("Käsesoße")
-                                                .withIndex(0)
-                                                .withDefaultChecked(true)
-                                                .withPriceDiff(new BigDecimal("0.5"))
+                        Item.builder()
+                                .title("Nachos")
+                                .price(new BigDecimal("2.0"))
+                                .type(ItemType.FOOD)
+                                .options(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
+                                        ValueOption.builder()
+                                                .title("Käsesoße")
+                                                .index(0)
+                                                .defaultChecked(true)
+                                                .priceDiff(new BigDecimal("0.5"))
                                                 .build()
                                 )))
                                 .build(),
-                        ItemBuilder.anItem()
-                                .withTitle("Mineralwasser")
-                                .withPrice(new BigDecimal("1.9"))
-                                .withType(ItemType.DRINK_NON_ALCOHOLIC)
+                        Item.builder()
+                                .title("Mineralwasser")
+                                .price(new BigDecimal("1.9"))
+                                .type(ItemType.DRINK_NON_ALCOHOLIC)
                                 .build(),
-                        ItemBuilder.anItem()
-                                .withTitle("Augustinger")
-                                .withPrice(new BigDecimal("2.2"))
-                                .withType(ItemType.DRINK_ALCOHOLIC)
-                                .withOptions(Sets.<Option>newHashSet(
+                        Item.builder()
+                                .title("Augustinger")
+                                .price(new BigDecimal("2.2"))
+                                .type(ItemType.DRINK_ALCOHOLIC)
+                                .options(Sets.<Option>newHashSet(
                                         createRadioOption("Größe", 0,
-                                                RadioItemBuilder.aRadioItem()
-                                                        .withTitle("groß")
-                                                        .withIndex(0)
-                                                        .withPriceDiff(BigDecimal.ZERO)
+                                                RadioItem.builder()
+                                                        .title("groß")
+                                                        .index(0)
+                                                        .priceDiff(BigDecimal.ZERO)
                                                         .build(),
-                                                RadioItemBuilder.aRadioItem()
-                                                        .withTitle("klein")
-                                                        .withIndex(1)
-                                                        .withPriceDiff(new BigDecimal("0.5"))
+                                                RadioItem.builder()
+                                                        .title("klein")
+                                                        .index(1)
+                                                        .priceDiff(new BigDecimal("0.5"))
                                                         .build())
                                 ))
                                 .build()
@@ -114,11 +113,11 @@ public class MenuDaoMockImpl implements MenuDao {
         Set<RadioItem> items = Sets.newHashSet(otherItems);
         items.add(defaultSelected);
 
-        return RadioOptionBuilder.aRadioOption()
-                .withIndex(index)
-                .withDefaultSelected(defaultSelected)
-                .withTitle(title)
-                .withRadioItems(items)
+        return RadioOption.builder()
+                .index(index)
+                .defaultSelected(defaultSelected)
+                .title(title)
+                .radioItems(items)
                 .build();
     }
 }

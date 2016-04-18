@@ -21,31 +21,58 @@ package com.github.clboettcher.bonappetit.domain.order;
 
 import com.github.clboettcher.bonappetit.domain.menu.Item;
 import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * An order for an {@link Item}.
+ */
+@Data
+@Builder
 public class ItemOrder {
 
+    /**
+     * The ID.
+     */
     private long id;
 
+    /**
+     * The ordered item.
+     */
     private Item item;
 
+    /**
+     * The ordered options (optional).
+     */
     private Set<OptionOrder> optionOrders;
 
+    /**
+     * The person or location that this order should be delivered to.
+     */
     private String deliverTo;
 
+    /**
+     * The {@link StaffMember} who took this order.
+     */
     private StaffMember staffMember;
 
+    /**
+     * The time this order was taken.
+     */
     private Date orderTime;
 
+    /**
+     * A note further describing this order (optional).
+     */
     private String note;
 
+    /**
+     * The status of this order.
+     */
     private OrderStatus status;
 
     /**
@@ -60,145 +87,4 @@ public class ItemOrder {
      * Does NOT contain the discount from the discount variable.
      */
     private BigDecimal price;
-
-    /**
-     * @return The ID.
-     */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public String getDeliverTo() {
-        return deliverTo;
-    }
-
-    public void setDeliverTo(String deliverTo) {
-        this.deliverTo = deliverTo;
-    }
-
-    public StaffMember getStaffMember() {
-        return staffMember;
-    }
-
-    public void setStaffMember(StaffMember staffMember) {
-        this.staffMember = staffMember;
-    }
-
-    public Date getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Set<OptionOrder> getOptionOrders() {
-        return optionOrders;
-    }
-
-    public void setOptionOrders(Set<OptionOrder> optionOrders) {
-        this.optionOrders = optionOrders;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("item", item)
-                .append("optionOrders", optionOrders)
-                .append("deliverTo", deliverTo)
-                .append("staffMember", staffMember)
-                .append("orderTime", orderTime)
-                .append("note", note)
-                .append("status", status)
-                .append("discount", discount)
-                .append("price", price)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ItemOrder rhs = (ItemOrder) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.item, rhs.item)
-                .append(this.optionOrders, rhs.optionOrders)
-                .append(this.deliverTo, rhs.deliverTo)
-                .append(this.staffMember, rhs.staffMember)
-                .append(this.orderTime, rhs.orderTime)
-                .append(this.note, rhs.note)
-                .append(this.status, rhs.status)
-                .append(this.discount, rhs.discount)
-                .append(this.price, rhs.price)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(item)
-                .append(optionOrders)
-                .append(deliverTo)
-                .append(staffMember)
-                .append(orderTime)
-                .append(note)
-                .append(status)
-                .append(discount)
-                .append(price)
-                .toHashCode();
-    }
 }

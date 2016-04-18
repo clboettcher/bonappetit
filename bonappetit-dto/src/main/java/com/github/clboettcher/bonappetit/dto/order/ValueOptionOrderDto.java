@@ -20,89 +20,37 @@
 package com.github.clboettcher.bonappetit.dto.order;
 
 import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@ApiModel(description = "An order for a value option")
 public class ValueOptionOrderDto extends OptionOrderDto {
 
+    @ApiModelProperty(value = "The ordered option", required = true)
     private ValueOptionDto option;
 
+    @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
     private Boolean checked;
 
+    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
     private int value;
 
     /**
-     * @return Whether the option has been checked or not.
+     * Constructor setting the specified properties.
+     *
+     * @param option  see {@link #option}.
+     * @param checked see {@link #checked}.
+     * @param value   see {@link #value}.
      */
-    public Boolean getChecked() {
-        return checked;
-    }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
-    }
-
-    /**
-     * @return The ordered option.
-     */
-    public ValueOptionDto getOption() {
-        return option;
-    }
-
-    public void setOption(ValueOptionDto option) {
+    public ValueOptionOrderDto(ValueOptionDto option, Boolean checked, int value) {
         this.option = option;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
+        this.checked = checked;
         this.value = value;
     }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ValueOptionOrderDto rhs = (ValueOptionOrderDto) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.option, rhs.option)
-                .append(this.checked, rhs.checked)
-                .append(this.value, rhs.value)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(option)
-                .append(checked)
-                .append(value)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .appendSuper(super.toString())
-                .append("option", option)
-                .append("checked", checked)
-                .append("value", value)
-                .toString();
-    }
-
-
 }

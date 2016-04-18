@@ -19,60 +19,20 @@
  */
 package com.github.clboettcher.bonappetit.domain.order;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Abstract base class for option order entities.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class OptionOrder {
 
+    /**
+     * The ID.
+     */
     private long id;
-
-    /**
-     * @return The ID of this event.
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * @param id see {@link #getId()}.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        OptionOrder rhs = (OptionOrder) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .toHashCode();
-    }
 }
