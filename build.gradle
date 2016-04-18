@@ -1,4 +1,29 @@
 buildscript {
+    ext {
+        // c
+        commonsCollections4Version = "4.1"
+        commonsIoVersion = "2.4"
+        commonsLang3Version = "3.0"
+        // g
+        guavaVersion = "19.0"
+        // h
+        h2Version = "1.4.191"
+        hamcrestVersion = "1.3"
+        hibernateVersion = "5.1.0.Final"
+        // j
+        javaxElVersion = "3.0.0"
+        jacksonVersion = "2.7.3"
+        junitVersion = "4.12"
+        // k
+        kotlinStdLibVersion = "1.0.1"
+        // l
+        lombokVersion = "1.16.8"
+        // m
+        mockitoVersion = "1.10.19"
+        // s
+        springVersion = "4.2.5.RELEASE"
+        swaggerVersion = "1.5.8"
+    }
 //    System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
     repositories {
         mavenCentral()
@@ -9,7 +34,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         // Kotlin
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinStdLibVersion}"
         // Spring
         classpath "io.spring.gradle:dependency-management-plugin:0.4.0.RELEASE"
     }
