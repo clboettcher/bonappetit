@@ -62,7 +62,7 @@ public enum ItemDtoType {
     DRINK_NON_ALCOHOLIC,
 
     /**
-     *
+     * A side dish, e.g. 'Ketchup'.
      */
     SIDE_DISH
 }
