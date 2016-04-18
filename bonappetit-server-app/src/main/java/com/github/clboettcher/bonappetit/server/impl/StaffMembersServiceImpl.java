@@ -19,21 +19,26 @@
  */
 package com.github.clboettcher.bonappetit.server.impl;
 
+import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
-import com.google.common.collect.Sets;
+import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
+import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 @Component
 public class StaffMembersServiceImpl implements StaffMembersService {
+
+    /**
+     * The bean providing access to stored staff members.
+     */
+    private StaffMemberDao staffMemberDao;
+
     @Override
     public Set<StaffMemberDto> getStaffMembers() {
-        return Sets.newHashSet(StaffMemberDto.builder()
-                .id(12354L)
-                .firstName("Foo")
-                .lastName("Bar")
-                .build());
+        Set<StaffMember> result = staffMemberDao.getStaffMembers();
+        return StaffMemberDtoMapper.INSTANCE.convert(result);
     }
 }
