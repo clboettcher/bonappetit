@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter;
+package com.github.clboettcher.bonappetit.server.impl.mapping;
 
 import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.dto.menu.MenuDto;

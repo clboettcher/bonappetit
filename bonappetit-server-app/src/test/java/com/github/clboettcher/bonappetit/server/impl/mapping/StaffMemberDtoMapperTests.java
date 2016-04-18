@@ -17,11 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.converter;
+package com.github.clboettcher.bonappetit.server.impl.mapping;
 
 import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
-import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
