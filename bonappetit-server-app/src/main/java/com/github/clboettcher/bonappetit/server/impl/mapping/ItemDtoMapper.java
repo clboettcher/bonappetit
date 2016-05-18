@@ -34,6 +34,9 @@ import java.util.Set;
 @Mapper(uses = OptionDtoMapper.class)
 public interface ItemDtoMapper {
 
+    /**
+     * A mapper instance.
+     */
     ItemDtoMapper INSTANCE = Mappers.getMapper(ItemDtoMapper.class);
 
     /**
