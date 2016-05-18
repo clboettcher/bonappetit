@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class StaffMembersServiceImpl implements StaffMembersService {
+public class StaffMembersServiceImplTmp implements StaffMembersService {
 
     /**
      * The bean providing access to stored staff members.
