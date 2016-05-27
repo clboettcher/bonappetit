@@ -24,6 +24,7 @@ import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
 import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
 import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -34,6 +35,7 @@ public class StaffMembersServiceImpl implements StaffMembersService {
     /**
      * The bean providing access to stored staff members.
      */
+    @Autowired
     private StaffMemberDao staffMemberDao;
 
     @Override
