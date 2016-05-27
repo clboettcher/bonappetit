@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="bonappetit-server buildNeeded" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.clboettcher.bonappetit.server.BonappetitServerApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <module name="bonappetit-server-app" />
+    <envs />
+    <method>
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="server-app buildNeeded -x test" run_configuration_type="GradleRunConfiguration" />
+    </method>
+  </configuration>
+</component>
