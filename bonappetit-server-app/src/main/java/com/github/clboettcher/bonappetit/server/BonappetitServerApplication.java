@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server;
 
-import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,10 +30,6 @@ import org.springframework.context.annotation.Configuration;
 public class BonappetitServerApplication {
 
     public static void main(String[] args) {
-        StaffMemberDto staffMemberDto = new StaffMemberDto();
-        staffMemberDto.setFirstName("Foo");
-        staffMemberDto.setLastName("bar");
-
         SpringApplication.run(BonappetitServerApplication.class, args);
     }
 }

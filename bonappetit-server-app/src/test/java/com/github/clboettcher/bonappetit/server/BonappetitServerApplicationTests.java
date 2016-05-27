@@ -31,6 +31,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class BonappetitServerApplicationTests {
 
     @Test
-    public void contextLoads() {
+    public void testContextLoads() {
     }
 }
