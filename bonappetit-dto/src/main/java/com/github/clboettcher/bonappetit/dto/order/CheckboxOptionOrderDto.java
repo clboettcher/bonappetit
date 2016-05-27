@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.dto.order;
 
-import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
+import com.github.clboettcher.bonappetit.dto.menu.CheckboxOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -30,24 +30,24 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "An order for a checkbox option")
+public class CheckboxOptionOrderDto extends OptionOrderDto {
 
     @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto option;
+    private CheckboxOptionDto option;
 
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param option see {@link #option}.
-     * @param value  see {@link #value}.
+     * @param option  see {@link #option}.
+     * @param checked see {@link #checked}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto option, int value) {
+    public CheckboxOptionOrderDto(CheckboxOptionDto option, Boolean checked) {
         this.option = option;
-        this.value = value;
+        this.checked = checked;
     }
 }
