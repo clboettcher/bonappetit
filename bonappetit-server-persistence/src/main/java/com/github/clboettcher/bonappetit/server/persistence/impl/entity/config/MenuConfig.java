@@ -20,47 +20,48 @@
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.config;
 
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.MenuEntity;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 /**
  * Holds menu configuration.
- * <p/>
+ * <p>
  * E.g. which menu is active at the moment. The corresponding table will never contain
  * more than one row.
  */
 @Entity
 @Table(name = "MENU_CONFIG")
+@Data
+@NoArgsConstructor
 public class MenuConfig {
 
+    /**
+     * The ID.
+     */
     @Id
     @GeneratedValue
     @Column(name = "MENU_CONFIG_ID")
     private long id;
 
-    @OneToOne(optional = false,cascade = CascadeType.ALL)
+    /**
+     * The currently active menu.
+     */
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private MenuEntity current;
 
     /**
-     * @return The ID of this menu config.
+     * Constructor setting the specified properties.
+     *
+     * @param id      see {@link #id}.
+     * @param current see {@link #current}.
      */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
+    @Builder
+    public MenuConfig(long id, MenuEntity current) {
         this.id = id;
-    }
-
-    /**
-     * @return The menu that is currently active.
-     */
-    public MenuEntity getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(MenuEntity current) {
         this.current = current;
     }
 }

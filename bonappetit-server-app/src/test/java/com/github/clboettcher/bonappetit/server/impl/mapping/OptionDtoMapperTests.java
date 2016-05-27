@@ -23,7 +23,6 @@ import com.github.clboettcher.bonappetit.domain.menu.Option;
 import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
 import com.github.clboettcher.bonappetit.dto.menu.OptionDto;
 import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
-import com.github.clboettcher.bonappetit.server.impl.mapping.OptionDtoMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Rule;
@@ -46,18 +45,20 @@ public class OptionDtoMapperTests {
 
     @Test
     public void testConvertValueOption() throws Exception {
-        ValueOption input = new ValueOption();
-        input.setId(1337);
-        input.setDefaultChecked(true);
-        input.setPriceDiff(new BigDecimal("2.5"));
-        input.setIndex(5);
-        input.setTitle("Test Value-Option");
+        ValueOption input = ValueOption.builder()
+                .id(1337)
+                .defaultValue(2)
+                .priceDiff(new BigDecimal("2.5"))
+                .index(5)
+                .title("Test Value-Option")
+                .build();
 
-        ValueOptionDto expected = new ValueOptionDto();
-        expected.setId(1337L);
-        expected.setDefaultChecked(true);
-        expected.setPriceDiff(new BigDecimal("2.5"));
-        expected.setTitle("Test Value-Option");
+        ValueOptionDto expected = ValueOptionDto.builder()
+                .id(1337L)
+                .defaultValue(2)
+                .priceDiff(new BigDecimal("2.5"))
+                .title("Test Value-Option")
+                .build();
 
         Set<OptionDto> expectedOutput = Sets.<OptionDto>newLinkedHashSet(Lists.newArrayList(expected));
         assertThat(OptionDtoMapper.INSTANCE.mapToOptionDtos(Sets.<Option>newHashSet(input)), is(expectedOutput));

@@ -21,47 +21,75 @@ package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff.StaffMemberEntity;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * An order for a {@link ItemEntity}.
+ */
 @Entity
 @Table(name = "ITEM_ORDER")
+@Data
+@NoArgsConstructor
 public class ItemOrderEntity {
 
+    /**
+     * The ID.
+     */
     @Id
     @GeneratedValue
     @Column(name = "ITEM_ORDER_ID")
     private long id;
 
+    /**
+     * The ordered item.
+     */
     @OneToOne(optional = false)
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private ItemEntity item;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    /**
+     * The ordered options.
+     */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ORDER_ID")
     private Set<AbstractOptionOrderEntity> optionOrders;
 
+    /**
+     * The person or place (eg table) that the order should be delivered to.
+     */
     @Column(name = "DELIVER_TO", nullable = false)
     private String deliverTo;
 
+    /**
+     * The staff member who took the order.
+     */
     @OneToOne(optional = false)
     @JoinColumn(name = "STAFF_MEMBER_ID", nullable = false)
     private StaffMemberEntity staffMember;
 
+    /**
+     * The timestamp that the order was taken.
+     */
     @Column(name = "ORDER_TIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderTime;
 
+    /**
+     * An optional note.
+     */
     @Column(name = "NOTE")
     private String note;
 
+    /**
+     * The status of this order.
+     */
     @Column(name = "STATUS", nullable = false)
     private OrderEntityStatus status;
 
@@ -74,150 +102,37 @@ public class ItemOrderEntity {
     private int discount;
 
     /**
-     * The price of the item and the chosen options.
+     * The calculated price of the item and the chosen options.
      * Does NOT contain the discount from the discount variable.
      */
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
     /**
-     * @return The ID.
+     * Constructor setting the specified properties.
+     *
+     * @param item         see {@link #item}.
+     * @param optionOrders see {@link #optionOrders}.
+     * @param deliverTo    see {@link #deliverTo}.
+     * @param staffMember  see {@link #staffMember}.
+     * @param orderTime    see {@link #orderTime}.
+     * @param note         see {@link #note}.
+     * @param status       see {@link #status}.
+     * @param discount     see {@link #discount}.
+     * @param price        see {@link #price}.
      */
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public ItemEntity getItem() {
-        return item;
-    }
-
-    public void setItem(ItemEntity item) {
+    @Builder
+    public ItemOrderEntity(ItemEntity item, Set<AbstractOptionOrderEntity> optionOrders,
+                           String deliverTo, StaffMemberEntity staffMember, Date orderTime,
+                           String note, OrderEntityStatus status, int discount, BigDecimal price) {
         this.item = item;
-    }
-
-    public String getDeliverTo() {
-        return deliverTo;
-    }
-
-    public void setDeliverTo(String deliverTo) {
-        this.deliverTo = deliverTo;
-    }
-
-    public StaffMemberEntity getStaffMember() {
-        return staffMember;
-    }
-
-    public void setStaffMember(StaffMemberEntity staffMember) {
-        this.staffMember = staffMember;
-    }
-
-    public Date getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Set<AbstractOptionOrderEntity> getOptionOrders() {
-        return optionOrders;
-    }
-
-    public void setOptionOrders(Set<AbstractOptionOrderEntity> optionOrders) {
         this.optionOrders = optionOrders;
-    }
-
-    public OrderEntityStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderEntityStatus status) {
+        this.deliverTo = deliverTo;
+        this.staffMember = staffMember;
+        this.orderTime = orderTime;
+        this.note = note;
         this.status = status;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
         this.discount = discount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("item", item)
-                .append("optionOrders", optionOrders)
-                .append("deliverTo", deliverTo)
-                .append("staffMember", staffMember)
-                .append("orderTime", orderTime)
-                .append("note", note)
-                .append("status", status)
-                .append("discount", discount)
-                .append("price", price)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ItemOrderEntity rhs = (ItemOrderEntity) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.item, rhs.item)
-                .append(this.optionOrders, rhs.optionOrders)
-                .append(this.deliverTo, rhs.deliverTo)
-                .append(this.staffMember, rhs.staffMember)
-                .append(this.orderTime, rhs.orderTime)
-                .append(this.note, rhs.note)
-                .append(this.status, rhs.status)
-                .append(this.discount, rhs.discount)
-                .append(this.price, rhs.price)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(item)
-                .append(optionOrders)
-                .append(deliverTo)
-                .append(staffMember)
-                .append(orderTime)
-                .append(note)
-                .append(status)
-                .append(discount)
-                .append(price)
-                .toHashCode();
     }
 }

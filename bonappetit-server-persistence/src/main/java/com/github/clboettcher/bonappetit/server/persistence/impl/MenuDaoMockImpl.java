@@ -61,11 +61,17 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemType.FOOD)
                                 .options(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOption.builder()
+                                        CheckboxOption.builder()
                                                 .title("Extra Salz")
-                                                .index(2)
+                                                .index(0)
                                                 .defaultChecked(false)
                                                 .priceDiff(BigDecimal.ZERO)
+                                                .build(),
+                                        ValueOption.builder()
+                                                .title("Ketchup")
+                                                .defaultValue(2)
+                                                .priceDiff(BigDecimal.ZERO)
+                                                .index(1)
                                                 .build()
                                 )))
                                 .build(),
@@ -74,7 +80,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemType.FOOD)
                                 .options(Sets.<Option>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOption.builder()
+                                        CheckboxOption.builder()
                                                 .title("Käsesoße")
                                                 .index(0)
                                                 .defaultChecked(true)

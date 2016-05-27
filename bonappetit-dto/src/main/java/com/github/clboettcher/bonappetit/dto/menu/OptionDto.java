@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class})
+@XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class, CheckboxOptionDto.class})
 public abstract class OptionDto {
 
     @ApiModelProperty(value = "The technical ID", required = true, example = "1337")

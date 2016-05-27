@@ -46,11 +46,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
- * An option consisting of a boolean checkbox and (optionally) a integer.
- * Example:
- * French fries with the option for ketchup for. The int value is the number of ketchup packages.
- * Example:
- * A hamburger with the option for bacon. The "defaultValue" is 0 since this is a yes-or-no option and has no int value.
+ * An option consisting of an integer value.
+ * <p>
+ * Example: French fries with the option for ketchup. The int value is the number of ketchup packages.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -59,20 +57,15 @@ public class ValueOption extends Option {
 
     /**
      * The price difference of this option.
-     * <p/>
+     * <p>
      * The total price of an order for an item can be calculated
      * using the items price and the price diff of all options.
      */
     private BigDecimal priceDiff;
 
     /**
-     * The default value to set when this option is ordered.
-     */
-    private Boolean defaultChecked;
-
-    /**
      * The default value for this option.
-     * <p/>
+     * <p>
      * A defaultValue of zero indicates that this option is only a yes/no option and no number is required.
      */
     private int defaultValue;
@@ -80,18 +73,16 @@ public class ValueOption extends Option {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #getId()}.
-     * @param title          see {@link #getTitle()}.
-     * @param index          see {@link #getIndex()}.
-     * @param priceDiff      see {@link #priceDiff}.
-     * @param defaultChecked see {@link #defaultChecked}.
-     * @param defaultValue   see {@link #defaultValue}.
+     * @param id           see {@link #getId()}.
+     * @param title        see {@link #getTitle()}.
+     * @param index        see {@link #getIndex()}.
+     * @param priceDiff    see {@link #priceDiff}.
+     * @param defaultValue see {@link #defaultValue}.
      */
     @Builder
-    public ValueOption(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked, int defaultValue) {
+    public ValueOption(long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
         super(id, title, index);
         this.priceDiff = priceDiff;
-        this.defaultChecked = defaultChecked;
         this.defaultValue = defaultValue;
     }
 }

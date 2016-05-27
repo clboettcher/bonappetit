@@ -47,12 +47,6 @@ public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
     private ValueOptionEntity option;
 
     /**
-     * Whether the option has been checked or not.
-     */
-    @Column(name = "CHECKED", nullable = false)
-    private Boolean checked;
-
-    /**
      * The value describing how often the option was ordered.
      */
     @Column(name = "VALUE", nullable = false)
@@ -61,16 +55,14 @@ public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id      see {@link #getId()}.
-     * @param option  see {@link #getOption()}.
-     * @param checked see {@link #getChecked()}.
-     * @param value   see {@link #getValue()}.
+     * @param id     see {@link #getId()}.
+     * @param option see {@link #getOption()}.
+     * @param value  see {@link #getValue()}.
      */
     @Builder
-    public ValueOptionOrderEntity(long id, ValueOptionEntity option, Boolean checked, int value) {
+    public ValueOptionOrderEntity(long id, ValueOptionEntity option, int value) {
         super(id);
         this.option = option;
-        this.checked = checked;
         this.value = value;
     }
 }

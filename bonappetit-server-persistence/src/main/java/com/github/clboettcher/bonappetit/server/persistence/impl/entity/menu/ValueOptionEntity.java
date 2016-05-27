@@ -48,11 +48,9 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
- * An option consisting of a boolean checkbox and (optionally) a integer.
- * Example:
- * French fries with the option for ketchup for. The int value is the number of ketchup packages.
- * Example:
- * A hamburger with the option for bacon. The "defaultValue" is 0 since this is a yes-or-no option and has no int value.
+ * An option consisting of an integer value.
+ * <p>
+ * Example: French fries with the option for ketchup. The int value is the number of ketchup packages.
  */
 @Entity
 @Data
@@ -62,18 +60,12 @@ public class ValueOptionEntity extends AbstractOptionEntity {
 
     /**
      * The price difference of this option.
-     * <p/>
+     * <p>
      * The total price of an order for an item can be calculated
      * using the items price and the price diff of all options.
      */
     @Column(name = "PRICE_DIFF")
     private BigDecimal priceDiff = BigDecimal.ZERO;
-
-    /**
-     * The default value to set when this option is ordered.
-     */
-    @Column(name = "DEFAULT_CHECKED")
-    private Boolean defaultChecked;
 
     /**
      * The default value for this option.
@@ -85,18 +77,16 @@ public class ValueOptionEntity extends AbstractOptionEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #getId()}.
-     * @param title          see {@link #getTitle()}.
-     * @param index          see {@link #getIndex()}.
-     * @param priceDiff      see {@link #getPriceDiff()}.
-     * @param defaultChecked see {@link #getDefaultChecked()}.
-     * @param defaultValue   see {@link #getDefaultValue()}.
+     * @param id           see {@link #getId()}.
+     * @param title        see {@link #getTitle()}.
+     * @param index        see {@link #getIndex()}.
+     * @param priceDiff    see {@link #getPriceDiff()}.
+     * @param defaultValue see {@link #getDefaultValue()}.
      */
     @Builder
-    public ValueOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked, int defaultValue) {
+    public ValueOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
         super(id, title, index);
         this.priceDiff = priceDiff;
-        this.defaultChecked = defaultChecked;
         this.defaultValue = defaultValue;
     }
 }

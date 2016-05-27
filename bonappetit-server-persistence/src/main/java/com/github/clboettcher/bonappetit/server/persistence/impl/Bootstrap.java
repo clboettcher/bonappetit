@@ -66,10 +66,16 @@ public class Bootstrap {
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionEntity.builder()
+                                        CheckboxOptionEntity.builder()
                                                 .title("Extra Salz")
-                                                .index(2)
+                                                .index(0)
                                                 .defaultChecked(false)
+                                                .priceDiff(BigDecimal.ZERO)
+                                                .build(),
+                                        ValueOptionEntity.builder()
+                                                .title("Ketchup")
+                                                .index(1)
+                                                .defaultValue(2)
                                                 .priceDiff(BigDecimal.ZERO)
                                                 .build()
                                 )))
@@ -79,7 +85,7 @@ public class Bootstrap {
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
-                                        ValueOptionEntity.builder()
+                                        CheckboxOptionEntity.builder()
                                                 .title("Käsesoße")
                                                 .index(0)
                                                 .defaultChecked(true)

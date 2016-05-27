@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -64,10 +65,10 @@ public class MenuRepositoryTests {
         assertThat(dbMenu, CoreMatchers.notNullValue());
         assertThat(dbMenu.getItems(), Matchers.not(Matchers.empty()));
         ItemEntity dbItem = dbMenu.getItems().iterator().next();
-        assertThat(dbItem.getTitle(), Matchers.is("Item Title"));
+        assertThat(dbItem.getTitle(), is("Item Title"));
         assertThat(dbItem.getOptions(), Matchers.nullValue());
-        assertThat(dbItem.getPrice(), Matchers.is(new BigDecimal("1.9")));
-        assertThat(dbItem.getType(), Matchers.is(ItemEntityType.DRINK_NON_ALCOHOLIC));
+        assertThat(dbItem.getPrice(), is(new BigDecimal("1.9")));
+        assertThat(dbItem.getType(), is(ItemEntityType.DRINK_NON_ALCOHOLIC));
     }
 
     @Test
@@ -81,7 +82,7 @@ public class MenuRepositoryTests {
                         ValueOptionEntity.builder()
                                 .title("Value Option")
                                 .index(17)
-                                .defaultChecked(true)
+                                .defaultValue(2)
                                 .priceDiff(BigDecimal.ONE)
                                 .build()
                 ))
@@ -99,12 +100,12 @@ public class MenuRepositoryTests {
         ItemEntity dbItem = dbMenu.getItems().iterator().next();
         assertThat(dbItem.getOptions(), Matchers.not(Matchers.empty()));
         AbstractOptionEntity dbOption = dbItem.getOptions().iterator().next();
-        assertThat(dbOption, Matchers.is(Matchers.instanceOf(ValueOptionEntity.class)));
+        assertThat(dbOption, is(Matchers.instanceOf(ValueOptionEntity.class)));
         ValueOptionEntity dbValueOption = (ValueOptionEntity) dbOption;
-        assertThat(dbValueOption.getTitle(), Matchers.is("Value Option"));
-        assertThat(dbValueOption.getIndex(), Matchers.is(17));
-        assertThat(dbValueOption.getDefaultChecked(), Matchers.is(true));
-        assertThat(dbValueOption.getPriceDiff(), Matchers.is(BigDecimal.ONE));
+        assertThat(dbValueOption.getTitle(), is("Value Option"));
+        assertThat(dbValueOption.getIndex(), is(17));
+        assertThat(dbValueOption.getDefaultValue(), is(2));
+        assertThat(dbValueOption.getPriceDiff(), is(BigDecimal.ONE));
     }
 
     @Test
@@ -147,16 +148,16 @@ public class MenuRepositoryTests {
         ItemEntity dbItem = dbMenu.getItems().iterator().next();
         assertThat(dbItem.getOptions(), Matchers.not(Matchers.empty()));
         AbstractOptionEntity dbOption = dbItem.getOptions().iterator().next();
-        assertThat(dbOption, Matchers.is(Matchers.instanceOf(RadioOptionEntity.class)));
+        assertThat(dbOption, is(Matchers.instanceOf(RadioOptionEntity.class)));
         RadioOptionEntity dbRadioOption = (RadioOptionEntity) dbOption;
-        assertThat(dbRadioOption.getTitle(), Matchers.is("Radio Option"));
-        assertThat(dbRadioOption.getIndex(), Matchers.is(17));
+        assertThat(dbRadioOption.getTitle(), is("Radio Option"));
+        assertThat(dbRadioOption.getIndex(), is(17));
         RadioItemEntity dbDefaultSelected = dbRadioOption.getDefaultSelected();
-        assertThat(dbDefaultSelected.getTitle(), Matchers.is("Default selected"));
-        assertThat(dbDefaultSelected.getIndex(), Matchers.is(0));
-        assertThat(dbDefaultSelected.getPriceDiff(), Matchers.is(BigDecimal.ONE));
-        assertThat(dbDefaultSelected.getIndex(), Matchers.is(0));
-        assertThat(dbRadioOption.getRadioItems().size(), Matchers.is(2));
+        assertThat(dbDefaultSelected.getTitle(), is("Default selected"));
+        assertThat(dbDefaultSelected.getIndex(), is(0));
+        assertThat(dbDefaultSelected.getPriceDiff(), is(BigDecimal.ONE));
+        assertThat(dbDefaultSelected.getIndex(), is(0));
+        assertThat(dbRadioOption.getRadioItems().size(), is(2));
     }
 
 //    @Configuration

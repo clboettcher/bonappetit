@@ -21,62 +21,53 @@ package com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
- * A single item of a {@link RadioOptionEntity}.
+ * An option which can be selected or not selected.
+ * <p>
+ * Example: A hamburger with the option for bacon.
  */
 @Entity
-@Table(name = "RADIO_ITEM")
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class RadioItemEntity {
+public class CheckboxOptionEntity extends AbstractOptionEntity {
 
     /**
-     * The ID.
-     */
-    @Id
-    @GeneratedValue
-    @Column(name = "RADIO_ITEM_ID")
-    private long id;
-
-    /**
-     * The title / name of this item, e.g. "small".
-     */
-    @Column(name = "TITLE", nullable = false)
-    private String title;
-
-    /**
-     * The zero based index to display this item at.
-     */
-    @Column(name = "RADIO_ITEM_INDEX", nullable = false) // 'index' is reserved in mysql
-    private Integer index;
-
-    /**
-     * The price difference of this radio item.
+     * The price difference of this option.
      * <p>
      * The total price of an order for an item can be calculated
      * using the items price and the price diff of all options.
      */
-    @Column(name = "PRICE_DIFF", nullable = false)
-    private BigDecimal priceDiff = BigDecimal.ZERO;
+    @Column(name = "PRICE_DIFF")
+    private BigDecimal priceDiff;
+
+    /**
+     * Whether this option should be checked (marked for order) per default when
+     * an order for the corresponding item is taken.
+     */
+    @Column(name = "DEFAULT_CHECKED")
+    private Boolean defaultChecked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id        see {@link #id}.
-     * @param title     see {@link #title}.
-     * @param index     see {@link #index}.
-     * @param priceDiff see {@link #priceDiff}.
+     * @param id             see {@link #id}.
+     * @param title          see {@link #title}.
+     * @param index          see {@link #index}.
+     * @param priceDiff      see {@link #priceDiff}.
+     * @param defaultChecked see {@link #defaultChecked}.
      */
     @Builder
-    public RadioItemEntity(long id, String title, Integer index, BigDecimal priceDiff) {
-        this.id = id;
-        this.title = title;
-        this.index = index;
+    public CheckboxOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+        super(id, title, index);
         this.priceDiff = priceDiff;
+        this.defaultChecked = defaultChecked;
     }
 }

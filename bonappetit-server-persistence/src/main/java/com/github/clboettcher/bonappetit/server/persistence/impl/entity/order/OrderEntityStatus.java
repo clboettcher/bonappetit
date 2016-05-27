@@ -44,22 +44,22 @@ package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 public enum OrderEntityStatus {
 
     /**
-     * The server has received the order
+     * The server has received the order (initial status).
      */
     ORDERED,
 
     /**
-     * The order has been printed
+     * The order has been printed.
      */
     PRINTED,
 
     /**
-     * The order has been paid
+     * The order has been paid.
      */
     PAID,
 
     /**
-     * The order has been canceled
+     * The order has been canceled.
      */
     CANCELED
 }

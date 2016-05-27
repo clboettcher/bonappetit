@@ -40,6 +40,7 @@ package com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -51,7 +52,7 @@ import java.util.Set;
 @Entity
 @Table(name = "ITEM")
 @Data
-@Builder
+@NoArgsConstructor
 public class ItemEntity {
 
     @Id
@@ -67,7 +68,7 @@ public class ItemEntity {
 
     /**
      * The price of this item.
-     * <p/>
+     * <p>
      * This is the 'raw' price of the item, not consisting any options which
      * might have effects on the total price.
      */
@@ -95,4 +96,24 @@ public class ItemEntity {
             joinColumns = @JoinColumn(name = "ITEM_ID"),
             inverseJoinColumns = @JoinColumn(name = "SIDE_DISH_ID", referencedColumnName = "ITEM_ID"))
     private Set<ItemEntity> sideDishes;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param id         see {@link #id}.
+     * @param title      see {@link #title}.
+     * @param price      see {@link #price}.
+     * @param type       see {@link #type}.
+     * @param options    see {@link #options}.
+     * @param sideDishes see {@link #sideDishes}.
+     */
+    @Builder
+    public ItemEntity(long id, String title, BigDecimal price, ItemEntityType type, Set<AbstractOptionEntity> options, Set<ItemEntity> sideDishes) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.type = type;
+        this.options = options;
+        this.sideDishes = sideDishes;
+    }
 }

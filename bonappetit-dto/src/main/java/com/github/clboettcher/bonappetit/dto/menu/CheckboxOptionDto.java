@@ -31,29 +31,28 @@ import java.math.BigDecimal;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An option consisting of an integer value")
-public class ValueOptionDto extends OptionDto {
+@ApiModel(description = "An option consisting of a boolean checkbox")
+public class CheckboxOptionDto extends OptionDto {
 
     @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
-            "using the items price and the price diff of all options.", required = true, example = "2.50")
+            "using the items price and the price diff of all options.", required = true, example = "0.50")
     private BigDecimal priceDiff;
 
-    @ApiModelProperty(value = "The default value for this option. That is the initial ordered count.",
-            required = true, example = "2")
-    private int defaultValue;
+    @ApiModelProperty(value = "The default value to set when this option is ordered", required = true)
+    private Boolean defaultChecked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id           see {@link #getId()}.
-     * @param title        see {@link #getTitle()}.
-     * @param priceDiff    see {@link #getPriceDiff()}.
-     * @param defaultValue see {@link  #getDefaultValue()}.
+     * @param id             see {@link #getId()}.
+     * @param title          see {@link #getTitle()}.
+     * @param priceDiff      see {@link #getPriceDiff()}.
+     * @param defaultChecked see {@link #getDefaultChecked()}.
      */
     @Builder
-    public ValueOptionDto(Long id, String title, BigDecimal priceDiff, int defaultValue) {
+    public CheckboxOptionDto(Long id, String title, BigDecimal priceDiff, Boolean defaultChecked) {
         super(id, title);
         this.priceDiff = priceDiff;
-        this.defaultValue = defaultValue;
+        this.defaultChecked = defaultChecked;
     }
 }

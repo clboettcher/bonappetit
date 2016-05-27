@@ -17,10 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.menu;
+package com.github.clboettcher.bonappetit.domain.menu;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,32 +26,42 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * An option which can be selected or not selected.
+ * <p>
+ * Example: A hamburger with the option for bacon.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An option consisting of an integer value")
-public class ValueOptionDto extends OptionDto {
+public class CheckboxOption extends Option {
 
-    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
-            "using the items price and the price diff of all options.", required = true, example = "2.50")
+    /**
+     * The price difference of this option.
+     * <p>
+     * The total price of an order for an item can be calculated
+     * using the items price and the price diff of all options.
+     */
     private BigDecimal priceDiff;
 
-    @ApiModelProperty(value = "The default value for this option. That is the initial ordered count.",
-            required = true, example = "2")
-    private int defaultValue;
+    /**
+     * Whether this option should be checked (marked for order) per default when
+     * an order for the corresponding item is taken.
+     */
+    private Boolean defaultChecked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id           see {@link #getId()}.
-     * @param title        see {@link #getTitle()}.
-     * @param priceDiff    see {@link #getPriceDiff()}.
-     * @param defaultValue see {@link  #getDefaultValue()}.
+     * @param id        see {@link #getId()}.
+     * @param title     see {@link #getTitle()}.
+     * @param index     see {@link #getIndex()}.
+     * @param priceDiff see {@link #priceDiff}.
      */
     @Builder
-    public ValueOptionDto(Long id, String title, BigDecimal priceDiff, int defaultValue) {
-        super(id, title);
+    public CheckboxOption(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+        super(id, title, index);
         this.priceDiff = priceDiff;
-        this.defaultValue = defaultValue;
+        this.defaultChecked = defaultChecked;
     }
 }

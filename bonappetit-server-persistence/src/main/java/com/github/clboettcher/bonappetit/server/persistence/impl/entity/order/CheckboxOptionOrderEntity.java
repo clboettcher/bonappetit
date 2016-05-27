@@ -17,40 +17,52 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.domain.order;
+package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
-import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
+import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.CheckboxOptionEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+/**
+ * An order for a {@link CheckboxOptionEntity}.
+ */
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ValueOptionOrder extends OptionOrder {
+public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
 
     /**
      * The ordered option.
      */
-    private ValueOption option;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "CHECKBOX_OPTION_ID", referencedColumnName = "OPTION_ID")
+    private CheckboxOptionEntity option;
 
     /**
-     * The ordered value.
+     * Whether the option has been checked or not.
      */
-    private int value;
+    @Column(name = "CHECKED", nullable = false)
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id     see {@link #getId()}.
-     * @param option see {@link #getOption()}.
-     * @param value  see {@link #getValue()}.
+     * @param id      see {@link #id}.
+     * @param option  see {@link #option}.
+     * @param checked see {@link #checked}.
      */
     @Builder
-    public ValueOptionOrder(long id, ValueOption option, int value) {
+    public CheckboxOptionOrderEntity(long id, CheckboxOptionEntity option, Boolean checked) {
         super(id);
         this.option = option;
-        this.value = value;
+        this.checked = checked;
     }
 }

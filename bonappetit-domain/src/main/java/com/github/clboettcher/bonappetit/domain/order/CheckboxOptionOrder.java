@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.domain.order;
 
-import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
+import com.github.clboettcher.bonappetit.domain.menu.CheckboxOption;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,29 +28,29 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ValueOptionOrder extends OptionOrder {
+public class CheckboxOptionOrder extends OptionOrder {
 
     /**
      * The ordered option.
      */
-    private ValueOption option;
+    private CheckboxOption option;
 
     /**
-     * The ordered value.
+     * Whether the option has been checked or not.
      */
-    private int value;
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id     see {@link #getId()}.
-     * @param option see {@link #getOption()}.
-     * @param value  see {@link #getValue()}.
+     * @param id      see {@link #getId()}.
+     * @param option  see {@link #getOption()}.
+     * @param checked see {@link #getChecked()}.
      */
     @Builder
-    public ValueOptionOrder(long id, ValueOption option, int value) {
+    public CheckboxOptionOrder(long id, CheckboxOption option, Boolean checked) {
         super(id);
         this.option = option;
-        this.value = value;
+        this.checked = checked;
     }
 }

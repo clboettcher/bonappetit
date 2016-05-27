@@ -40,6 +40,7 @@ package com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -50,7 +51,7 @@ import java.util.Set;
 @Entity
 @Table(name = "MENU")
 @Data
-@Builder
+@NoArgsConstructor
 public class MenuEntity {
 
     /**
@@ -67,4 +68,14 @@ public class MenuEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private Set<ItemEntity> items;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param items see {@link #items}.
+     */
+    @Builder
+    public MenuEntity(long id, Set<ItemEntity> items) {
+        this.items = items;
+    }
 }
