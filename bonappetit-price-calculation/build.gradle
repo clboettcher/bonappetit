@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+description = "This module calculates prices for orders."
+
 dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-domain')

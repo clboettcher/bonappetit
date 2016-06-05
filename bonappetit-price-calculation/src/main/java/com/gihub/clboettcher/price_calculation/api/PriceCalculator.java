@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.bonappetit.pricecalculator.api;
+package com.gihub.clboettcher.price_calculation.api;
 
 import com.github.clboettcher.bonappetit.domain.order.ItemOrder;
+import com.github.clboettcher.bonappetit.domain.order.OptionOrder;
 
 import java.math.BigDecimal;
 
@@ -29,7 +30,7 @@ import java.math.BigDecimal;
 public interface PriceCalculator {
 
     /**
-     * Calculates the total price of the given {@link ItemOrder} taking all ordered {@link Option}s into account.
+     * Calculates the total price of the given {@link ItemOrder} taking all ordered {@link OptionOrder}s into account.
      *
      * @param itemOrder The order to calculate the total price of.
      * @return The calculated price.
