@@ -72,7 +72,7 @@ public class OptionDtoMapperTests {
     }
 
     /**
-     * Subtype of {@link Option} unknown to the converter.
+     * Subtype of {@link Option} unknown to the mapper.
      */
     static class UnknownOption extends Option {
     }

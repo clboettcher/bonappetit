@@ -21,9 +21,9 @@ package com.github.clboettcher.bonappetit.server.persistence.impl;
 
 import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.server.persistence.api.MenuDao;
-import com.github.clboettcher.bonappetit.server.persistence.impl.converter.MenuConverter;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.config.MenuConfig;
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.MenuEntity;
+import com.github.clboettcher.bonappetit.server.persistence.impl.mapper.MenuMapper;
 import com.github.clboettcher.bonappetit.server.persistence.impl.repository.MenuConfigRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +36,8 @@ import java.util.List;
  * Default impl of {@link MenuDao}.
  */
 @Component
-@Profile("default")
+@Profile("default") // TODO  need profile default or is this the default?
 public class MenuDaoImpl implements MenuDao {
-
-    /**
-     * The converter for {@link MenuEntity} to {@link Menu}.
-     */
-    private MenuConverter menuConverter;
 
     /**
      * The DAO for {@link MenuConfig}.
@@ -52,12 +47,10 @@ public class MenuDaoImpl implements MenuDao {
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuConverter        see {@link #menuConverter}.
      * @param menuConfigRepository see {@link #menuConfigRepository}.
      */
     @Autowired
-    public MenuDaoImpl(MenuConverter menuConverter, MenuConfigRepository menuConfigRepository) {
-        this.menuConverter = menuConverter;
+    public MenuDaoImpl(MenuConfigRepository menuConfigRepository) {
         this.menuConfigRepository = menuConfigRepository;
     }
 
@@ -72,6 +65,6 @@ public class MenuDaoImpl implements MenuDao {
 
         MenuEntity current = menuConfigs.get(0).getCurrent();
 
-        return menuConverter.convert(current);
+        return MenuMapper.INSTANCE.mapToMenu(current);
     }
 }

@@ -38,7 +38,7 @@ public interface MenuDtoMapper {
     /**
      * Maps the given {@link Menu} to a {@link MenuDto}.
      *
-     * @param menu The {@link Menu} to convert.
+     * @param menu The {@link Menu} to mapToMenu.
      * @return The resulting {@link MenuDto}.
      */
     MenuDto mapToMenuDto(Menu menu);

@@ -40,6 +40,7 @@ package com.github.clboettcher.bonappetit.domain.menu;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -47,7 +48,7 @@ import java.util.Set;
  * The menu represents the items that can be ordered.
  */
 @Data
-@Builder
+@NoArgsConstructor
 public class Menu {
 
     /**
@@ -59,4 +60,16 @@ public class Menu {
      * The items that this menu consists of.
      */
     private Set<Item> items;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param id    see {@link #id}.
+     * @param items see {@link #items}.
+     */
+    @Builder
+    public Menu(long id, Set<Item> items) {
+        this.id = id;
+        this.items = items;
+    }
 }

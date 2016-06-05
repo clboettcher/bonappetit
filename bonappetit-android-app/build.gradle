@@ -23,7 +23,8 @@ dependencies {
     compile 'org.joda:joda-convert:1.7'
 
     // Rest
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE' // @Rest uses Spring RestTemplates
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    // @Rest uses Spring RestTemplates
     compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     // Rest Converter uses Jackson for deserialization
     compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"

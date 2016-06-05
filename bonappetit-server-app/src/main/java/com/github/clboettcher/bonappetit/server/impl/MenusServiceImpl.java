@@ -23,7 +23,7 @@ import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.server.api.MenusService;
 import com.github.clboettcher.bonappetit.server.impl.mapping.MenuDtoMapper;
-import com.github.clboettcher.bonappetit.server.persistence.api.MenuDao;
+import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,21 +36,21 @@ public class MenusServiceImpl implements MenusService {
     /**
      * The DAO for stored menus.
      */
-    private MenuDao menuDao;
+    private MenuManagement menuManagement;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param menuManagement see {@link #menuManagement}.
      */
     @Autowired
-    public MenusServiceImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
+    public MenusServiceImpl(MenuManagement menuManagement) {
+        this.menuManagement = menuManagement;
     }
 
     @Override
     public MenuDto getCurrentMenu() {
-        Menu currentMenu = menuDao.getCurrentMenu();
+        Menu currentMenu = menuManagement.getCurrentMenu();
         return MenuDtoMapper.INSTANCE.mapToMenuDto(currentMenu);
     }
 }

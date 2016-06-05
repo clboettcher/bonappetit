@@ -2,12 +2,16 @@ rootProject.name = 'bonappetit'
 
 // Subprojects
 include 'bonappetit-core'
-include 'bonappetit-common'
 include 'bonappetit-domain'
 include 'bonappetit-dto'
 
+include 'bonappetit-price-calculation'
+include 'bonappetit-printing'
+
 include 'bonappetit-server-app'
 include 'bonappetit-server-persistence'
+include 'bonappetit-server-menu-management'
+include 'bonappetit-server-staff-management'
 
 include 'bonappetit-android-app'
 include 'androidannotations-example'

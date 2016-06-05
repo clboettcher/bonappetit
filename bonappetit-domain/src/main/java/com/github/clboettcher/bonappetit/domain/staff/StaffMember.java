@@ -40,12 +40,13 @@ package com.github.clboettcher.bonappetit.domain.staff;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents a staff member of the restaurant.
  */
 @Data
-@Builder
+@NoArgsConstructor
 public class StaffMember {
 
     /**
@@ -62,4 +63,18 @@ public class StaffMember {
      * The last name.
      */
     private String lastName;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param id        see {@link #id}.
+     * @param firstName see {@link #firstName}.
+     * @param lastName  see {@link #lastName}.
+     */
+    @Builder
+    public StaffMember(long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

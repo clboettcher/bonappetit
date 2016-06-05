@@ -25,6 +25,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * An order for a {@link CheckboxOption}.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -36,21 +39,14 @@ public class CheckboxOptionOrder extends OptionOrder {
     private CheckboxOption option;
 
     /**
-     * Whether the option has been checked or not.
-     */
-    private Boolean checked;
-
-    /**
      * Constructor setting the specified properties.
      *
-     * @param id      see {@link #getId()}.
-     * @param option  see {@link #getOption()}.
-     * @param checked see {@link #getChecked()}.
+     * @param id     see {@link #getId()}.
+     * @param option see {@link #getOption()}.
      */
     @Builder
-    public CheckboxOptionOrder(long id, CheckboxOption option, Boolean checked) {
+    public CheckboxOptionOrder(long id, CheckboxOption option) {
         super(id);
         this.option = option;
-        this.checked = checked;
     }
 }

@@ -17,14 +17,33 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.persistence.impl.converter;
+package com.github.clboettcher.printing.entity;
 
-import com.github.clboettcher.bonappetit.domain.menu.Menu;
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.MenuEntity;
+import com.google.common.collect.Sets;
+
+import java.util.Set;
 
 /**
- * Converter for {@link MenuEntity} to {@link Menu}.
+ * Contains sets of categorized order options.
  */
-public interface MenuConverter {
-    Menu convert(MenuEntity menuEntity);
+public class OrderOptionStrings {
+
+    private Set<String> emphasisedOptions = Sets.newHashSet();
+    private Set<String> defaultOptions = Sets.newHashSet();
+
+    public Set<String> getEmphasisedOptions() {
+        return emphasisedOptions;
+    }
+
+    public void setEmphasisedOptions(Set<String> emphasisedOptions) {
+        this.emphasisedOptions = emphasisedOptions;
+    }
+
+    public Set<String> getDefaultOptions() {
+        return defaultOptions;
+    }
+
+    public void setDefaultOptions(Set<String> defaultOptions) {
+        this.defaultOptions = defaultOptions;
+    }
 }

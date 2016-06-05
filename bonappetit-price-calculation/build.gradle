@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+dependencies {
+    compile project(':bonappetit-core')
+    compile project(':bonappetit-domain')
+
+    testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+    testCompile "org.mockito:mockito-core:${mockitoVersion}"
+    testCompile "junit:junit:${junitVersion}"
+}

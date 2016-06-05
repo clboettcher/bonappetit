@@ -1,28 +1,36 @@
+buildscript {
+    ext {
+        generatedMapperSourcesDir = "${buildDir}/generated-src/mapstruct/main"
+    }
+}
+
 apply plugin: 'java'
-apply plugin: "io.spring.dependency-management"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.data:spring-data-releasetrain:Hopper-SR1'
-    }
+configurations {
+    providedRuntime
+    mapstruct
 }
 
 dependencies {
     // BonAppetit modules
-    compile project(':bonappetit-common')
+    compile project(':bonappetit-core')
     compile project(':bonappetit-domain')
 
     // Data access
-    compile 'org.springframework.data:spring-data-jpa'
+    compile 'org.springframework.data:spring-data-jpa:1.10.1.RELEASE'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compile "org.hibernate:hibernate-core:${hibernateVersion}"
     compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
     compile "javax.el:javax.el-api:${javaxElVersion}"
     compile "org.glassfish:javax.el:${javaxElVersion}"
     compile "com.h2database:h2:${h2Version}"
+
+    // Object mapping
+    compile("org.mapstruct:mapstruct:${mapstructVersion}")
+    mapstruct("org.mapstruct:mapstruct-processor:${mapstructVersion}")
 
     // Utils
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
@@ -33,3 +41,41 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
 }
+
+sourceSets {
+    main {
+        ext.originalJavaSrcDirs = java.srcDirs
+        java.srcDir "${generatedMapperSourcesDir}"
+    }
+}
+
+task generateMainMapperClasses(type: JavaCompile) {
+    ext.aptDumpDir = file("${buildDir}/tmp/apt/mapstruct")
+    destinationDir = aptDumpDir
+
+    classpath = compileJava.classpath + configurations.mapstruct
+    source = sourceSets.main.originalJavaSrcDirs
+    ext.sourceDestDir = file("$generatedMapperSourcesDir")
+
+    options.define(
+            compilerArgs: [
+                    "-nowarn",
+                    "-proc:only",
+                    "-encoding", "UTF-8",
+                    "-processor", "org.mapstruct.ap.MappingProcessor",
+                    "-s", sourceDestDir.absolutePath,
+                    "-source", sourceCompatibility,
+                    "-target", targetCompatibility,
+            ]
+    );
+
+    inputs.dir source
+    outputs.dir generatedMapperSourcesDir;
+    doFirst {
+        sourceDestDir.mkdirs()
+    }
+    doLast {
+        aptDumpDir.delete()
+    }
+}
+compileJava.dependsOn generateMainMapperClasses

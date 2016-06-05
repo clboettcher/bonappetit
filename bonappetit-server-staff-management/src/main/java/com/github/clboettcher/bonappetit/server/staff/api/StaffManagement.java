@@ -17,18 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.persistence.impl.converter;
+package com.github.clboettcher.bonappetit.server.staff.api;
 
-import com.github.clboettcher.bonappetit.domain.menu.Menu;
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.MenuEntity;
-import org.springframework.stereotype.Component;
+import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 
-@Component
-public class MenuConverterImpl implements MenuConverter {
-    @Override
-    public Menu convert(MenuEntity menuEntity) {
-        return Menu.builder()
-                .id(menuEntity.getId())
-                .build();
-    }
+import java.util.Set;
+
+/**
+ * Management for {@link StaffMember}s providing all business functionality.
+ */
+public interface StaffManagement {
+
+    /**
+     * Returns all {@link StaffMember}s.
+     *
+     * @return All {@link StaffMember}s.
+     */
+    Set<StaffMember> getStaffMembers();
 }
