@@ -19,31 +19,38 @@
  */
 package com.github.clboettcher.printing.entity;
 
-import com.google.common.collect.Sets;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 /**
  * Contains sets of categorized order options.
  */
+@Data
+@NoArgsConstructor
 public class OrderOptionStrings {
 
-    private Set<String> emphasisedOptions = Sets.newHashSet();
-    private Set<String> defaultOptions = Sets.newHashSet();
+    /**
+     * The options which should be printed in an emphasised way.
+     */
+    private Set<String> emphasisedOptions;
 
-    public Set<String> getEmphasisedOptions() {
-        return emphasisedOptions;
-    }
+    /**
+     * The options which should be printed normally, not emphasised.
+     */
+    private Set<String> defaultOptions;
 
-    public void setEmphasisedOptions(Set<String> emphasisedOptions) {
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param emphasisedOptions see {@link #emphasisedOptions}.
+     * @param defaultOptions    see {@link #defaultOptions}.
+     */
+    @Builder
+    public OrderOptionStrings(Set<String> emphasisedOptions, Set<String> defaultOptions) {
         this.emphasisedOptions = emphasisedOptions;
-    }
-
-    public Set<String> getDefaultOptions() {
-        return defaultOptions;
-    }
-
-    public void setDefaultOptions(Set<String> defaultOptions) {
         this.defaultOptions = defaultOptions;
     }
 }

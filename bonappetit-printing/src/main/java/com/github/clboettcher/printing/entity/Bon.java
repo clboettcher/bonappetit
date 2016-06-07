@@ -21,106 +21,81 @@ package com.github.clboettcher.printing.entity;
 
 
 import com.github.clboettcher.bonappetit.domain.menu.ItemType;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
-import java.util.GregorianCalendar;
 import java.util.Set;
 
 /**
  * An order to be printed.
  */
+@Data
+@NoArgsConstructor
 public class Bon {
+
+    /**
+     * A note (optional).
+     */
     private String note;
+
+    /**
+     * The name of the item which is printed.
+     */
     private String itemName;
+
+    /**
+     * The name of the staff member that took the order.
+     */
     private String staffMemberName;
-    private String customer;
-    private GregorianCalendar orderTime;
+
+    /**
+     * The person or place to deliver the order to.
+     */
+    private String deliverTo;
+
+    /**
+     * The time the order was taken.
+     */
+    private DateTime orderTime;
+
+    /**
+     * The type of the ordered item.
+     */
     private ItemType itemType;
+
+    /**
+     * The options which should be printed normally (not emphasised).
+     */
     private Set<String> defaultOptions;
+
+    /**
+     * The options which should be printed in an emphasised way.
+     */
     private Set<String> emphasisedOptions;
 
     /**
-     * Default noop no-args constructor.
-     */
-    public Bon() {
-    }
-
-    /**
-     * Copy constructor.
+     * Constructor setting the specified properties.
      *
-     * @param bon The bon to copy.
+     * @param note              see {@link #note}.
+     * @param itemName          see {@link #itemName}.
+     * @param staffMemberName   see {@link #staffMemberName}.
+     * @param deliverTo         see {@link #deliverTo}.
+     * @param orderTime         see {@link #orderTime}.
+     * @param itemType          see {@link #itemType}.
+     * @param defaultOptions    see {@link #defaultOptions}.
+     * @param emphasisedOptions see {@link #emphasisedOptions}.
      */
-    public Bon(Bon bon) {
-        note = bon.getNote();
-        itemName = bon.getItemName();
-        staffMemberName = bon.getStaffMemberName();
-        customer = bon.getCustomer();
-        orderTime = bon.getOrderTime();
-        itemType = bon.getItemType();
-        defaultOptions = bon.getDefaultOptions();
-        emphasisedOptions = bon.getEmphasisedOptions();
-    }
-
-    public void setNote(String note) {
+    @Builder
+    public Bon(String note, String itemName, String staffMemberName, String deliverTo, DateTime orderTime, ItemType itemType, Set<String> defaultOptions, Set<String> emphasisedOptions) {
         this.note = note;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setStaffMemberName(String staffMemberName) {
         this.staffMemberName = staffMemberName;
-    }
-
-    public String getStaffMemberName() {
-        return staffMemberName;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setOrderTime(GregorianCalendar orderTime) {
+        this.deliverTo = deliverTo;
         this.orderTime = orderTime;
-    }
-
-    public GregorianCalendar getOrderTime() {
-        return orderTime;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(ItemType itemType) {
         this.itemType = itemType;
-    }
-
-    public Set<String> getDefaultOptions() {
-        return defaultOptions;
-    }
-
-    public void setDefaultOptions(Set<String> orderOptionsString) {
-        this.defaultOptions = orderOptionsString;
-    }
-
-    public Set<String> getEmphasisedOptions() {
-        return emphasisedOptions;
-    }
-
-    public void setEmphasisedOptions(Set<String> importantOrderOptionsString) {
-        this.emphasisedOptions = importantOrderOptionsString;
+        this.defaultOptions = defaultOptions;
+        this.emphasisedOptions = emphasisedOptions;
     }
 }

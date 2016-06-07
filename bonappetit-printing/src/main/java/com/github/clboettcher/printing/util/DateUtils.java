@@ -19,49 +19,70 @@
  */
 package com.github.clboettcher.printing.util;
 
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Provides commonly used functionality for working with dates.
- *
- * @author Claudius Boettcher (claudius.boettcher@qaware.de)
- * @since 15.11.2014
  */
 public final class DateUtils {
 
+    /**
+     * Format for day month year hour minute.
+     */
+    private static final DateTimeFormatter DAY_MONTH_YEAR_HOUR_MINUTE = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm 'Uhr'");
 
-    private static final SimpleDateFormat DAY_MONTH_YEAR_HOUR_MINUTE = new SimpleDateFormat("dd.MM.yyyy, HH:mm 'Uhr'");
-    private static final SimpleDateFormat DAY_MONTH_YEAR = new SimpleDateFormat("dd.MM.yyyy");
-    private static final SimpleDateFormat DAY_MONTH_HOUR_MINUTE = new SimpleDateFormat("dd.MM., HH:mm 'Uhr'");
-    private static final SimpleDateFormat DAY_MONTH_HOUR_MINUTE_SECOND = new SimpleDateFormat("dd.MM., HH:mm:ss 'Uhr'");
+    /**
+     * Format for day month year.
+     */
+    private static final DateTimeFormatter DAY_MONTH_YEAR = DateTimeFormat.forPattern("dd.MM.yyyy");
+
+    /**
+     * Format for day month hour minute.
+     */
+    private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE = DateTimeFormat.forPattern("dd.MM., HH:mm 'Uhr'");
+
+    /**
+     * Format for day month hour minute second.
+     */
+    private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE_SECOND = DateTimeFormat.forPattern("dd.MM., HH:mm:ss 'Uhr'");
 
     /**
      * No instances.
      */
-    private DateUtils() {}
-
-    public static String formatDayMonthTime(GregorianCalendar calendar) {
-        SimpleDateFormat fmt = DAY_MONTH_HOUR_MINUTE;
-        fmt.setCalendar(calendar);
-        return fmt.format(calendar.getTime());
+    private DateUtils() {
     }
 
-    public static String formatDayMonthYearTime(GregorianCalendar calendar) {
-        SimpleDateFormat fmt = DAY_MONTH_YEAR_HOUR_MINUTE;
-        fmt.setCalendar(calendar);
-        return fmt.format(calendar.getTime());
+    /**
+     * @param dateTime A {@link DateTime}.
+     * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE}.
+     */
+    public static String formatDayMonthTime(DateTime dateTime) {
+        return dateTime.toString(DAY_MONTH_HOUR_MINUTE);
     }
 
-    public static String formatDayMonthYear(GregorianCalendar calendar) {
-        SimpleDateFormat fmt = DAY_MONTH_YEAR;
-        fmt.setCalendar(calendar);
-        return fmt.format(calendar.getTime());
+    /**
+     * @param dateTime A {@link DateTime}.
+     * @return The date time as string following the format {@link #DAY_MONTH_YEAR_HOUR_MINUTE}.
+     */
+    public static String formatDayMonthYearTime(DateTime dateTime) {
+        return dateTime.toString(DAY_MONTH_YEAR_HOUR_MINUTE);
     }
 
-    public static String formatDayMonthTimeWithSeconds(GregorianCalendar calendar) {
-        SimpleDateFormat fmt = DAY_MONTH_HOUR_MINUTE_SECOND;
-        fmt.setCalendar(calendar);
-        return fmt.format(calendar.getTime());
+    /**
+     * @param dateTime A {@link DateTime}.
+     * @return The date time as string following the format {@link #DAY_MONTH_YEAR}.
+     */
+    public static String formatDayMonthYear(DateTime dateTime) {
+        return dateTime.toString(DAY_MONTH_YEAR);
+    }
+
+    /**
+     * @param dateTime A {@link DateTime}.
+     * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE_SECOND}.
+     */
+    public static String formatDayMonthTimeWithSeconds(DateTime dateTime) {
+        return dateTime.toString(DAY_MONTH_HOUR_MINUTE_SECOND);
     }
 }

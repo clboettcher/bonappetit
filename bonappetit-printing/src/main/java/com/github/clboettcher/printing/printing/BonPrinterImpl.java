@@ -60,7 +60,7 @@ public class BonPrinterImpl implements BonPrinter {
                 emphasisedOptionsString = "";
             }
 
-            printData.alignCenter(String.format("Kunde: %s", bon.getCustomer()))
+            printData.alignCenter(String.format("Kunde: %s", bon.getDeliverTo()))
                     .doubleWidthDoubleHeightAlignCenter(bon.getItemName() + emphasisedOptionsString)
                     .lineFeed();
             // Append options only if present
@@ -111,7 +111,7 @@ public class BonPrinterImpl implements BonPrinter {
                 emphasisedOptionsString = "";
             }
 
-            printData.append(controlCharProvider.getAlignCenterString()).append("Kunde: ").append(bon.getCustomer()).append("\n")
+            printData.append(controlCharProvider.getAlignCenterString()).append("Kunde: ").append(bon.getDeliverTo()).append("\n")
                     .append(controlCharProvider.getDoubleWidthDoubleHeightString()).append(bon.getItemName()).append(emphasisedOptionsString).append("\n")
                     .append(controlCharProvider.getLineFeedChar())
                     .append(controlCharProvider.getAlignLeftString())

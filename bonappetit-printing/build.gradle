@@ -4,5 +4,8 @@ dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-domain')
 
+    // Utils
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
     testCompile "junit:junit:${junitVersion}"
 }
