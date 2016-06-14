@@ -4,8 +4,15 @@ dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-domain')
 
+    // Spring
+    // http://mvnrepository.com/artifact/org.springframework/spring-core
+    compile group: 'org.springframework', name: 'spring-core', version: '4.2.6.RELEASE'
+    // http://mvnrepository.com/artifact/org.springframework/spring-context
+    compile group: 'org.springframework', name: 'spring-context', version: '4.2.6.RELEASE'
+
     // Utils
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
+    // Testing
     testCompile "junit:junit:${junitVersion}"
 }

@@ -23,9 +23,9 @@ import com.github.clboettcher.bonappetit.domain.menu.Item;
 import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
 import lombok.Builder;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -63,7 +63,7 @@ public class ItemOrder {
     /**
      * The time this order was taken.
      */
-    private Date orderTime;
+    private DateTime orderTime;
 
     /**
      * A note further describing this order (optional).
