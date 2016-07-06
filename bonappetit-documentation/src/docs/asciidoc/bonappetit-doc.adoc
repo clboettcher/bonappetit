@@ -8,9 +8,15 @@ ifndef::sourcedir[:sourcedir: ../java]
 
 This is the documentation of the open source Point-of-Sale system BonAppetit.
 
-== Domain Model
+== Use Cases
 
-TBD
+TBA
+
+== Non-Functional Requirements
+
+TBA
+
+== Domain Model
 
 //[plantuml, diagram-classes, png]
 //....
@@ -23,3 +29,25 @@ TBD
 //DiagramBlock <|-- DitaaBlock
 //DiagramBlock <|-- PlantUmlBlock
 //....
+
+TBA
+
+== Functional Architecture (A-Architecture)
+
+TBA
+
+== Technical Architecture (T-Architecture)
+
+TBA
+
+== Technical Infrastructure Architecture (TI-Architecture)
+
+TBA
+
+== Implementation Architecture (I-Architecture)
+
+TBA
+
+== UI Concept
+
+TBA
