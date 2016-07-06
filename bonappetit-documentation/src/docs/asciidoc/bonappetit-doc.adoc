@@ -1,0 +1,25 @@
+= BonAppetit
+Claudius Boettcher <pos.bonappetit@gmail.com>
+2016-07-06
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+
+This is the documentation of the open source Point-of-Sale system BonAppetit.
+
+== Domain Model
+
+TBD
+
+//[plantuml, diagram-classes, png]
+//....
+//class BlockProcessor
+//class DiagramBlock
+//class DitaaBlock
+//class PlantUmlBlock
+//
+//BlockProcessor <|-- DiagramBlock
+//DiagramBlock <|-- DitaaBlock
+//DiagramBlock <|-- PlantUmlBlock
+//....
