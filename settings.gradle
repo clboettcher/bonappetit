@@ -13,6 +13,3 @@ include 'bonappetit-server-persistence'
 include 'bonappetit-server-menu-management'
 include 'bonappetit-server-staff-management'
 include 'bonappetit-documentation'
-
-include 'bonappetit-android-app'
-include 'androidannotations-example'

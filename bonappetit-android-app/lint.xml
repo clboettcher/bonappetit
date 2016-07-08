@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<lint>
-    <!-- Lint fails for lombok because it references java.lang.instrument which is not available in android-->
-    <!-- However, this is not a problem since lombok is not executed at the device. -->
-    <issue id="InvalidPackage" severity="ignore"/>
-
-    <!-- Change the severity of hardcoded strings to "error" -->
-    <issue id="HardcodedText" severity="error"/>
-</lint>
