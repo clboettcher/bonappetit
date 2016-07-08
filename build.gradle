@@ -1,31 +1,19 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        // Android
-        classpath 'com.android.tools.build:gradle:2.0.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-    }
-}
-
 plugins {
-    id "org.sonarqube" version "1.1"
-    id "com.github.hierynomus.license" version "0.12.1"
+    id "com.github.hierynomus.license" version "0.13.1"
 }
 
 apply from: "scripts/dependencyVersions.gradle"
 
 // Config for all bonappetit projects
 allprojects {
-    apply plugin: 'com.github.hierynomus.license'
     group = 'com.github.clboettcher.bonappetit'
     version = '0.0.1-SNAPSHOT'
 }
 
 // Config for all bonappetit subprojects
 subprojects {
+    apply plugin: 'com.github.hierynomus.license'
+
     repositories {
         mavenCentral()
         jcenter()
