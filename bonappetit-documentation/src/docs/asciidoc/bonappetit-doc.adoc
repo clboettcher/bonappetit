@@ -18,17 +18,104 @@ TBA
 
 == Domain Model
 
-//[plantuml, diagram-classes, png]
-//....
-//class BlockProcessor
-//class DiagramBlock
-//class DitaaBlock
-//class PlantUmlBlock
-//
-//BlockProcessor <|-- DiagramBlock
-//DiagramBlock <|-- DitaaBlock
-//DiagramBlock <|-- PlantUmlBlock
-//....
+[plantuml, diagram-classes, png]
+....
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Declaration
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Menu & Item
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+class MenuConfig
+class Menu
+class Item {
+    title : String
+    price : BigDecimal
+}
+enum ItemType {
+    FOOD
+    DRINK_ALCOHOLIC
+    DRINK_NON_ALCOHOLIC
+    SIDE_DISH
+}
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Options
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+abstract class Option {
+    title : String
+    index : Integer
+}
+class ValueOption {
+    priceDiff : BigDecimal
+    defaultValue : Integer
+}
+class RadioOption
+class CheckboxOption {
+    priceDiff : BigDecimal
+    defaultChecked : boolean
+}
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Orders
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+class ItemOrder {
+    deliverTo : String
+    orderTime : DateTime
+    note : String
+    totalPrice : BigDecimal
+    discount : Integer
+}
+
+abstract class  OptionOrder
+class ValueOptionOrder {
+    value : Integer
+}
+class RadioOptionOrder
+class CheckboxOptionOrder
+enum OrderState {
+    ORDERED
+    PRINTED
+    PAID
+    CANCELLED
+}
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Staff
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+class StaffMember {
+    firstName : String
+    lastName : String
+}
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Associations
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+MenuConfig --> "1" Menu : active
+Menu --> "1..n" Item
+Item --> "0..m" Item : sideDishes
+Item --> ItemType : type
+Item --> "0..n" Option : options
+
+Option <|-- ValueOption
+Option <|-- RadioOption
+Option <|-- CheckboxOption
+RadioOption --> "1" RadioItem : defaultSelected
+RadioOption --> "2..n" RadioItem : radoioItems
+
+ItemOrder --> "1" OrderState : state
+ItemOrder --> "1" StaffMember : orderedBy
+ItemOrder --> "1" Item : item
+ItemOrder --> "0..n" OptionOrder : optionOrders
+
+OptionOrder <|-- ValueOptionOrder
+OptionOrder <|-- RadioOptionOrder
+OptionOrder <|-- CheckboxOptionOrder
+
+ValueOptionOrder --> "1" ValueOption : option
+RadioOptionOrder --> "1" RadioItem : selectedItem
+CheckboxOptionOrder --> "1" CheckboxOption : option
+....
 
 TBA
 
