@@ -17,6 +17,9 @@ dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-server-staff-management')
 
+    // Web
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+
     // DB
     compile "org.flywaydb:flyway-core:4.0.3"
     runtime('mysql:mysql-connector-java')
