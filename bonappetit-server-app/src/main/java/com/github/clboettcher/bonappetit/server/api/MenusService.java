@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.api;
 
-import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -39,6 +38,6 @@ public interface MenusService {
     @Path("/current")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the currently active menu.")
-    MenuDto getCurrentMenu();
+    Object getCurrentMenu();
 
 }

@@ -27,9 +27,6 @@ jar {
 
 dependencies {
     compile project(':bonappetit-core')
-//    compile project(':bonappetit-domain')
-    compile project(':bonappetit-dto')
-//    compile project(':bonappetit-server-menu-management')
     compile project(':bonappetit-server-staff-management')
 
     // DB

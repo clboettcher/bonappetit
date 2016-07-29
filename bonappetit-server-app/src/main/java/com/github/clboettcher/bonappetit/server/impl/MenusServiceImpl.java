@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.impl;
 
-import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.server.api.MenusService;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +45,7 @@ public class MenusServiceImpl implements MenusService {
 //    }
 
     @Override
-    public MenuDto getCurrentMenu() {
+    public Object getCurrentMenu() {
 //        Menu currentMenu = menuManagement.getCurrentMenu();
 //        return MenuDtoMapper.INSTANCE.mapToMenuDto(currentMenu);
         return null;
