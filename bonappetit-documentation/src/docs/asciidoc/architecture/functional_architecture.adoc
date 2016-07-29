@@ -1,0 +1,3 @@
+=== Functional Architecture (A-Architecture)
+
+TBA

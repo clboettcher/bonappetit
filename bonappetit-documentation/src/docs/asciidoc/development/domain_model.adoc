@@ -1,22 +1,4 @@
-= BonAppetit
-Claudius Boettcher <pos.bonappetit@gmail.com>
-2016-07-08
-:revnumber: {project-version}
-:example-caption!:
-ifndef::imagesdir[:imagesdir: images]
-ifndef::sourcedir[:sourcedir: ../java]
-
-This is the documentation of the open source Point-of-Sale system BonAppetit.
-
-== Use Cases
-
-TBA
-
-== Non-Functional Requirements
-
-TBA
-
-== Domain Model
+=== Domain Model
 
 [plantuml, domain-model, png]
 ....
@@ -116,59 +98,5 @@ ValueOptionOrder --> "1" ValueOption : option
 RadioOptionOrder --> "1" RadioItem : selectedItem
 CheckboxOptionOrder --> "1" CheckboxOption : option
 ....
-
-TBA
-
-== Functional Architecture (A-Architecture)
-
-TBA
-
-== Technical Architecture (T-Architecture)
-
-TBA
-
-== Technical Infrastructure Architecture (TI-Architecture)
-
-TBA
-
-== Implementation Architecture (I-Architecture)
-
-The following illustration shows the canonical package structure of a business
-component for the example "Foo"-component.
-
-[plantuml, i-architecture, png]
-....
-@startsalt
-{
-{T
- + foo
- ++ to
- ++ fc
- +++ impl
- +++ mock
- ++ ba
- ++ et
- ++ dao
- +++ impl
- +++ mock
-}
-}
-@endsalt
-....
-
-foo::
-    The top level package is named after the component. It contains the public API interface, parameter and exception
-    types of the component.
-    to;; The transport objects (DTOs) that the component hands to the caller.
-    fc;; The facade package contains the implementations of the top level api interfaces.
-        impl::: The production impls of the top level api interfaces.
-        mock::: Contains mock implementations of the top level api interfaces that.
-    ba;; The business activities package contains the implementations of the provided business functions.
-    et;; The entities package contains the entity types which are mapped to the database.
-    dao;; The data access objects package contains the data access layer api interfaces.
-        impl::: The real impl of the daos.
-        mock::: A mocked impl of the daos that provide test data.
-
-== UI Concept
 
 TBA

@@ -1,0 +1,22 @@
+= BonAppetit Reference Documentation
+Claudius Boettcher <pos.bonappetit@gmail.com>
+2016-07-08
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+:numbered:
+
+WARNING: This project is being refactored, modernized and moved to github. Unfortunately it is far from usable at the moment.
+More stuff coming soon. Stay tuned.
+
+This is the reference documentation of the https://github.com/clboettcher/bonappetit[BonAppetit @ *GitHub*] project.
+
+include::intro.adoc[]
+
+include::operations/operations.adoc[]
+
+include::development/development.adoc[]
+
+include::architecture/architecture.adoc[]
+

@@ -1,0 +1,48 @@
+== Operations
+
+In this section you will find all you need to know to operate BonAppetit.
+
+=== Dependencies
+
+The BonAppetit server requires
+
+* Java SE Runtime Environment 8 or higher
+* A SQL database
+* A directory in the file system where configuration and log files are stored. Referred to as `BONAPPETIT_BASE`, see <<Configuration>>
+
+=== Configuration
+
+Table LINK lists the JVM parameters that are supported by the BonAppetit-Server. Note that you must prefix them with -D w
+hen running from the command-line.
+
+.JVM parameters
+|===
+|Name |Required |Description |Default |Example
+
+|BONAPPETIT_BASE
+|true
+|The path of the base directory where configuration and logs are stored.
+|-
+|"M:\bonappetit-base", "BONAPPETIT_BASE", ".", "/home/peter/bonappetit-base"
+
+|spring.profiles.active
+|false
+|The profiles to activate. Profiles control the server configuration, e.g. the database URL and credentials.
+PROD means the server is run in production configuration. LOCAL is only relevant to developers working with a database
+that contains only test data.
+|PROD
+|PROD, LOCAL
+|===
+
+=== Endpoints
+
+.Endpoints
+|===
+|URI |Description
+
+|`/health`
+|Shows application health information
+
+|`/v1/doc/index.html`
+|Shows an interactive API documentation (Swagger)
+|===

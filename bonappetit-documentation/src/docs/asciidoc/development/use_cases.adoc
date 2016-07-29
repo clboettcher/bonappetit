@@ -1,0 +1,14 @@
+=== Use Cases
+
+.Staff Member Use Cases
+|===
+|ID |Description |Benefit (so that...)
+
+|S-US-1
+|As a client i want to be able to query the staff members that work at the restaurant.
+|so that i can provide a select box in the app.
+
+|S-US-2
+|As a staff member i want to be able to select a staff member name in the app
+|so that my orders can be related to me.
+|===
