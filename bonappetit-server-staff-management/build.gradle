@@ -25,7 +25,7 @@ dependencies {
     mapstruct("org.mapstruct:mapstruct-processor:${mapstructVersion}")
 
     // Utils
-    compile('org.projectlombok:lombok:1.16.6')
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     // Testing
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
