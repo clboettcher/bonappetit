@@ -1,7 +1,4 @@
 buildscript {
-//    ext {
-//        generatedMapperSourcesDir = "${buildDir}/generated-src/mapstruct/main"
-//    }
     repositories {
         mavenCentral()
     }
@@ -10,16 +7,7 @@ buildscript {
     }
 }
 
-//apply plugin: 'java'
 apply plugin: 'spring-boot'
-
-//sourceCompatibility = 1.8
-//targetCompatibility = 1.8
-
-//configurations {
-//    providedRuntime
-//    mapstruct
-//}
 
 jar {
     baseName 'bonappetit-server'
@@ -33,61 +21,6 @@ dependencies {
     compile "org.flywaydb:flyway-core:4.0.3"
     runtime('mysql:mysql-connector-java')
 
-    // API
-//    compile 'org.springframework.boot:spring-boot-starter-web'
-//    compile('org.springframework.boot:spring-boot-starter-jersey')
-
-    // Security
-//    compile('org.springframework.boot:spring-boot-starter-security')
-
-    // Monitoring
-//    compile("org.springframework.boot:spring-boot-starter-actuator")
-
-    // Documentation
-//    compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
-
-    // Object mapping
-//    compile("org.mapstruct:mapstruct:${mapstructVersion}")
-//    mapstruct("org.mapstruct:mapstruct-processor:${mapstructVersion}")
-
     // Testing
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
-//sourceSets {
-//    main {
-//        ext.originalJavaSrcDirs = java.srcDirs
-//        java.srcDir "${generatedMapperSourcesDir}"
-//    }
-//}
-//
-//task generateMainMapperClasses(type: JavaCompile) {
-//    ext.aptDumpDir = file("${buildDir}/tmp/apt/mapstruct")
-//    destinationDir = aptDumpDir
-//
-//    classpath = compileJava.classpath + configurations.mapstruct
-//    source = sourceSets.main.originalJavaSrcDirs
-//    ext.sourceDestDir = file("$generatedMapperSourcesDir")
-//
-//    options.define(
-//            compilerArgs: [
-//                    "-nowarn",
-//                    "-proc:only",
-//                    "-encoding", "UTF-8",
-//                    "-processor", "org.mapstruct.ap.MappingProcessor",
-//                    "-s", sourceDestDir.absolutePath,
-//                    "-source", sourceCompatibility,
-//                    "-target", targetCompatibility,
-//            ]
-//    );
-//
-//    inputs.dir source
-//    outputs.dir generatedMapperSourcesDir;
-//    doFirst {
-//        sourceDestDir.mkdirs()
-//    }
-//    doLast {
-//        aptDumpDir.delete()
-//    }
-//}
-//compileJava.dependsOn generateMainMapperClasses
