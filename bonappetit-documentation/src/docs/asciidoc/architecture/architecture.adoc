@@ -1,9 +1,9 @@
 == Architecture Documentation
 
-include::functional_architecture.adoc[]
+//include::functional_architecture.adoc[]
 
-include::technical_architecture.adoc[]
+//include::technical_architecture.adoc[]
 
-include::technical_infrastructure_architecture.adoc[]
+//include::technical_infrastructure_architecture.adoc[]
 
 include::implementation_architecture.adoc[]

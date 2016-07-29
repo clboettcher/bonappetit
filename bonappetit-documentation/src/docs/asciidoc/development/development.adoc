@@ -4,7 +4,7 @@ include::domain_model.adoc[]
 
 include::use_cases.adoc[]
 
-include::non_functional_requirements.adoc[]
+//include::non_functional_requirements.adoc[]
 
-include::ui_concept.adoc[]
+//include::ui_concept.adoc[]
 
