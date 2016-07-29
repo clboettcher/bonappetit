@@ -28,6 +28,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StaffMemberDto {
 
+    @ApiModelProperty(value = "The server ID", required = true, example = "321")
+    private Long id;
+
     @ApiModelProperty(value = "The first name", required = true, example = "John")
     private String firstName;
 
@@ -35,9 +38,18 @@ public class StaffMemberDto {
     private String lastName;
 
     @Builder
-    public StaffMemberDto(String firstName, String lastName) {
+    public StaffMemberDto(Long id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
