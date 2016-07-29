@@ -17,21 +17,25 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api;
+package com.github.clboettcher.bonappetit.server.staff;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
+import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.Set;
 
-/**
- * Management for {@link StaffMember}s providing all business functionality.
- */
-public interface StaffManagement {
+@Path("/staffMembers")
+@Api(value = "staffMembers")
+public interface StaffMemberResource {
 
-    /**
-     * Returns all {@link StaffMember}s.
-     *
-     * @return All {@link StaffMember}s.
-     */
-    Set<StaffMember> getStaffMembers();
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns a list of staff members.")
+    Set<StaffMemberDto> getStaffMembers();
 }

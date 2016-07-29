@@ -19,43 +19,34 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.mapping;
 
-import com.github.clboettcher.bonappetit.domain.menu.Item;
-import com.github.clboettcher.bonappetit.domain.menu.ItemType;
-import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.dto.menu.ItemDtoType;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-import java.util.Set;
-
-/**
- * Converts {@link Item}s to {@link ItemDto}s.
- */
 @Mapper(uses = OptionDtoMapper.class)
 public interface ItemDtoMapper {
 
-    /**
-     * A mapper instance.
-     */
-    ItemDtoMapper INSTANCE = Mappers.getMapper(ItemDtoMapper.class);
-
-    /**
-     * Converts the given {@link Item}s to {@link ItemDto}s.
-     *
-     * @param items The items to map.
-     * @return The mapping result.
-     */
-    Set<ItemDto> mapToItemDtos(Set<Item> items);
-
-    /**
-     * @param item The {@link Item} to map.
-     * @return The mapping result.
-     */
-    ItemDto mapToItemDto(Item item);
-
-    /**
-     * @param itemType The {@link ItemType} to map.
-     * @return The mapping result.
-     */
-    ItemDtoType mapToItemDtoType(ItemType itemType);
+    // TODO repair
+//    /**
+//     * A mapper instance.
+//     */
+//    ItemDtoMapper INSTANCE = Mappers.getMapper(ItemDtoMapper.class);
+//
+//    /**
+//     * Converts the given {@link Item}s to {@link ItemDto}s.
+//     *
+//     * @param items The items to map.
+//     * @return The mapping result.
+//     */
+//    Set<ItemDto> mapToItemDtos(Set<Item> items);
+//
+//    /**
+//     * @param item The {@link Item} to map.
+//     * @return The mapping result.
+//     */
+//    ItemDto mapToItemDto(Item item);
+//
+//    /**
+//     * @param itemType The {@link ItemType} to map.
+//     * @return The mapping result.
+//     */
+//    ItemDtoType mapToItemDtoType(ItemType itemType);
 }

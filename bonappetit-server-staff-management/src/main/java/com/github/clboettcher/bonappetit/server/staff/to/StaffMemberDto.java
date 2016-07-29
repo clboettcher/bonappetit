@@ -17,15 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.staff;
+package com.github.clboettcher.bonappetit.server.staff.to;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @ApiModel(description = "A staff member of the restaurant")
-@Data
-//@NoArgsConstructor
+@NoArgsConstructor
 public class StaffMemberDto {
 
     @ApiModelProperty(value = "The first name", required = true, example = "John")
@@ -34,11 +34,25 @@ public class StaffMemberDto {
     @ApiModelProperty(value = "The last name", required = true, example = "Smith")
     private String lastName;
 
-//    @Builder
-//    public StaffMemberDto(String firstName, String lastName) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//    }
+    @Builder
+    public StaffMemberDto(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

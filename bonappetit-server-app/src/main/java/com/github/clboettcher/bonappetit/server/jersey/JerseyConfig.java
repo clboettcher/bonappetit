@@ -19,10 +19,10 @@
  */
 package com.github.clboettcher.bonappetit.server.jersey;
 
-import com.github.clboettcher.bonappetit.server.api.ManagementService;
 import com.github.clboettcher.bonappetit.server.impl.ManagementServiceImpl;
 import com.github.clboettcher.bonappetit.server.impl.MenusServiceImpl;
-import com.github.clboettcher.bonappetit.server.impl.StaffMembersServiceImpl;
+import com.github.clboettcher.bonappetit.server.staff.StaffMemberResource;
+import com.github.clboettcher.bonappetit.server.staff.fc.impl.StaffMemberResourceImpl;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -48,7 +48,7 @@ public class JerseyConfig extends ResourceConfig {
         register(ManagementServiceImpl.class);
         register(MenusServiceImpl.class);
         register(ObjectMapperProvider.class);
-        register(StaffMembersServiceImpl.class);
+        register(StaffMemberResourceImpl.class);
 
         initSwagger();
     }
@@ -59,12 +59,12 @@ public class JerseyConfig extends ResourceConfig {
     private void initSwagger() {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setTitle("BonAppetit Server");
-        beanConfig.setVersion("1.0.0");
+        beanConfig.setVersion("0.0.1-SNAPSHOT");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setHost("localhost:8080");
         beanConfig.setBasePath("/v1/api");
         // Setup classes that will swagger pick up
-        beanConfig.setResourcePackage(ManagementService.class.getPackage().getName());
+        beanConfig.setResourcePackage(StaffMemberResource.class.getPackage().getName());
         // Actually produce the documentation
         beanConfig.setScan(true);
         // Pretty print swagger.json

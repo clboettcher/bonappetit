@@ -17,27 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.persistence.impl;
+package com.github.clboettcher.bonappetit.server.staff.dao.impl;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff.StaffMemberEntity;
-import com.github.clboettcher.bonappetit.server.persistence.impl.mapper.StaffMemberMapper;
-import com.github.clboettcher.bonappetit.server.persistence.impl.repository.StaffMemberEntityRepository;
-import com.google.common.collect.Lists;
+import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Default impl of {@link StaffMemberDao}.
  */
 @Component
-@Profile("default")
 public class StaffMemberDaoImpl implements StaffMemberDao {
 
     /**
@@ -56,13 +50,12 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     }
 
     @Override
-    public Set<StaffMember> getStaffMembers() {
+    public Set<StaffMemberEntity> getStaffMembers() {
         Iterable<StaffMemberEntity> allEntities = staffMemberEntityRepository.findAll();
         if (!allEntities.iterator().hasNext()) {
             return Collections.emptySet();
         } else {
-            List<StaffMemberEntity> staffMemberEntities = Lists.newArrayList(allEntities);
-            return StaffMemberMapper.INSTANCE.mapToStaffMembers(staffMemberEntities);
+            return Sets.newHashSet(allEntities);
         }
     }
 }

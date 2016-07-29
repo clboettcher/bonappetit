@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Utilities for Jackson object mappers
+ * Utilities for Jackson object mappers.
  */
 public final class ObjectMapperFactory {
     /**

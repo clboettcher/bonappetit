@@ -36,9 +36,9 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff;
+package com.github.clboettcher.bonappetit.server.staff.et;
 
-import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -48,7 +48,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STAFF_MEMBER")
-@Data
 @NoArgsConstructor
 public class StaffMemberEntity {
 
@@ -58,7 +57,7 @@ public class StaffMemberEntity {
     @Id
     @GeneratedValue
     @Column(name = "STAFF_MEMBER_ID")
-    private long id;
+    private Long id;
 
     /**
      * The first name.
@@ -71,4 +70,42 @@ public class StaffMemberEntity {
      */
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param firstName see {@link #firstName}.
+     * @param lastName  see {@link #lastName}.
+     */
+    @Builder
+    public StaffMemberEntity(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

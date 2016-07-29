@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.persistence.impl;
+package com.github.clboettcher.bonappetit.server.staff.dao.mock;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
+import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -35,15 +35,15 @@ import java.util.Set;
 public class StaffMemberDaoMockImpl implements StaffMemberDao {
 
     @Override
-    public Set<StaffMember> getStaffMembers() {
+    public Set<StaffMemberEntity> getStaffMembers() {
         return Sets.newHashSet(
-                StaffMember.builder()
-                        .id(1)
+                StaffMemberEntity.builder()
+                        .id(1L)
                         .firstName("John")
                         .lastName("Smith")
                         .build(),
-                StaffMember.builder()
-                        .id(2)
+                StaffMemberEntity.builder()
+                        .id(2L)
                         .firstName("Jane")
                         .lastName("Smith")
                         .build()

@@ -17,40 +17,41 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl;
+package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
-import com.github.clboettcher.bonappetit.server.api.StaffMembersService;
-import com.github.clboettcher.bonappetit.server.impl.mapping.StaffMemberDtoMapper;
-import com.github.clboettcher.bonappetit.server.staff.api.StaffManagement;
+import com.github.clboettcher.bonappetit.server.staff.StaffMemberResource;
+import com.github.clboettcher.bonappetit.server.staff.ba.ListStaffMembersActivity;
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/**
+ * Default impl of {@link StaffMemberResource}.
+ */
 @Component
-public class StaffMembersServiceImpl implements StaffMembersService {
+public class StaffMemberResourceImpl implements StaffMemberResource {
 
     /**
-     * The management bean for {@link StaffMember}s.
+     * The activity for listing staff members.
      */
-    private StaffManagement staffManagement;
-
+    private ListStaffMembersActivity listStaffMembersActivity;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param staffManagement see {@link #staffManagement}.
+     * @param listStaffMembersActivity see {@link #listStaffMembersActivity}.
      */
     @Autowired
-    public StaffMembersServiceImpl(StaffManagement staffManagement) {
-        this.staffManagement = staffManagement;
+    public StaffMemberResourceImpl(ListStaffMembersActivity listStaffMembersActivity) {
+        this.listStaffMembersActivity = listStaffMembersActivity;
     }
 
     @Override
     public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMember> result = staffManagement.getStaffMembers();
+        Set<StaffMemberEntity> result = listStaffMembersActivity.getStaffMembers();
         return StaffMemberDtoMapper.INSTANCE.convert(result);
     }
 }

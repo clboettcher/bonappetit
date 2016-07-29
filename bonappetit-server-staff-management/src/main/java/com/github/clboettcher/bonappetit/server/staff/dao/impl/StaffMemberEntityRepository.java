@@ -17,15 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server;
+package com.github.clboettcher.bonappetit.server.staff.dao.impl;
 
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 
-public class ServletInitializer extends SpringBootServletInitializer {
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import org.springframework.data.repository.CrudRepository;
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(BonappetitServerApplication.class);
-    }
+public interface StaffMemberEntityRepository extends CrudRepository<StaffMemberEntity, Long> {
 }

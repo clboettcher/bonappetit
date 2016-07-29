@@ -19,27 +19,22 @@
  */
 package com.github.clboettcher.bonappetit.server.impl.mapping;
 
-import com.github.clboettcher.bonappetit.domain.menu.Menu;
-import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-/**
- * Maps {@link Menu}s to {@link MenuDto}s.
- */
 @Mapper(uses = ItemDtoMapper.class)
 public interface MenuDtoMapper {
-
-    /**
-     * The mapper instance.
-     */
-    MenuDtoMapper INSTANCE = Mappers.getMapper(MenuDtoMapper.class);
-
-    /**
-     * Maps the given {@link Menu} to a {@link MenuDto}.
-     *
-     * @param menu The {@link Menu} to mapToMenu.
-     * @return The resulting {@link MenuDto}.
-     */
-    MenuDto mapToMenuDto(Menu menu);
+    // TODO repair
+//
+//    /**
+//     * The mapper instance.
+//     */
+//    MenuDtoMapper INSTANCE = Mappers.getMapper(MenuDtoMapper.class);
+//
+//    /**
+//     * Maps the given {@link Menu} to a {@link MenuDto}.
+//     *
+//     * @param menu The {@link Menu} to mapToMenu.
+//     * @return The resulting {@link MenuDto}.
+//     */
+//    MenuDto mapToMenuDto(Menu menu);
 }

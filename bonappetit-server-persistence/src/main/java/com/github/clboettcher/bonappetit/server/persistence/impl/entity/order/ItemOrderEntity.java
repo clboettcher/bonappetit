@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.persistence.impl.entity.order;
 
 import com.github.clboettcher.bonappetit.server.persistence.impl.entity.menu.ItemEntity;
-import com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.persistence.impl.entity.staff.StaffMemberEntityOld;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -71,8 +71,8 @@ public class ItemOrderEntity {
      * The staff member who took the order.
      */
     @OneToOne(optional = false)
-    @JoinColumn(name = "STAFF_MEMBER_ID", nullable = false)
-    private StaffMemberEntity staffMember;
+    @JoinColumn(name = "STAFF_MEMBER_OLD_ID", nullable = false)
+    private StaffMemberEntityOld staffMember;
 
     /**
      * The timestamp that the order was taken.
@@ -123,7 +123,7 @@ public class ItemOrderEntity {
      */
     @Builder
     public ItemOrderEntity(ItemEntity item, Set<AbstractOptionOrderEntity> optionOrders,
-                           String deliverTo, StaffMemberEntity staffMember, Date orderTime,
+                           String deliverTo, StaffMemberEntityOld staffMember, Date orderTime,
                            String note, OrderEntityStatus status, int discount, BigDecimal price) {
         this.item = item;
         this.optionOrders = optionOrders;

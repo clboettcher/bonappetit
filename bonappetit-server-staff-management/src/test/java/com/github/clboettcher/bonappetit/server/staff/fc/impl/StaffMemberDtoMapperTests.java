@@ -17,16 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl.mapping;
+package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,20 +35,19 @@ public class StaffMemberDtoMapperTests {
 
     @Test
     public void testConverter() throws Exception {
-        HashSet<StaffMember> input = Sets.newHashSet(
-                StaffMember.builder()
-                        .id(1)
+        Set<StaffMemberEntity> input = Sets.newHashSet(
+                StaffMemberEntity.builder()
+                        .id(1L)
                         .firstName("John")
                         .lastName("Smith")
                         .build(),
-                StaffMember.builder()
-                        .id(2)
+                StaffMemberEntity.builder()
+                        .id(2L)
                         .firstName("Jane")
                         .lastName("Smith")
                         .build()
         );
         Set<StaffMemberDto> actual = StaffMemberDtoMapper.INSTANCE.convert(input);
-
         Assert.assertThat(actual.size(), Matchers.is(2));
     }
 }

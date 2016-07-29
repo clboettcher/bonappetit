@@ -27,7 +27,6 @@ import com.github.clboettcher.bonappetit.server.persistence.impl.mapper.MenuMapp
 import com.github.clboettcher.bonappetit.server.persistence.impl.repository.MenuConfigRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,7 +35,6 @@ import java.util.List;
  * Default impl of {@link MenuDao}.
  */
 @Component
-@Profile("default") // TODO  need profile default or is this the default?
 public class MenuDaoImpl implements MenuDao {
 
     /**

@@ -17,27 +17,22 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.impl;
+package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.github.clboettcher.bonappetit.server.persistence.api.StaffMemberDao;
-import com.github.clboettcher.bonappetit.server.staff.api.StaffManagement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
-@Component
-public class StaffManagementImpl implements StaffManagement {
+@Mapper
+public interface StaffMemberDtoMapper {
 
-    /**
-     * The bean providing access to stored staff members.
-     */
-    @Autowired
-    private StaffMemberDao staffMemberDao;
+    StaffMemberDtoMapper INSTANCE = Mappers.getMapper(StaffMemberDtoMapper.class);
 
-    @Override
-    public Set<StaffMember> getStaffMembers() {
-        return staffMemberDao.getStaffMembers();
-    }
+    StaffMemberDto convert(StaffMemberEntity staffMember);
+
+    Set<StaffMemberDto> convert(Set<StaffMemberEntity> staffMembers);
+
 }

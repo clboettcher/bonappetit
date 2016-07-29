@@ -19,12 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.impl;
 
-import com.github.clboettcher.bonappetit.domain.menu.Menu;
 import com.github.clboettcher.bonappetit.dto.menu.MenuDto;
 import com.github.clboettcher.bonappetit.server.api.MenusService;
-import com.github.clboettcher.bonappetit.server.impl.mapping.MenuDtoMapper;
-import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,24 +29,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class MenusServiceImpl implements MenusService {
 
-    /**
-     * The DAO for stored menus.
-     */
-    private MenuManagement menuManagement;
-
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param menuManagement see {@link #menuManagement}.
-     */
-    @Autowired
-    public MenusServiceImpl(MenuManagement menuManagement) {
-        this.menuManagement = menuManagement;
-    }
+    // TODO repair
+//    /**
+//     * The DAO for stored menus.
+//     */
+//    private MenuManagement menuManagement;
+//
+//    /**
+//     * Constructor setting the specified properties.
+//     *
+//     * @param menuManagement see {@link #menuManagement}.
+//     */
+//    @Autowired
+//    public MenusServiceImpl(MenuManagement menuManagement) {
+//        this.menuManagement = menuManagement;
+//    }
 
     @Override
     public MenuDto getCurrentMenu() {
-        Menu currentMenu = menuManagement.getCurrentMenu();
-        return MenuDtoMapper.INSTANCE.mapToMenuDto(currentMenu);
+//        Menu currentMenu = menuManagement.getCurrentMenu();
+//        return MenuDtoMapper.INSTANCE.mapToMenuDto(currentMenu);
+        return null;
     }
 }
