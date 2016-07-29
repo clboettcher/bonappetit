@@ -37,21 +37,18 @@ public class StaffMemberResourceImpl implements StaffMemberResource {
     /**
      * The activity for listing staff members.
      */
-    private ListStaffMembersActivity listStaffMembersActivity;
+    @Autowired
+    private ListStaffMembersActivity listMembersActivity;
 
     /**
-     * Constructor setting the specified properties.
-     *
-     * @param listStaffMembersActivity see {@link #listStaffMembersActivity}.
+     * The bean mapper.
      */
     @Autowired
-    public StaffMemberResourceImpl(ListStaffMembersActivity listStaffMembersActivity) {
-        this.listStaffMembersActivity = listStaffMembersActivity;
-    }
+    private StaffMemberDtoMapper mapper;
 
     @Override
     public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMemberEntity> result = listStaffMembersActivity.getStaffMembers();
-        return StaffMemberDtoMapper.INSTANCE.convert(result);
+        Set<StaffMemberEntity> result = listMembersActivity.getStaffMembers();
+        return mapper.mapToStaffMemberDtos(result);
     }
 }

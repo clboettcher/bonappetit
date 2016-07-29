@@ -22,19 +22,30 @@ package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
 import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
 import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests for {@link StaffMemberDtoMapper}.
  */
 public class StaffMemberDtoMapperTests {
 
+    private StaffMemberDtoMapper mapper;
+
+    @Before
+    public void setUp() throws Exception {
+        this.mapper = Mappers.getMapper(StaffMemberDtoMapper.class);
+    }
+
     @Test
-    public void testConverter() throws Exception {
+    public void testMapper() throws Exception {
         Set<StaffMemberEntity> input = Sets.newHashSet(
                 StaffMemberEntity.builder()
                         .id(1L)
@@ -47,7 +58,12 @@ public class StaffMemberDtoMapperTests {
                         .lastName("Smith")
                         .build()
         );
-        Set<StaffMemberDto> actual = StaffMemberDtoMapper.INSTANCE.convert(input);
-        Assert.assertThat(actual.size(), Matchers.is(2));
+        Set<StaffMemberDto> actual = mapper.mapToStaffMemberDtos(input);
+        assertThat(actual.size(), is(2));
+        for (StaffMemberDto staffMemberDto : actual) {
+            assertThat(staffMemberDto.getId(), notNullValue());
+            assertThat(staffMemberDto.getFirstName(), notNullValue());
+            assertThat(staffMemberDto.getLastName(), notNullValue());
+        }
     }
 }

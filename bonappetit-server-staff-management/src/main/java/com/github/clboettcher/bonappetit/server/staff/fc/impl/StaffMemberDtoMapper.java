@@ -22,17 +22,14 @@ package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
 import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StaffMemberDtoMapper {
 
-    StaffMemberDtoMapper INSTANCE = Mappers.getMapper(StaffMemberDtoMapper.class);
+    StaffMemberDto mapToStaffMemberDto(StaffMemberEntity staffMember);
 
-    StaffMemberDto convert(StaffMemberEntity staffMember);
-
-    Set<StaffMemberDto> convert(Set<StaffMemberEntity> staffMembers);
+    Set<StaffMemberDto> mapToStaffMemberDtos(Set<StaffMemberEntity> staffMembers);
 
 }

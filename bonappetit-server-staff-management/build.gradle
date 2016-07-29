@@ -59,7 +59,7 @@ task generateMainMapperClasses(type: JavaCompile) {
                     "-processor", "org.mapstruct.ap.MappingProcessor",
                     "-s", sourceDestDir.absolutePath,
                     "-source", sourceCompatibility,
-                    "-target", targetCompatibility,
+                    "-target", targetCompatibility
             ]
     );
 
