@@ -1,6 +1,5 @@
 = BonAppetit Reference Documentation
 Claudius Boettcher <pos.bonappetit@gmail.com>
-2016-07-08
 :revnumber: {project-version}
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
