@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `library` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `library`;
+CREATE DATABASE  IF NOT EXISTS `bonappetit-local` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `bonappetit-local`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: library
+-- Host: localhost    Database: bonappetit-local
 -- ------------------------------------------------------
 -- Server version	5.7.13-log
 
@@ -16,57 +16,6 @@ USE `library`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `book`
---
-
-DROP TABLE IF EXISTS `book`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `book` (
-  `BOOK_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TITLE` varchar(255) NOT NULL,
-  `LOCATION` varchar(255) NOT NULL,
-  `SUB_TITLE` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`BOOK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `book`
---
-
-LOCK TABLES `book` WRITE;
-/*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Java','Munich',NULL),(2,'C++','Funky Town',NULL),(3,'Kotlin','Awesome Town',NULL),(4,'Yay local book with subtitle','LOCAL','The awesome sub title.');
-/*!40000 ALTER TABLE `book` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `employee`
---
-
-DROP TABLE IF EXISTS `employee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee` (
-  `EMPLOYEE_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `NAME` varchar(255) NOT NULL,
-  `LOCATION` varchar(255) NOT NULL,
-  PRIMARY KEY (`EMPLOYEE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employee`
---
-
-LOCK TABLES `employee` WRITE;
-/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'Dieter','Munich'),(2,'Hans','Funky Town'),(3,'Peter','Awesome Town');
-/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `schema_version`
@@ -88,7 +37,7 @@ CREATE TABLE `schema_version` (
   `success` tinyint(1) NOT NULL,
   PRIMARY KEY (`installed_rank`),
   KEY `schema_version_s_idx` (`success`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,8 +46,33 @@ CREATE TABLE `schema_version` (
 
 LOCK TABLES `schema_version` WRITE;
 /*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
-INSERT INTO `schema_version` VALUES (1,'0.1.1','create tabels','SQL','V0_1_1__create_tabels.sql',1078844435,'root','2016-07-27 16:00:19',96,1),(2,'0.1.2','add book sub title','SQL','V0_1_2__add_book_sub_title.sql',-814038231,'bonappetit-local','2016-07-28 15:43:36',116,1);
+INSERT INTO `schema_version` VALUES (1,'0.1.1','create table staff member','SQL','V0_1_1__create_table_staff_member.sql',806212197,'bonappetit-local','2016-07-29 11:07:08',44,1);
 /*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `staff_member`
+--
+
+DROP TABLE IF EXISTS `staff_member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `staff_member` (
+  `STAFF_MEMBER_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `FIRST_NAME` varchar(255) NOT NULL,
+  `LAST_NAME` varchar(255) NOT NULL,
+  PRIMARY KEY (`STAFF_MEMBER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `staff_member`
+--
+
+LOCK TABLES `staff_member` WRITE;
+/*!40000 ALTER TABLE `staff_member` DISABLE KEYS */;
+INSERT INTO `staff_member` VALUES (1,'Peter','Pommes'),(2,'Hans','Wurst'),(3,'Claus','Cola'),(4,'Bernd','Burger'),(5,'Willi','Weißbier'),(6,'Nick','Nachos'),(7,'Harry','Helles'),(8,'Leo','Limo');
+/*!40000 ALTER TABLE `staff_member` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -110,4 +84,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-28 17:45:43
+-- Dump completed on 2016-07-29 13:11:39
