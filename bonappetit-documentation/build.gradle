@@ -27,3 +27,23 @@ asciidoctor {
             'idseparator': '-',
             'docinfo1': 'true'
 }
+
+task cleanGhPages(type: Delete) {
+    group = 'documentation'
+    def dirName = "gh-pages"
+    file(dirName).listFiles().each {
+        f ->
+            if (!f.name.equals(".git")) {
+                println "Deleting $f"
+                delete f
+            }
+    }
+}
+
+task publishGhPages(type: Copy, dependsOn: ['asciidoctor', 'cleanGhPages']) {
+    group = 'documentation'
+    description = """Copies the html build output of the asciidoctor task to the gh-pages branch location.
+                     Needs to be committed and pushed manually."""
+    from file("${buildDir}/asciidoc/html5")
+    into file("${projectDir}/gh-pages")
+}
