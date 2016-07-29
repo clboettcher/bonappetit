@@ -5,8 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<meta name="author" content="Claudius Boettcher">
-<title>BonAppetit Reference Documentation</title>
+<title>Operations</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -512,85 +511,28 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>BonAppetit Reference Documentation</h1>
-<div class="details">
-<span id="author" class="author">Claudius Boettcher</span><br>
-<span id="email" class="email"><a href="mailto:pos.bonappetit@gmail.com">pos.bonappetit@gmail.com</a></span><br>
-<span id="revnumber">version 0.0.1-SNAPSHOT,</span>
-<span id="revdate">2016-07-08</span>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a></li>
-<li><a href="#operations">2. Operations</a>
+<li><a href="#operations">Operations</a>
 <ul class="sectlevel2">
-<li><a href="#dependencies">2.1. Dependencies</a></li>
-<li><a href="#configuration">2.2. Configuration</a></li>
-<li><a href="#endpoints">2.3. Endpoints</a></li>
-</ul>
-</li>
-<li><a href="#development-management">3. Development Management</a>
-<ul class="sectlevel2">
-<li><a href="#domain-model">3.1. Domain Model</a></li>
-<li><a href="#use-cases">3.2. Use Cases</a></li>
-</ul>
-</li>
-<li><a href="#architecture-documentation">4. Architecture Documentation</a>
-<ul class="sectlevel2">
-<li><a href="#implementation-architecture-i-architecture">4.1. Implementation Architecture (I-Architecture)</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#endpoints">Endpoints</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-This project is being refactored, modernized and moved to github. Unfortunately it is far from usable at the moment.
-More stuff coming soon. Stay tuned.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This is the reference documentation of the <a href="https://github.com/clboettcher/bonappetit">BonAppetit @ <strong>GitHub</strong></a> project.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>BonAppetit is a free Point-of-Sale solution for small and medium restaurants. It consists of an Android client and a Java
-server application connected to a receipt printer.</p>
-</div>
-<div class="paragraph">
-<p>The client app provides the ability to record, edit and delete
-orders for menu items configured in the server. Orders are transferred to the server via WLAN.</p>
-</div>
-<div class="paragraph">
-<p>The server saves the recorded orders to a database and prints receipts using a thermal receipt printer. The receipts
-contain all information required to further process the order consisting of table number, item name, options,
-additional free text notes as well as the service member who took the order and the time the order was registered.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="operations">2. Operations</h2>
+<h2 id="operations">Operations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this section you will find all you need to know to operate BonAppetit.</p>
 </div>
 <div class="sect2">
-<h3 id="dependencies">2.1. Dependencies</h3>
+<h3 id="dependencies">Dependencies</h3>
 <div class="paragraph">
 <p>The BonAppetit server requires</p>
 </div>
@@ -609,9 +551,9 @@ additional free text notes as well as the service member who took the order and 
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration">2.2. Configuration</h3>
+<h3 id="configuration">Configuration</h3>
 <div class="sect3">
-<h4 id="bonappetit-base">2.2.1. Base Directory (aka BONAPPETIT_BASE)</h4>
+<h4 id="bonappetit-base">Base Directory (aka BONAPPETIT_BASE)</h4>
 <div class="paragraph">
 <p>The BonAppetit Server requires a directory referred to as <code>BONAPPETIT_BASE</code>. In this directory you must provide the
 configuration for your database. This is also the location where the server writes its log files.</p>
@@ -662,7 +604,7 @@ configuration for your database. This is also the location where the server writ
 </div>
 </div>
 <div class="sect3">
-<h4 id="external-configuration">2.2.2. External Configuration</h4>
+<h4 id="external-configuration">External Configuration</h4>
 <div class="paragraph">
 <p>The main external configuration is read from <code>${BONAPPETIT_BASE}/content/config/bonappetit.properties</code> (see <a href="#bonappetit-base">Base Directory (aka BONAPPETIT_BASE)</a>). The BonAppetit Server
 project is a <a href="http://projects.spring.io/spring-boot/">Spring Boot</a> application. Therefore the <code>bonappetit.properties</code> file
@@ -734,7 +676,7 @@ always contains surprises). Then apply the migration manually to the production 
 </table>
 </div>
 <div class="sect3">
-<h4 id="profiles">2.2.3. Profiles</h4>
+<h4 id="profiles">Profiles</h4>
 <div class="paragraph">
 <p>Profiles  control what configuration the BonAppetit Server is run in. If you are just using (and not developing) the
 BonAppetit server you don&#8217;t need to bother much with profiles.</p>
@@ -770,7 +712,7 @@ BonAppetit server you don&#8217;t need to bother much with profiles.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jvm-parameters">2.2.4. JVM Parameters</h4>
+<h4 id="jvm-parameters">JVM Parameters</h4>
 <div class="paragraph">
 <p>Table <a href="#table_jvm_params">JVM parameters</a> lists the JVM parameters that are supported by the BonAppetit-Server. Note that you have to
 prefix them with -D when running from the command-line.</p>
@@ -815,7 +757,7 @@ that contains only test data.</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="endpoints">2.3. Endpoints</h3>
+<h3 id="endpoints">Endpoints</h3>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 4. Endpoints</caption>
 <colgroup>
@@ -842,131 +784,10 @@ that contains only test data.</p></td>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="development-management">3. Development Management</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="domain-model">3.1. Domain Model</h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/domain-model.png" alt="domain model" width="744" height="934">
-</div>
-</div>
-<div class="paragraph">
-<p>TBA</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="use-cases">3.2. Use Cases</h3>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Staff Member Use Cases</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">ID</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Benefit (so that&#8230;&#8203;)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">S-US-1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">As a client i want to be able to query the staff members that work at the restaurant.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">so that i can provide a select box in the app.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">S-US-2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">As a staff member i want to be able to select a staff member name in the app</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">so that my orders can be related to me.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="architecture-documentation">4. Architecture Documentation</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="implementation-architecture-i-architecture">4.1. Implementation Architecture (I-Architecture)</h3>
-<div class="paragraph">
-<p>The following illustration shows the canonical package structure of a business
-component for the example "Foo"-component.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/i-architecture.png" alt="i architecture" width="72" height="161">
-</div>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">foo</dt>
-<dd>
-<p>The top level package is named after the component. It contains the public API interface, parameter and exception
-types of the component.</p>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">to</dt>
-<dd>
-<p>The transport objects (DTOs) that the component hands to the caller.</p>
-</dd>
-<dt class="hdlist1">fc</dt>
-<dd>
-<p>The facade package contains the implementations of the top level api interfaces.</p>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">impl</dt>
-<dd>
-<p>The production impls of the top level api interfaces.</p>
-</dd>
-<dt class="hdlist1">mock</dt>
-<dd>
-<p>Contains mock implementations of the top level api interfaces that.</p>
-</dd>
-</dl>
-</div>
-</dd>
-<dt class="hdlist1">ba</dt>
-<dd>
-<p>The business activities package contains the implementations of the provided business functions.</p>
-</dd>
-<dt class="hdlist1">et</dt>
-<dd>
-<p>The entities package contains the entity types which are mapped to the database.</p>
-</dd>
-<dt class="hdlist1">dao</dt>
-<dd>
-<p>The data access objects package contains the data access layer api interfaces.</p>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">impl</dt>
-<dd>
-<p>The real impl of the daos.</p>
-</dd>
-<dt class="hdlist1">mock</dt>
-<dd>
-<p>A mocked impl of the daos that provide test data.</p>
-</dd>
-</dl>
-</div>
-</dd>
-</dl>
-</div>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.0.1-SNAPSHOT<br>
-Last updated 2016-07-29 21:31:19 +02:00
+Last updated 2016-07-29 21:31:23 +02:00
 </div>
 </div>
 </body>
