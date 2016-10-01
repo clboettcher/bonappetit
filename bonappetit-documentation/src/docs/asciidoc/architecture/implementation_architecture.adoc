@@ -1,5 +1,7 @@
 === Implementation Architecture (I-Architecture)
 
+==== BonAppetit Server
+
 The following illustration shows the canonical package structure of a business
 component for the example "Foo"-component.
 
@@ -35,3 +37,16 @@ foo::
     dao;; The data access objects package contains the data access layer api interfaces.
         impl::: The real impl of the daos.
         mock::: A mocked impl of the daos that provide test data.
+
+==== BonAppetit Android App
+
+===== Layout Style Guide
+
+[source,xml]
+----
+<ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/staffMembersListView"/><!--1-->
+----
+<1> android:id attributes in camelCase
