@@ -10,6 +10,9 @@ configurations {
 }
 
 dependencies {
+    // API
+    compile project(":bonappetit-server-staff-management-api")
+
     // Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}")

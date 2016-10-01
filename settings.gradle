@@ -9,4 +9,5 @@ include 'bonappetit-printing'
 
 include 'bonappetit-server-app'
 include 'bonappetit-server-staff-management'
+include 'bonappetit-server-staff-management-api'
 include 'bonappetit-documentation'
