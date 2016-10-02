@@ -28,15 +28,18 @@ component for the example "Foo"-component.
 foo::
     The top level package is named after the component. It contains the public API interface, parameter and exception
     types of the component.
-    to;; The transport objects (DTOs) that the component hands to the caller.
-    fc;; The facade package contains the implementations of the top level api interfaces.
+    api;;
+        The api package contains all parts of the public API of the business module (interfaces, exceptions, dtos)
+        to::: The transport objects (DTOs) that the component hands to the caller.
+    impl;; The impl package contains the implementations of the top level api interfaces.
         impl::: The production impls of the top level api interfaces.
         mock::: Contains mock implementations of the top level api interfaces that.
-    ba;; The business activities package contains the implementations of the provided business functions.
-    et;; The entities package contains the entity types which are mapped to the database.
+    entity;; The entities package contains the entity types which are mapped to the database.
     dao;; The data access objects package contains the data access layer api interfaces.
         impl::: The real impl of the daos.
         mock::: A mocked impl of the daos that provide test data.
+
+The packages api and api.dto are part of a separate module to be reusable in client code (as jar).
 
 ==== BonAppetit Android App
 
