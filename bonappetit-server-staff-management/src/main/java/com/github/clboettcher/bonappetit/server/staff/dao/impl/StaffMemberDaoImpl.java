@@ -23,6 +23,7 @@ import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -32,6 +33,7 @@ import java.util.Set;
  * Default impl of {@link StaffMemberDao}.
  */
 @Component
+@Profile("default ")
 public class StaffMemberDaoImpl implements StaffMemberDao {
 
     /**

@@ -39,7 +39,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -51,7 +50,6 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_TYPE")
 @Table(name = "ITEM_OPTION") // 'option' is reserved in mysql
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class AbstractOptionEntity {
@@ -76,4 +74,28 @@ public abstract class AbstractOptionEntity {
     // 'index' is reserved in mysql
     @Column(name = "OPTION_INDEX", nullable = false)
     private Integer index;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 }

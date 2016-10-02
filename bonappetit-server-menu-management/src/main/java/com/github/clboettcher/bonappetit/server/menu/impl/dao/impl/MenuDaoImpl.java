@@ -19,10 +19,12 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.List;
  * Default impl of {@link MenuDao}.
  */
 @Component
+@Profile("default ")
 public class MenuDaoImpl implements MenuDao {
 
     /**

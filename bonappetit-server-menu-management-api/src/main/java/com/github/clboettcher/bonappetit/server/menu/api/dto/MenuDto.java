@@ -49,8 +49,8 @@ import java.util.Set;
 /**
  * The menu represents the items that can be ordered.
  */
-@Data
 @NoArgsConstructor
+@Data
 @ApiModel(description = "The menu contains the items that can be ordered")
 public class MenuDto {
 

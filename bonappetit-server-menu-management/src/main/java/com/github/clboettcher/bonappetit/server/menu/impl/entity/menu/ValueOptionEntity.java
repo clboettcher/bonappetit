@@ -39,7 +39,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -53,7 +52,6 @@ import java.math.BigDecimal;
  * Example: French fries with the option for ketchup. The int value is the number of ketchup packages.
  */
 @Entity
-@Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class ValueOptionEntity extends AbstractOptionEntity {
@@ -87,6 +85,22 @@ public class ValueOptionEntity extends AbstractOptionEntity {
     public ValueOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
         super(id, title, index);
         this.priceDiff = priceDiff;
+        this.defaultValue = defaultValue;
+    }
+
+    public BigDecimal getPriceDiff() {
+        return priceDiff;
+    }
+
+    public void setPriceDiff(BigDecimal priceDiff) {
+        this.priceDiff = priceDiff;
+    }
+
+    public int getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
     }
 }

@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.api;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.staff.impl;
 
 import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberResource;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;

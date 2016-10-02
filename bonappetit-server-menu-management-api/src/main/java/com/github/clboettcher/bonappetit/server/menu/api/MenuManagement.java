@@ -34,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 public interface MenuManagement {
 
     String ROOT_PATH = "menus";
-    String CURRENT_MENU_PATH = ROOT_PATH + "/" + "current";
+    String CURRENT_MENU_PATH = "/current";
 
     @GET
     @Path(CURRENT_MENU_PATH)

@@ -20,7 +20,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -31,7 +30,6 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "RADIO_ITEM")
-@Data
 @NoArgsConstructor
 public class RadioItemEntity {
 
@@ -77,6 +75,38 @@ public class RadioItemEntity {
         this.id = id;
         this.title = title;
         this.index = index;
+        this.priceDiff = priceDiff;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public BigDecimal getPriceDiff() {
+        return priceDiff;
+    }
+
+    public void setPriceDiff(BigDecimal priceDiff) {
         this.priceDiff = priceDiff;
     }
 }

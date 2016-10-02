@@ -39,7 +39,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -50,7 +49,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "MENU")
-@Data
 @NoArgsConstructor
 public class MenuEntity {
 
@@ -76,6 +74,22 @@ public class MenuEntity {
      */
     @Builder
     public MenuEntity(long id, Set<ItemEntity> items) {
+        this.items = items;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemEntity> items) {
         this.items = items;
     }
 }

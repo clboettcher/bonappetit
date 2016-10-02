@@ -39,7 +39,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -51,7 +50,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ITEM")
-@Data
 @NoArgsConstructor
 public class ItemEntity {
 
@@ -114,6 +112,54 @@ public class ItemEntity {
         this.price = price;
         this.type = type;
         this.options = options;
+        this.sideDishes = sideDishes;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public ItemEntityType getType() {
+        return type;
+    }
+
+    public void setType(ItemEntityType type) {
+        this.type = type;
+    }
+
+    public Set<AbstractOptionEntity> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<AbstractOptionEntity> options) {
+        this.options = options;
+    }
+
+    public Set<ItemEntity> getSideDishes() {
+        return sideDishes;
+    }
+
+    public void setSideDishes(Set<ItemEntity> sideDishes) {
         this.sideDishes = sideDishes;
     }
 }

@@ -17,23 +17,20 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.menu.impl.dao;
+
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
-import org.mapstruct.Mapper;
 
 /**
- * Mapper for {@link MenuEntity} to {@link MenuDto}.
+ * Provides access to stored {@link MenuEntity}s.
  */
-@Mapper(componentModel = "spring")
-public interface MenuMapper {
+public interface MenuDao {
 
     /**
-     * Maps the given {@code menuEntity} to {@link MenuDto}.
+     * Returns the current {@link MenuEntity}.
      *
-     * @param menuEntity The {@code menuEntity} to map.
-     * @return The mapping result.
+     * @return The current {@link MenuEntity}.
      */
-    MenuDto mapToMenu(MenuEntity menuEntity);
+    MenuEntity getCurrentMenu();
 }

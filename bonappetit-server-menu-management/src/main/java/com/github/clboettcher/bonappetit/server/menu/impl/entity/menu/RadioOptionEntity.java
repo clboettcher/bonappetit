@@ -20,7 +20,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +30,6 @@ import java.util.Set;
  * An option that consists of multiple items of which one must be selected.
  */
 @Entity
-@Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class RadioOptionEntity extends AbstractOptionEntity {
@@ -67,6 +65,22 @@ public class RadioOptionEntity extends AbstractOptionEntity {
     public RadioOptionEntity(long id, String title, Integer index, RadioItemEntity defaultSelected, Set<RadioItemEntity> radioItems) {
         super(id, title, index);
         this.defaultSelected = defaultSelected;
+        this.radioItems = radioItems;
+    }
+
+    public RadioItemEntity getDefaultSelected() {
+        return defaultSelected;
+    }
+
+    public void setDefaultSelected(RadioItemEntity defaultSelected) {
+        this.defaultSelected = defaultSelected;
+    }
+
+    public Set<RadioItemEntity> getRadioItems() {
+        return radioItems;
+    }
+
+    public void setRadioItems(Set<RadioItemEntity> radioItems) {
         this.radioItems = radioItems;
     }
 }

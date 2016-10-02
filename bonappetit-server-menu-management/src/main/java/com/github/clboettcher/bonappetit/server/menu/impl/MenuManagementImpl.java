@@ -19,9 +19,10 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.MenuDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,7 @@ public class MenuManagementImpl implements MenuManagement {
      * The bean mapper.
      */
     @Autowired
-    private MenuMapper mapper;
+    private MenuDtoMapper mapper;
 
     /**
      * Constructor setting the specified properties.
@@ -54,6 +55,6 @@ public class MenuManagementImpl implements MenuManagement {
 
     @Override
     public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+        return mapper.mapToMenuDto(menuDao.getCurrentMenu());
     }
 }

@@ -17,8 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
+package com.github.clboettcher.bonappetit.server.menu.impl.dao.mock;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
