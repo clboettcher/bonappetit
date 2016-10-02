@@ -19,8 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
-import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.impl.StaffMemberDtoMapper;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;

@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.staff.dao.mock;
 
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
-import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

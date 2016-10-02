@@ -17,12 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.fc.impl;
+package com.github.clboettcher.bonappetit.server.staff.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.StaffMemberResource;
-import com.github.clboettcher.bonappetit.server.staff.ba.ListStaffMembersActivity;
-import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
-import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberResource;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,10 +35,10 @@ import java.util.Set;
 public class StaffMemberResourceImpl implements StaffMemberResource {
 
     /**
-     * The activity for listing staff members.
+     * The bean providing access to stored staff members.
      */
     @Autowired
-    private ListStaffMembersActivity listMembersActivity;
+    private StaffMemberDao staffMemberDao;
 
     /**
      * The bean mapper.
@@ -48,7 +48,7 @@ public class StaffMemberResourceImpl implements StaffMemberResource {
 
     @Override
     public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMemberEntity> result = listMembersActivity.getStaffMembers();
+        Set<StaffMemberEntity> result = staffMemberDao.getStaffMembers();
         return mapper.mapToStaffMemberDtos(result);
     }
 }

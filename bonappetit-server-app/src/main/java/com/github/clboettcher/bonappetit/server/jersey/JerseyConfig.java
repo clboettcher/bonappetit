@@ -21,8 +21,8 @@ package com.github.clboettcher.bonappetit.server.jersey;
 
 import com.github.clboettcher.bonappetit.server.impl.ManagementServiceImpl;
 import com.github.clboettcher.bonappetit.server.impl.MenusServiceImpl;
-import com.github.clboettcher.bonappetit.server.staff.StaffMemberResource;
-import com.github.clboettcher.bonappetit.server.staff.fc.impl.StaffMemberResourceImpl;
+import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberResource;
+import com.github.clboettcher.bonappetit.server.staff.impl.StaffMemberResourceImpl;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;

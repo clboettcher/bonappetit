@@ -17,26 +17,19 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff;
+package com.github.clboettcher.bonappetit.server.staff.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.to.StaffMemberDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import org.mapstruct.Mapper;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.Set;
 
-@Path("/" + StaffMemberResource.STAFF_MEMBERS_PATH)
-@Api(value = StaffMemberResource.STAFF_MEMBERS_PATH)
-public interface StaffMemberResource {
+@Mapper(componentModel = "spring")
+public interface StaffMemberDtoMapper {
 
-    String STAFF_MEMBERS_PATH = "staffMembers";
+    StaffMemberDto mapToStaffMemberDto(StaffMemberEntity staffMember);
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+    Set<StaffMemberDto> mapToStaffMemberDtos(Set<StaffMemberEntity> staffMembers);
+
 }

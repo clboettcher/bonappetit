@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.dao;
 
-import com.github.clboettcher.bonappetit.server.staff.et.StaffMemberEntity;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 
 import java.util.Set;
 
