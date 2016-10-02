@@ -29,12 +29,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Set;
 
-@Path("/staffMembers")
-@Api(value = "staffMembers")
+@Path("/" + StaffMemberResource.STAFF_MEMBERS_PATH)
+@Api(value = StaffMemberResource.STAFF_MEMBERS_PATH)
 public interface StaffMemberResource {
 
+    String STAFF_MEMBERS_PATH = "staffMembers";
+
     @GET
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns a list of staff members.")
     Set<StaffMemberDto> getStaffMembers();
