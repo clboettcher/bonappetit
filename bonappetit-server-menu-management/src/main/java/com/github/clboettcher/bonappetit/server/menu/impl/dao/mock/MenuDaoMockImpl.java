@@ -57,6 +57,7 @@ public class MenuDaoMockImpl implements MenuDao {
         return MenuEntity.builder()
                 .items(Sets.newLinkedHashSet(Lists.newArrayList(
                         ItemEntity.builder()
+                                .id(1)
                                 .title("Pommes")
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
@@ -76,6 +77,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                 )))
                                 .build(),
                         ItemEntity.builder()
+                                .id(2)
                                 .title("Nachos")
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
@@ -89,11 +91,13 @@ public class MenuDaoMockImpl implements MenuDao {
                                 )))
                                 .build(),
                         ItemEntity.builder()
+                                .id(3)
                                 .title("Mineralwasser")
                                 .price(new BigDecimal("1.9"))
                                 .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
                                 .build(),
                         ItemEntity.builder()
+                                .id(4)
                                 .title("Augustinger")
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)

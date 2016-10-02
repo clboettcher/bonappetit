@@ -1,0 +1,77 @@
+{
+  "id": 1,
+  "items": [
+    {
+      "id": 1,
+      "title": "Augustinger",
+      "price": 2.2,
+      "type": "DRINK_ALCOHOLIC",
+      "options": [
+        {
+          "id": 1,
+          "title": "Größe",
+          "defaultSelected": {
+            "id": 1,
+            "title": "groß",
+            "priceDiff": 0,
+            "index": 0
+          },
+          "radioItems": [
+            {
+              "id": 1,
+              "title": "groß",
+              "priceDiff": 0,
+              "index": 0
+            },
+            {
+              "id": 2,
+              "title": "klein",
+              "priceDiff": 0.5,
+              "index": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Mineralwasser",
+      "price": 1.9,
+      "type": "DRINK_NON_ALCOHOLIC"
+    },
+    {
+      "id": 3,
+      "title": "Pommes",
+      "price": 2.5,
+      "type": "FOOD",
+      "options": [
+        {
+          "id": 2,
+          "title": "Extra Salz",
+          "priceDiff": 0,
+          "defaultChecked": false
+        },
+        {
+          "id": 3,
+          "title": "Ketchup",
+          "priceDiff": 0,
+          "defaultValue": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Nachos",
+      "price": 2,
+      "type": "FOOD",
+      "options": [
+        {
+          "id": 4,
+          "title": "Käsesoße",
+          "priceDiff": 0.5,
+          "defaultChecked": true
+        }
+      ]
+    }
+  ]
+}
