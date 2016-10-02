@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="copy lib" type="BashConfigurationType" factoryName="Bash">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="INTERPRETER_PATH" value="M:\software\git-2.7.0\bin\bash.exe" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <option name="SCRIPT_NAME" value="M:\home\bin\copy-lib.sh" />
+    <option name="PARAMETERS" value="" />
+    <module name="" />
+    <envs />
+    <method>
+      <option name="Make" enabled="false" />
+    </method>
+  </configuration>
+</component>
