@@ -17,43 +17,40 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.staff.entity;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
- * Default impl of the {@link MenuManagement}.
+ * An order for a radio option.
  */
-@Component
-public class MenuManagementImpl implements MenuManagement {
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class RadioOptionOrderEntity extends AbstractOptionOrderEntity {
 
     /**
-     * The DAO for stored menus.
+     * The ID of the radio item that was selected.
      */
-    private MenuDao menuDao;
-
-    /**
-     * The bean mapper.
-     */
-    @Autowired
-    private MenuMapper mapper;
+    @Column(name = "SELECTED_RADIO_ITEM_ID", nullable = true)
+    private Long selectedItemId;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param id             see {@link #getId()}.
+     * @param selectedItemId see {@link #getSelectedItemId()}.
      */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
-
-    @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+    @Builder
+    public RadioOptionOrderEntity(long id, Long selectedItemId) {
+        super(id);
+        this.selectedItemId = selectedItemId;
     }
 }

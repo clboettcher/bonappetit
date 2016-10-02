@@ -17,43 +17,51 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.menu.impl.entity.config;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
- * Default impl of the {@link MenuManagement}.
+ * Holds menu configuration.
+ * <p>
+ * E.g. which menu is active at the moment. The corresponding table will never contain
+ * more than one row.
  */
-@Component
-public class MenuManagementImpl implements MenuManagement {
+@Entity
+@Table(name = "MENU_CONFIG")
+@Data
+@NoArgsConstructor
+public class MenuConfig {
 
     /**
-     * The DAO for stored menus.
+     * The ID.
      */
-    private MenuDao menuDao;
+    @Id
+    @GeneratedValue
+    @Column(name = "MENU_CONFIG_ID")
+    private long id;
 
     /**
-     * The bean mapper.
+     * The currently active menu.
      */
-    @Autowired
-    private MenuMapper mapper;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MENU_ID", nullable = false)
+    private MenuEntity current;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param id      see {@link #id}.
+     * @param current see {@link #current}.
      */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
-
-    @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+    @Builder
+    public MenuConfig(long id, MenuEntity current) {
+        this.id = id;
+        this.current = current;
     }
 }

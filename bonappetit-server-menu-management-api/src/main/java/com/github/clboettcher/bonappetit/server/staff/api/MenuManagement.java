@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.api;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -27,16 +27,18 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.Set;
 
-@Path("/" + StaffMemberResource.ROOT_PATH)
-@Api(value = StaffMemberResource.ROOT_PATH)
-public interface StaffMemberResource {
 
-    String ROOT_PATH = "staffMembers";
+@Path("/" + MenuManagement.ROOT_PATH)
+@Api(value = MenuManagement.ROOT_PATH)
+public interface MenuManagement {
+
+    String ROOT_PATH = "menus";
+    String CURRENT_MENU_PATH = ROOT_PATH + "/" + "current";
 
     @GET
+    @Path(CURRENT_MENU_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+    @ApiOperation(value = "Returns the currently active menu.")
+    MenuDto getCurrentMenu();
 }

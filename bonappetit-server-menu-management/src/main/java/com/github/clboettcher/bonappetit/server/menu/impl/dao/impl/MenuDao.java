@@ -17,26 +17,20 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api;
+package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.Set;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 
-@Path("/" + StaffMemberResource.ROOT_PATH)
-@Api(value = StaffMemberResource.ROOT_PATH)
-public interface StaffMemberResource {
+/**
+ * Provides access to stored {@link MenuEntity}s.
+ */
+public interface MenuDao {
 
-    String ROOT_PATH = "staffMembers";
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+    /**
+     * Returns the current {@link MenuEntity}.
+     *
+     * @return The current {@link MenuEntity}.
+     */
+    MenuEntity getCurrentMenu();
 }

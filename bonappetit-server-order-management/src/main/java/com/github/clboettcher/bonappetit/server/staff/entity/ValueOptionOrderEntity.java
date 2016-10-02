@@ -17,43 +17,48 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.staff.entity;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
- * Default impl of the {@link MenuManagement}.
+ * An order for a value option.
  */
-@Component
-public class MenuManagementImpl implements MenuManagement {
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
 
     /**
-     * The DAO for stored menus.
+     * The ordered option ID.
      */
-    private MenuDao menuDao;
+    @Column(name = "VALUE_OPTION_ID", nullable = true)
+    private Long optionId;
 
     /**
-     * The bean mapper.
+     * The value describing how often the option was ordered.
      */
-    @Autowired
-    private MenuMapper mapper;
+    @Column(name = "VALUE", nullable = true)
+    private int value;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param id       see {@link #getId()}.
+     * @param optionId see {@link #getOptionId()}.
+     * @param value    see {@link #getValue()}.
      */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
-
-    @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+    @Builder
+    public ValueOptionOrderEntity(long id, Long optionId, int value) {
+        super(id);
+        this.optionId = optionId;
+        this.value = value;
     }
 }

@@ -17,26 +17,31 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api;
+package com.github.clboettcher.bonappetit.server.staff.entity;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.Set;
+import javax.persistence.*;
 
-@Path("/" + StaffMemberResource.ROOT_PATH)
-@Api(value = StaffMemberResource.ROOT_PATH)
-public interface StaffMemberResource {
+/**
+ * Abstract base class for option order entities.
+ */
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "OPTION_ORDER_TYPE")
+@Table(name = "OPTION_ORDER")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public abstract class AbstractOptionOrderEntity {
 
-    String ROOT_PATH = "staffMembers";
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+    /**
+     * The ID.
+     */
+    @Id
+    @GeneratedValue
+    @Column(name = "OPTION_ORDER_ID")
+    private long id;
 }

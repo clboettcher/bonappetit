@@ -19,41 +19,21 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
 /**
- * Default impl of the {@link MenuManagement}.
+ * Mapper for {@link MenuEntity} to {@link MenuDto}.
  */
-@Component
-public class MenuManagementImpl implements MenuManagement {
+@Mapper(componentModel = "spring")
+public interface MenuMapper {
 
     /**
-     * The DAO for stored menus.
-     */
-    private MenuDao menuDao;
-
-    /**
-     * The bean mapper.
-     */
-    @Autowired
-    private MenuMapper mapper;
-
-    /**
-     * Constructor setting the specified properties.
+     * Maps the given {@code menuEntity} to {@link MenuDto}.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param menuEntity The {@code menuEntity} to map.
+     * @return The mapping result.
      */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
-
-    @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
-    }
+    MenuDto mapToMenu(MenuEntity menuEntity);
 }

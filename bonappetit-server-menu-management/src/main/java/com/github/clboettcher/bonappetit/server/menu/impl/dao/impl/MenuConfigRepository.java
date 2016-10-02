@@ -17,26 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api;
+package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
+import org.springframework.data.repository.CrudRepository;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.Set;
-
-@Path("/" + StaffMemberResource.ROOT_PATH)
-@Api(value = StaffMemberResource.ROOT_PATH)
-public interface StaffMemberResource {
-
-    String ROOT_PATH = "staffMembers";
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+public interface MenuConfigRepository extends CrudRepository<MenuConfig, Long> {
 }

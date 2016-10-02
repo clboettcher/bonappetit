@@ -16,6 +16,7 @@ jar {
 dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-server-staff-management')
+    compile project(':bonappetit-server-menu-management')
 
     // Web
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")

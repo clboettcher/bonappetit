@@ -17,43 +17,48 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.staff.entity;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
- * Default impl of the {@link MenuManagement}.
+ * An order for a checkbox option.
  */
-@Component
-public class MenuManagementImpl implements MenuManagement {
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
 
     /**
-     * The DAO for stored menus.
+     * The ordered option.
      */
-    private MenuDao menuDao;
+    @Column(name = "CHECKBOX_OPTION_ID", nullable = true)
+    private Long optionId;
 
     /**
-     * The bean mapper.
+     * Whether the option has been checked or not.
      */
-    @Autowired
-    private MenuMapper mapper;
+    @Column(name = "CHECKED", nullable = true)
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param id       see {@link #id}.
+     * @param optionId see {@link #optionId}.
+     * @param checked  see {@link #checked}.
      */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
-
-    @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+    @Builder
+    public CheckboxOptionOrderEntity(long id, Long optionId, Boolean checked) {
+        super(id);
+        this.optionId = optionId;
+        this.checked = checked;
     }
 }

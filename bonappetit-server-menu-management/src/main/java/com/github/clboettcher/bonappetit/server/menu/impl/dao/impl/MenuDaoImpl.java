@@ -17,43 +17,46 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl;
+package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
- * Default impl of the {@link MenuManagement}.
+ * Default impl of {@link MenuDao}.
  */
 @Component
-public class MenuManagementImpl implements MenuManagement {
+public class MenuDaoImpl implements MenuDao {
 
     /**
-     * The DAO for stored menus.
+     * The DAO for {@link MenuConfig}.
      */
-    private MenuDao menuDao;
-
-    /**
-     * The bean mapper.
-     */
-    @Autowired
-    private MenuMapper mapper;
+    private MenuConfigRepository menuConfigRepository;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param menuDao see {@link #menuDao}.
+     * @param menuConfigRepository see {@link #menuConfigRepository}.
      */
     @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
+    public MenuDaoImpl(MenuConfigRepository menuConfigRepository) {
+        this.menuConfigRepository = menuConfigRepository;
     }
 
     @Override
-    public MenuDto getCurrentMenu() {
-        return mapper.mapToMenu(menuDao.getCurrentMenu());
+    public MenuEntity getCurrentMenu() {
+        Iterable<MenuConfig> all = menuConfigRepository.findAll();
+        List<MenuConfig> menuConfigs = Lists.newArrayList(all);
+        if (menuConfigs.size() > 1) {
+            throw new IllegalStateException(String.format("Found more than one %s in the database.",
+                    MenuConfig.class.getSimpleName()));
+        }
+
+        return menuConfigs.get(0).getCurrent();
     }
 }
