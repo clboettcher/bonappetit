@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.mapstruct.Mapper;
 

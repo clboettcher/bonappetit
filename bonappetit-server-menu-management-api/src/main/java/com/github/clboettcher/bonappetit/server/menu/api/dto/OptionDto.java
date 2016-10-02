@@ -36,48 +36,27 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.staff.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
+/**
+ * Abstract base class for menu item options.
+ */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "A menu item")
-public class ItemDto {
+@XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class, CheckboxOptionDto.class})
+public abstract class OptionDto {
 
     @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
     private Long id;
 
-    @ApiModelProperty(value = "The title / name of this item", required = true, example = "Cola")
+    @ApiModelProperty(value = "The title / name of this option", required = true, example = "Size")
     private String title;
-
-    @ApiModelProperty(value = "The price of this item. This is the 'raw' price of the item, not consisting " +
-            "any options which might have effects on the total price.", required = true, example = "2.50")
-    private BigDecimal price;
-
-    @ApiModelProperty(value = "The type of this item", required = true)
-    private ItemDtoType type;
-
-    @ApiModelProperty(value = "The options available for this item")
-    private Set<OptionDto> options;
-
-    @ApiModelProperty(value = "The side dishes available for this item")
-    private Set<ItemDto> sideDishes;
-
-    @Builder
-    public ItemDto(Long id, String title, BigDecimal price, ItemDtoType type, Set<OptionDto> options, Set<ItemDto> sideDishes) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.type = type;
-        this.options = options;
-        this.sideDishes = sideDishes;
-    }
 }

@@ -20,8 +20,8 @@
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.impl.MenuDao;
-import com.github.clboettcher.bonappetit.server.staff.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

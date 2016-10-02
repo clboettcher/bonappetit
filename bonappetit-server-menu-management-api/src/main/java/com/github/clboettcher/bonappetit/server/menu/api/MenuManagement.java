@@ -17,9 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api;
+package com.github.clboettcher.bonappetit.server.menu.api;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

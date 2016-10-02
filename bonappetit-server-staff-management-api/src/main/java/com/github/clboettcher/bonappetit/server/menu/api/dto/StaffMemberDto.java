@@ -17,42 +17,54 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-/**
- * A single item of a {@link RadioOptionDto}.
- */
-@Data
+@ApiModel(description = "A staff member of the restaurant")
 @NoArgsConstructor
-@ApiModel(description = "A single item of a radio option")
-public class RadioItemDto {
+public class StaffMemberDto {
 
-    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    @ApiModelProperty(value = "The server ID", required = true, example = "321")
     private Long id;
 
-    @ApiModelProperty(value = "The title / name of this item", required = true, example = "small")
-    private String title;
+    @ApiModelProperty(value = "The first name", required = true, example = "John")
+    private String firstName;
 
-    @ApiModelProperty(value = "The price difference of this radio item. The total price of an order for an item " +
-            "can be calculated using the items price and the price diff of all options.", required = true, example = "2.50")
-    private BigDecimal priceDiff;
-
-    @ApiModelProperty(value = "The index this item should be displayed at", required = true, example = "0")
-    private Integer index;
+    @ApiModelProperty(value = "The last name", required = true, example = "Smith")
+    private String lastName;
 
     @Builder
-    public RadioItemDto(Long id, String title, BigDecimal priceDiff, Integer index) {
+    public StaffMemberDto(Long id, String firstName, String lastName) {
         this.id = id;
-        this.title = title;
-        this.priceDiff = priceDiff;
-        this.index = index;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

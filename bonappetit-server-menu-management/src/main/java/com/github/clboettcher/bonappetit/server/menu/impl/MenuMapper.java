@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
-import com.github.clboettcher.bonappetit.server.staff.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import org.mapstruct.Mapper;
 
 /**

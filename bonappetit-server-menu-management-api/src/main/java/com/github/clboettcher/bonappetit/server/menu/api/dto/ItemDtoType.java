@@ -36,27 +36,33 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.staff.api.dto;
-
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.xml.bind.annotation.XmlSeeAlso;
+package com.github.clboettcher.bonappetit.server.menu.api.dto;
 
 /**
- * Abstract base class for menu item options.
+ * Enumerates different types of menu items.
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class, CheckboxOptionDto.class})
-public abstract class OptionDto {
+public enum ItemDtoType {
+    /**
+     * A food item.
+     * <p/>
+     * E.g. pommes.
+     */
+    FOOD,
 
-    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
-    private Long id;
+    /**
+     * An alcoholic drink.
+     */
+    DRINK_ALCOHOLIC,
 
-    @ApiModelProperty(value = "The title / name of this option", required = true, example = "Size")
-    private String title;
+    /**
+     * A non alcoholic drink.
+     * <p/>
+     * E.g. juice.
+     */
+    DRINK_NON_ALCOHOLIC,
+
+    /**
+     * A side dish, e.g. 'Ketchup'.
+     */
+    SIDE_DISH
 }
