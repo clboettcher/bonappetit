@@ -8,30 +8,11 @@
       "type": "FOOD",
       "options": [
         {
+          "type": "checkboxOption",
           "id": 3,
           "title": "Käsesoße",
           "priceDiff": 0.5,
           "defaultChecked": true
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "title": "Pommes",
-      "price": 2.5,
-      "type": "FOOD",
-      "options": [
-        {
-          "id": 1,
-          "title": "Extra Salz",
-          "priceDiff": 0,
-          "defaultChecked": false
-        },
-        {
-          "id": 2,
-          "title": "Ketchup",
-          "priceDiff": 0,
-          "defaultValue": 2
         }
       ]
     },
@@ -42,6 +23,7 @@
       "type": "DRINK_ALCOHOLIC",
       "options": [
         {
+          "type": "radioOption",
           "id": 1,
           "title": "Größe",
           "defaultSelected": {
@@ -72,6 +54,28 @@
       "title": "Mineralwasser",
       "price": 1.9,
       "type": "DRINK_NON_ALCOHOLIC"
+    },
+    {
+      "id": 1,
+      "title": "Pommes",
+      "price": 2.5,
+      "type": "FOOD",
+      "options": [
+        {
+          "type": "checkboxOption",
+          "id": 1,
+          "title": "Extra Salz",
+          "priceDiff": 0,
+          "defaultChecked": false
+        },
+        {
+          "type": "valueOption",
+          "id": 2,
+          "title": "Ketchup",
+          "priceDiff": 0,
+          "defaultValue": 2
+        }
+      ]
     }
   ]
 }

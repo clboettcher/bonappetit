@@ -8,4 +8,8 @@ dependencies {
     compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
     // Utils
     compile("org.projectlombok:lombok:${lombokVersion}")
+
+    // Testing
+    testCompile project(":bonappetit-core")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

@@ -17,20 +17,23 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.impl;
+package com.github.clboettcher.bonappetit.server.staff.api.dto;
 
-import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
-import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
-import org.mapstruct.Mapper;
+import com.github.clboettcher.bonappetit.core.BonAppetitResourceUtils;
+import com.github.clboettcher.bonappetit.core.JsonUtils;
+import com.github.clboettcher.bonappetit.core.ObjectMapperFactory;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.Set;
+import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface StaffMemberDtoMapper {
+import static org.hamcrest.Matchers.notNullValue;
 
-    Set<StaffMemberDto> mapToStaffMemberDtos(Set<StaffMemberEntity> staffMembers);
-
-    // Dont delete. Required by mapstruct to map single instances.
-    StaffMemberDto mapToStaffMemberDto(StaffMemberEntity staffMember);
-
+public class DtoDeserializationTests {
+    @Test
+    public void testDeserializeStaffMemberList() throws Exception {
+        List<StaffMemberDto> staffMembers = JsonUtils
+                .parseJsonArray(BonAppetitResourceUtils.readFileContentAsString("staff_members.json"), ObjectMapperFactory.create(), StaffMemberDto.class);
+        Assert.assertThat(staffMembers, notNullValue());
+    }
 }

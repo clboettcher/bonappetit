@@ -38,12 +38,12 @@
 */
 package com.github.clboettcher.bonappetit.server.menu.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * Abstract base class for menu item options.
@@ -51,7 +51,14 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlSeeAlso({ValueOptionDto.class, RadioOptionDto.class, CheckboxOptionDto.class})
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = RadioOptionDto.class, name = "radioOption"),
+        @JsonSubTypes.Type(value = CheckboxOptionDto.class, name = "checkboxOption"),
+        @JsonSubTypes.Type(value = ValueOptionDto.class, name = "valueOption")})
 public abstract class OptionDto {
 
     @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
