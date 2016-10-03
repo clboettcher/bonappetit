@@ -17,28 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.staff;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-
-@ApiModel(description = "A staff member of the restaurant")
-@Data
-//@NoArgsConstructor
-public class StaffMemberDto {
-
-    @ApiModelProperty(value = "The first name", required = true, example = "John")
-    private String firstName;
-
-    @ApiModelProperty(value = "The last name", required = true, example = "Smith")
-    private String lastName;
-
-//    @Builder
-//    public StaffMemberDto(String firstName, String lastName) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//    }
+package com.github.clboettcher.bonappetit.server.order.impl;
 
 
+import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ItemOrderRepository extends CrudRepository<ItemOrderEntity, Long> {
 }

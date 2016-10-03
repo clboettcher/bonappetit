@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.entity;
+package com.github.clboettcher.bonappetit.server.order.entity;
 
 import lombok.Builder;
 import lombok.Data;

@@ -17,37 +17,48 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.order;
+package com.github.clboettcher.bonappetit.server.order.entity;
 
-import com.github.clboettcher.bonappetit.dto.menu.RadioItemDto;
-import com.github.clboettcher.bonappetit.dto.menu.RadioOptionDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 /**
- * An order for a {@link RadioOptionDto}.
+ * An order for a checkbox option.
  */
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel("An order for a radio option")
-public class RadioOptionOrderDto extends OptionOrderDto {
+public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
 
-    @ApiModelProperty(value = "The radio item that was selected", required = true)
-    private RadioItemDto selectedItem;
+    /**
+     * The ordered option.
+     */
+    @Column(name = "CHECKBOX_OPTION_ID", nullable = true)
+    private Long optionId;
+
+    /**
+     * Whether the option has been checked or not.
+     */
+    @Column(name = "CHECKED", nullable = true)
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param selectedItem see {@link #selectedItem}.
+     * @param id       see {@link #id}.
+     * @param optionId see {@link #optionId}.
+     * @param checked  see {@link #checked}.
      */
     @Builder
-    public RadioOptionOrderDto(RadioItemDto selectedItem) {
-        this.selectedItem = selectedItem;
+    public CheckboxOptionOrderEntity(long id, Long optionId, Boolean checked) {
+        super(id);
+        this.optionId = optionId;
+        this.checked = checked;
     }
-
 }

@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    // Documentation
+    compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
+    // Utils
+    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    // Testing
+    testCompile project(":bonappetit-core")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}

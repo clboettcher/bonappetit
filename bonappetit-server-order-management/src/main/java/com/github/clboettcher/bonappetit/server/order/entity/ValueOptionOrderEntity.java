@@ -17,37 +17,48 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.order;
+package com.github.clboettcher.bonappetit.server.order.entity;
 
-import com.github.clboettcher.bonappetit.dto.menu.ValueOptionDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+/**
+ * An order for a value option.
+ */
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto option;
+    /**
+     * The ordered option ID.
+     */
+    @Column(name = "VALUE_OPTION_ID", nullable = true)
+    private Long optionId;
 
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
+    /**
+     * The value describing how often the option was ordered.
+     */
+    @Column(name = "VALUE", nullable = true)
     private int value;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param option see {@link #option}.
-     * @param value  see {@link #value}.
+     * @param id       see {@link #getId()}.
+     * @param optionId see {@link #getOptionId()}.
+     * @param value    see {@link #getValue()}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto option, int value) {
-        this.option = option;
+    public ValueOptionOrderEntity(long id, Long optionId, int value) {
+        super(id);
+        this.optionId = optionId;
         this.value = value;
     }
 }

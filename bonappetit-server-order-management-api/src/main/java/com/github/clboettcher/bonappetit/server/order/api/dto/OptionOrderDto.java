@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.dao.impl;
+package com.github.clboettcher.bonappetit.server.order.api.dto;
 
+/**
+ * Abstract base class for option order entities.
+ */
+public abstract class OptionOrderDto {
 
-import com.github.clboettcher.bonappetit.server.staff.entity.ItemOrderEntity;
-import org.springframework.data.repository.CrudRepository;
-
-public interface ItemOrderRepository extends CrudRepository<ItemOrderEntity, Long> {
 }

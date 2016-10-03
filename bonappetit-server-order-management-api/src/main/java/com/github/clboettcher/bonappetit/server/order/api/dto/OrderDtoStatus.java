@@ -36,30 +36,30 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.staff.entity;
+package com.github.clboettcher.bonappetit.server.order.api.dto;
 
 /**
  * Enumerates different types of menu items.
  */
-public enum OrderEntityStatus {
+public enum OrderDtoStatus {
 
     /**
-     * The server has received the order (initial status).
+     * The server has received the order
      */
     ORDERED,
 
     /**
-     * The order has been printed.
+     * The order has been printed
      */
     PRINTED,
 
     /**
-     * The order has been paid.
+     * The order has been paid
      */
     PAID,
 
     /**
-     * The order has been canceled.
+     * The order has been canceled
      */
     CANCELED
 }

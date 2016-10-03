@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.entity;
+package com.github.clboettcher.bonappetit.server.order.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -28,37 +28,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
- * An order for a value option.
+ * An order for a radio option.
  */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
+public class RadioOptionOrderEntity extends AbstractOptionOrderEntity {
 
     /**
-     * The ordered option ID.
+     * The ID of the radio item that was selected.
      */
-    @Column(name = "VALUE_OPTION_ID", nullable = true)
-    private Long optionId;
-
-    /**
-     * The value describing how often the option was ordered.
-     */
-    @Column(name = "VALUE", nullable = true)
-    private int value;
+    @Column(name = "SELECTED_RADIO_ITEM_ID", nullable = true)
+    private Long selectedItemId;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id       see {@link #getId()}.
-     * @param optionId see {@link #getOptionId()}.
-     * @param value    see {@link #getValue()}.
+     * @param id             see {@link #getId()}.
+     * @param selectedItemId see {@link #getSelectedItemId()}.
      */
     @Builder
-    public ValueOptionOrderEntity(long id, Long optionId, int value) {
+    public RadioOptionOrderEntity(long id, Long selectedItemId) {
         super(id);
-        this.optionId = optionId;
-        this.value = value;
+        this.selectedItemId = selectedItemId;
     }
 }

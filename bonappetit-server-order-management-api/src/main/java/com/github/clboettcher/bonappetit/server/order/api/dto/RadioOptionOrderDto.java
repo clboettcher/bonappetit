@@ -17,11 +17,35 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.order;
+package com.github.clboettcher.bonappetit.server.order.api.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
- * Abstract base class for option order entities.
+ * An order for a radio option.
  */
-public abstract class OptionOrderDto {
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@ApiModel("An order for a radio option")
+public class RadioOptionOrderDto extends OptionOrderDto {
+
+    @ApiModelProperty(value = "The ID of the radio item that was selected", required = true)
+    private Long selectedRadioItemId;
+
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param selectedRadioItemId see {@link #selectedRadioItemId}.
+     */
+    @Builder
+    public RadioOptionOrderDto(Long selectedRadioItemId) {
+        this.selectedRadioItemId = selectedRadioItemId;
+    }
 
 }

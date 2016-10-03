@@ -17,47 +17,35 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.staff.entity;
+package com.github.clboettcher.bonappetit.server.order.api.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
-/**
- * An order for a checkbox option.
- */
-@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
+@ApiModel(description = "An order for a checkbox option")
+public class CheckboxOptionOrderDto extends OptionOrderDto {
 
-    /**
-     * The ordered option.
-     */
-    @Column(name = "CHECKBOX_OPTION_ID", nullable = true)
+    @ApiModelProperty(value = "The ordered option", required = true)
     private Long optionId;
 
-    /**
-     * Whether the option has been checked or not.
-     */
-    @Column(name = "CHECKED", nullable = true)
+    @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
     private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id       see {@link #id}.
      * @param optionId see {@link #optionId}.
      * @param checked  see {@link #checked}.
      */
     @Builder
-    public CheckboxOptionOrderEntity(long id, Long optionId, Boolean checked) {
-        super(id);
+    public CheckboxOptionOrderDto(Long optionId, Boolean checked) {
         this.optionId = optionId;
         this.checked = checked;
     }

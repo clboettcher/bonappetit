@@ -8,11 +8,15 @@ include 'bonappetit-price-calculation'
 include 'bonappetit-printing'
 
 include 'bonappetit-server-app'
+include 'bonappetit-documentation'
+
 include 'bonappetit-server-staff-management-api'
 include 'bonappetit-server-staff-management'
+
 include 'bonappetit-server-menu-management-api'
 include 'bonappetit-server-menu-management'
+
+include 'bonappetit-server-order-management-api'
 include 'bonappetit-server-order-management'
 
-include 'bonappetit-documentation'
 

@@ -17,10 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.dto.order;
+package com.github.clboettcher.bonappetit.server.order.api.dto;
 
-import com.github.clboettcher.bonappetit.dto.menu.ItemDto;
-import com.github.clboettcher.bonappetit.dto.staff.StaffMemberDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -35,8 +33,8 @@ import java.util.Set;
 @ApiModel(description = "An order for an item")
 public class ItemOrderDto {
 
-    @ApiModelProperty(value = "The ordered item", required = true)
-    private ItemDto item;
+    @ApiModelProperty(value = "The ID of the ordered item", required = true)
+    private Long itemId;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
     private Set<OptionOrderDto> optionOrders;
@@ -45,8 +43,8 @@ public class ItemOrderDto {
             example = "Table 4")
     private String deliverTo;
 
-    @ApiModelProperty(value = "The staff member who took this order", required = true)
-    private StaffMemberDto staffMember;
+    @ApiModelProperty(value = "The ID of the staff member who took this order", required = true)
+    private Long staffMemberId;
 
     @ApiModelProperty(value = "The time this order was taken", required = true)
     private Date orderTime;
@@ -55,11 +53,12 @@ public class ItemOrderDto {
     private String note;
 
     @Builder
-    public ItemOrderDto(ItemDto item, Set<OptionOrderDto> optionOrders, String deliverTo, StaffMemberDto staffMember, Date orderTime, String note) {
-        this.item = item;
+    public ItemOrderDto(Long itemId, Set<OptionOrderDto> optionOrders, String deliverTo,
+                        Long staffMemberId, Date orderTime, String note) {
+        this.itemId = itemId;
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
-        this.staffMember = staffMember;
+        this.staffMemberId = staffMemberId;
         this.orderTime = orderTime;
         this.note = note;
     }
