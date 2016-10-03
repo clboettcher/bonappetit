@@ -74,6 +74,7 @@ public class MenuEntity {
      */
     @Builder
     public MenuEntity(long id, Set<ItemEntity> items) {
+        this.id = id;
         this.items = items;
     }
 

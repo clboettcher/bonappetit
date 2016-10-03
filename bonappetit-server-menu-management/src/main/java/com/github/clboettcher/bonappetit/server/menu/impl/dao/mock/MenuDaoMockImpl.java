@@ -55,6 +55,7 @@ public class MenuDaoMockImpl implements MenuDao {
 
     private MenuEntity createMenu() {
         return MenuEntity.builder()
+                .id(1)
                 .items(Sets.newLinkedHashSet(Lists.newArrayList(
                         ItemEntity.builder()
                                 .id(1)
@@ -63,12 +64,14 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.newLinkedHashSet(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
+                                                .id(1)
                                                 .title("Extra Salz")
                                                 .index(0)
                                                 .defaultChecked(false)
                                                 .priceDiff(BigDecimal.ZERO)
                                                 .build(),
                                         ValueOptionEntity.builder()
+                                                .id(2)
                                                 .title("Ketchup")
                                                 .defaultValue(2)
                                                 .priceDiff(BigDecimal.ZERO)
@@ -83,6 +86,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
+                                                .id(3)
                                                 .title("Käsesoße")
                                                 .index(0)
                                                 .defaultChecked(true)
@@ -102,15 +106,17 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)
                                 .options(Sets.<AbstractOptionEntity>newHashSet(
-                                        createRadioOptionEntity("Größe", 0,
+                                        createRadioOptionEntity(1, 0, "Größe",
                                                 RadioItemEntity.builder()
-                                                        .title("groß")
+                                                        .id(1)
                                                         .index(0)
+                                                        .title("groß")
                                                         .priceDiff(BigDecimal.ZERO)
                                                         .build(),
                                                 RadioItemEntity.builder()
-                                                        .title("klein")
+                                                        .id(2)
                                                         .index(1)
+                                                        .title("klein")
                                                         .priceDiff(new BigDecimal("0.5"))
                                                         .build())
                                 ))
@@ -119,11 +125,12 @@ public class MenuDaoMockImpl implements MenuDao {
                 .build();
     }
 
-    private static RadioOptionEntity createRadioOptionEntity(String title, int index, RadioItemEntity defaultSelected, RadioItemEntity... otherItemEntitys) {
-        Set<RadioItemEntity> items = Sets.newHashSet(otherItemEntitys);
+    private static RadioOptionEntity createRadioOptionEntity(long id, int index, String title, RadioItemEntity defaultSelected, RadioItemEntity... otherItemEntities) {
+        Set<RadioItemEntity> items = Sets.newHashSet(otherItemEntities);
         items.add(defaultSelected);
 
         return RadioOptionEntity.builder()
+                .id(id)
                 .index(index)
                 .defaultSelected(defaultSelected)
                 .title(title)
