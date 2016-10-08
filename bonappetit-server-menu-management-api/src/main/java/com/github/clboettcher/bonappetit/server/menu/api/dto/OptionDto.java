@@ -61,9 +61,21 @@ import lombok.NoArgsConstructor;
         @JsonSubTypes.Type(value = ValueOptionDto.class, name = "valueOption")})
 public abstract class OptionDto {
 
-    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    @ApiModelProperty(value = "The technical ID",
+            required = true,
+            example = "1337",
+            allowableValues = "[1, infinity]")
     private Long id;
 
-    @ApiModelProperty(value = "The title / name of this option", required = true, example = "Size")
+    @ApiModelProperty(value = "The title / name of this option",
+            required = true,
+            example = "Size")
     private String title;
+
+    @ApiModelProperty(value = "The zero based index that this option should be displayed at in a " +
+            "list of options.",
+            required = true,
+            example = "1",
+            allowableValues = "[0, infinity]")
+    private Integer index;
 }

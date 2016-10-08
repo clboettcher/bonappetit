@@ -47,12 +47,13 @@ public class ValueOptionDto extends OptionDto {
      *
      * @param id           see {@link #getId()}.
      * @param title        see {@link #getTitle()}.
+     * @param index        see {@link #index}.
      * @param priceDiff    see {@link #getPriceDiff()}.
      * @param defaultValue see {@link  #getDefaultValue()}.
      */
     @Builder
-    public ValueOptionDto(Long id, String title, BigDecimal priceDiff, int defaultValue) {
-        super(id, title);
+    public ValueOptionDto(Long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
+        super(id, title, index);
         this.priceDiff = priceDiff;
         this.defaultValue = defaultValue;
     }

@@ -43,15 +43,15 @@ public class CheckboxOptionDto extends OptionDto {
 
     /**
      * Constructor setting the specified properties.
-     *
      * @param id             see {@link #getId()}.
      * @param title          see {@link #getTitle()}.
+     * @param index see {@link #index}.
      * @param priceDiff      see {@link #getPriceDiff()}.
      * @param defaultChecked see {@link #getDefaultChecked()}.
      */
     @Builder
-    public CheckboxOptionDto(Long id, String title, BigDecimal priceDiff, Boolean defaultChecked) {
-        super(id, title);
+    public CheckboxOptionDto(Long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+        super(id, title, index);
         this.priceDiff = priceDiff;
         this.defaultChecked = defaultChecked;
     }

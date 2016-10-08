@@ -45,12 +45,13 @@ public class RadioOptionDto extends OptionDto {
      *
      * @param id              see {@link #getId()}.
      * @param title           see {@link #getTitle()}.
+     * @param index           see {@link #index}.
      * @param defaultSelected see {@link #getDefaultSelected()}.
      * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public RadioOptionDto(Long id, String title, RadioItemDto defaultSelected, Set<RadioItemDto> radioItems) {
-        super(id, title);
+    public RadioOptionDto(Long id, String title, Integer index, RadioItemDto defaultSelected, Set<RadioItemDto> radioItems) {
+        super(id, title, index);
         this.defaultSelected = defaultSelected;
         this.radioItems = radioItems;
     }
