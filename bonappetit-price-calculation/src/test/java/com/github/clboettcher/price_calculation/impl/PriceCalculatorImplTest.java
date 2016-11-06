@@ -72,6 +72,22 @@ public class PriceCalculatorImplTest {
     }
 
     @Test
+    public void testUncheckedCheckboxHasNoEffect() throws Exception {
+        ItemOrderPrices order = ItemOrderPrices.builder()
+                .price(new BigDecimal("3.00"))
+                .optionOrderPrices(Lists.newArrayList(
+                        CheckboxOptionOrderPrices.builder()
+                                .checked(false)
+                                .priceDiff(new BigDecimal("0.5"))
+                                .build()
+                ))
+                .build();
+
+        BigDecimal totalPrice = priceCalculator.calculateTotalPrice(order);
+        assertThat(totalPrice, is(new BigDecimal("3.00")));
+    }
+
+    @Test
     public void testMixedOptions() throws Exception {
         ItemOrderPrices order = ItemOrderPrices.builder()
                 .price(new BigDecimal("3.00"))
@@ -81,6 +97,7 @@ public class PriceCalculatorImplTest {
                                 .priceDiff(BigDecimal.ONE)
                                 .build(),
                         CheckboxOptionOrderPrices.builder()
+                                .checked(true)
                                 .priceDiff(new BigDecimal("0.5"))
                                 .build(),
                         RadioOptionOrderPrices.builder()

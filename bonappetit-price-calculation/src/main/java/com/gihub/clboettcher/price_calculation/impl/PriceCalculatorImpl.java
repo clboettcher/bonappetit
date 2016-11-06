@@ -52,7 +52,9 @@ public class PriceCalculatorImpl implements PriceCalculator {
                     result = result.add(radioOptionOrder.getSelectedItemPriceDiff());
                 } else if (optionOrder instanceof CheckboxOptionOrderPrices) {
                     CheckboxOptionOrderPrices checkboxOptionOrder = (CheckboxOptionOrderPrices) optionOrder;
-                    result = result.add(checkboxOptionOrder.getPriceDiff());
+                    if (checkboxOptionOrder.getChecked()) {
+                        result = result.add(checkboxOptionOrder.getPriceDiff());
+                    }
                 } else {
                     throw new IllegalArgumentException(String.format("Could not calculate price for option " +
                             "order with unknown type %s", (optionOrder != null
