@@ -44,22 +44,23 @@ package com.github.clboettcher.bonappetit.domain.order;
 public enum OrderStatus {
 
     /**
-     * The server has received the order
+     * The server has received the order and it was saved to the database. It has
+     * not been printed yet.
      */
     ORDERED,
 
     /**
-     * The order has been printed
+     * The order has been printed.
      */
     PRINTED,
 
     /**
-     * The order has been paid
+     * The order has been paid.
      */
     PAID,
 
     /**
-     * The order has been canceled
+     * The order has been canceled.
      */
     CANCELED
 }
