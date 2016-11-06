@@ -45,11 +45,42 @@ The packages api and api.dto are part of a separate module to be reusable in cli
 
 ===== Layout Style Guide
 
+The following guidelines are partly based on the following articles:
+
+* https://github.com/futurice/android-best-practices
+
+**Layout XML vs. Style**
+
+Keep only layout (positioning, margin, sizing) and content attributes in the layout files,
+while keeping all appearance details (colors, padding, font) in styles files.
+
+Attributes that are defined in the layout XML:
+
+* `android:id`
+* `android:layout_****`
+* `android:orientation` for a `LinearLayout`
+* `android:text`
+* `android:layout_width` and `android:layout_height`
+
+Other `android:****` should stay in a style XML
+
+**Attribute Order and format**
+
+* One attribute per line
+* `android:id` as the first attribute always
+* `android:id` is only present if required to reference the view
+* `android:layout_****` attributes at the top
+* `style` attribute at the bottom
+* Tag closer `/>` on its own line, to facilitate ordering and adding attributes.
+
 [source,xml]
 ----
 <ListView
+            android:id="@+id/staffMembersListView"<!--1-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/staffMembersListView"/><!--1-->
+            style="@style/MyListView.SpecialStyle"<!--2-->
+            />
 ----
-<1> android:id attributes in camelCase
+<1> `android:id` attribute in camelCase
+<2> `style` attribute in PascalCase
