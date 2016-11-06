@@ -20,14 +20,13 @@
 package com.gihub.clboettcher.price_calculation.impl;
 
 import com.gihub.clboettcher.price_calculation.api.PriceCalculator;
-import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
-import com.github.clboettcher.bonappetit.domain.order.*;
+import com.gihub.clboettcher.price_calculation.api.entity.*;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Default impl of {@link PriceCalculator}.
@@ -35,29 +34,29 @@ import java.util.Set;
 public class PriceCalculatorImpl implements PriceCalculator {
 
     @Override
-    public BigDecimal calculateTotalPrice(ItemOrder itemOrder) {
+    public BigDecimal calculateTotalPrice(ItemOrderPrices itemOrder) {
         Preconditions.checkNotNull(itemOrder, "itemOrder");
         Preconditions.checkNotNull(itemOrder.getPrice(), "itemOrder.getPrice()");
         BigDecimal result = itemOrder.getPrice();
 
-        final Set<OptionOrder> optionOrders = itemOrder.getOptionOrders();
+        final List<OptionOrderPrices> optionOrders = itemOrder.getOptionOrderPrices();
         if (CollectionUtils.isNotEmpty(optionOrders)) {
-            for (OptionOrder optionOrder : optionOrders) {
-                if (optionOrder instanceof ValueOptionOrder) {
-                    ValueOptionOrder valueOptionOrder = (ValueOptionOrder) optionOrder;
-                    final BigDecimal valueOptionOrderPrice = valueOptionOrder.getOption().getPriceDiff().multiply(
+            for (OptionOrderPrices optionOrder : optionOrders) {
+                if (optionOrder instanceof ValueOptionOrderPrices) {
+                    ValueOptionOrderPrices valueOptionOrder = (ValueOptionOrderPrices) optionOrder;
+                    final BigDecimal valueOptionOrderPrice = valueOptionOrder.getPriceDiff().multiply(
                             new BigDecimal(String.valueOf(valueOptionOrder.getValue())));
                     result = result.add(valueOptionOrderPrice);
-                } else if (optionOrder instanceof RadioOptionOrder) {
-                    RadioOptionOrder radioOptionOrder = (RadioOptionOrder) optionOrder;
-                    RadioItem selectedItem = radioOptionOrder.getSelectedItem();
-                    result = result.add(selectedItem.getPriceDiff());
-                } else if (optionOrder instanceof CheckboxOptionOrder) {
-                    CheckboxOptionOrder checkboxOptionOrder = (CheckboxOptionOrder) optionOrder;
-                    result = result.add(checkboxOptionOrder.getOption().getPriceDiff());
+                } else if (optionOrder instanceof RadioOptionOrderPrices) {
+                    RadioOptionOrderPrices radioOptionOrder = (RadioOptionOrderPrices) optionOrder;
+                    result = result.add(radioOptionOrder.getSelectedItemPriceDiff());
+                } else if (optionOrder instanceof CheckboxOptionOrderPrices) {
+                    CheckboxOptionOrderPrices checkboxOptionOrder = (CheckboxOptionOrderPrices) optionOrder;
+                    result = result.add(checkboxOptionOrder.getPriceDiff());
                 } else {
-                    throw new IllegalArgumentException(String.format("Could not calculate price for option order with " +
-                            "unknown type %s", (optionOrder != null ? optionOrder.getClass().getSimpleName() : "<null>")));
+                    throw new IllegalArgumentException(String.format("Could not calculate price for option " +
+                            "order with unknown type %s", (optionOrder != null
+                            ? optionOrder.getClass().getSimpleName() : "<null>")));
                 }
             }
         }

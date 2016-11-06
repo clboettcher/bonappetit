@@ -19,12 +19,9 @@
  */
 package com.github.clboettcher.price_calculation.impl;
 
+import com.gihub.clboettcher.price_calculation.api.entity.*;
 import com.gihub.clboettcher.price_calculation.impl.PriceCalculatorImpl;
-import com.github.clboettcher.bonappetit.domain.menu.CheckboxOption;
-import com.github.clboettcher.bonappetit.domain.menu.RadioItem;
-import com.github.clboettcher.bonappetit.domain.menu.ValueOption;
-import com.github.clboettcher.bonappetit.domain.order.*;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,7 +49,7 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testItemWithoutOptions() throws Exception {
-        ItemOrder order = ItemOrder.builder()
+        ItemOrderPrices order = ItemOrderPrices.builder()
                 .price(new BigDecimal("3.125"))
                 .build();
         BigDecimal totalPrice = priceCalculator.calculateTotalPrice(order);
@@ -61,13 +58,11 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testValueOptionWithValueZeroHasNoEffect() throws Exception {
-        ItemOrder order = ItemOrder.builder()
+        ItemOrderPrices order = ItemOrderPrices.builder()
                 .price(new BigDecimal("3.00"))
-                .optionOrders(Sets.<OptionOrder>newHashSet(ValueOptionOrder.builder()
+                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(ValueOptionOrderPrices.builder()
                         .value(0)
-                        .option(ValueOption.builder()
-                                .priceDiff(BigDecimal.ONE)
-                                .build())
+                        .priceDiff(BigDecimal.ONE)
                         .build()
                 ))
                 .build();
@@ -78,24 +73,18 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testMixedOptions() throws Exception {
-        ItemOrder order = ItemOrder.builder()
+        ItemOrderPrices order = ItemOrderPrices.builder()
                 .price(new BigDecimal("3.00"))
-                .optionOrders(Sets.newHashSet(
-                        ValueOptionOrder.builder()
+                .optionOrderPrices(Lists.newArrayList(
+                        ValueOptionOrderPrices.builder()
                                 .value(2)
-                                .option(ValueOption.builder()
-                                        .priceDiff(BigDecimal.ONE)
-                                        .build())
+                                .priceDiff(BigDecimal.ONE)
                                 .build(),
-                        CheckboxOptionOrder.builder()
-                                .option(CheckboxOption.builder()
-                                        .priceDiff(new BigDecimal("0.5"))
-                                        .build())
+                        CheckboxOptionOrderPrices.builder()
+                                .priceDiff(new BigDecimal("0.5"))
                                 .build(),
-                        RadioOptionOrder.builder()
-                                .selectedItem(RadioItem.builder()
-                                        .priceDiff(new BigDecimal("-0.25"))
-                                        .build())
+                        RadioOptionOrderPrices.builder()
+                                .selectedItemPriceDiff(new BigDecimal("-0.25"))
                                 .build()
                 ))
                 .build();
@@ -106,14 +95,10 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testUnknownOptionType() throws Exception {
-        ItemOrder itemOrder = ItemOrder.builder()
+        ItemOrderPrices itemOrder = ItemOrderPrices.builder()
                 .price(BigDecimal.ONE)
-                .optionOrders(Sets.<OptionOrder>newHashSet(
-                        new OptionOrder() {
-                            @Override
-                            public long getId() {
-                                return super.getId();
-                            }
+                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(
+                        new OptionOrderPrices() {
                         }
                 ))
                 .build();
