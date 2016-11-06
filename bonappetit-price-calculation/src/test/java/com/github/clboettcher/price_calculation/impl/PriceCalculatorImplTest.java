@@ -75,7 +75,7 @@ public class PriceCalculatorImplTest {
     public void testUncheckedCheckboxHasNoEffect() throws Exception {
         ItemOrderPrices order = ItemOrderPrices.builder()
                 .price(new BigDecimal("3.00"))
-                .optionOrderPrices(Lists.newArrayList(
+                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(
                         CheckboxOptionOrderPrices.builder()
                                 .checked(false)
                                 .priceDiff(new BigDecimal("0.5"))
