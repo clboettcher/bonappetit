@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Claudius Boettcher">
 <title>BonAppetit Reference Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -18,7 +18,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -53,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -65,7 +64,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -120,13 +118,16 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
@@ -417,7 +418,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -911,13 +912,21 @@ component for the example "Foo"-component.</p>
 types of the component.</p>
 <div class="dlist">
 <dl>
+<dt class="hdlist1">api</dt>
+<dd>
+<p>The api package contains all parts of the public API of the business module (interfaces, exceptions, dtos)</p>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">to</dt>
 <dd>
 <p>The transport objects (DTOs) that the component hands to the caller.</p>
 </dd>
-<dt class="hdlist1">fc</dt>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">impl</dt>
 <dd>
-<p>The facade package contains the implementations of the top level api interfaces.</p>
+<p>The impl package contains the implementations of the top level api interfaces.</p>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">impl</dt>
@@ -931,11 +940,7 @@ types of the component.</p>
 </dl>
 </div>
 </dd>
-<dt class="hdlist1">ba</dt>
-<dd>
-<p>The business activities package contains the implementations of the provided business functions.</p>
-</dd>
-<dt class="hdlist1">et</dt>
+<dt class="hdlist1">entity</dt>
 <dd>
 <p>The entities package contains the entity types which are mapped to the database.</p>
 </dd>
@@ -960,24 +965,100 @@ types of the component.</p>
 </dd>
 </dl>
 </div>
+<div class="paragraph">
+<p>The packages api and api.dto are part of a separate module to be reusable in client code (as jar).</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="bonappetit-android-app">4.1.2. BonAppetit Android App</h4>
 <div class="sect4">
 <h5 id="layout-style-guide">Layout Style Guide</h5>
+<div class="paragraph">
+<p>The following guidelines are partly based on the following articles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/futurice/android-best-practices" class="bare">https://github.com/futurice/android-best-practices</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Layout XML vs. Style</strong></p>
+</div>
+<div class="paragraph">
+<p>Keep only layout (positioning, margin, sizing) and content attributes in the layout files,
+while keeping all appearance details (colors, padding, font) in styles files.</p>
+</div>
+<div class="paragraph">
+<p>Attributes that are defined in the layout XML:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>android:id</code></p>
+</li>
+<li>
+<p><code>android:layout_*<strong>*</strong></code></p>
+</li>
+<li>
+<p><code>android:orientation</code> for a <code>LinearLayout</code></p>
+</li>
+<li>
+<p><code>android:text</code></p>
+</li>
+<li>
+<p><code>android:layout_width</code> and <code>android:layout_height</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Other <code>android:*<strong>*</strong></code> should stay in a style XML</p>
+</div>
+<div class="paragraph">
+<p><strong>Attribute Order and format</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One attribute per line</p>
+</li>
+<li>
+<p><code>android:id</code> as the first attribute always</p>
+</li>
+<li>
+<p><code>android:id</code> is only present if required to reference the view</p>
+</li>
+<li>
+<p><code>android:layout_*<strong>*</strong></code> attributes at the top</p>
+</li>
+<li>
+<p><code>style</code> attribute at the bottom</p>
+</li>
+<li>
+<p>Tag closer <code>/&gt;</code> on its own line, to facilitate ordering and adding attributes.</p>
+</li>
+</ul>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ListView</span>
+            <span class="attribute-name">android:id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">@+id/staffMembersListView</span><span class="delimiter">&quot;</span></span><i class="conum" data-value="1"></i><b>(1)</b>
             <span class="attribute-name">android:layout_width</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">match_parent</span><span class="delimiter">&quot;</span></span>
             <span class="attribute-name">android:layout_height</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">wrap_content</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">android:id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">@+id/staffMembersListView</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+            <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="directive">@style</span>/<span class="key">MyListView</span>.<span class="key">SpecialStyle</span><span class="delimiter">&quot;</span></span><i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ID attributes in camelCase</td>
+<td><code>android:id</code> attribute in camelCase</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>style</code> attribute in PascalCase</td>
 </tr>
 </table>
 </div>
@@ -990,7 +1071,7 @@ types of the component.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2016-07-29 22:51:36 +02:00
+Last updated 2016-07-29 21:51:36 +02:00
 </div>
 </div>
 </body>
