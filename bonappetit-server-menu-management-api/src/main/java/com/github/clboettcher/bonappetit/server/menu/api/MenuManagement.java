@@ -29,11 +29,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
-@Path("/" + MenuManagement.ROOT_PATH)
+@Path(MenuManagement.ROOT_PATH)
 @Api(value = MenuManagement.ROOT_PATH)
 public interface MenuManagement {
 
-    String ROOT_PATH = "menus";
+    String ROOT_PATH = "/menus";
     String CURRENT_MENU_PATH = "/current";
 
     @GET
