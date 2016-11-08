@@ -24,8 +24,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
-import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -47,14 +47,14 @@ public class ItemOrderDto {
     private Long staffMemberId;
 
     @ApiModelProperty(value = "The time this order was taken", required = true)
-    private Date orderTime;
+    private DateTime orderTime;
 
     @ApiModelProperty(value = "A note further describing this order", example = "Without onions")
     private String note;
 
     @Builder
     public ItemOrderDto(Long itemId, Set<OptionOrderDto> optionOrders, String deliverTo,
-                        Long staffMemberId, Date orderTime, String note) {
+                        Long staffMemberId, DateTime orderTime, String note) {
         this.itemId = itemId;
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
