@@ -21,19 +21,19 @@ package com.github.clboettcher.bonappetit.server.staff.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Default impl of {@link StaffMemberDao}.
  */
 @Component
-@Profile("default ")
+@Profile("default")
 public class StaffMemberDaoImpl implements StaffMemberDao {
 
     /**
@@ -52,12 +52,17 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     }
 
     @Override
-    public Set<StaffMemberEntity> getStaffMembers() {
+    public List<StaffMemberEntity> getStaffMembers() {
         Iterable<StaffMemberEntity> allEntities = staffMemberEntityRepository.findAll();
         if (!allEntities.iterator().hasNext()) {
-            return Collections.emptySet();
+            return Collections.emptyList();
         } else {
-            return Sets.newHashSet(allEntities);
+            return Lists.newArrayList(allEntities);
         }
+    }
+
+    @Override
+    public StaffMemberEntity getStaffMember(long id) {
+        return staffMemberEntityRepository.findOne(id);
     }
 }

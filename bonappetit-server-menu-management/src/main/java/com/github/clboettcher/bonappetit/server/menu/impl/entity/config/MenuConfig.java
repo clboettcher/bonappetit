@@ -49,7 +49,7 @@ public class MenuConfig {
     /**
      * The currently active menu.
      */
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false)
     @JoinColumn(name = "MENU_ID", nullable = false)
     private MenuEntity current;
 

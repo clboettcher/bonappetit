@@ -40,6 +40,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -51,6 +53,7 @@ import java.util.Set;
 @Entity
 @Table(name = "ITEM")
 @NoArgsConstructor
+@ToString
 public class ItemEntity {
 
     @Id
@@ -161,5 +164,9 @@ public class ItemEntity {
 
     public void setSideDishes(Set<ItemEntity> sideDishes) {
         this.sideDishes = sideDishes;
+    }
+
+    public boolean hasOptions() {
+        return CollectionUtils.isNotEmpty(this.options);
     }
 }

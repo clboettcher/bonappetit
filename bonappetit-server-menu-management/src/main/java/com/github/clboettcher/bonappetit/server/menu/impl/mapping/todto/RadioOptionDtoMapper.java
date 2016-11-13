@@ -1,4 +1,4 @@
-package com.github.clboettcher.bonappetit.server.menu.impl.mapping;
+package com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.RadioOptionDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioOptionEntity;

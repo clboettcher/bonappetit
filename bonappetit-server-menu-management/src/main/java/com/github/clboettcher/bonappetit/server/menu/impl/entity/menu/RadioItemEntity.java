@@ -20,7 +20,9 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -31,6 +33,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "RADIO_ITEM")
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class RadioItemEntity {
 
     /**

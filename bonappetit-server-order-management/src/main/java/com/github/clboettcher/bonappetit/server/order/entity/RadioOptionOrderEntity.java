@@ -19,13 +19,15 @@
  */
 package com.github.clboettcher.bonappetit.server.order.entity;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioItemEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * An order for a radio option.
@@ -39,18 +41,19 @@ public class RadioOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * The ID of the radio item that was selected.
      */
-    @Column(name = "SELECTED_RADIO_ITEM_ID", nullable = true)
-    private Long selectedItemId;
+    @OneToOne(optional = true)
+    @JoinColumn(name = "RADIO_ITEM_ID", nullable = true)
+    private RadioItemEntity selectedRadioItem;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #getId()}.
-     * @param selectedItemId see {@link #getSelectedItemId()}.
+     * @param id                see {@link #getId()}.
+     * @param selectedRadioItem see {@link #getSelectedRadioItem()}.
      */
     @Builder
-    public RadioOptionOrderEntity(long id, Long selectedItemId) {
+    public RadioOptionOrderEntity(long id, RadioItemEntity selectedRadioItem) {
         super(id);
-        this.selectedItemId = selectedItemId;
+        this.selectedRadioItem = selectedRadioItem;
     }
 }

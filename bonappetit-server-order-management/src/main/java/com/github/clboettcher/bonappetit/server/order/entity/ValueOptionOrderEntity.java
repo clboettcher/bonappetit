@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order.entity;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ValueOptionEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * An order for a value option.
@@ -39,8 +42,9 @@ public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * The ordered option ID.
      */
-    @Column(name = "VALUE_OPTION_ID", nullable = true)
-    private Long optionId;
+    @OneToOne(optional = true)
+    @JoinColumn(name = "OPTION_ID", nullable = true)
+    private ValueOptionEntity valueOption;
 
     /**
      * The value describing how often the option was ordered.
@@ -51,14 +55,14 @@ public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id       see {@link #getId()}.
-     * @param optionId see {@link #getOptionId()}.
-     * @param value    see {@link #getValue()}.
+     * @param id          see {@link #getId()}.
+     * @param valueOption see {@link #getValueOption()}.
+     * @param value       see {@link #getValue()}.
      */
     @Builder
-    public ValueOptionOrderEntity(long id, Long optionId, int value) {
+    public ValueOptionOrderEntity(long id, ValueOptionEntity valueOption, int value) {
         super(id);
-        this.optionId = optionId;
+        this.valueOption = valueOption;
         this.value = value;
     }
 }

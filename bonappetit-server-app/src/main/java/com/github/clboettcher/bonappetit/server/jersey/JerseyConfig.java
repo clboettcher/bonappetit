@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.server.jersey;
 
 import com.github.clboettcher.bonappetit.server.impl.ManagementServiceImpl;
 import com.github.clboettcher.bonappetit.server.menu.impl.MenuManagementImpl;
+import com.github.clboettcher.bonappetit.server.order.OrderManagementImpl;
 import com.github.clboettcher.bonappetit.server.staff.impl.StaffMemberResourceImpl;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -46,6 +47,7 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         register(StaffMemberResourceImpl.class);
         register(MenuManagementImpl.class);
+        register(OrderManagementImpl.class);
 
         register(ManagementServiceImpl.class);
         register(ObjectMapperProvider.class);

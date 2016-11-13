@@ -27,6 +27,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,6 +43,10 @@ public class MenuDaoMockImpl implements MenuDao {
      */
     private MenuEntity menu;
 
+    private Map<Integer, MenuEntity> menus = new HashMap<>();
+
+    private int currentMenuId = 1;
+
     /**
      * Constructor initializing the bean with test data.
      */
@@ -53,9 +59,17 @@ public class MenuDaoMockImpl implements MenuDao {
         return menu;
     }
 
+    @Override
+    public MenuEntity save(MenuEntity menuEntity) {
+        int id = getNewMenuId();
+        menuEntity.setId(id);
+        this.menus.put(id, menuEntity);
+        return menuEntity;
+    }
+
     private MenuEntity createMenu() {
         return MenuEntity.builder()
-                .id(1)
+                .id(this.getNewMenuId())
                 .items(Sets.newLinkedHashSet(Lists.newArrayList(
                         ItemEntity.builder()
                                 .id(1)
@@ -136,5 +150,9 @@ public class MenuDaoMockImpl implements MenuDao {
                 .title(title)
                 .radioItems(items)
                 .build();
+    }
+
+    private int getNewMenuId() {
+        return this.currentMenuId++;
     }
 }

@@ -22,9 +22,17 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
-import com.github.clboettcher.bonappetit.server.menu.impl.mapping.MenuDtoMapper;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * Default impl of the {@link MenuManagement}.
@@ -32,16 +40,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class MenuManagementImpl implements MenuManagement {
 
+    @Context
+    private UriInfo uri;
+
     /**
      * The DAO for stored menus.
      */
     private MenuDao menuDao;
 
     /**
-     * The bean mapper.
+     * The entity to dto mapper.
      */
     @Autowired
-    private MenuDtoMapper mapper;
+    private MenuDtoMapper dtoMapper;
+
+    /**
+     * The dto to entity mapper.
+     */
+    @Autowired
+    private MenuEntityMapper menuEntityMapper;
 
     /**
      * Constructor setting the specified properties.
@@ -55,6 +72,18 @@ public class MenuManagementImpl implements MenuManagement {
 
     @Override
     public MenuDto getCurrentMenu() {
-        return mapper.mapToMenuDto(menuDao.getCurrentMenu());
+        return dtoMapper.mapToMenuDto(menuDao.getCurrentMenu());
+    }
+
+    @Override
+    public Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto) {
+        MenuEntity menuEntity = this.menuEntityMapper.mapToMenuEntity(menuDto);
+        MenuEntity saved = menuDao.save(menuEntity);
+
+        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(MenuManagement.ROOT_PATH + "/" + saved.getId());
+
+        return Response.ok()
+                .location(baseUriBuilder.build())
+                .build();
     }
 }

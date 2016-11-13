@@ -23,12 +23,12 @@ import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.mapstruct.Mapper;
 
-import java.util.Set;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StaffMemberDtoMapper {
 
-    Set<StaffMemberDto> mapToStaffMemberDtos(Set<StaffMemberEntity> staffMembers);
+    List<StaffMemberDto> mapToStaffMemberDtos(List<StaffMemberEntity> staffMembers);
 
     // Dont delete. Required by mapstruct to map single instances.
     StaffMemberDto mapToStaffMemberDto(StaffMemberEntity staffMember);

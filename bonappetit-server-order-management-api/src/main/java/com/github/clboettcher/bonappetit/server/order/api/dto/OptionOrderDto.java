@@ -19,9 +19,20 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * Abstract base class for option order entities.
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = RadioOptionOrderDto.class, name = "radioOptionOrder"),
+        @JsonSubTypes.Type(value = CheckboxOptionOrderDto.class, name = "checkboxOptionOrder"),
+        @JsonSubTypes.Type(value = ValueOptionOrderDto.class, name = "valueOptionOrder")})
 public abstract class OptionOrderDto {
 
 }

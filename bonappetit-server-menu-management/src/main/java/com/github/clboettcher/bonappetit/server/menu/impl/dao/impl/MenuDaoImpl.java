@@ -21,35 +21,36 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioItemEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioOptionEntity;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Default impl of {@link MenuDao}.
  */
 @Component
-@Profile("default ")
+@Profile("default")
 public class MenuDaoImpl implements MenuDao {
 
     /**
      * The DAO for {@link MenuConfig}.
      */
+    @Autowired
     private MenuConfigRepository menuConfigRepository;
 
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param menuConfigRepository see {@link #menuConfigRepository}.
-     */
     @Autowired
-    public MenuDaoImpl(MenuConfigRepository menuConfigRepository) {
-        this.menuConfigRepository = menuConfigRepository;
-    }
+    private MenuRepository menuRepository;
 
     @Override
     public MenuEntity getCurrentMenu() {
@@ -58,8 +59,52 @@ public class MenuDaoImpl implements MenuDao {
         if (menuConfigs.size() > 1) {
             throw new IllegalStateException(String.format("Found more than one %s in the database.",
                     MenuConfig.class.getSimpleName()));
+        } else if (CollectionUtils.isEmpty(menuConfigs)) {
+            throw new NotFoundException("Current menu not found");
         }
 
         return menuConfigs.get(0).getCurrent();
+    }
+
+    @Override
+    public MenuEntity save(MenuEntity menuEntity) {
+        Set<ItemEntity> items = menuEntity.getItems();
+        items.stream()
+                .filter(ItemEntity::hasOptions)
+                .forEach(item -> item.getOptions()
+                        .stream()
+                        .filter(option -> option instanceof RadioOptionEntity)
+                        .forEach(option -> prepareRadioOption(item, (RadioOptionEntity) option)));
+        return menuRepository.save(menuEntity);
+    }
+
+    /**
+     * Prepares the given {@link RadioOptionEntity} before able to be saved in the db.
+     * <p>
+     * This method finds the instance of the radio item that is equal to the
+     * {@link RadioOptionEntity#getDefaultSelected()} in the list of radio items
+     * ({@link RadioOptionEntity#getRadioItems()} and uses it to override the default selected item.
+     * If we would not do this, the default selected item and the items in the list of items would be different
+     * instances. However the default selected item should be contained in the list of items.
+     *
+     * @param item   The whole item (for logging).
+     * @param option The option to prepare.
+     */
+    private void prepareRadioOption(ItemEntity item, RadioOptionEntity option) {
+        RadioItemEntity defaultSelected = option.getDefaultSelected();
+        Set<RadioItemEntity> radioItems = option.getRadioItems();
+
+        List<RadioItemEntity> defaultSelectedCandidates = radioItems.stream().filter(radioItem ->
+                radioItem.equals(defaultSelected)).collect(Collectors.toList());
+
+        if (defaultSelectedCandidates.size() != 1) {
+            throw new IllegalArgumentException(String.format("Expected exactly one radio item to " +
+                            "match the default selected radio" +
+                            " item. Found %d. Full item: %s",
+                    defaultSelectedCandidates.size(),
+                    item));
+        }
+
+        option.setDefaultSelected(defaultSelectedCandidates.get(0));
     }
 }

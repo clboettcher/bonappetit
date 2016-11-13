@@ -47,7 +47,7 @@ public enum OrderEntityStatus {
      * The server has received the order (initial status).
      * It has not been printed yet.
      */
-    ORDERED,
+    CREATED,
 
     /**
      * The order has been printed.

@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -32,17 +33,18 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@ToString
 public class RadioOptionEntity extends AbstractOptionEntity {
 
     /**
      * The default selected item.
-     * <p/>
+     * <p>
      * This item should be selected per default when this option is available.
-     * <p/>
+     * <p>
      * Must be contained ind the list of items as returned by {@link #getRadioItems()}.
      */
     @OneToOne
-    @JoinColumn(name = "RADIO_ITEM_ID")
+    @JoinColumn(name = "DEFAULT_SELECTED_RADIO_ITEM_ID", referencedColumnName = "RADIO_ITEM_ID")
     private RadioItemEntity defaultSelected;
 
     /**

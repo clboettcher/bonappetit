@@ -21,13 +21,12 @@ package com.github.clboettcher.bonappetit.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = {"com.github.clboettcher.bonappetit"})
 @EnableJpaRepositories(basePackages = "com.github.clboettcher.bonappetit")
-@EntityScan(basePackages = "com.github.clboettcher.bonappetit")
+//@EntityScan(basePackages = "com.github.clboettcher.bonappetit")
 @PropertySource({
         "file:${BONAPPETIT_BASE}/content/config/bonappetit.properties"
 })

@@ -17,20 +17,25 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl.mapping;
+package com.github.clboettcher.bonappetit.server.order.dao;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
-import org.mapstruct.Mapper;
+import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 
-@Mapper(uses = ItemDtoMapper.class, componentModel = "spring")
-public interface MenuDtoMapper {
+import java.util.Collection;
+
+public interface OrderDao {
 
     /**
-     * Maps the given {@link MenuEntity} to a {@link MenuDto}.
+     * Saves the given orders in the database.
      *
-     * @param menu The {@link MenuEntity} to map.
-     * @return The resulting {@link MenuDto}.
+     * @param orders The orders to save, may be empty.
+     * @return The saved entites.
      */
-    MenuDto mapToMenuDto(MenuEntity menu);
+    Iterable<ItemOrderEntity> save(Collection<ItemOrderEntity> orders);
+
+    /**
+     * Updates the given orders in in the database.
+     * @param itemOrderEntities The orders to update.
+     */
+    Iterable<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities);
 }

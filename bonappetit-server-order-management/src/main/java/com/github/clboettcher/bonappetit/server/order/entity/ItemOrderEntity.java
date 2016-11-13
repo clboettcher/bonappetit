@@ -19,14 +19,15 @@
  */
 package com.github.clboettcher.bonappetit.server.order.entity;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * An order for a menu item.
@@ -46,17 +47,18 @@ public class ItemOrderEntity {
     private long id;
 
     /**
-     * The ID of the ordered item.
+     * The ordered item.
      */
-    @Column(name = "ITEM_ID", nullable = false)
-    private Long itemId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "ITEM_ID", nullable = false)
+    private ItemEntity item;
 
     /**
      * The ordered options.
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ORDER_ID")
-    private Set<AbstractOptionOrderEntity> optionOrders;
+    private List<AbstractOptionOrderEntity> optionOrders;
 
     /**
      * The person or place (eg table) that the order should be delivered to.
@@ -67,8 +69,9 @@ public class ItemOrderEntity {
     /**
      * The staff member who took the order.
      */
-    @Column(name = "STAFF_MEMBER_ID", nullable = false)
-    private Long staffMemberId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "STAFF_MEMBER_ID", nullable = false)
+    private StaffMemberEntity staffMember;
 
     /**
      * The timestamp that the order was taken.
@@ -90,45 +93,26 @@ public class ItemOrderEntity {
     private OrderEntityStatus status;
 
     /**
-     * The discount in percent.
-     * discount = 10
-     * means a 10% discount
-     */
-    @Column(name = "DISCOUNT", nullable = false)
-    private int discount;
-
-    /**
-     * The calculated price of the item and the chosen options.
-     * Does NOT contain the discount from the discount variable.
-     */
-    @Column(name = "PRICE", nullable = false)
-    private BigDecimal price;
-
-    /**
      * Constructor setting the specified properties.
      *
-     * @param itemId        see {@link #itemId}.
-     * @param optionOrders  see {@link #optionOrders}.
-     * @param deliverTo     see {@link #deliverTo}.
-     * @param staffMemberId see {@link #staffMemberId}.
-     * @param orderTime     see {@link #orderTime}.
-     * @param note          see {@link #note}.
-     * @param status        see {@link #status}.
-     * @param discount      see {@link #discount}.
-     * @param price         see {@link #price}.
+     * @param item         see {@link #item}.
+     * @param optionOrders see {@link #optionOrders}.
+     * @param deliverTo    see {@link #deliverTo}.
+     * @param staffMember  see {@link #staffMember}.
+     * @param orderTime    see {@link #orderTime}.
+     * @param note         see {@link #note}.
+     * @param status       see {@link #status}.
      */
     @Builder
-    public ItemOrderEntity(Long itemId, Set<AbstractOptionOrderEntity> optionOrders,
-                           String deliverTo, Long staffMemberId, Date orderTime,
-                           String note, OrderEntityStatus status, int discount, BigDecimal price) {
-        this.itemId = itemId;
+    public ItemOrderEntity(ItemEntity item, List<AbstractOptionOrderEntity> optionOrders,
+                           String deliverTo, StaffMemberEntity staffMember, Date orderTime,
+                           String note, OrderEntityStatus status) {
+        this.item = item;
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
-        this.staffMemberId = staffMemberId;
+        this.staffMember = staffMember;
         this.orderTime = orderTime;
         this.note = note;
         this.status = status;
-        this.discount = discount;
-        this.price = price;
     }
 }

@@ -26,6 +26,8 @@ import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -33,8 +35,9 @@ import java.util.Set;
 /**
  * This class bootstraps some testdata into the db and will be deleted at some point.
  */
-// Enable to save test data in the db
-//@Component
+// Enable to save test menu in the db
+@Component
+@Profile("INMEM")
 public class Bootstrap {
 
     /**
@@ -48,12 +51,13 @@ public class Bootstrap {
      * @param menuConfigRepository The bean used to access the stored menu config.
      */
     @Autowired
-    public Bootstrap(MenuConfigRepository menuConfigRepository) {
+    public Bootstrap(MenuConfigRepository menuConfigRepository, MenuRepository menuRepository) {
         LOGGER.info("Saving test data in the DB.");
 
         MenuEntity menuEntity = createMenu();
         MenuConfig menuConfig = new MenuConfig();
         menuConfig.setCurrent(menuEntity);
+        menuRepository.save(menuEntity);
         menuConfigRepository.save(menuConfig);
     }
 

@@ -21,7 +21,7 @@ package com.github.clboettcher.bonappetit.server.staff.dao;
 
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Provides access to stored {@link StaffMemberEntity}s.
@@ -33,5 +33,13 @@ public interface StaffMemberDao {
      *
      * @return All stored {@link StaffMemberEntity}s. May be empty.
      */
-    Set<StaffMemberEntity> getStaffMembers();
+    List<StaffMemberEntity> getStaffMembers();
+
+    /**
+     * Returns the staff member with the givern id.
+     *
+     * @param id The id.
+     * @return The staff member, or null if it does not exist.
+     */
+    StaffMemberEntity getStaffMember(long id);
 }

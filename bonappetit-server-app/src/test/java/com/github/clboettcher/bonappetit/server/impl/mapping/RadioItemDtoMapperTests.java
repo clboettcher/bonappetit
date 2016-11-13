@@ -44,7 +44,7 @@ public class RadioItemDtoMapperTests {
 //                .title("Test Radio-Item 01")
 //                .build();
 //
-//        Set<RadioItemDto> actual = RadioItemDtoMapper.INSTANCE.mapToRadioItemDtos(Sets.newLinkedHashSet(
+//        Set<RadioItemDto> actual = RadioItemEntityMapper.INSTANCE.mapToRadioItemDtos(Sets.newLinkedHashSet(
 //                Collections.singletonList(input01)));
 //        final Set<RadioItemDto> expectedDtos = Sets.newHashSet(expected01);
 //        assertThat(actual, is(expectedDtos));

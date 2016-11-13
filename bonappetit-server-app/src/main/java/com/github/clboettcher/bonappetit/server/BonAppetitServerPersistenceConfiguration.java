@@ -19,21 +19,29 @@
  */
 package com.github.clboettcher.bonappetit.server;
 
+import com.google.common.collect.ImmutableMap;
+import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Map;
 
 // Enable to use H2 database
-//@Configuration
-//@EnableJpaRepositories(basePackages = "com.github.clboettcher.bonappetit")
-//@EnableTransactionManagement
+@Profile("INMEM")
+@Configuration
+@EnableJpaRepositories(basePackages = "com.github.clboettcher.bonappetit")
+@EnableTransactionManagement
 public class BonAppetitServerPersistenceConfiguration {
 
     @Bean
@@ -46,11 +54,16 @@ public class BonAppetitServerPersistenceConfiguration {
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+//        vendorAdapter.setGenerateDdl(true);
         vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
+
+        Map<String, Object> jpaProperties = ImmutableMap.<String, Object>builder()
+                .put(Environment.HBM2DDL_AUTO, "create-drop")
+                .build();
+        factory.setJpaPropertyMap(jpaProperties);
         factory.setPackagesToScan("com.github.clboettcher.bonappetit");
         factory.setDataSource(dataSource);
         factory.afterPropertiesSet();

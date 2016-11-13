@@ -1,0 +1,4 @@
+This folder contains JSON representations of MenuDto and referenced types (see unit tests).
+
+The file menu_without_ids.json can be used to test the creation of menus via the REST endpoint. With IDs
+hibernate would attempt to update existing entities (which would fail because entities don't exits).

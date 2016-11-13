@@ -23,10 +23,11 @@ import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberResource;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Default impl of {@link StaffMemberResource}.
@@ -47,8 +48,8 @@ public class StaffMemberResourceImpl implements StaffMemberResource {
     private StaffMemberDtoMapper mapper;
 
     @Override
-    public Set<StaffMemberDto> getStaffMembers() {
-        Set<StaffMemberEntity> result = staffMemberDao.getStaffMembers();
-        return mapper.mapToStaffMemberDtos(result);
+    public List<StaffMemberDto> getStaffMembers() {
+        List<StaffMemberEntity> result = staffMemberDao.getStaffMembers();
+        return Lists.newArrayList(mapper.mapToStaffMemberDtos(result));
     }
 }

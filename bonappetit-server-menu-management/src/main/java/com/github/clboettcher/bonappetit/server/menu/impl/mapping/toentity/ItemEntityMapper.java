@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.impl.mapping;
+package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDtoType;
@@ -27,26 +27,26 @@ import org.mapstruct.Mapper;
 
 import java.util.Set;
 
-@Mapper(uses = OptionDtoMapper.class, componentModel = "spring")
-public interface ItemDtoMapper {
+@Mapper(uses = OptionEntityMapper.class, componentModel = "spring")
+public interface ItemEntityMapper {
 
     /**
-     * Converts the given {@link ItemEntity}s to {@link ItemDto}s.
+     * Converts the given {@link ItemDto}s to {@link ItemEntity}s.
      *
      * @param items The items to map.
      * @return The mapping result.
      */
-    Set<ItemDto> mapToItemEntityDtos(Set<ItemEntity> items);
+    Set<ItemEntity> mapToItemEntity(Set<ItemDto> items);
 
     /**
-     * @param item The {@link ItemEntity} to map.
+     * @param item The {@link ItemDto} to map.
      * @return The mapping result.
      */
-    ItemDto mapToItemEntityDto(ItemEntity item);
+    ItemEntity mapToItemEntity(ItemDto item);
 
     /**
-     * @param itemType The {@link ItemEntityType} to map.
+     * @param itemType The {@link ItemDtoType} to map.
      * @return The mapping result.
      */
-    ItemDtoType mapToItemEntityDtoType(ItemEntityType itemType);
+    ItemEntityType mapToItemEntityType(ItemDtoType itemType);
 }

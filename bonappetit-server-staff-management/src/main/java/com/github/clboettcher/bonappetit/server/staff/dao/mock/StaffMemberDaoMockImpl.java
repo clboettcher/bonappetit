@@ -21,11 +21,11 @@ package com.github.clboettcher.bonappetit.server.staff.dao.mock;
 
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Impl of {@link StaffMemberDao} that returns static testdata.
@@ -34,19 +34,26 @@ import java.util.Set;
 @Profile("mock")
 public class StaffMemberDaoMockImpl implements StaffMemberDao {
 
+    public static final List<StaffMemberEntity> TEST_DATA = Arrays.asList(
+            StaffMemberEntity.builder()
+                    .id(1L)
+                    .firstName("John")
+                    .lastName("Smith")
+                    .build(),
+            StaffMemberEntity.builder()
+                    .id(2L)
+                    .firstName("Jane")
+                    .lastName("Smith")
+                    .build()
+    );
+
     @Override
-    public Set<StaffMemberEntity> getStaffMembers() {
-        return Sets.newHashSet(
-                StaffMemberEntity.builder()
-                        .id(1L)
-                        .firstName("John")
-                        .lastName("Smith")
-                        .build(),
-                StaffMemberEntity.builder()
-                        .id(2L)
-                        .firstName("Jane")
-                        .lastName("Smith")
-                        .build()
-        );
+    public List<StaffMemberEntity> getStaffMembers() {
+        return TEST_DATA;
+    }
+
+    @Override
+    public StaffMemberEntity getStaffMember(long id) {
+        return TEST_DATA.get(0);
     }
 }

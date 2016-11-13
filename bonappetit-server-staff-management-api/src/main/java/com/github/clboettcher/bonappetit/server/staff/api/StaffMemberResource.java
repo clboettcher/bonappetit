@@ -27,7 +27,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.Set;
+import java.util.List;
 
 @Path("/" + StaffMemberResource.ROOT_PATH)
 @Api(value = StaffMemberResource.ROOT_PATH)
@@ -38,5 +38,5 @@ public interface StaffMemberResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns a list of staff members.")
-    Set<StaffMemberDto> getStaffMembers();
+    List<StaffMemberDto> getStaffMembers();
 }

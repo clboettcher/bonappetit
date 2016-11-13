@@ -12,7 +12,8 @@
           "id": 3,
           "title": "Käsesoße",
           "priceDiff": 0.5,
-          "defaultChecked": true
+          "defaultChecked": true,
+          "index" : 0
         }
       ]
     },
@@ -25,6 +26,7 @@
         {
           "type": "radioOption",
           "id": 1,
+          "index" : 0,
           "title": "Größe",
           "defaultSelected": {
             "id": 1,
@@ -66,14 +68,16 @@
           "id": 1,
           "title": "Extra Salz",
           "priceDiff": 0,
-          "defaultChecked": false
+          "defaultChecked": false,
+          "index" : 0
         },
         {
           "type": "valueOption",
           "id": 2,
           "title": "Ketchup",
           "priceDiff": 0,
-          "defaultValue": 2
+          "defaultValue": 2,
+          "index" : 1
         }
       ]
     }

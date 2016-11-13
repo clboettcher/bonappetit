@@ -19,15 +19,15 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.fc.impl;
 
-import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.github.clboettcher.bonappetit.server.staff.impl.StaffMemberDtoMapper;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -47,7 +47,7 @@ public class StaffMemberDtoMapperTests {
 
     @Test
     public void testMapper() throws Exception {
-        Set<StaffMemberEntity> input = Sets.newHashSet(
+        List<StaffMemberEntity> input = Lists.newArrayList(
                 StaffMemberEntity.builder()
                         .id(1L)
                         .firstName("John")
@@ -59,7 +59,7 @@ public class StaffMemberDtoMapperTests {
                         .lastName("Smith")
                         .build()
         );
-        Set<StaffMemberDto> actual = mapper.mapToStaffMemberDtos(input);
+        List<StaffMemberDto> actual = mapper.mapToStaffMemberDtos(input);
         assertThat(actual.size(), is(2));
         for (StaffMemberDto staffMemberDto : actual) {
             assertThat(staffMemberDto.getId(), notNullValue());

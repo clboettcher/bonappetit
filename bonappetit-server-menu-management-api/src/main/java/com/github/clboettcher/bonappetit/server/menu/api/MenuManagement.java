@@ -22,11 +22,11 @@ package com.github.clboettcher.bonappetit.server.menu.api;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 @Path(MenuManagement.ROOT_PATH)
@@ -41,4 +41,9 @@ public interface MenuManagement {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the currently active menu.")
     MenuDto getCurrentMenu();
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Creates the given menu in the database.")
+    Response createMenu(@ApiParam(value="The menu to create.", required = true) MenuDto menuDto);
 }

@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order.entity;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.CheckboxOptionEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * An order for a checkbox option.
@@ -39,8 +42,9 @@ public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * The ordered option.
      */
-    @Column(name = "CHECKBOX_OPTION_ID", nullable = true)
-    private Long optionId;
+    @OneToOne(optional = true)
+    @JoinColumn(name = "OPTION_ID", nullable = true)
+    private CheckboxOptionEntity checkboxOption;
 
     /**
      * Whether the option has been checked or not.
@@ -51,14 +55,14 @@ public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id       see {@link #id}.
-     * @param optionId see {@link #optionId}.
-     * @param checked  see {@link #checked}.
+     * @param id             see {@link #id}.
+     * @param checkboxOption see {@link #checkboxOption}.
+     * @param checked        see {@link #checked}.
      */
     @Builder
-    public CheckboxOptionOrderEntity(long id, Long optionId, Boolean checked) {
+    public CheckboxOptionOrderEntity(long id, CheckboxOptionEntity checkboxOption, Boolean checked) {
         super(id);
-        this.optionId = optionId;
+        this.checkboxOption = checkboxOption;
         this.checked = checked;
     }
 }

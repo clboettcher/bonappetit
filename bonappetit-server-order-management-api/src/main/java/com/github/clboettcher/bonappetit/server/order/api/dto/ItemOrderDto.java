@@ -26,7 +26,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,7 +37,7 @@ public class ItemOrderDto {
     private Long itemId;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
-    private Set<OptionOrderDto> optionOrders;
+    private List<OptionOrderDto> optionOrders;
 
     @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
             example = "Table 4")
@@ -53,7 +53,7 @@ public class ItemOrderDto {
     private String note;
 
     @Builder
-    public ItemOrderDto(Long itemId, Set<OptionOrderDto> optionOrders, String deliverTo,
+    public ItemOrderDto(Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
                         Long staffMemberId, DateTime orderTime, String note) {
         this.itemId = itemId;
         this.optionOrders = optionOrders;

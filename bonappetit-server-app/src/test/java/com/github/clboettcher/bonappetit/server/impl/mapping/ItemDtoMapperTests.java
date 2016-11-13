@@ -59,6 +59,6 @@ public class ItemDtoMapperTests {
 //                        .build()
 //        );
 //
-//        assertThat(ItemDtoMapper.INSTANCE.mapToItemDtos(inputItems), is(expectedItemDtos));
+//        assertThat(ItemEntityMapper.INSTANCE.mapToItemDtos(inputItems), is(expectedItemDtos));
 //    }
 }

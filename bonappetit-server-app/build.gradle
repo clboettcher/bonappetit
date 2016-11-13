@@ -17,6 +17,7 @@ dependencies {
     compile project(':bonappetit-core')
     compile project(':bonappetit-server-staff-management')
     compile project(':bonappetit-server-menu-management')
+    compile project(':bonappetit-server-order-management')
 
     // Web
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
@@ -24,6 +25,7 @@ dependencies {
     // DB
     compile "org.flywaydb:flyway-core:4.0.3"
     runtime('mysql:mysql-connector-java')
+    runtime('com.h2database:h2')
 
     // Testing
     testCompile('org.springframework.boot:spring-boot-starter-test')
