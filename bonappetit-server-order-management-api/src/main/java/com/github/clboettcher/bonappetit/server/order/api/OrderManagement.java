@@ -51,7 +51,7 @@ public interface OrderManagement {
     @ApiResponses(
             @ApiResponse(
                     code = 400,
-                    message = "An ordered item does not exist.",
+                    message = "A referenced entity (ordered item, staff member) does not exist.",
                     response = ErrorResponse.class
             )
     )

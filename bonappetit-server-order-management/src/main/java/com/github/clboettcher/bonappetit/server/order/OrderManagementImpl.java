@@ -27,6 +27,8 @@ import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.order.mapping.ItemOrderEntityMapper;
+import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class OrderManagementImpl implements OrderManagement {
 
     @Autowired
     private ItemDao itemDao;
+
+    @Autowired
+    private StaffMemberDao staffMemberDao;
 
     @Autowired
     private ItemOrderEntityMapper mapper;
@@ -90,6 +95,12 @@ public class OrderManagementImpl implements OrderManagement {
                                 "because it does not exist.",
                         orderDto.getItemId()));
             }
+            StaffMemberEntity staffMember = staffMemberDao.getStaffMember(orderDto.getStaffMemberId());
+            if (staffMember == null) {
+                throw new BadRequestException(String.format("Staff member with ID %d does not exist.",
+                        orderDto.getStaffMemberId()));
+            }
+
         }
     }
 }
