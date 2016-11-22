@@ -20,9 +20,9 @@
 package com.github.clboettcher.bonappetit.server.order.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.clboettcher.bonappetit.core.BonAppetitResourceUtils;
-import com.github.clboettcher.bonappetit.core.JsonUtils;
-import com.github.clboettcher.bonappetit.core.ObjectMapperFactory;
+import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
+import com.github.clboettcher.bonappetit.common.JsonUtils;
+import com.github.clboettcher.bonappetit.common.ObjectMapperFactory;
 import com.github.clboettcher.bonappetit.server.order.api.dto.*;
 import org.junit.Test;
 

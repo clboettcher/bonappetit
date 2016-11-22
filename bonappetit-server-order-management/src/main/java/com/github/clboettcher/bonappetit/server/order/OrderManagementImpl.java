@@ -19,6 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.order;
 
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
@@ -30,8 +32,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.List;
 
 @Component
 public class OrderManagementImpl implements OrderManagement {
@@ -42,29 +46,50 @@ public class OrderManagementImpl implements OrderManagement {
     private OrderDao orderDao;
 
     @Autowired
+    private ItemDao itemDao;
+
+    @Autowired
     private ItemOrderEntityMapper mapper;
 
     @Override
     public Response createOrders(Collection<ItemOrderDto> orderDtos) {
-        LOGGER.info(String.format("Creating orders: %s", orderDtos));
+        assertValid(orderDtos);
+        LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
 
         // Map
         Collection<ItemOrderEntity> itemOrderEntities = mapper.mapToItemOrderEntities(orderDtos);
 
         // Save
         itemOrderEntities.forEach((itemOrderEntity) -> itemOrderEntity.setStatus(OrderEntityStatus.CREATED));
-        Iterable<ItemOrderEntity> saved = orderDao.save(itemOrderEntities);
+        List<ItemOrderEntity> saved = orderDao.save(itemOrderEntities);
 
+        LOGGER.info(String.format("Saved %d order(s) in state %s",
+                saved.size(), OrderEntityStatus.CREATED));
         // Print
         // TODO: Print orders
+        LOGGER.info(String.format("Printing %d order(s)", saved.size()));
 
         // Update status
         saved.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.PRINTED));
-        orderDao.update(saved);
+        List<ItemOrderEntity> updated = orderDao.update(saved);
 
+        LOGGER.info(String.format("Updating the order status to %s for %d printed orders.",
+                OrderEntityStatus.PRINTED, updated.size()));
+
+        LOGGER.info(String.format("Creating order history entries for %d order(s)", updated.size()));
         // Save order history
         // TODO: save in history
-
         return Response.noContent().build();
+    }
+
+    private void assertValid(Collection<ItemOrderDto> orderDtos) {
+        for (ItemOrderDto orderDto : orderDtos) {
+            ItemEntity item = itemDao.getItem(orderDto.getItemId());
+            if (item == null) {
+                throw new BadRequestException(String.format("Item with ID %d cannot be ordered " +
+                                "because it does not exist.",
+                        orderDto.getItemId()));
+            }
+        }
     }
 }

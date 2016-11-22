@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 dependencies {
-    compile project(':bonappetit-core')
+    compile project(':bonappetit-common')
     compile project(':bonappetit-domain')
 
     // Spring

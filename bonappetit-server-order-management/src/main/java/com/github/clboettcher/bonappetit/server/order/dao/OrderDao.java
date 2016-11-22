@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.order.dao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface OrderDao {
 
@@ -31,11 +32,11 @@ public interface OrderDao {
      * @param orders The orders to save, may be empty.
      * @return The saved entites.
      */
-    Iterable<ItemOrderEntity> save(Collection<ItemOrderEntity> orders);
+    List<ItemOrderEntity> save(Collection<ItemOrderEntity> orders);
 
     /**
      * Updates the given orders in in the database.
      * @param itemOrderEntities The orders to update.
      */
-    Iterable<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities);
+    List<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities);
 }

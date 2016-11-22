@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    // Object mapping
+    compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+//    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jacksonVersion}"
+//     https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.3'
+
+    // Utils
+//    compile "com.google.guava:guava:${guavaVersion}"
+//    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+//    compile "commons-io:commons-io:${commonsIoVersion}"
+//    compile "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+
+    // Documentation
+    compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
+
+    // Logging
+    // http://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+
+}

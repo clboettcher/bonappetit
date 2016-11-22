@@ -14,7 +14,8 @@ jar {
 }
 
 dependencies {
-    compile project(':bonappetit-core')
+    compile project(':bonappetit-common')
+    compile project(':bonappetit-server-core')
     compile project(':bonappetit-server-staff-management')
     compile project(':bonappetit-server-menu-management')
     compile project(':bonappetit-server-order-management')

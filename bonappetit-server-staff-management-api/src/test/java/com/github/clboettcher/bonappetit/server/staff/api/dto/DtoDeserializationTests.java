@@ -19,9 +19,9 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.api.dto;
 
-import com.github.clboettcher.bonappetit.core.BonAppetitResourceUtils;
-import com.github.clboettcher.bonappetit.core.JsonUtils;
-import com.github.clboettcher.bonappetit.core.ObjectMapperFactory;
+import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
+import com.github.clboettcher.bonappetit.common.JsonUtils;
+import com.github.clboettcher.bonappetit.common.ObjectMapperFactory;
 import org.junit.Assert;
 import org.junit.Test;
 

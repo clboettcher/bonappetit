@@ -20,9 +20,12 @@
 package com.github.clboettcher.bonappetit.server.order.api;
 
 
+import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,8 +42,18 @@ public interface OrderManagement {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Creates the given orders in the database. " +
-            "After the orders have been saved they are printed. If printing" +
-            "fails, the orders are not deleted from the database.")
+    @ApiOperation(
+            value = "Creates and prints the given orders.",
+            notes = "Creates the given orders in the database. " +
+                    "After the orders have been saved they are printed. If printing" +
+                    "fails, the orders are not deleted from the database."
+    )
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "An ordered item does not exist.",
+                    response = ErrorResponse.class
+            )
+    )
     Response createOrders(Collection<ItemOrderDto> orders);
 }

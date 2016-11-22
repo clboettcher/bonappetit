@@ -19,5 +19,93 @@
  */
 package com.github.clboettcher.bonappetit.server.jersey;
 
-public class ExceptionMapper {
+import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
+
+public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwable> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionMapper.class);
+    public static final List<Class<? extends ClientErrorException>> CLIENT_ERROR_EXCEPTIONS = Arrays.asList(
+            BadRequestException.class,
+            NotFoundException.class,
+            ForbiddenException.class);
+    private static final EnumSet<Response.Status.Family> IGNORABLE_STATUS_FAMILIES = EnumSet.of(
+            Response.Status.Family.SUCCESSFUL,
+            Response.Status.Family.REDIRECTION
+    );
+
+    @Override
+    public Response toResponse(Throwable exception) {
+        Response waeResponse = getIgnorableWebApplicationExceptionResponse(exception);
+        if (waeResponse != null) {
+            return waeResponse;
+        }
+
+        ErrorResponse errorResponse = toErrorResponse(exception);
+
+        this.log(exception, errorResponse);
+
+        return Response.status(errorResponse.getStatus())
+                .entity(errorResponse)
+                .build();
+    }
+
+    private ErrorResponse toErrorResponse(Throwable exception) {
+        if (exception instanceof WebApplicationException) {
+            return toErrorResponse((WebApplicationException) exception);
+        }
+
+        return new ErrorResponse(Response.Status.INTERNAL_SERVER_ERROR);
+    }
+
+
+    private Response getIgnorableWebApplicationExceptionResponse(Throwable t) {
+        if (t instanceof WebApplicationException) {
+            WebApplicationException wae = (WebApplicationException) t;
+            final Response.StatusType status = wae.getResponse().getStatusInfo();
+            if (IGNORABLE_STATUS_FAMILIES.contains(status.getFamily())) {
+                return wae.getResponse();
+            }
+        }
+        return null;
+    }
+
+    private ErrorResponse toErrorResponse(WebApplicationException e) {
+        Response.Status status = Response.Status.fromStatusCode(e.getResponse().getStatus());
+        for (Class<? extends ClientErrorException> exceptionClass : CLIENT_ERROR_EXCEPTIONS) {
+            if (exceptionClass.isAssignableFrom(e.getClass())) {
+                // In this case we forward the error message if there is one
+                String msg;
+                if (StringUtils.isEmpty(e.getMessage())) {
+                    msg = status.getReasonPhrase();
+                } else {
+                    msg = e.getMessage();
+                }
+                return new ErrorResponse(status, msg);
+            }
+        }
+        return new ErrorResponse(status);
+    }
+
+    private void log(Throwable t, ErrorResponse errorResponse) {
+        final String errorMsg = String.format("Returning error response %s. Caused by %s: %s.",
+                errorResponse,
+                t.getClass().getSimpleName(),
+                t.getMessage());
+
+        if (errorResponse.getStatusType().getFamily() == Response.Status.Family.CLIENT_ERROR) {
+            LOGGER.warn(errorMsg);
+        } else {
+            LOGGER.error(errorMsg, t);
+        }
+    }
+
 }

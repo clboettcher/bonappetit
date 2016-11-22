@@ -10,6 +10,6 @@ dependencies {
     compile("org.projectlombok:lombok:${lombokVersion}")
 
     // Testing
-    testCompile project(":bonappetit-core")
+    testCompile project(":bonappetit-common")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

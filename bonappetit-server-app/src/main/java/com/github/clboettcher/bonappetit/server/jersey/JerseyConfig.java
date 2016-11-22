@@ -45,6 +45,8 @@ public class JerseyConfig extends ResourceConfig {
      * Constructor registering the application components.
      */
     public JerseyConfig() {
+        register(ExceptionMapper.class);
+
         register(StaffMemberResourceImpl.class);
         register(MenuManagementImpl.class);
         register(OrderManagementImpl.class);
