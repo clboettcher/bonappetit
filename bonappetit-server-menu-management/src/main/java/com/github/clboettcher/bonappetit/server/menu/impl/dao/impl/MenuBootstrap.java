@@ -38,12 +38,12 @@ import java.util.Set;
 // Enable to save test menu in the db
 @Component
 @Profile("INMEM")
-public class Bootstrap {
+public class MenuBootstrap {
 
     /**
      * The logger for this class.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuBootstrap.class);
 
     /**
      * Constructor that saves some testdata in the db.
@@ -51,7 +51,7 @@ public class Bootstrap {
      * @param menuConfigRepository The bean used to access the stored menu config.
      */
     @Autowired
-    public Bootstrap(MenuConfigRepository menuConfigRepository, MenuRepository menuRepository) {
+    public MenuBootstrap(MenuConfigRepository menuConfigRepository, MenuRepository menuRepository) {
         LOGGER.info("Saving test data in the DB.");
 
         MenuEntity menuEntity = createMenu();
