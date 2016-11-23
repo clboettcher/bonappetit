@@ -30,7 +30,7 @@ public interface MenuDao {
     /**
      * Returns the current {@link MenuEntity}.
      *
-     * @return The current {@link MenuEntity}.
+     * @return The current {@link MenuEntity}, may be null if it has not been configured.
      */
     MenuEntity getCurrentMenu();
 
@@ -41,4 +41,12 @@ public interface MenuDao {
      * @return The saved instance (including non null IDs).
      */
     MenuEntity save(MenuEntity menuEntity);
+
+    /**
+     * Returns the {@link MenuEntity} with the given ID.
+     *
+     * @param id The ID.
+     * @return The saved instance, may be null if it does not exist.
+     */
+    MenuEntity getMenuById(Long id);
 }

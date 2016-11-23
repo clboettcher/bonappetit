@@ -4,6 +4,8 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 dependencies {
+    compile project(':bonappetit-server-core')
+
     // Documentation
     compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
 

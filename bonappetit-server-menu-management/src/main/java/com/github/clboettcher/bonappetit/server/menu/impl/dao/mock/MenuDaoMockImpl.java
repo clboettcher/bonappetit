@@ -67,6 +67,11 @@ public class MenuDaoMockImpl implements MenuDao {
         return menuEntity;
     }
 
+    @Override
+    public MenuEntity getMenuById(Long id) {
+        return menus.get(id);
+    }
+
     private MenuEntity createMenu() {
         return MenuEntity.builder()
                 .id(this.getNewMenuId())

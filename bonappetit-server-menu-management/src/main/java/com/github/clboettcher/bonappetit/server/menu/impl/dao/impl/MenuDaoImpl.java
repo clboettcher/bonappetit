@@ -67,6 +67,11 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
+    public MenuEntity getMenuById(Long id) {
+        return menuRepository.findOne(id);
+    }
+
+    @Override
     public MenuEntity save(MenuEntity menuEntity) {
         Set<ItemEntity> items = menuEntity.getItems();
         items.stream()

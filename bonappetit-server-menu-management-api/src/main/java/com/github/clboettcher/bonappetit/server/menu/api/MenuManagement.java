@@ -19,31 +19,91 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.api;
 
+import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-@Path(MenuManagement.ROOT_PATH)
-@Api(value = MenuManagement.ROOT_PATH)
+/**
+ * Public rest interface to manage menus.
+ */
+@Path("/")
+@Api(value = "menus")
+@ApiResponses(
+        @ApiResponse(
+                code = 404,
+                message = "If a requested resource does not exist.",
+                response = ErrorResponse.class
+        )
+)
 public interface MenuManagement {
 
-    String ROOT_PATH = "/menus";
-    String CURRENT_MENU_PATH = "/current";
+    /**
+     * Relative path of the current menu resource.
+     */
+    String CURRENT_MENU_PATH = "/currentMenu";
+    /**
+     * Relative path of the menu resource.
+     */
+    String MENUS_PATH = "/menus";
 
+    /**
+     * Returns the currently active menu.
+     *
+     * @return A menu.
+     */
     @GET
     @Path(CURRENT_MENU_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the currently active menu.")
+    @ApiResponses(
+            @ApiResponse(
+                    code = 500,
+                    message = "If no current menu has been configured.",
+                    response = ErrorResponse.class
+            )
+    )
     MenuDto getCurrentMenu();
 
+    /**
+     * Returns the menu with the given ID.
+     *
+     * @param id The ID to look for.
+     * @return A menu.
+     */
+    @GET
+    @Path(MENUS_PATH + "/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the menu with the given ID.")
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "If param id is blank.",
+                    response = ErrorResponse.class
+            )
+    )
+    MenuDto getMenuById(@ApiParam(value = "The menu ID to look for.", allowableValues = "0,*", required = true)
+                        @PathParam("id") Long id);
+
+    /**
+     * Creates a menu from the given data.
+     *
+     * @param menuDto The menu transfer object.
+     * @return A response indicating the success of the operation.
+     */
     @POST
+    @Path(MENUS_PATH)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates the given menu in the database.")
-    Response createMenu(@ApiParam(value="The menu to create.", required = true) MenuDto menuDto);
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "The request did not contain a menu to create.",
+                    response = ErrorResponse.class
+            )
+    )
+    Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto);
 }

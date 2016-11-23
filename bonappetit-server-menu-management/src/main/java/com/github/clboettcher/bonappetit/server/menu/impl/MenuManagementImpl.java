@@ -29,6 +29,9 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -72,15 +75,40 @@ public class MenuManagementImpl implements MenuManagement {
 
     @Override
     public MenuDto getCurrentMenu() {
-        return dtoMapper.mapToMenuDto(menuDao.getCurrentMenu());
+        MenuEntity currentMenu = menuDao.getCurrentMenu();
+
+        if (currentMenu == null) {
+            throw new InternalServerErrorException("No menu has been configured as current.");
+        }
+
+        return dtoMapper.mapToMenuDto(currentMenu);
+    }
+
+    @Override
+    public MenuDto getMenuById(Long id) {
+        if (id == null) {
+            throw new BadRequestException("Param id may not be blank.");
+        }
+
+        MenuEntity menu = menuDao.getMenuById(id);
+
+        if (menu == null) {
+            throw new NotFoundException(String.format("Menu with ID %d does not exist.", id));
+        }
+
+        return dtoMapper.mapToMenuDto(menu);
     }
 
     @Override
     public Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto) {
+        if (menuDto == null) {
+            throw new BadRequestException("Menu that should be created must be present");
+        }
+
         MenuEntity menuEntity = this.menuEntityMapper.mapToMenuEntity(menuDto);
         MenuEntity saved = menuDao.save(menuEntity);
 
-        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(MenuManagement.ROOT_PATH + "/" + saved.getId());
+        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(String.format("%s/%d", MENUS_PATH, saved.getId()));
 
         return Response.ok()
                 .location(baseUriBuilder.build())
