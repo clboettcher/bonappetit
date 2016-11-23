@@ -32,13 +32,6 @@ import javax.ws.rs.core.Response;
  */
 @Path("/")
 @Api(value = "menus")
-@ApiResponses(
-        @ApiResponse(
-                code = 404,
-                message = "If a requested resource does not exist.",
-                response = ErrorResponse.class
-        )
-)
 public interface MenuManagement {
 
     /**
@@ -78,15 +71,19 @@ public interface MenuManagement {
     @Path(MENUS_PATH + "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the menu with the given ID.")
-    @ApiResponses(
+    @ApiResponses({
             @ApiResponse(
                     code = 400,
                     message = "If param id is blank.",
                     response = ErrorResponse.class
-            )
+            ),
+            @ApiResponse(
+                    code = 404,
+                    message = "The requested menu does not exist.",
+                    response = ErrorResponse.class
+            )}
     )
-    MenuDto getMenuById(@ApiParam(value = "The menu ID to look for.", allowableValues = "0,*", required = true)
-                        @PathParam("id") Long id);
+    MenuDto getMenuById(@ApiParam(value = "The menu ID to look for.") @PathParam("id") Long id);
 
     /**
      * Creates a menu from the given data.
@@ -106,4 +103,14 @@ public interface MenuManagement {
             )
     )
     Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto);
+
+    @PUT
+    @Path(CURRENT_MENU_PATH + "/{menuId}")
+    @ApiOperation(value = "Update the currently active menu.")
+    @ApiResponses(@ApiResponse(code = 400,
+            message = "Param menuId was blank or no menu was found for the given menuId.",
+            response = ErrorResponse.class))
+    Response updateCurrentMenu(
+            @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
+
 }

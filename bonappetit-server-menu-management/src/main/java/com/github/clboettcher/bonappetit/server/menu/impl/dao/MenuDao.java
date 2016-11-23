@@ -49,4 +49,14 @@ public interface MenuDao {
      * @return The saved instance, may be null if it does not exist.
      */
     MenuEntity getMenuById(Long id);
+
+    boolean exists(Long id);
+
+    /**
+     * Sets the given menu as current in the menu config.
+     *
+     * @param menuEntity The menu to set as current.
+     */
+    void setCurrent(MenuEntity menuEntity);
+
 }

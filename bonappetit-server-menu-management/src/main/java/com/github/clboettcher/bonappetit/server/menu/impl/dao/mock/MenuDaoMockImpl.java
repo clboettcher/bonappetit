@@ -43,9 +43,9 @@ public class MenuDaoMockImpl implements MenuDao {
      */
     private MenuEntity menu;
 
-    private Map<Integer, MenuEntity> menus = new HashMap<>();
+    private Map<Long, MenuEntity> menus = new HashMap<>();
 
-    private int currentMenuId = 1;
+    private Long currentMenuId = 1L;
 
     /**
      * Constructor initializing the bean with test data.
@@ -61,7 +61,7 @@ public class MenuDaoMockImpl implements MenuDao {
 
     @Override
     public MenuEntity save(MenuEntity menuEntity) {
-        int id = getNewMenuId();
+        Long id = getNewMenuId();
         menuEntity.setId(id);
         this.menus.put(id, menuEntity);
         return menuEntity;
@@ -157,7 +157,17 @@ public class MenuDaoMockImpl implements MenuDao {
                 .build();
     }
 
-    private int getNewMenuId() {
+    private Long getNewMenuId() {
         return this.currentMenuId++;
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return this.menus.containsKey(id);
+    }
+
+    @Override
+    public void setCurrent(MenuEntity menuEntity) {
+        throw new UnsupportedOperationException();
     }
 }

@@ -114,4 +114,22 @@ public class MenuManagementImpl implements MenuManagement {
                 .location(baseUriBuilder.build())
                 .build();
     }
+
+    @Override
+    public Response updateCurrentMenu(Long menuId) {
+        if (menuId == null) {
+            throw new BadRequestException("Param menuId may not be blank.");
+        }
+
+        if (!menuDao.exists(menuId)) {
+            throw new BadRequestException(String.format("Menu with ID %d cannot be set as current because " +
+                    "it does not exist.", menuId
+            ));
+        }
+
+        MenuEntity newCurrent = menuDao.getMenuById(menuId);
+        menuDao.setCurrent(newCurrent);
+
+        return Response.noContent().build();
+    }
 }
