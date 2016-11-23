@@ -53,4 +53,9 @@ public class OrderDaoImpl implements OrderDao {
     public List<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities) {
         return Lists.newArrayList(repository.save(itemOrderEntities));
     }
+
+    @Override
+    public List<ItemOrderEntity> getAllOrders() {
+        return Lists.newArrayList(this.repository.findAll());
+    }
 }

@@ -39,4 +39,11 @@ public interface OrderDao {
      * @param itemOrderEntities The orders to update.
      */
     List<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities);
+
+    /**
+     * Returns all orders.
+     *
+     * @return A list of orders, may be empty.
+     */
+    List<ItemOrderEntity> getAllOrders();
 }

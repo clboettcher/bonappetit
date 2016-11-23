@@ -27,12 +27,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.List;
 
 @Path(OrderManagement.ROOT_PATH)
 @Api(value = OrderManagement.ROOT_PATH)
@@ -56,4 +58,14 @@ public interface OrderManagement {
             )
     )
     Response createOrders(Collection<ItemOrderDto> orders);
+
+    /**
+     * Returns all orders.
+     *
+     * @return A list of orders, may be empty.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns all orders, may be empty.")
+    List<ItemOrderDto> getAllOrders();
 }

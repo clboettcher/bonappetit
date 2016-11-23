@@ -26,7 +26,8 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
-import com.github.clboettcher.bonappetit.server.order.mapping.ItemOrderEntityMapper;
+import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDtoMapper;
+import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.slf4j.Logger;
@@ -54,7 +55,10 @@ public class OrderManagementImpl implements OrderManagement {
     private StaffMemberDao staffMemberDao;
 
     @Autowired
-    private ItemOrderEntityMapper mapper;
+    private ItemOrderEntityMapper toEntityMapper;
+
+    @Autowired
+    private ItemOrderDtoMapper toDtoMapper;
 
     @Override
     public Response createOrders(Collection<ItemOrderDto> orderDtos) {
@@ -62,7 +66,7 @@ public class OrderManagementImpl implements OrderManagement {
         LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
 
         // Map
-        Collection<ItemOrderEntity> itemOrderEntities = mapper.mapToItemOrderEntities(orderDtos);
+        Collection<ItemOrderEntity> itemOrderEntities = toEntityMapper.mapToItemOrderEntities(orderDtos);
 
         // Save
         itemOrderEntities.forEach((itemOrderEntity) -> itemOrderEntity.setStatus(OrderEntityStatus.CREATED));
@@ -85,6 +89,12 @@ public class OrderManagementImpl implements OrderManagement {
         // Save order history
         // TODO: save in history
         return Response.noContent().build();
+    }
+
+    @Override
+    public List<ItemOrderDto> getAllOrders() {
+        List<ItemOrderEntity> allOrders = this.orderDao.getAllOrders();
+        return this.toDtoMapper.mapToItemOrderDtos(allOrders);
     }
 
     private void assertValid(Collection<ItemOrderDto> orderDtos) {

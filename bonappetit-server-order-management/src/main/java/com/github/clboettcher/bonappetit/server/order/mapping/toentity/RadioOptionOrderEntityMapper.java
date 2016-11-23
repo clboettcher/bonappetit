@@ -1,4 +1,4 @@
-package com.github.clboettcher.bonappetit.server.order.mapping;
+package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.order.api.dto.RadioOptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.entity.RadioOptionOrderEntity;
