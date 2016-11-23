@@ -13,10 +13,13 @@ allprojects {
 // Config for all bonappetit subprojects
 subprojects {
     apply plugin: 'com.github.hierynomus.license'
-    apply plugin: 'java'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    if (!project.name.equals("bonappetit-documentation")) {
+        apply plugin: 'java'
+
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
     ext {
         springBootVersion = '1.3.6.RELEASE'
