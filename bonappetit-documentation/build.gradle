@@ -30,13 +30,15 @@ asciidoctor {
 
 task cleanGhPages(type: Delete) {
     group = 'documentation'
-    def dirName = "gh-pages"
-    file(dirName).listFiles().each {
-        f ->
-            if (!f.name.equals(".git")) {
-                println "Deleting $f"
-                delete f
-            }
+    doLast {
+        def dirName = "gh-pages"
+        file(dirName).listFiles().each {
+            f ->
+                if (!f.name.equals(".git")) {
+                    println "Deleting $f"
+                    delete f
+                }
+        }
     }
 }
 
