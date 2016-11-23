@@ -71,6 +71,11 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
+    public List<MenuEntity> getAllMenus() {
+        return Lists.newArrayList(menuRepository.findAll());
+    }
+
+    @Override
     public MenuEntity getMenuById(Long id) {
         return menuRepository.findOne(id);
     }

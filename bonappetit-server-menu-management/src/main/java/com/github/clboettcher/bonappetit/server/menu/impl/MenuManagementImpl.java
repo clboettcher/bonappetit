@@ -26,6 +26,8 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,12 +38,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 /**
  * Default impl of the {@link MenuManagement}.
  */
 @Component
 public class MenuManagementImpl implements MenuManagement {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuManagementImpl.class);
 
     @Context
     private UriInfo uri;
@@ -85,6 +90,13 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
+    public List<MenuDto> getAllMenus() {
+        List<MenuEntity> allMenus = menuDao.getAllMenus();
+        LOGGER.info(String.format("Returning %d menu(s)", allMenus.size()));
+        return dtoMapper.mapToMenuDtos(allMenus);
+    }
+
+    @Override
     public MenuDto getMenuById(Long id) {
         if (id == null) {
             throw new BadRequestException("Param id may not be blank.");
@@ -105,10 +117,13 @@ public class MenuManagementImpl implements MenuManagement {
             throw new BadRequestException("Menu that should be created must be present");
         }
 
+        LOGGER.info(String.format("Creating menu from DTO %s", menuDto));
+
         MenuEntity menuEntity = this.menuEntityMapper.mapToMenuEntity(menuDto);
         MenuEntity saved = menuDao.save(menuEntity);
 
-        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(String.format("%s/%d", MENUS_PATH, saved.getId()));
+        String location = String.format("%s/%d", MENUS_PATH, saved.getId());
+        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(location);
 
         return Response.ok()
                 .location(baseUriBuilder.build())

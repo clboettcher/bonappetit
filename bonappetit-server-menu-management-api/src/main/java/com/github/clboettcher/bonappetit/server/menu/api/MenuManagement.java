@@ -26,6 +26,7 @@ import io.swagger.annotations.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Public rest interface to manage menus.
@@ -60,6 +61,17 @@ public interface MenuManagement {
             )
     )
     MenuDto getCurrentMenu();
+
+    /**
+     * Returns all menus.
+     *
+     * @return A list of menus, may be empty.
+     */
+    @GET
+    @Path(MENUS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns all stored menus, may be empty.")
+    List<MenuDto> getAllMenus();
 
     /**
      * Returns the menu with the given ID.

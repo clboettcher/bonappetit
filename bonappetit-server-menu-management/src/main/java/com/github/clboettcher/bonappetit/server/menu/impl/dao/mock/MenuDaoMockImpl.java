@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -159,6 +160,11 @@ public class MenuDaoMockImpl implements MenuDao {
 
     private Long getNewMenuId() {
         return this.currentMenuId++;
+    }
+
+    @Override
+    public List<MenuEntity> getAllMenus() {
+        return Lists.newArrayList(this.menus.values());
     }
 
     @Override

@@ -23,8 +23,18 @@ import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(uses = ItemDtoMapper.class, componentModel = "spring")
 public interface MenuDtoMapper {
+
+    /**
+     * Maps the given {@link MenuEntity}s to {@link MenuDto}s.
+     *
+     * @param menus The {@link MenuEntity}s to map.
+     * @return The resulting {@link MenuDto}s.
+     */
+    List<MenuDto> mapToMenuDtos(List<MenuEntity> menus);
 
     /**
      * Maps the given {@link MenuEntity} to a {@link MenuDto}.

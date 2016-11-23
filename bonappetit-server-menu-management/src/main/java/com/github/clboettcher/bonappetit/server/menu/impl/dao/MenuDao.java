@@ -22,6 +22,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 
+import java.util.List;
+
 /**
  * Provides access to stored {@link MenuEntity}s.
  */
@@ -50,6 +52,19 @@ public interface MenuDao {
      */
     MenuEntity getMenuById(Long id);
 
+    /**
+     * Returns all menus.
+     *
+     * @return A list of menus, may be empty.
+     */
+    List<MenuEntity> getAllMenus();
+
+    /**
+     * Checks whether a menu with the given ID exists in the DB.
+     *
+     * @param id The id to look for.
+     * @return Whether a menu with the given ID exists.
+     */
     boolean exists(Long id);
 
     /**
@@ -58,5 +73,4 @@ public interface MenuDao {
      * @param menuEntity The menu to set as current.
      */
     void setCurrent(MenuEntity menuEntity);
-
 }
