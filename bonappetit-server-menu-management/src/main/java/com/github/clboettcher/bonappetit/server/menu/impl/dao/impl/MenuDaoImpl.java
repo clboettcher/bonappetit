@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,7 +59,7 @@ public class MenuDaoImpl implements MenuDao {
             throw new IllegalStateException(String.format("Found more than one %s in the database.",
                     MenuConfig.class.getSimpleName()));
         } else if (CollectionUtils.isEmpty(menuConfigs)) {
-            throw new NotFoundException("Current menu not found");
+            return null;
         }
 
         return menuConfigs.get(0).getCurrent();
