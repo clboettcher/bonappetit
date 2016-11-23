@@ -20,10 +20,12 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.todto;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
-import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.OrderStatusDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.joda.time.DateTime;
 import org.mapstruct.Mapper;
@@ -43,14 +45,18 @@ public abstract class ItemOrderDtoMapper {
         StaffMemberEntity staffMember = itemOrderEntity.getStaffMember();
 
         return ItemOrderDto.builder()
+                .id(itemOrderEntity.getId())
                 .itemId(item.getId())
                 .optionOrders(this.mapToOptionOrderDtos(itemOrderEntity.getOptionOrders()))
                 .deliverTo(itemOrderEntity.getDeliverTo())
                 .staffMemberId(staffMember.getId())
                 .orderTime(new DateTime(itemOrderEntity.getOrderTime()))
                 .note(itemOrderEntity.getNote())
+                .orderStatus(this.mapToOrderStatusDto(itemOrderEntity.getStatus()))
                 .build();
     }
 
     public abstract List<OptionOrderDto> mapToOptionOrderDtos(List<AbstractOptionOrderEntity> options);
+
+    public abstract OrderStatusDto mapToOrderStatusDto(OrderEntityStatus status);
 }

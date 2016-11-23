@@ -1,10 +1,10 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 
-import com.github.clboettcher.bonappetit.server.order.api.dto.CheckboxOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.OptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.RadioOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.ValueOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.CheckboxOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.RadioOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.ValueOptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.CheckboxOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ValueOptionOrderEntity;

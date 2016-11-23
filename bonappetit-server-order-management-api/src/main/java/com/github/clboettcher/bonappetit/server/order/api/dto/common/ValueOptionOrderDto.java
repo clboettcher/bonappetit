@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto;
+package com.github.clboettcher.bonappetit.server.order.api.dto.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,24 +29,24 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a checkbox option")
-public class CheckboxOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "An order for a value option")
+public class ValueOptionOrderDto extends OptionOrderDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
+    @ApiModelProperty(value = "The server ID of the ordered option", required = true)
     private Long optionId;
 
-    @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
-    private Boolean checked;
+    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
+    private int value;
 
     /**
      * Constructor setting the specified properties.
      *
      * @param optionId see {@link #optionId}.
-     * @param checked  see {@link #checked}.
+     * @param value    see {@link #value}.
      */
     @Builder
-    public CheckboxOptionOrderDto(Long optionId, Boolean checked) {
+    public ValueOptionOrderDto(Long optionId, int value) {
         this.optionId = optionId;
-        this.checked = checked;
+        this.value = value;
     }
 }

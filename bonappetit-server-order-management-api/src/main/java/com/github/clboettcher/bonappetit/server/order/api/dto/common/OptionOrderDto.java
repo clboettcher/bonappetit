@@ -17,35 +17,22 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto;
+package com.github.clboettcher.bonappetit.server.order.api.dto.common;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
- * An order for a radio option.
+ * Abstract base class for option order entities.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@ApiModel("An order for a radio option")
-public class RadioOptionOrderDto extends OptionOrderDto {
-
-    @ApiModelProperty(value = "The ID of the radio item that was selected", required = true)
-    private Long selectedRadioItemId;
-
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param selectedRadioItemId see {@link #selectedRadioItemId}.
-     */
-    @Builder
-    public RadioOptionOrderDto(Long selectedRadioItemId) {
-        this.selectedRadioItemId = selectedRadioItemId;
-    }
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = RadioOptionOrderDto.class, name = "radioOptionOrder"),
+        @JsonSubTypes.Type(value = CheckboxOptionOrderDto.class, name = "checkboxOptionOrder"),
+        @JsonSubTypes.Type(value = ValueOptionOrderDto.class, name = "valueOptionOrder")})
+public abstract class OptionOrderDto {
 
 }

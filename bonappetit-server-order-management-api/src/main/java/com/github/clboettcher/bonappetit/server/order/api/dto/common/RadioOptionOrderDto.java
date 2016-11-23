@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto;
+package com.github.clboettcher.bonappetit.server.order.api.dto.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,27 +26,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * An order for a radio option.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+@ApiModel("An order for a radio option")
+public class RadioOptionOrderDto extends OptionOrderDto {
 
-    @ApiModelProperty(value = "The server ID of the ordered option", required = true)
-    private Long optionId;
-
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    @ApiModelProperty(value = "The ID of the radio item that was selected", required = true)
+    private Long selectedRadioItemId;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param optionId see {@link #optionId}.
-     * @param value    see {@link #value}.
+     * @param selectedRadioItemId see {@link #selectedRadioItemId}.
      */
     @Builder
-    public ValueOptionOrderDto(Long optionId, int value) {
-        this.optionId = optionId;
-        this.value = value;
+    public RadioOptionOrderDto(Long selectedRadioItemId) {
+        this.selectedRadioItemId = selectedRadioItemId;
     }
+
 }

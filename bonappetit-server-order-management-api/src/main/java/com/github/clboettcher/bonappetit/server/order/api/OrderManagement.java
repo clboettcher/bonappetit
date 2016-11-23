@@ -21,7 +21,8 @@ package com.github.clboettcher.bonappetit.server.order.api;
 
 
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
-import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -57,7 +58,7 @@ public interface OrderManagement {
                     response = ErrorResponse.class
             )
     )
-    Response createOrders(Collection<ItemOrderDto> orders);
+    Response createOrders(Collection<ItemOrderCreationDto> orders);
 
     /**
      * Returns all orders.

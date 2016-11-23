@@ -23,7 +23,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
 import com.github.clboettcher.bonappetit.common.JsonUtils;
 import com.github.clboettcher.bonappetit.common.ObjectMapperFactory;
-import com.github.clboettcher.bonappetit.server.order.api.dto.*;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.CheckboxOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.RadioOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.ValueOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import org.junit.Test;
 
 import java.util.List;
@@ -38,7 +42,7 @@ public class DtoDeserializationTests {
     @Test
     public void testDeserializeOrderWithoutOptions() throws Exception {
         String jsonObject = BonAppetitResourceUtils.readFileContentAsString("orders_without_options.json");
-        List<ItemOrderDto> orders = JsonUtils.parseJsonArray(jsonObject, OBJECT_MAPPER, ItemOrderDto.class);
+        List<ItemOrderCreationDto> orders = JsonUtils.parseJsonArray(jsonObject, OBJECT_MAPPER, ItemOrderCreationDto.class);
         assertThat(orders, notNullValue());
         assertThat(orders.size(), is(1));
         assertThat(orders.get(0).getItemId(), is(123L));
@@ -47,12 +51,12 @@ public class DtoDeserializationTests {
     @Test
     public void testDeserializeOrders() throws Exception {
         String jsonObject = BonAppetitResourceUtils.readFileContentAsString("orders.json");
-        List<ItemOrderDto> orders = JsonUtils.parseJsonArray(jsonObject, OBJECT_MAPPER, ItemOrderDto.class);
+        List<ItemOrderCreationDto> orders = JsonUtils.parseJsonArray(jsonObject, OBJECT_MAPPER, ItemOrderCreationDto.class);
         assertThat(orders, notNullValue());
         assertThat(orders.size(), is(1));
-        ItemOrderDto itemOrderDto = orders.get(0);
-        assertThat(itemOrderDto.getOptionOrders().size(), is(3));
-        List<OptionOrderDto> optionOrders = itemOrderDto.getOptionOrders();
+        ItemOrderCreationDto itemOrderCreationDto = orders.get(0);
+        assertThat(itemOrderCreationDto.getOptionOrders().size(), is(3));
+        List<OptionOrderDto> optionOrders = itemOrderCreationDto.getOptionOrders();
 
         // ValueOptionOrder
         assertThat(optionOrders.get(0), is(instanceOf(ValueOptionOrderDto.class)));

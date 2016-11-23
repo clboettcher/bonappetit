@@ -21,8 +21,8 @@ package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
-import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
@@ -45,29 +45,29 @@ public abstract class ItemOrderEntityMapper {
     private StaffMemberDao staffMemberDao;
 
     /**
-     * Converts the given {@link ItemOrderDto}s to {@link ItemOrderEntity}s.
+     * Converts the given {@link ItemOrderCreationDto}s to {@link ItemOrderEntity}s.
      *
      * @param orderDtos The dtos to map.
      * @return The mapping result.
      */
-    public abstract Collection<ItemOrderEntity> mapToItemOrderEntities(Collection<ItemOrderDto> orderDtos);
+    public abstract Collection<ItemOrderEntity> mapToItemOrderEntities(Collection<ItemOrderCreationDto> orderDtos);
 
     /**
-     * @param itemOrderDto The {@link ItemOrderDto} to map.
+     * @param itemOrderCreationDto The {@link ItemOrderCreationDto} to map.
      * @return The mapping result.
      */
-    ItemOrderEntity mapToItemOrderEntity(ItemOrderDto itemOrderDto) {
+    ItemOrderEntity mapToItemOrderEntity(ItemOrderCreationDto itemOrderCreationDto) {
 
-        ItemEntity item = itemDao.getItem(itemOrderDto.getItemId());
-        StaffMemberEntity staffMember = staffMemberDao.getStaffMember(itemOrderDto.getStaffMemberId());
+        ItemEntity item = itemDao.getItem(itemOrderCreationDto.getItemId());
+        StaffMemberEntity staffMember = staffMemberDao.getStaffMember(itemOrderCreationDto.getStaffMemberId());
 
         return ItemOrderEntity.builder()
                 .item(item)
-                .optionOrders(this.mapToOptionOrderEntities(itemOrderDto.getOptionOrders()))
-                .deliverTo(itemOrderDto.getDeliverTo())
+                .optionOrders(this.mapToOptionOrderEntities(itemOrderCreationDto.getOptionOrders()))
+                .deliverTo(itemOrderCreationDto.getDeliverTo())
                 .staffMember(staffMember)
-                .orderTime(itemOrderDto.getOrderTime().toDate())
-                .note(itemOrderDto.getNote())
+                .orderTime(itemOrderCreationDto.getOrderTime().toDate())
+                .note(itemOrderCreationDto.getNote())
                 .build();
     }
 

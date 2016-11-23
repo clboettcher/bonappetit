@@ -22,7 +22,8 @@ package com.github.clboettcher.bonappetit.server.order;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
-import com.github.clboettcher.bonappetit.server.order.api.dto.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
@@ -61,7 +62,7 @@ public class OrderManagementImpl implements OrderManagement {
     private ItemOrderDtoMapper toDtoMapper;
 
     @Override
-    public Response createOrders(Collection<ItemOrderDto> orderDtos) {
+    public Response createOrders(Collection<ItemOrderCreationDto> orderDtos) {
         assertValid(orderDtos);
         LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
 
@@ -97,8 +98,9 @@ public class OrderManagementImpl implements OrderManagement {
         return this.toDtoMapper.mapToItemOrderDtos(allOrders);
     }
 
-    private void assertValid(Collection<ItemOrderDto> orderDtos) {
-        for (ItemOrderDto orderDto : orderDtos) {
+    private void assertValid(Collection<ItemOrderCreationDto> orderDtos) {
+        // TODO Implement check if ordered options all exist and fail validation if not.
+        for (ItemOrderCreationDto orderDto : orderDtos) {
             ItemEntity item = itemDao.getItem(orderDto.getItemId());
             if (item == null) {
                 throw new BadRequestException(String.format("Item with ID %d cannot be ordered " +

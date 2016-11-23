@@ -17,8 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto;
+package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
+import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -32,6 +33,9 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(description = "An order for an item")
 public class ItemOrderDto {
+
+    @ApiModelProperty(value = "The ID of the order", required = true)
+    private Long id;
 
     @ApiModelProperty(value = "The ID of the ordered item", required = true)
     private Long itemId;
@@ -52,14 +56,20 @@ public class ItemOrderDto {
     @ApiModelProperty(value = "A note further describing this order", example = "Without onions")
     private String note;
 
+    @ApiModelProperty(value = "The status the order is in.")
+    private OrderStatusDto orderStatus;
+
     @Builder
-    public ItemOrderDto(Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
-                        Long staffMemberId, DateTime orderTime, String note) {
+    public ItemOrderDto(Long id, Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
+                        Long staffMemberId, DateTime orderTime, String note, OrderStatusDto orderStatus) {
+
+        this.id = id;
         this.itemId = itemId;
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
         this.staffMemberId = staffMemberId;
         this.orderTime = orderTime;
         this.note = note;
+        this.orderStatus = orderStatus;
     }
 }
