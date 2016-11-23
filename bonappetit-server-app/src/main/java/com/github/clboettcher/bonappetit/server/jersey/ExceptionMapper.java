@@ -33,10 +33,15 @@ import java.util.List;
 public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwable> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionMapper.class);
-    public static final List<Class<? extends ClientErrorException>> CLIENT_ERROR_EXCEPTIONS = Arrays.asList(
+    /**
+     * List of exception classes where the message is written to the response.
+     */
+    public static final List<Class<? extends WebApplicationException>> WRITE_MSG_EXCEPTIONS = Arrays.asList(
             BadRequestException.class,
             NotFoundException.class,
-            ForbiddenException.class);
+            ForbiddenException.class,
+            InternalServerErrorException.class
+    );
     private static final EnumSet<Response.Status.Family> IGNORABLE_STATUS_FAMILIES = EnumSet.of(
             Response.Status.Family.SUCCESSFUL,
             Response.Status.Family.REDIRECTION
@@ -80,7 +85,7 @@ public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwabl
 
     private ErrorResponse toErrorResponse(WebApplicationException e) {
         Response.Status status = Response.Status.fromStatusCode(e.getResponse().getStatus());
-        for (Class<? extends ClientErrorException> exceptionClass : CLIENT_ERROR_EXCEPTIONS) {
+        for (Class<? extends WebApplicationException> exceptionClass : WRITE_MSG_EXCEPTIONS) {
             if (exceptionClass.isAssignableFrom(e.getClass())) {
                 // In this case we forward the error message if there is one
                 String msg;
