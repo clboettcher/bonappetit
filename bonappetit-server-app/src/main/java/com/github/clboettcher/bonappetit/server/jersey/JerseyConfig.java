@@ -19,16 +19,19 @@
  */
 package com.github.clboettcher.bonappetit.server.jersey;
 
-import com.github.clboettcher.bonappetit.server.impl.ManagementServiceImpl;
-import com.github.clboettcher.bonappetit.server.menu.impl.MenuManagementImpl;
-import com.github.clboettcher.bonappetit.server.order.OrderManagementImpl;
-import com.github.clboettcher.bonappetit.server.staff.impl.StaffMemberResourceImpl;
+import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
+import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
+import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberManagement;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
 import io.swagger.models.Contact;
 import io.swagger.models.Info;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.ApplicationPath;
@@ -41,17 +44,20 @@ import javax.ws.rs.ApplicationPath;
 @Component
 public class JerseyConfig extends ResourceConfig {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyConfig.class);
+
     /**
      * Constructor registering the application components.
      */
-    public JerseyConfig() {
+    @Autowired
+    public JerseyConfig(ApplicationContext context) {
+        LOGGER.info("Initializing jersey application.");
         register(ExceptionMapper.class);
 
-        register(StaffMemberResourceImpl.class);
-        register(MenuManagementImpl.class);
-        register(OrderManagementImpl.class);
+        register(context.getBean(StaffMemberManagement.class));
+        register(context.getBean(MenuManagement.class));
+        register(context.getBean(OrderManagement.class));
 
-        register(ManagementServiceImpl.class);
         register(ObjectMapperProvider.class);
         initSwagger();
     }
