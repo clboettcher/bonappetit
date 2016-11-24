@@ -37,7 +37,7 @@ import javax.ws.rs.ApplicationPath;
 /**
  * Jersey application config.
  */
-@ApplicationPath("/v1/api")
+@ApplicationPath("/api")
 @Component
 public class JerseyConfig extends ResourceConfig {
 
@@ -65,7 +65,7 @@ public class JerseyConfig extends ResourceConfig {
         beanConfig.setVersion("0.0.1-SNAPSHOT");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setHost("localhost:8080");
-        beanConfig.setBasePath("/v1/api");
+        beanConfig.setBasePath("/api");
         // Setup classes that will swagger pick up
         beanConfig.setResourcePackage("com.github.clboettcher.bonappetit");
         // Actually produce the documentation

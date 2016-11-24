@@ -34,7 +34,8 @@
             if (url && url.length > 1) {
                 url = decodeURIComponent(url[1]);
             } else {
-                url = "http://petstore.swagger.io/v2/swagger.json";
+                var pathComponents = window.location.pathname.split('/');
+                url = `${window.location.protocol}//${window.location.host}/api/swagger.json`;
             }
 
             // Pre load translate...
@@ -42,7 +43,7 @@
                 window.SwaggerTranslator.translate();
             }
             window.swaggerUi = new SwaggerUi({
-                url: "http://localhost:8080/v1/api/swagger.json",
+                url: url,
                 dom_id: "swagger-ui-container",
                 supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
                 onComplete: function (swaggerApi, swaggerUi) {
