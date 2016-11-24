@@ -23,5 +23,5 @@ ext {
     mockitoVersion = "1.10.19"
     // s
     springVersion = "4.2.5.RELEASE"
-    swaggerVersion = "1.5.8"
+    swaggerVersion = "1.5.10"
 }
