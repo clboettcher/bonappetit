@@ -42,4 +42,12 @@ public interface StaffMemberDao {
      * @return The staff member, or null if it does not exist.
      */
     StaffMemberEntity getStaffMember(long id);
+
+    /**
+     * Saves the given staff member in the db.
+     *
+     * @param staffMember The staff member.
+     * @return The saved staff member (with IDs not null).
+     */
+    StaffMemberEntity save(StaffMemberEntity staffMember);
 }

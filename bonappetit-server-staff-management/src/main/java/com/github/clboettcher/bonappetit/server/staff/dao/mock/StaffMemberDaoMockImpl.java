@@ -56,4 +56,9 @@ public class StaffMemberDaoMockImpl implements StaffMemberDao {
     public StaffMemberEntity getStaffMember(long id) {
         return TEST_DATA.get(0);
     }
+
+    @Override
+    public StaffMemberEntity save(StaffMemberEntity staffMember) {
+        throw new UnsupportedOperationException();
+    }
 }

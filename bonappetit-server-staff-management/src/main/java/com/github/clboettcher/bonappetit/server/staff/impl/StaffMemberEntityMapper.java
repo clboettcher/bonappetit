@@ -17,19 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.impl;
+package com.github.clboettcher.bonappetit.server.staff.impl;
 
-import com.github.clboettcher.bonappetit.server.api.ManagementService;
-import org.springframework.stereotype.Component;
+import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberCreationDto;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import org.mapstruct.Mapper;
 
-/**
- * Default impl of {@link ManagementService}.
- */
-@Component
-public class ManagementServiceImpl implements ManagementService {
+@Mapper(componentModel = "spring")
+public interface StaffMemberEntityMapper {
 
-    @Override
-    public String ping() {
-        return "pong";
-    }
+    StaffMemberEntity mapToStaffMemberEntity(StaffMemberCreationDto staffMember);
+
 }

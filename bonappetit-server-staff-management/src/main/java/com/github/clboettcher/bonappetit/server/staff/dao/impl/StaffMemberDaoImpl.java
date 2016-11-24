@@ -65,4 +65,9 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     public StaffMemberEntity getStaffMember(long id) {
         return staffMemberEntityRepository.findOne(id);
     }
+
+    @Override
+    public StaffMemberEntity save(StaffMemberEntity staffMember) {
+        return staffMemberEntityRepository.save(staffMember);
+    }
 }
