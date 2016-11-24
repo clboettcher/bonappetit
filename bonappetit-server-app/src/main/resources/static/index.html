@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>BonAppetit Server</title>
+    <script type="text/javascript">
+        baseUrl = `${window.location.protocol}//${window.location.host}`;
+        function toSwaggerUi() {
+            window.location = baseUrl + "/doc/index.html" ;
+        }
+        function toCurrentMenu() {
+            window.location = baseUrl + "/api/currentMenu" ;
+        }
+        function toAllMenus() {
+            window.location = baseUrl + "/api/menus" ;
+        }
+        function toAllOrders() {
+            window.location = baseUrl + "/api/orders" ;
+        }
+        function toAllStaffMembers() {
+            window.location = baseUrl + "/api/staffMembers" ;
+        }
+    </script>
+</head>
+<body>
+<h1>BonAppetit Server</h1>
+<ul>
+    <li><a href="javascript:toSwaggerUi()">API Dokumentation</a></li>
+    <li><a href="javascript:toCurrentMenu()">Aktuelle Speisekarte</a></li>
+    <li><a href="javascript:toAllMenus()">All Speisekarten</a></li>
+    <li><a href="javascript:toAllOrders()">Alle Bestellungen</a></li>
+    <li><a href="javascript:toAllStaffMembers()">Alle Mitarbeiter</a></li>
+</ul>
+</body>
+</html>
