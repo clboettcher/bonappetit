@@ -23,24 +23,19 @@ package com.github.clboettcher.bonappetit.server.order.api;
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.List;
 
 @Path(OrderManagement.ROOT_PATH)
-@Api(value = OrderManagement.ROOT_PATH)
+@Api
 public interface OrderManagement {
 
+    String TAG = "orders";
     String ROOT_PATH = "/orders";
 
     @POST
@@ -48,25 +43,39 @@ public interface OrderManagement {
     @ApiOperation(
             value = "Creates and prints the given orders.",
             notes = "Creates the given orders in the database. " +
-                    "After the orders have been saved they are printed. If printing" +
-                    "fails, the orders are not deleted from the database."
+                    "After the orders have been saved they are printed. If printing " +
+                    "fails, the orders are not deleted from the database.",
+            tags = {TAG}
     )
-    @ApiResponses(
-            @ApiResponse(
-                    code = 400,
-                    message = "A referenced entity (ordered item, staff member) does not exist.",
-                    response = ErrorResponse.class
-            )
-    )
+    @ApiResponses(@ApiResponse(
+            code = 400,
+            message = "A referenced entity (ordered item, staff member) does not exist.",
+            response = ErrorResponse.class))
     Response createOrders(Collection<ItemOrderCreationDto> orders);
 
     /**
      * Returns all orders.
+     * d
      *
+     * @param orderedAfter Indicates that the response should only contain resources
+     *                     ordered after the specified time.
      * @return A list of orders, may be empty.
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns all orders, may be empty.")
-    List<ItemOrderDto> getAllOrders();
+    @ApiOperation(value = "Returns all orders.", tags = {TAG})
+    List<ItemOrderDto> getAllOrders(
+            @ApiParam(value = "The orderedAfter parameter indicates that the API response " +
+                    "should only contain orders which were taken at or after the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only one of the params orderedAfter " +
+                    "and orderedAt can be used.", required = false)
+            @QueryParam("orderedAfter") String orderedAfter,
+
+            @ApiParam(value = "The orderedAt parameter indicates that the API response " +
+                    "should only contain orders which were taken at the specified date. " +
+                    "The value is an RFC 3339 formatted date value (1970-01-01) or a " +
+                    "key word. Supported key words are: today. Only one of the params orderedAfter " +
+                    "and orderedAt can be used.", required = false)
+            @QueryParam("orderedAt") String orderedAt);
 }

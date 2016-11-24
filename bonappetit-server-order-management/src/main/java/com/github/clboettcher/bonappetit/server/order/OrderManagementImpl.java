@@ -31,6 +31,10 @@ import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDto
 import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +43,10 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderManagementImpl implements OrderManagement {
@@ -93,9 +100,41 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     @Override
-    public List<ItemOrderDto> getAllOrders() {
+    public List<ItemOrderDto> getAllOrders(String orderedAfter, String orderedAt) {
+        Optional<DateTime> orderedAfterTimeOpt = parseOrderedBound(orderedAfter, "orderedAfter");
+        Optional<LocalDate> orderedAtDateOpt = parseOrderedAt(orderedAt, "orderedAt");
+
+        if (orderedAfterTimeOpt.isPresent() && orderedAtDateOpt.isPresent()) {
+            throw new BadRequestException("Only one of the parameters orderedAfter and orderedAt may be provided.");
+        }
+
         List<ItemOrderEntity> allOrders = this.orderDao.getAllOrders();
-        return this.toDtoMapper.mapToItemOrderDtos(allOrders);
+        List<ItemOrderEntity> filtered;
+
+        if (orderedAtDateOpt.isPresent()) {
+            filtered = allOrders.stream().filter(itemOrderEntity -> {
+                Date orderDate = itemOrderEntity.getOrderTime();
+                DateTime orderDateTime = new DateTime(orderDate);
+                LocalDate orderLocalDate = orderDateTime.toLocalDate();
+                return orderLocalDate.isEqual(orderedAtDateOpt.get());
+            }).collect(Collectors.toList());
+        } else if (orderedAfterTimeOpt.isPresent()) {
+            filtered = allOrders.stream().filter(itemOrderEntity -> {
+                Date orderDate = itemOrderEntity.getOrderTime();
+                DateTime orderDateTime = new DateTime(orderDate);
+                DateTime orderedAfterDateTime = orderedAfterTimeOpt.get();
+                return orderDateTime.isEqual(orderedAfterDateTime) || orderDateTime.isAfter(orderedAfterDateTime);
+            }).collect(Collectors.toList());
+        } else {
+            filtered = allOrders;
+        }
+        LOGGER.info(String.format("Returning %d out of a total of %d order(s) filtered by orderedAfter: %s, orderedAt: %s",
+                filtered.size(),
+                allOrders.size(),
+                orderedAfterTimeOpt.isPresent() ? orderedAfterTimeOpt.get() : "<empty>",
+                orderedAtDateOpt.isPresent() ? orderedAtDateOpt.get() : "<empty>"
+        ));
+        return this.toDtoMapper.mapToItemOrderDtos(filtered);
     }
 
     private void assertValid(Collection<ItemOrderCreationDto> orderDtos) {
@@ -113,6 +152,48 @@ public class OrderManagementImpl implements OrderManagement {
                         orderDto.getStaffMemberId()));
             }
 
+        }
+    }
+
+    private Optional<LocalDate> parseOrderedAt(String orderedAt, String paramName) {
+        if (StringUtils.isBlank(orderedAt)) {
+            return Optional.empty();
+        }
+
+        if ("today".equalsIgnoreCase(StringUtils.trimToEmpty(orderedAt))) {
+
+            LocalDate now = LocalDate.now(DateTimeZone.UTC);
+            return Optional.of(now);
+        }
+
+        try {
+            return Optional.of(LocalDate.parse(orderedAt));
+        } catch (Exception e) {
+            throw new BadRequestException(String.format("Param %s with value %s was invalid: %s",
+                    paramName,
+                    orderedAt,
+                    e.getMessage()
+            ));
+        }
+    }
+
+    private Optional<DateTime> parseOrderedBound(String orderedBound, String paramName) {
+        if (StringUtils.isBlank(orderedBound)) {
+            return Optional.empty();
+        }
+
+        if ("today".equalsIgnoreCase(StringUtils.trimToEmpty(orderedBound))) {
+            return Optional.of(DateTime.now(DateTimeZone.UTC).withTimeAtStartOfDay());
+        }
+
+        try {
+            return Optional.of(DateTime.parse(orderedBound));
+        } catch (Exception e) {
+            throw new BadRequestException(String.format("Param %s with value %s was invalid: %s",
+                    paramName,
+                    orderedBound,
+                    e.getMessage()
+            ));
         }
     }
 }
