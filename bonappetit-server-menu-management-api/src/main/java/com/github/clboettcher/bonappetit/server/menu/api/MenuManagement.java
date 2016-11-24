@@ -32,8 +32,10 @@ import java.util.List;
  * Public rest interface to manage menus.
  */
 @Path("/")
-@Api(value = "menus")
+@Api(tags = {MenuManagement.TAG})
 public interface MenuManagement {
+
+    String TAG = "menus";
 
     /**
      * Relative path of the current menu resource.
@@ -52,7 +54,7 @@ public interface MenuManagement {
     @GET
     @Path(CURRENT_MENU_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns the currently active menu.")
+    @ApiOperation(value = "Returns the currently active menu.",tags = {MenuManagement.TAG})
     @ApiResponses(
             @ApiResponse(
                     code = 500,
@@ -70,7 +72,7 @@ public interface MenuManagement {
     @GET
     @Path(MENUS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns all stored menus, may be empty.")
+    @ApiOperation(value = "Returns all stored menus.",tags = {MenuManagement.TAG})
     List<MenuDto> getAllMenus();
 
     /**
@@ -82,7 +84,7 @@ public interface MenuManagement {
     @GET
     @Path(MENUS_PATH + "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns the menu with the given ID.")
+    @ApiOperation(value = "Returns the menu with the given ID.",tags = {MenuManagement.TAG})
     @ApiResponses({
             @ApiResponse(
                     code = 400,
@@ -106,7 +108,7 @@ public interface MenuManagement {
     @POST
     @Path(MENUS_PATH)
     @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Creates the given menu in the database.")
+    @ApiOperation(value = "Creates the given menu in the database.",tags = {MenuManagement.TAG})
     @ApiResponses(
             @ApiResponse(
                     code = 400,
@@ -118,7 +120,7 @@ public interface MenuManagement {
 
     @PUT
     @Path(CURRENT_MENU_PATH + "/{menuId}")
-    @ApiOperation(value = "Update the currently active menu.")
+    @ApiOperation(value = "Update the currently active menu.",tags = {MenuManagement.TAG})
     @ApiResponses(@ApiResponse(code = 400,
             message = "Param menuId was blank or no menu was found for the given menuId.",
             response = ErrorResponse.class))
