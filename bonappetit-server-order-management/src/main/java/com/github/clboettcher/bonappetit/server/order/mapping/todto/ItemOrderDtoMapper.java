@@ -20,8 +20,8 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.todto;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OrderStatusDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;

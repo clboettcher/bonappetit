@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto.common;
+package com.github.clboettcher.bonappetit.server.order.api.dto.write;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,26 +26,27 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * An order for a radio option.
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel("An order for a radio option")
-public class RadioOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "An order for a checkbox option")
+public class CheckboxOptionOrderCreationDto extends OptionOrderCreationDto {
 
-    @ApiModelProperty(value = "The ID of the radio item that was selected", required = true)
-    private Long selectedRadioItemId;
+    @ApiModelProperty(value = "The ordered option", required = true)
+    private Long optionId;
+
+    @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
+    private Boolean checked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param selectedRadioItemId see {@link #selectedRadioItemId}.
+     * @param optionId see {@link #optionId}.
+     * @param checked  see {@link #checked}.
      */
     @Builder
-    public RadioOptionOrderDto(Long selectedRadioItemId) {
-        this.selectedRadioItemId = selectedRadioItemId;
+    public CheckboxOptionOrderCreationDto(Long optionId, Boolean checked) {
+        this.optionId = optionId;
+        this.checked = checked;
     }
-
 }

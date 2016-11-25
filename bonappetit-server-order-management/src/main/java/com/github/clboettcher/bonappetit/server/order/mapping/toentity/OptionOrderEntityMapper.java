@@ -1,10 +1,12 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.CheckboxOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.RadioOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.ValueOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.OptionDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.CheckboxOptionEntity;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.CheckboxOptionOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.OptionOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.RadioOptionOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.ValueOptionOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.CheckboxOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ValueOptionOrderEntity;
@@ -19,23 +21,26 @@ public abstract class OptionOrderEntityMapper {
     @Autowired
     private RadioOptionOrderEntityMapper radioOptionOrderEntityMapper;
 
+    @Autowired
+    private OptionDao optionDao;
+
     /**
      * @param options The dto to map.
      * @return The mapping result.
      */
-    public abstract List<AbstractOptionOrderEntity> mapToOptionDtos(List<OptionOrderDto> options);
+    public abstract List<AbstractOptionOrderEntity> mapToOptionDtos(List<OptionOrderCreationDto> options);
 
     /**
-     * @param option The {@link OptionOrderDto} to map.
+     * @param option The {@link OptionOrderCreationDto} to map.
      * @return The mapping result.
      */
-    public AbstractOptionOrderEntity mapToOptionOrderEntity(OptionOrderDto option) {
-        if (option instanceof RadioOptionOrderDto) {
-            return radioOptionOrderEntityMapper.mapToRadioOptionDto((RadioOptionOrderDto) option);
-        } else if (option instanceof ValueOptionOrderDto) {
-            return mapToValueOptionDto((ValueOptionOrderDto) option);
-        } else if (option instanceof CheckboxOptionOrderDto) {
-            return mapToCheckboxOptionDto((CheckboxOptionOrderDto) option);
+    public AbstractOptionOrderEntity mapToOptionOrderEntity(OptionOrderCreationDto option) {
+        if (option instanceof RadioOptionOrderCreationDto) {
+            return radioOptionOrderEntityMapper.mapToRadioOptionDto((RadioOptionOrderCreationDto) option);
+        } else if (option instanceof ValueOptionOrderCreationDto) {
+            return mapToValueOptionDto((ValueOptionOrderCreationDto) option);
+        } else if (option instanceof CheckboxOptionOrderCreationDto) {
+            return mapToCheckboxOptionDto((CheckboxOptionOrderCreationDto) option);
         } else {
             throw new IllegalArgumentException(String.format("Unknown subtype: %s", option.getClass().getName()));
         }
@@ -45,11 +50,23 @@ public abstract class OptionOrderEntityMapper {
      * @param option The dto to map.
      * @return The mapping result.
      */
-    public abstract CheckboxOptionOrderEntity mapToCheckboxOptionDto(CheckboxOptionOrderDto option);
+    public CheckboxOptionOrderEntity mapToCheckboxOptionDto(CheckboxOptionOrderCreationDto option) {
+        if (option == null) {
+            return null;
+        }
+
+        CheckboxOptionOrderEntity result = new CheckboxOptionOrderEntity();
+        CheckboxOptionEntity checkboxOption = (CheckboxOptionEntity) optionDao.getOptionById(option.getOptionId());
+
+        result.setCheckboxOption(checkboxOption);
+        result.setChecked(option.getChecked());
+
+        return result;
+    };
 
     /**
-     * @param valueOption The {@link ValueOptionOrderDto} to map.
+     * @param valueOption The {@link ValueOptionOrderCreationDto} to map.
      * @return The mapping result.
      */
-    public abstract ValueOptionOrderEntity mapToValueOptionDto(ValueOptionOrderDto valueOption);
+    public abstract ValueOptionOrderEntity mapToValueOptionDto(ValueOptionOrderCreationDto valueOption);
 }

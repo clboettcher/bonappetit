@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.api.dto;
+package com.github.clboettcher.bonappetit.server.order.api.dto.write;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,34 +26,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
+/**
+ * An order for a radio option.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An option consisting of a boolean checkbox")
-public class CheckboxOptionDto extends OptionDto {
+@ApiModel("An order for a radio option")
+public class RadioOptionOrderCreationDto extends OptionOrderCreationDto {
 
-    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
-            "using the items price and the price diff of all options.", required = true, example = "0.50")
-    private BigDecimal priceDiff;
-
-    @ApiModelProperty(value = "The default value to set when this option is ordered", required = true)
-    private Boolean defaultChecked;
+    @ApiModelProperty(value = "The ID of the radio item that was selected", required = true)
+    private Long selectedRadioItemId;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #getId()}.
-     * @param title          see {@link #getTitle()}.
-     * @param index          see {@link #index}.
-     * @param priceDiff      see {@link #getPriceDiff()}.
-     * @param defaultChecked see {@link #getDefaultChecked()}.
+     * @param selectedRadioItemId see {@link #selectedRadioItemId}.
      */
     @Builder
-    public CheckboxOptionDto(Long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
-        super(id, title, index);
-        this.priceDiff = priceDiff;
-        this.defaultChecked = defaultChecked;
+    public RadioOptionOrderCreationDto(Long selectedRadioItemId) {
+        this.selectedRadioItemId = selectedRadioItemId;
     }
+
 }

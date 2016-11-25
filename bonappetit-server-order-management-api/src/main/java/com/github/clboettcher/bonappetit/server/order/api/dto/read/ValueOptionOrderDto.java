@@ -17,8 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto.common;
+package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
+import com.github.clboettcher.bonappetit.server.menu.api.dto.ValueOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -32,8 +33,8 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "An order for a value option")
 public class ValueOptionOrderDto extends OptionOrderDto {
 
-    @ApiModelProperty(value = "The server ID of the ordered option", required = true)
-    private Long optionId;
+    @ApiModelProperty(value = "The ordered option", required = true)
+    private ValueOptionDto valueOption;
 
     @ApiModelProperty(value = "The ordered value", required = true, example = "2")
     private int value;
@@ -41,12 +42,12 @@ public class ValueOptionOrderDto extends OptionOrderDto {
     /**
      * Constructor setting the specified properties.
      *
-     * @param optionId see {@link #optionId}.
-     * @param value    see {@link #value}.
+     * @param valueOption see {@link #valueOption}.
+     * @param value  see {@link #value}.
      */
     @Builder
-    public ValueOptionOrderDto(Long optionId, int value) {
-        this.optionId = optionId;
+    public ValueOptionOrderDto(ValueOptionDto valueOption, int value) {
+        this.valueOption = valueOption;
         this.value = value;
     }
 }

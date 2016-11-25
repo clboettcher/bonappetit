@@ -1,6 +1,6 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.RadioOptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.RadioOptionOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.entity.RadioOptionOrderEntity;
 import org.mapstruct.Mapper;
 
@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 public interface RadioOptionOrderEntityMapper {
 
     /**
-     * @param radioOption The {@link RadioOptionOrderDto} to map.
+     * @param radioOption The {@link RadioOptionOrderCreationDto} to map.
      * @return The mapping result.
      */
-    RadioOptionOrderEntity mapToRadioOptionDto(RadioOptionOrderDto radioOption);
+    RadioOptionOrderEntity mapToRadioOptionDto(RadioOptionOrderCreationDto radioOption);
 }

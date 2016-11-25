@@ -128,7 +128,8 @@ public class OrderManagementImpl implements OrderManagement {
         } else {
             filtered = allOrders;
         }
-        LOGGER.info(String.format("Returning %d out of a total of %d order(s) filtered by orderedAfter: %s, orderedAt: %s",
+        LOGGER.info(String.format("Returning %d out of a total of %d order(s) filtered by orderedAfter: %s, " +
+                        "orderedAt: %s",
                 filtered.size(),
                 allOrders.size(),
                 orderedAfterTimeOpt.isPresent() ? orderedAfterTimeOpt.get() : "<empty>",
@@ -138,7 +139,10 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     private void assertValid(Collection<ItemOrderCreationDto> orderDtos) {
-        // TODO Implement check if ordered options all exist and fail validation if not.
+        // TODO Implement check if
+        // TODO - ordered options exist and have the correct types: e.g. checkbox option order --> checkbox option
+        // TODO - all required fields are set
+
         for (ItemOrderCreationDto orderDto : orderDtos) {
             ItemEntity item = itemDao.getItem(orderDto.getItemId());
             if (item == null) {

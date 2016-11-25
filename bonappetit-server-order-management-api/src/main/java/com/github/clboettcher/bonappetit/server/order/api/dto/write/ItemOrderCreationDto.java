@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.write;
 
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -38,7 +37,7 @@ public class ItemOrderCreationDto {
     private Long itemId;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
-    private List<OptionOrderDto> optionOrders;
+    private List<OptionOrderCreationDto> optionOrders;
 
     @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
             example = "Table 4")
@@ -54,7 +53,7 @@ public class ItemOrderCreationDto {
     private String note;
 
     @Builder
-    public ItemOrderCreationDto(Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
+    public ItemOrderCreationDto(Long itemId, List<OptionOrderCreationDto> optionOrders, String deliverTo,
                                 Long staffMemberId, DateTime orderTime, String note) {
         this.itemId = itemId;
         this.optionOrders = optionOrders;

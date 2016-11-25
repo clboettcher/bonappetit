@@ -23,11 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
 import com.github.clboettcher.bonappetit.common.JsonUtils;
 import com.github.clboettcher.bonappetit.common.ObjectMapperFactory;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.CheckboxOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.RadioOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.ValueOptionOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -56,20 +52,20 @@ public class DtoDeserializationTests {
         assertThat(orders.size(), is(1));
         ItemOrderCreationDto itemOrderCreationDto = orders.get(0);
         assertThat(itemOrderCreationDto.getOptionOrders().size(), is(3));
-        List<OptionOrderDto> optionOrders = itemOrderCreationDto.getOptionOrders();
+        List<OptionOrderCreationDto> optionOrders = itemOrderCreationDto.getOptionOrders();
 
         // ValueOptionOrder
-        assertThat(optionOrders.get(0), is(instanceOf(ValueOptionOrderDto.class)));
-        assertThat(((ValueOptionOrderDto) optionOrders.get(0)).getOptionId(), is(10L));
-        assertThat(((ValueOptionOrderDto) optionOrders.get(0)).getValue(), is(1));
+        assertThat(optionOrders.get(0), is(instanceOf(ValueOptionOrderCreationDto.class)));
+        assertThat(((ValueOptionOrderCreationDto) optionOrders.get(0)).getOptionId(), is(10L));
+        assertThat(((ValueOptionOrderCreationDto) optionOrders.get(0)).getValue(), is(1));
 
         // CheckboxOptionOrder
-        assertThat(optionOrders.get(1), is(instanceOf(CheckboxOptionOrderDto.class)));
-        assertThat(((CheckboxOptionOrderDto) optionOrders.get(1)).getOptionId(), is(11L));
-        assertThat(((CheckboxOptionOrderDto) optionOrders.get(1)).getChecked(), is(true));
+        assertThat(optionOrders.get(1), is(instanceOf(CheckboxOptionOrderCreationDto.class)));
+        assertThat(((CheckboxOptionOrderCreationDto) optionOrders.get(1)).getOptionId(), is(11L));
+        assertThat(((CheckboxOptionOrderCreationDto) optionOrders.get(1)).getChecked(), is(true));
 
         // RadioOptionOrder
-        assertThat(optionOrders.get(2), is(instanceOf(RadioOptionOrderDto.class)));
-        assertThat(((RadioOptionOrderDto) optionOrders.get(2)).getSelectedRadioItemId(), is(12L));
+        assertThat(optionOrders.get(2), is(instanceOf(RadioOptionOrderCreationDto.class)));
+        assertThat(((RadioOptionOrderCreationDto) optionOrders.get(2)).getSelectedRadioItemId(), is(12L));
     }
 }

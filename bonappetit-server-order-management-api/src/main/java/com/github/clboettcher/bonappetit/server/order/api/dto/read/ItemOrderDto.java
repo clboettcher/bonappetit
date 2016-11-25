@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -56,7 +55,7 @@ public class ItemOrderDto {
     @ApiModelProperty(value = "A note further describing this order", example = "Without onions")
     private String note;
 
-    @ApiModelProperty(value = "The status the order is in.")
+    @ApiModelProperty(value = "The status the order is in.", required = true)
     private OrderStatusDto orderStatus;
 
     @Builder

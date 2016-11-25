@@ -1,0 +1,21 @@
+[
+  {
+    "itemId": 1,
+    "optionOrders": [
+      {
+        "type": "checkboxOptionOrder",
+        "optionId": 1,
+        "checked": true
+      },
+      {
+        "type": "valueOptionOrder",
+        "optionId": 2,
+        "value": 2
+      }
+    ],
+    "deliverTo": "Table 4",
+    "staffMemberId": 1,
+    "orderTime": "2016-11-25T18:01:07.167Z",
+    "note": "My fancy order"
+  }
+]

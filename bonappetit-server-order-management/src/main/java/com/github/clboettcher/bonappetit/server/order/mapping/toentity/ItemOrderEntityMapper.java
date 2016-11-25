@@ -21,8 +21,8 @@ package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
-import com.github.clboettcher.bonappetit.server.order.api.dto.common.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.write.OptionOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
@@ -75,5 +75,5 @@ public abstract class ItemOrderEntityMapper {
      * @param options The dto to map.
      * @return The mapping result.
      */
-    public abstract List<AbstractOptionOrderEntity> mapToOptionOrderEntities(List<OptionOrderDto> options);
+    public abstract List<AbstractOptionOrderEntity> mapToOptionOrderEntities(List<OptionOrderCreationDto> options);
 }
