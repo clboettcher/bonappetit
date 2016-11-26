@@ -39,7 +39,7 @@ public abstract class ItemOrderDtoMapper {
 
     public abstract List<ItemOrderDto> mapToItemOrderDtos(List<ItemOrderEntity> orderEntities);
 
-    ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrderEntity) {
+    public ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrderEntity) {
 
         ItemEntity item = itemOrderEntity.getItem();
         StaffMemberEntity staffMember = itemOrderEntity.getStaffMember();

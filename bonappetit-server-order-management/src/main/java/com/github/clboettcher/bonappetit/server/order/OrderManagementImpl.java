@@ -21,12 +21,15 @@ package com.github.clboettcher.bonappetit.server.order;
 
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDtoMapper;
+import com.github.clboettcher.bonappetit.server.order.mapping.todto.OptionOrderDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
+import io.swagger.annotations.ApiParam;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -35,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Date;
@@ -58,6 +62,9 @@ public class OrderManagementImpl implements OrderManagement {
 
     @Autowired
     private ItemOrderDtoMapper toDtoMapper;
+
+    @Autowired
+    private OptionOrderDtoMapper optionOrderDtoMapper;
 
     @Autowired
     private OrderManagementParamParser orderManagementParamParser;
@@ -133,4 +140,26 @@ public class OrderManagementImpl implements OrderManagement {
         return this.toDtoMapper.mapToItemOrderDtos(filtered);
     }
 
+    @Override
+    public ItemOrderDto getOrderById(Long id) {
+        ItemOrderEntity orderById = orderDao.getOrderById(id);
+
+        if (orderById == null) {
+            throw new NotFoundException(String.format("Could not return order with ID %d because it does not exist.",
+                    id));
+        }
+
+        return this.toDtoMapper.mapToItemOrderDto(orderById);
+    }
+
+    @Override
+    public List<OptionOrderDto> getOptionOrders(@ApiParam(value = "The id to look for.") Long id) {
+        ItemOrderEntity orderById = orderDao.getOrderById(id);
+
+        if (orderById == null) {
+            throw new NotFoundException(String.format("Could not return option orders for order with ID %d because " +
+                    "it does not exist.", id));
+        }
+        return this.optionOrderDtoMapper.mapToOptionOrderDtos(orderById.getOptionOrders());
+    }
 }

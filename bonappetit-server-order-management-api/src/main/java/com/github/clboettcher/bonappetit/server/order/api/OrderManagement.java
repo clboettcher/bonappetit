@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.order.api;
 
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import io.swagger.annotations.*;
 
@@ -79,4 +80,29 @@ public interface OrderManagement {
                     "key word. Supported key words are: today. Only one of the params orderedAfter " +
                     "and orderedAt can be used.", required = false)
             @QueryParam("orderedAt") String orderedAt);
+
+    /**
+     * Returns the order with the specified id.
+     *
+     * @param id The id to look for.
+     * @return The order.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Get a single order by id.", tags = {TAG})
+    @Path("/{id}")
+    ItemOrderDto getOrderById(@ApiParam(value = "The id to look for.") @PathParam("id") Long id);
+
+    /**
+     * Returns the option orders from the option with the given id.
+     *
+     * @param id The option id.
+     * @return The option orders, may be empty if the specified order does not contain any option orders.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value="Gets the option orders of the order with the given id.", tags = {TAG})
+    @Path("/{id}/optionOrders")
+    List<OptionOrderDto> getOptionOrders(@ApiParam(value = "The id of the order to " +
+            "return the option orders from.") @PathParam("id") Long id);
 }
