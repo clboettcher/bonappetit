@@ -40,4 +40,9 @@ public class ItemDaoImpl implements ItemDao {
     public ItemEntity getItem(long id) {
         return repository.findOne(id);
     }
+
+    @Override
+    public boolean exists(Long id) {
+        return repository.exists(id);
+    }
 }

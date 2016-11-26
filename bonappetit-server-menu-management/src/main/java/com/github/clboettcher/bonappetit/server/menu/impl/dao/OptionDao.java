@@ -25,4 +25,8 @@ public interface OptionDao {
 
     AbstractOptionEntity getOptionById(Long id);
 
+    boolean exists(Long id);
+
+    <T extends AbstractOptionEntity> boolean isSubType(Long id, Class<T> clazz);
+
 }

@@ -34,4 +34,19 @@ public class OptionDaoImpl implements OptionDao {
     public AbstractOptionEntity getOptionById(Long id) {
         return repository.findOne(id);
     }
+
+    @Override
+    public boolean exists(Long id) {
+        return repository.exists(id);
+    }
+
+    @Override
+    public <T extends AbstractOptionEntity> boolean isSubType(Long id, Class<T> clazz) {
+        AbstractOptionEntity option = this.getOptionById(id);
+        if (option == null) {
+            return false;
+        } else {
+            return option.getClass().isAssignableFrom(clazz);
+        }
+    }
 }

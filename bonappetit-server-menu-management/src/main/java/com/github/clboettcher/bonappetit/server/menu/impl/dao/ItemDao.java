@@ -34,4 +34,12 @@ public interface ItemDao {
      * @return The item, or null if it does not exist.
      */
     ItemEntity getItem(long id);
+
+    /**
+     * Returns whether an item exists in the db with the given id.
+     *
+     * @param id The id.
+     * @return true, if an item exists with the given id.
+     */
+    boolean exists(Long id);
 }
