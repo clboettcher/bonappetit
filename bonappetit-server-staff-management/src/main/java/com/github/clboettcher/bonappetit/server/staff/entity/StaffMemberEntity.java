@@ -40,6 +40,7 @@ package com.github.clboettcher.bonappetit.server.staff.entity;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -49,6 +50,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "STAFF_MEMBER")
 @NoArgsConstructor
+@ToString
 public class StaffMemberEntity {
 
     /**
