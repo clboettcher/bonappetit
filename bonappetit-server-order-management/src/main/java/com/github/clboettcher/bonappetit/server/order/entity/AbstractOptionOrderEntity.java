@@ -43,5 +43,5 @@ public abstract class AbstractOptionOrderEntity {
     @Id
     @GeneratedValue
     @Column(name = "OPTION_ORDER_ID")
-    private long id;
+    private Long id;
 }

@@ -44,7 +44,7 @@ public class ItemOrderEntity {
     @Id
     @GeneratedValue
     @Column(name = "ITEM_ORDER_ID")
-    private long id;
+    private Long id;
 
     /**
      * The ordered item.
