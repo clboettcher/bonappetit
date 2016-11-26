@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "title": "Pommes",
+      "price": 2.5,
+      "type": "FOOD",
+      "options": [
+        {
+          "type": "checkboxOption",
+          "index": 0,
+          "title": "Extra Salz",
+          "priceDiff": 0,
+          "defaultChecked": false
+        }
+      ]
+    }
+  ]
+}
