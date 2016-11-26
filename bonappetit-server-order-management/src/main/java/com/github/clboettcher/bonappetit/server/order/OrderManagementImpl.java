@@ -19,8 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.order;
 
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
@@ -29,11 +27,7 @@ import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
-import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
-import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,10 +51,7 @@ public class OrderManagementImpl implements OrderManagement {
     private OrderDao orderDao;
 
     @Autowired
-    private ItemDao itemDao;
-
-    @Autowired
-    private StaffMemberDao staffMemberDao;
+    private OrderManagementValidator validator;
 
     @Autowired
     private ItemOrderEntityMapper toEntityMapper;
@@ -68,9 +59,13 @@ public class OrderManagementImpl implements OrderManagement {
     @Autowired
     private ItemOrderDtoMapper toDtoMapper;
 
+    @Autowired
+    private OrderManagementParamParser orderManagementParamParser;
+
     @Override
+
     public Response createOrders(Collection<ItemOrderCreationDto> orderDtos) {
-        assertValid(orderDtos);
+        validator.assertValid(orderDtos);
         LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
 
         // Map
@@ -78,7 +73,7 @@ public class OrderManagementImpl implements OrderManagement {
 
         // Save
         itemOrderEntities.forEach((itemOrderEntity) -> itemOrderEntity.setStatus(OrderEntityStatus.CREATED));
-        List<ItemOrderEntity> saved = orderDao.save(itemOrderEntities);
+        List<ItemOrderEntity> saved = orderDao.create(itemOrderEntities);
 
         LOGGER.info(String.format("Saved %d order(s) in state %s",
                 saved.size(), OrderEntityStatus.CREATED));
@@ -101,8 +96,8 @@ public class OrderManagementImpl implements OrderManagement {
 
     @Override
     public List<ItemOrderDto> getAllOrders(String orderedAfter, String orderedAt) {
-        Optional<DateTime> orderedAfterTimeOpt = parseOrderedBound(orderedAfter, "orderedAfter");
-        Optional<LocalDate> orderedAtDateOpt = parseOrderedAt(orderedAt, "orderedAt");
+        Optional<DateTime> orderedAfterTimeOpt = orderManagementParamParser.parseOrderedBound(orderedAfter, "orderedAfter");
+        Optional<LocalDate> orderedAtDateOpt = orderManagementParamParser.parseOrderedAt(orderedAt, "orderedAt");
 
         if (orderedAfterTimeOpt.isPresent() && orderedAtDateOpt.isPresent()) {
             throw new BadRequestException("Only one of the parameters orderedAfter and orderedAt may be provided.");
@@ -138,66 +133,4 @@ public class OrderManagementImpl implements OrderManagement {
         return this.toDtoMapper.mapToItemOrderDtos(filtered);
     }
 
-    private void assertValid(Collection<ItemOrderCreationDto> orderDtos) {
-        // TODO Implement check if
-        // TODO - ordered options exist and have the correct types: e.g. checkbox option order --> checkbox option
-        // TODO - all required fields are set
-
-        for (ItemOrderCreationDto orderDto : orderDtos) {
-            ItemEntity item = itemDao.getItem(orderDto.getItemId());
-            if (item == null) {
-                throw new BadRequestException(String.format("Item with ID %d cannot be ordered " +
-                                "because it does not exist.",
-                        orderDto.getItemId()));
-            }
-            StaffMemberEntity staffMember = staffMemberDao.getStaffMember(orderDto.getStaffMemberId());
-            if (staffMember == null) {
-                throw new BadRequestException(String.format("Staff member with ID %d does not exist.",
-                        orderDto.getStaffMemberId()));
-            }
-
-        }
-    }
-
-    private Optional<LocalDate> parseOrderedAt(String orderedAt, String paramName) {
-        if (StringUtils.isBlank(orderedAt)) {
-            return Optional.empty();
-        }
-
-        if ("today".equalsIgnoreCase(StringUtils.trimToEmpty(orderedAt))) {
-
-            LocalDate now = LocalDate.now(DateTimeZone.UTC);
-            return Optional.of(now);
-        }
-
-        try {
-            return Optional.of(LocalDate.parse(orderedAt));
-        } catch (Exception e) {
-            throw new BadRequestException(String.format("Param %s with value %s was invalid: %s",
-                    paramName,
-                    orderedAt,
-                    e.getMessage()
-            ));
-        }
-    }
-
-    private Optional<DateTime> parseOrderedBound(String orderedBound, String paramName) {
-        if (StringUtils.isBlank(orderedBound)) {
-            return Optional.empty();
-        }
-
-        if ("today".equalsIgnoreCase(StringUtils.trimToEmpty(orderedBound))) {
-            return Optional.of(DateTime.now(DateTimeZone.UTC).withTimeAtStartOfDay());
-        }
-
-        try {
-            return Optional.of(DateTime.parse(orderedBound));
-        } catch (Exception e) {
-            throw new BadRequestException(String.format("Param %s with value %s was invalid: %s",
-                    paramName,
-                    orderedBound,
-                    e.getMessage()
-            ));
-        }
-    }
 }

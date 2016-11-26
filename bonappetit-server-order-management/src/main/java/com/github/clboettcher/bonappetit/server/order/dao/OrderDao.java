@@ -32,13 +32,13 @@ public interface OrderDao {
      * @param orders The orders to save, may be empty.
      * @return The saved entites.
      */
-    List<ItemOrderEntity> save(Collection<ItemOrderEntity> orders);
+    List<ItemOrderEntity> create(Collection<ItemOrderEntity> orders);
 
     /**
      * Updates the given orders in in the database.
      * @param itemOrderEntities The orders to update.
      */
-    List<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities);
+    List<ItemOrderEntity> update(Collection<ItemOrderEntity> itemOrderEntities);
 
     /**
      * Returns all orders.
@@ -46,4 +46,12 @@ public interface OrderDao {
      * @return A list of orders, may be empty.
      */
     List<ItemOrderEntity> getAllOrders();
+
+    /**
+     * Returns the order with the given ID.
+     *
+     * @param id The id.
+     * @return The order, may be null, if it does not exist.
+     */
+    ItemOrderEntity getOrderById(Long id);
 }

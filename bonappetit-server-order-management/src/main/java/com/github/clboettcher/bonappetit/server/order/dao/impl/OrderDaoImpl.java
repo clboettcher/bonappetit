@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.order.dao.impl;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +45,59 @@ public class OrderDaoImpl implements OrderDao {
     private ItemOrderRepository repository;
 
     @Override
-    public List<ItemOrderEntity> save(Collection<ItemOrderEntity> orders) {
+    public List<ItemOrderEntity> create(Collection<ItemOrderEntity> orders) {
+        // Make sure that we do not update existing entities by checking if the ID field is set.
+        orders.forEach(itemOrderEntity -> {
+            if (itemOrderEntity.getId() != null) {
+                throw new IllegalArgumentException(String.format("New item orders to be saved may not " +
+                                "contain ids: %s",
+                        itemOrderEntity));
+            }
+            if (CollectionUtils.isNotEmpty(itemOrderEntity.getOptionOrders())) {
+                itemOrderEntity.getOptionOrders().forEach(abstractOptionOrderEntity -> {
+                    if (abstractOptionOrderEntity.getId() != null) {
+                        throw new IllegalArgumentException(String.format("New option orders to be saved " +
+                                        "may not contain ids: %s",
+                                abstractOptionOrderEntity));
+                    }
+                });
+            }
+        });
         LOGGER.info(String.format("Saving %d order(s): %s", orders.size(), orders));
         return Lists.newArrayList(repository.save(orders));
     }
 
     @Override
-    public List<ItemOrderEntity> update(Iterable<ItemOrderEntity> itemOrderEntities) {
+    public List<ItemOrderEntity> update(Collection<ItemOrderEntity> itemOrderEntities) {
+        // Make sure that we don't create entities by checking if all id values are set.
+        itemOrderEntities.forEach(itemOrderEntity -> {
+            if (itemOrderEntity.getId() == null) {
+                throw new IllegalArgumentException(String.format("Item order cannot be updated because " +
+                        "it does not exist in the db. Create the order first: %s", itemOrderEntity
+                ));
+            }
+            if (CollectionUtils.isNotEmpty(itemOrderEntity.getOptionOrders())) {
+                itemOrderEntity.getOptionOrders().forEach(abstractOptionOrderEntity -> {
+                    if (abstractOptionOrderEntity.getId() == null) {
+                        throw new IllegalArgumentException(String.format("Option order cannot be updated because " +
+                                        "it does not exist in the db. Create the option order first: %s",
+                                abstractOptionOrderEntity));
+                    }
+                });
+            }
+        });
+        LOGGER.info(String.format("Updating %d order(s): %s", itemOrderEntities.size(), itemOrderEntities));
         return Lists.newArrayList(repository.save(itemOrderEntities));
     }
+
 
     @Override
     public List<ItemOrderEntity> getAllOrders() {
         return Lists.newArrayList(this.repository.findAll());
+    }
+
+    @Override
+    public ItemOrderEntity getOrderById(Long id) {
+        return repository.findOne(id);
     }
 }
