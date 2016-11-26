@@ -36,7 +36,7 @@ public class ValueOptionOrderCreationDto extends OptionOrderCreationDto {
     private Long optionId;
 
     @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    private Integer value;
 
     /**
      * Constructor setting the specified properties.
@@ -45,7 +45,7 @@ public class ValueOptionOrderCreationDto extends OptionOrderCreationDto {
      * @param value    see {@link #value}.
      */
     @Builder
-    public ValueOptionOrderCreationDto(Long optionId, int value) {
+    public ValueOptionOrderCreationDto(Long optionId, Integer value) {
         this.optionId = optionId;
         this.value = value;
     }
