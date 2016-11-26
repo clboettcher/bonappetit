@@ -23,6 +23,7 @@ import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
+import com.github.clboettcher.bonappetit.server.order.dao.OptionOrderDao;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
@@ -53,6 +54,9 @@ public class OrderManagementImpl implements OrderManagement {
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private OptionOrderDao optionOrderDao;
 
     @Autowired
     private OrderManagementValidator validator;
@@ -161,5 +165,10 @@ public class OrderManagementImpl implements OrderManagement {
                     "it does not exist.", id));
         }
         return this.optionOrderDtoMapper.mapToOptionOrderDtos(orderById.getOptionOrders());
+    }
+
+    @Override
+    public List<OptionOrderDto> getAllOptionOrders() {
+        return this.optionOrderDtoMapper.mapToOptionOrderDtos(optionOrderDao.getAll());
     }
 }

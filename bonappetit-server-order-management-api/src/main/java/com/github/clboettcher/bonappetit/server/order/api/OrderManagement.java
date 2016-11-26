@@ -32,15 +32,17 @@ import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.List;
 
-@Path(OrderManagement.ROOT_PATH)
 @Api
+@Path("/")
 public interface OrderManagement {
 
     String TAG = "orders";
-    String ROOT_PATH = "/orders";
+    String ORDERS_ROOT_PATH = "/orders";
+    String OPTION_ORDERS_ROOT_PATH = "/optionOrders";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Path(ORDERS_ROOT_PATH)
     @ApiOperation(
             value = "Creates and prints the given orders.",
             notes = "Creates the given orders in the database. " +
@@ -64,6 +66,7 @@ public interface OrderManagement {
      * @return A list of orders, may be empty.
      */
     @GET
+    @Path(ORDERS_ROOT_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns all orders.", tags = {TAG})
     List<ItemOrderDto> getAllOrders(
@@ -90,7 +93,7 @@ public interface OrderManagement {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get a single order by id.", tags = {TAG})
-    @Path("/{id}")
+    @Path(ORDERS_ROOT_PATH + "/{id}")
     ItemOrderDto getOrderById(@ApiParam(value = "The id to look for.") @PathParam("id") Long id);
 
     /**
@@ -102,7 +105,18 @@ public interface OrderManagement {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value="Gets the option orders of the order with the given id.", tags = {TAG})
-    @Path("/{id}/optionOrders")
+    @Path(ORDERS_ROOT_PATH + "/{id}/optionOrders")
     List<OptionOrderDto> getOptionOrders(@ApiParam(value = "The id of the order to " +
             "return the option orders from.") @PathParam("id") Long id);
+
+    /**
+     * Returns all stored option orders.
+     *
+     * @return The option orders, may be empty.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value="Gets all stored option orders.", tags = {TAG})
+    @Path(OPTION_ORDERS_ROOT_PATH)
+    List<OptionOrderDto> getAllOptionOrders();
 }
