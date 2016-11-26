@@ -49,7 +49,8 @@ public interface OrderManagement {
     )
     @ApiResponses(@ApiResponse(
             code = 400,
-            message = "A referenced entity (ordered item, staff member) does not exist.",
+            message = "A required property is missing or a referenced entity " +
+                    "(ordered item, ordered option, staff member) does not exist in the database.",
             response = ErrorResponse.class))
     Response createOrders(Collection<ItemOrderCreationDto> orders);
 
