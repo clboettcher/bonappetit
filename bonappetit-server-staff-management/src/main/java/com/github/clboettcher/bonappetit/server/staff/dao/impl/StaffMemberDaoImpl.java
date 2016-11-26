@@ -67,6 +67,11 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     }
 
     @Override
+    public boolean exists(Long id) {
+        return staffMemberEntityRepository.exists(id);
+    }
+
+    @Override
     public StaffMemberEntity save(StaffMemberEntity staffMember) {
         return staffMemberEntityRepository.save(staffMember);
     }

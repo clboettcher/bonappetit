@@ -61,4 +61,9 @@ public class StaffMemberDaoMockImpl implements StaffMemberDao {
     public StaffMemberEntity save(StaffMemberEntity staffMember) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean exists(Long id) {
+        throw new UnsupportedOperationException("Not yet implemented:");
+    }
 }
