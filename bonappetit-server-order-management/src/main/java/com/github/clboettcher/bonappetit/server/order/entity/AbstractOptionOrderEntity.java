@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.order.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
 
@@ -31,6 +32,8 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_ORDER_TYPE")
+// Force usage of the discriminator value when querying a specific subclass to prevent loading of the wrong subtype.
+@DiscriminatorOptions(force = true)
 @Table(name = "OPTION_ORDER")
 @Data
 @AllArgsConstructor

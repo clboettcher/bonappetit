@@ -25,12 +25,13 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDt
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OptionOrderDao;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
+import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.OptionOrderDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
-import io.swagger.annotations.ApiParam;
+import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -157,14 +158,22 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     @Override
-    public List<OptionOrderDto> getOptionOrders(@ApiParam(value = "The id to look for.") Long id) {
-        ItemOrderEntity orderById = orderDao.getOrderById(id);
+    public List<OptionOrderDto> getOptionOrdersForOrder(Long id) {
+        ItemOrderEntity itemOrderEntity = orderDao.getOrderById(id);
 
-        if (orderById == null) {
+        if (itemOrderEntity == null) {
             throw new NotFoundException(String.format("Could not return option orders for order with ID %d because " +
-                    "it does not exist.", id));
+                    "no order exists with this id.", id));
         }
-        return this.optionOrderDtoMapper.mapToOptionOrderDtos(orderById.getOptionOrders());
+
+        List<AbstractOptionOrderEntity> optionOrders = Lists.newArrayList();
+        optionOrders.addAll(itemOrderEntity.getCheckboxOptionOrders());
+        optionOrders.addAll(itemOrderEntity.getValueOptionOrders());
+        optionOrders.addAll(itemOrderEntity.getRadioOptionOrders());
+
+
+        List<AbstractOptionOrderEntity> abstractOptionOrderEntities = Lists.newArrayList(optionOrders);
+        return this.optionOrderDtoMapper.mapToOptionOrderDtos(abstractOptionOrderEntities);
     }
 
     @Override

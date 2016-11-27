@@ -27,6 +27,7 @@ import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrder
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.mapstruct.Mapper;
 
@@ -44,10 +45,15 @@ public abstract class ItemOrderDtoMapper {
         ItemEntity item = itemOrderEntity.getItem();
         StaffMemberEntity staffMember = itemOrderEntity.getStaffMember();
 
+        List<AbstractOptionOrderEntity> optionOrders = Lists.newArrayList();
+        optionOrders.addAll(itemOrderEntity.getCheckboxOptionOrders());
+        optionOrders.addAll(itemOrderEntity.getValueOptionOrders());
+        optionOrders.addAll(itemOrderEntity.getRadioOptionOrders());
+
         return ItemOrderDto.builder()
                 .id(itemOrderEntity.getId())
                 .itemId(item.getId())
-                .optionOrders(this.mapToOptionOrderDtos(itemOrderEntity.getOptionOrders()))
+                .optionOrders(this.mapToOptionOrderDtos(optionOrders))
                 .deliverTo(itemOrderEntity.getDeliverTo())
                 .staffMemberId(staffMember.getId())
                 .orderTime(new DateTime(itemOrderEntity.getOrderTime()))

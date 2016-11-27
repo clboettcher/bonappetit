@@ -106,7 +106,7 @@ public interface OrderManagement {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value="Gets the option orders of the order with the given id.", tags = {TAG})
     @Path(ORDERS_ROOT_PATH + "/{id}/optionOrders")
-    List<OptionOrderDto> getOptionOrders(@ApiParam(value = "The id of the order to " +
+    List<OptionOrderDto> getOptionOrdersForOrder(@ApiParam(value = "The id of the order to " +
             "return the option orders from.") @PathParam("id") Long id);
 
     /**

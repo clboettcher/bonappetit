@@ -23,10 +23,10 @@ import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.OptionOrderCreationDto;
-import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
-import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import com.github.clboettcher.bonappetit.server.order.entity.*;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import com.google.common.collect.Lists;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,26 +44,41 @@ public abstract class ItemOrderEntityMapper {
     @Autowired
     private StaffMemberDao staffMemberDao;
 
-    /**
-     * Converts the given {@link ItemOrderCreationDto}s to {@link ItemOrderEntity}s.
-     *
-     * @param orderDtos The dtos to map.
-     * @return The mapping result.
-     */
     public abstract Collection<ItemOrderEntity> mapToItemOrderEntities(Collection<ItemOrderCreationDto> orderDtos);
 
-    /**
-     * @param itemOrderCreationDto The {@link ItemOrderCreationDto} to map.
-     * @return The mapping result.
-     */
     ItemOrderEntity mapToItemOrderEntity(ItemOrderCreationDto itemOrderCreationDto) {
 
         ItemEntity item = itemDao.getItem(itemOrderCreationDto.getItemId());
         StaffMemberEntity staffMember = staffMemberDao.getStaffMember(itemOrderCreationDto.getStaffMemberId());
 
+        List<AbstractOptionOrderEntity> abstractOptionOrderEntities = this.mapToOptionOrderEntities(
+                itemOrderCreationDto.getOptionOrders());
+        List<CheckboxOptionOrderEntity> checkboxOptionOrderEntities = Lists.newArrayList();
+        List<ValueOptionOrderEntity> valueOptionOrderEntities = Lists.newArrayList();
+        List<RadioOptionOrderEntity> radioOptionOrderEntities = Lists.newArrayList();
+
+        abstractOptionOrderEntities.forEach(abstractOptionOrderEntity -> {
+            if (abstractOptionOrderEntity instanceof CheckboxOptionOrderEntity) {
+                CheckboxOptionOrderEntity checkboxOptionOrderEntity = (CheckboxOptionOrderEntity) abstractOptionOrderEntity;
+                checkboxOptionOrderEntities.add(checkboxOptionOrderEntity);
+            } else if (abstractOptionOrderEntity instanceof ValueOptionOrderEntity) {
+                ValueOptionOrderEntity optionOrderEntity = (ValueOptionOrderEntity) abstractOptionOrderEntity;
+                valueOptionOrderEntities.add(optionOrderEntity);
+            } else if (abstractOptionOrderEntity instanceof RadioOptionOrderEntity) {
+                RadioOptionOrderEntity radioOptionOrderEntity = (RadioOptionOrderEntity) abstractOptionOrderEntity;
+                radioOptionOrderEntities.add(radioOptionOrderEntity);
+            } else {
+                throw new IllegalArgumentException(String.format("Unknown subtype %s of %s",
+                        abstractOptionOrderEntity.getClass().getName(),
+                        AbstractOptionOrderEntity.class.getName()));
+            }
+        });
+
         return ItemOrderEntity.builder()
                 .item(item)
-                .optionOrders(this.mapToOptionOrderEntities(itemOrderCreationDto.getOptionOrders()))
+                .checkboxOptionOrders(checkboxOptionOrderEntities)
+                .valueOptionOrders(valueOptionOrderEntities)
+                .radioOptionOrders(radioOptionOrderEntities)
                 .deliverTo(itemOrderCreationDto.getDeliverTo())
                 .staffMember(staffMember)
                 .orderTime(itemOrderCreationDto.getOrderTime().toDate())
@@ -71,9 +86,5 @@ public abstract class ItemOrderEntityMapper {
                 .build();
     }
 
-    /**
-     * @param options The dto to map.
-     * @return The mapping result.
-     */
     public abstract List<AbstractOptionOrderEntity> mapToOptionOrderEntities(List<OptionOrderCreationDto> options);
 }

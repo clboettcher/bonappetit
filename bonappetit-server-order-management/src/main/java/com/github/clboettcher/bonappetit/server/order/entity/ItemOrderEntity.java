@@ -53,12 +53,32 @@ public class ItemOrderEntity {
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private ItemEntity item;
 
+    // We need to model the ordered options for each type separately so that hibernate
+    // is able to query the it via WHEN clause on the discriminator value. Otherwise
+    // hibernate fails with unexpected class errors when loading the option that is
+    // referenced by the option order.
+
     /**
-     * The ordered options.
+     * The ordered checkbox options.
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ORDER_ID")
-    private List<AbstractOptionOrderEntity> optionOrders;
+    private List<CheckboxOptionOrderEntity> checkboxOptionOrders;
+
+    /**
+     * The ordered value options.
+     */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ITEM_ORDER_ID")
+    private List<ValueOptionOrderEntity> valueOptionOrders;
+
+    /**
+     * The ordered radio options.
+     */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ITEM_ORDER_ID")
+    private List<RadioOptionOrderEntity> radioOptionOrders;
+
 
     /**
      * The person or place (eg table) that the order should be delivered to.
@@ -95,20 +115,28 @@ public class ItemOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param item         see {@link #item}.
-     * @param optionOrders see {@link #optionOrders}.
-     * @param deliverTo    see {@link #deliverTo}.
-     * @param staffMember  see {@link #staffMember}.
-     * @param orderTime    see {@link #orderTime}.
-     * @param note         see {@link #note}.
-     * @param status       see {@link #status}.
+     * @param item                 see {@link #item}.
+     * @param checkboxOptionOrders see {@link #checkboxOptionOrders}.
+     * @param deliverTo            see {@link #deliverTo}.
+     * @param staffMember          see {@link #staffMember}.
+     * @param orderTime            see {@link #orderTime}.
+     * @param note                 see {@link #note}.
+     * @param status               see {@link #status}.
      */
     @Builder
-    public ItemOrderEntity(ItemEntity item, List<AbstractOptionOrderEntity> optionOrders,
-                           String deliverTo, StaffMemberEntity staffMember, Date orderTime,
-                           String note, OrderEntityStatus status) {
+    public ItemOrderEntity(ItemEntity item,
+                           List<CheckboxOptionOrderEntity> checkboxOptionOrders,
+                           List<ValueOptionOrderEntity> valueOptionOrders,
+                           List<RadioOptionOrderEntity> radioOptionOrders,
+                           String deliverTo,
+                           StaffMemberEntity staffMember,
+                           Date orderTime,
+                           String note,
+                           OrderEntityStatus status) {
         this.item = item;
-        this.optionOrders = optionOrders;
+        this.checkboxOptionOrders = checkboxOptionOrders;
+        this.valueOptionOrders = valueOptionOrders;
+        this.radioOptionOrders = radioOptionOrders;
         this.deliverTo = deliverTo;
         this.staffMember = staffMember;
         this.orderTime = orderTime;

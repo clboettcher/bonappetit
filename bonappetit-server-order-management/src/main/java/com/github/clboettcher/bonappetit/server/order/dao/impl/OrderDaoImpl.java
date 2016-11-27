@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.order.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
+import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,16 +50,19 @@ public class OrderDaoImpl implements OrderDao {
         // Make sure that we do not update existing entities by checking if the ID field is set.
         orders.forEach(itemOrderEntity -> {
             if (itemOrderEntity.getId() != null) {
-                throw new IllegalArgumentException(String.format("New item orders to be saved may not " +
-                                "contain ids: %s",
-                        itemOrderEntity));
+                throw new IllegalArgumentException(String.format("New item orders to be " +
+                        "saved may not contain ids: %s", itemOrderEntity));
             }
-            if (CollectionUtils.isNotEmpty(itemOrderEntity.getOptionOrders())) {
-                itemOrderEntity.getOptionOrders().forEach(abstractOptionOrderEntity -> {
-                    if (abstractOptionOrderEntity.getId() != null) {
-                        throw new IllegalArgumentException(String.format("New option orders to be saved " +
-                                        "may not contain ids: %s",
-                                abstractOptionOrderEntity));
+            List<AbstractOptionOrderEntity> newOptionOrders = Lists.newArrayList();
+            newOptionOrders.addAll(itemOrderEntity.getCheckboxOptionOrders());
+            newOptionOrders.addAll(itemOrderEntity.getValueOptionOrders());
+            newOptionOrders.addAll(itemOrderEntity.getRadioOptionOrders());
+
+            if (CollectionUtils.isNotEmpty(newOptionOrders)) {
+                newOptionOrders.forEach(optionOrder -> {
+                    if (optionOrder.getId() != null) {
+                        throw new IllegalArgumentException(String.format("New option orders to " +
+                                "be saved may not contain ids: %s", optionOrder));
                     }
                 });
             }
@@ -76,12 +80,18 @@ public class OrderDaoImpl implements OrderDao {
                         "it does not exist in the db. Create the order first: %s", itemOrderEntity
                 ));
             }
-            if (CollectionUtils.isNotEmpty(itemOrderEntity.getOptionOrders())) {
-                itemOrderEntity.getOptionOrders().forEach(abstractOptionOrderEntity -> {
-                    if (abstractOptionOrderEntity.getId() == null) {
+
+            List<AbstractOptionOrderEntity> updatedOptionOrders = Lists.newArrayList();
+            updatedOptionOrders.addAll(itemOrderEntity.getCheckboxOptionOrders());
+            updatedOptionOrders.addAll(itemOrderEntity.getValueOptionOrders());
+            updatedOptionOrders.addAll(itemOrderEntity.getRadioOptionOrders());
+
+            if (CollectionUtils.isNotEmpty(updatedOptionOrders)) {
+                updatedOptionOrders.forEach(updatedOptionOrder -> {
+                    if (updatedOptionOrder.getId() == null) {
                         throw new IllegalArgumentException(String.format("Option order cannot be updated because " +
                                         "it does not exist in the db. Create the option order first: %s",
-                                abstractOptionOrderEntity));
+                                updatedOptionOrder));
                     }
                 });
             }
