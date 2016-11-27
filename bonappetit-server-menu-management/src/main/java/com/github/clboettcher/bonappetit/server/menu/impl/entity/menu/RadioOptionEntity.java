@@ -33,7 +33,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 public class RadioOptionEntity extends AbstractOptionEntity {
 
     /**

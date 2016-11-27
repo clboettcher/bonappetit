@@ -39,6 +39,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -52,6 +53,7 @@ import javax.persistence.*;
 @Table(name = "ITEM_OPTION") // 'option' is reserved in mysql
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public abstract class AbstractOptionEntity {
 
     /**

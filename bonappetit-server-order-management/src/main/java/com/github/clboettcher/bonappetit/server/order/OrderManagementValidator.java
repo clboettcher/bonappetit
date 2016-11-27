@@ -22,9 +22,7 @@ package com.github.clboettcher.bonappetit.server.order;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.OptionDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.RadioItemDao;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.AbstractOptionEntity;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.CheckboxOptionEntity;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ValueOptionEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.*;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import org.apache.commons.collections4.CollectionUtils;
@@ -34,12 +32,21 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderManagementValidator {
 
 
+    /**
+     * Predicate that can be used to filter for a subtype {@link RadioOptionEntity}.
+     */
+    private static final Predicate<AbstractOptionEntity> RADIO_OPTION_PREDICATE =
+            abstractOptionEntity -> abstractOptionEntity instanceof RadioOptionEntity;
     @Autowired
     private ItemDao itemDao;
 
@@ -64,7 +71,8 @@ public class OrderManagementValidator {
 
     private void assertValid(ItemOrderCreationDto orderDto) {
         assertOrderedItemValid(orderDto.getItemId());
-        assertOrderedOptionsValid(orderDto.getOptionOrders());
+        ItemEntity orderedItem = itemDao.getItem(orderDto.getItemId());
+        assertOrderedOptionsValid(orderDto.getOptionOrders(), orderedItem);
         assertOrderingStaffMemberValid(orderDto.getStaffMemberId());
 
         if (StringUtils.isBlank(orderDto.getDeliverTo())) {
@@ -87,7 +95,7 @@ public class OrderManagementValidator {
         }
     }
 
-    private void assertOrderedOptionsValid(List<OptionOrderCreationDto> optionOrders) {
+    private void assertOrderedOptionsValid(List<OptionOrderCreationDto> optionOrders, ItemEntity orderedItem) {
         if (CollectionUtils.isEmpty(optionOrders)) {
             return;
         }
@@ -95,13 +103,13 @@ public class OrderManagementValidator {
         optionOrders.forEach(optionOrderDto -> {
             if (optionOrderDto instanceof ValueOptionOrderCreationDto) {
                 ValueOptionOrderCreationDto valueOptionOrderDto = (ValueOptionOrderCreationDto) optionOrderDto;
-                assertValid(valueOptionOrderDto);
+                assertValid(valueOptionOrderDto, orderedItem);
             } else if (optionOrderDto instanceof CheckboxOptionOrderCreationDto) {
                 CheckboxOptionOrderCreationDto orderDto = (CheckboxOptionOrderCreationDto) optionOrderDto;
-                assertValid(orderDto);
+                assertValid(orderDto, orderedItem);
             } else if (optionOrderDto instanceof RadioOptionOrderCreationDto) {
                 RadioOptionOrderCreationDto orderDto = (RadioOptionOrderCreationDto) optionOrderDto;
-                assertValid(orderDto);
+                assertValid(orderDto, orderedItem);
             } else {
                 throw new IllegalArgumentException(String.format("Unknown subtype of %s: %s",
                         OptionOrderCreationDto.class.getName(),
@@ -111,21 +119,21 @@ public class OrderManagementValidator {
 
     }
 
-    private void assertValid(ValueOptionOrderCreationDto valueOptionOrderCreationDto) {
+    private void assertValid(ValueOptionOrderCreationDto valueOptionOrderCreationDto, ItemEntity orderedItem) {
         if (valueOptionOrderCreationDto.getValue() == null) {
             throw new BadRequestException("Property 'value' in order for a value option may not be missing.");
         }
-        assertValidOptionRef(valueOptionOrderCreationDto.getOptionId(), ValueOptionEntity.class);
+        assertValidOptionRef(valueOptionOrderCreationDto.getOptionId(), ValueOptionEntity.class, orderedItem);
     }
 
-    private void assertValid(CheckboxOptionOrderCreationDto checkboxOptionOrderCreationDto) {
+    private void assertValid(CheckboxOptionOrderCreationDto checkboxOptionOrderCreationDto, ItemEntity orderedItem) {
         if (checkboxOptionOrderCreationDto.getChecked() == null) {
             throw new BadRequestException("Property 'checked' in order for a checkbox option may not be missing.");
         }
-        assertValidOptionRef(checkboxOptionOrderCreationDto.getOptionId(), CheckboxOptionEntity.class);
+        assertValidOptionRef(checkboxOptionOrderCreationDto.getOptionId(), CheckboxOptionEntity.class, orderedItem);
     }
 
-    private void assertValid(RadioOptionOrderCreationDto radioOptionOrderCreationDto) {
+    private void assertValid(RadioOptionOrderCreationDto radioOptionOrderCreationDto, ItemEntity orderedItem) {
         Long selectedRadioItemId = radioOptionOrderCreationDto.getSelectedRadioItemId();
         if (selectedRadioItemId == null) {
             throw new BadRequestException("Property 'selectedRadioItemId' in order for a radio " +
@@ -136,9 +144,27 @@ public class OrderManagementValidator {
                             "because it does not exist.",
                     selectedRadioItemId));
         }
+
+        // Make sure that the ordered radio item belongs to a radio option that belongs to the ordered item.
+        Set<Long> radioItemIds = new HashSet<>();
+        orderedItem.getOptions().stream().filter(RADIO_OPTION_PREDICATE).forEach(abstractOptionEntity -> {
+            RadioOptionEntity radioOptionEntity = (RadioOptionEntity) abstractOptionEntity;
+            Set<RadioItemEntity> radioItems = radioOptionEntity.getRadioItems();
+            radioItemIds.addAll(radioItems
+                    .stream()
+                    .map(RadioItemEntity::getId)
+                    .collect(Collectors.toList()));
+        });
+        if (!radioItemIds.contains(selectedRadioItemId)) {
+            throw new BadRequestException(String.format("Radio item with ID %d cannot be ordered because it does not " +
+                            "belong to the ordered item with ID %d", selectedRadioItemId,
+                    orderedItem.getId()));
+        }
     }
 
-    private <T extends AbstractOptionEntity> void assertValidOptionRef(Long optionId, Class<T> expectedSubType) {
+    private <T extends AbstractOptionEntity> void assertValidOptionRef(Long optionId,
+                                                                       Class<T> expectedSubType,
+                                                                       ItemEntity orderedItem) {
         if (optionId == null) {
             throw new BadRequestException("Property 'optionId' in order for value option may not be missing)");
         }
@@ -153,6 +179,18 @@ public class OrderManagementValidator {
                     optionId,
                     expectedSubType.getSimpleName(),
                     optionEntity.getClass().getSimpleName()));
+        }
+        assertOrderedOptionBelongsToItem(orderedItem, optionEntity);
+    }
+
+    private void assertOrderedOptionBelongsToItem(ItemEntity orderedItem,
+                                                  AbstractOptionEntity orderedOption) {
+        Set<AbstractOptionEntity> orderedItemOptions = orderedItem.getOptions();
+        if (!orderedItemOptions.contains(orderedOption)) {
+            throw new BadRequestException(String.format("Order for option with ID %d is invalid because " +
+                            "the referenced option does not belong to the ordered item (id=%d).",
+                    orderedOption.getId(),
+                    orderedItem.getId()));
         }
     }
 

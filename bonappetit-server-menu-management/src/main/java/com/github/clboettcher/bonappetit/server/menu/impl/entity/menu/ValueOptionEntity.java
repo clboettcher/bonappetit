@@ -55,7 +55,7 @@ import java.math.BigDecimal;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 public class ValueOptionEntity extends AbstractOptionEntity {
 
     /**

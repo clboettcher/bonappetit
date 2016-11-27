@@ -24,8 +24,10 @@ import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -143,4 +145,29 @@ public class ItemOrderEntity {
         this.note = note;
         this.status = status;
     }
+
+    /**
+     * Convenience method for retrieving all options.
+     * <p>
+     * This just collects all options returned by {@link #getCheckboxOptionOrders()},
+     * {@link #getValueOptionOrders()} and {@link #getRadioOptionOrders()}.
+     *
+     * @return All options, may be empty.
+     */
+    public List<AbstractOptionOrderEntity> getAllOptionOrders() {
+        List<AbstractOptionOrderEntity> result = new ArrayList<>();
+
+        if (CollectionUtils.isNotEmpty(this.getCheckboxOptionOrders())) {
+            result.addAll(this.getCheckboxOptionOrders());
+        }
+        if (CollectionUtils.isNotEmpty(this.getValueOptionOrders())) {
+            result.addAll(this.getValueOptionOrders());
+        }
+        if (CollectionUtils.isNotEmpty(this.getRadioOptionOrders())) {
+            result.addAll(this.getRadioOptionOrders());
+        }
+
+        return result;
+    }
+
 }
