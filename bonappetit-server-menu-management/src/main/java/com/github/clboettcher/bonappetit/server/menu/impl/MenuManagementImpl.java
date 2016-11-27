@@ -132,7 +132,7 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
-    public Response updateCurrentMenu(Long menuId) {
+    public Response setCurrentMenu(Long menuId) {
         if (menuId == null) {
             throw new BadRequestException("Param menuId may not be blank.");
         }

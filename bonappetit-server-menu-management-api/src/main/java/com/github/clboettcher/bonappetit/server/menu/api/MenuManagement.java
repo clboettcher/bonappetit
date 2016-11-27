@@ -125,7 +125,7 @@ public interface MenuManagement {
     @ApiResponses(@ApiResponse(code = 400,
             message = "Param menuId was blank or no menu was found for the given menuId.",
             response = ErrorResponse.class))
-    Response updateCurrentMenu(
+    Response setCurrentMenu(
             @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
 
 }
