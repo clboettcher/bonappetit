@@ -185,7 +185,7 @@ public class OrderManagementValidator {
 
     private void assertOrderedOptionBelongsToItem(ItemEntity orderedItem,
                                                   AbstractOptionEntity orderedOption) {
-        Set<AbstractOptionEntity> orderedItemOptions = orderedItem.getOptions();
+        List<AbstractOptionEntity> orderedItemOptions = orderedItem.getOptions();
         if (!orderedItemOptions.contains(orderedOption)) {
             throw new BadRequestException(String.format("Order for option with ID %d is invalid because " +
                             "the referenced option does not belong to the ordered item (id=%d).",

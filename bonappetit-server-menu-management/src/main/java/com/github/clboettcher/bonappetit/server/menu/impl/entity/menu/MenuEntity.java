@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * The menu represents the items that can be ordered.
@@ -67,7 +67,7 @@ public class MenuEntity {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MENU_ID", nullable = false)
-    private Set<ItemEntity> items;
+    private List<ItemEntity> items;
 
     /**
      * Constructor setting the specified properties.
@@ -75,7 +75,7 @@ public class MenuEntity {
      * @param items see {@link #items}.
      */
     @Builder
-    public MenuEntity(Long id, Set<ItemEntity> items) {
+    public MenuEntity(Long id, List<ItemEntity> items) {
         this.id = id;
         this.items = items;
     }
@@ -88,11 +88,11 @@ public class MenuEntity {
         this.id = id;
     }
 
-    public Set<ItemEntity> getItems() {
+    public List<ItemEntity> getItems() {
         return items;
     }
 
-    public void setItems(Set<ItemEntity> items) {
+    public void setItems(List<ItemEntity> items) {
         this.items = items;
     }
 }

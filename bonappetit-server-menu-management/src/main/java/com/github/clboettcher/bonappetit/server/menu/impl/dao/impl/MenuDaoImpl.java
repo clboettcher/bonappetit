@@ -35,7 +35,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -86,7 +85,7 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public MenuEntity create(MenuEntity menuEntity) {
         menuValidator.assertNewMenuValid(menuEntity);
-        Set<ItemEntity> items = menuEntity.getItems();
+        List<ItemEntity> items = menuEntity.getItems();
         items.stream()
                 .filter(ItemEntity::hasOptions)
                 .forEach(item -> item.getOptions()
@@ -147,7 +146,7 @@ public class MenuDaoImpl implements MenuDao {
      */
     private void prepareRadioOption(ItemEntity item, RadioOptionEntity option) {
         RadioItemEntity defaultSelected = option.getDefaultSelected();
-        Set<RadioItemEntity> radioItems = option.getRadioItems();
+        List<RadioItemEntity> radioItems = option.getRadioItems();
 
         List<RadioItemEntity> defaultSelectedCandidates = radioItems.stream().filter(radioItem ->
                 radioItem.equals(defaultSelected)).collect(Collectors.toList());

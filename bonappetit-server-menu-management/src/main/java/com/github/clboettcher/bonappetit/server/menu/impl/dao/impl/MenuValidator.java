@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Predicate;
@@ -60,7 +61,10 @@ public class MenuValidator {
      */
     private static final Predicate<ItemEntity> ALL_ITEM_REFS_HAVE_IDS_PREDICATE = itemEntity -> {
         boolean itemHasId = itemEntity.getId() != null;
-        boolean allOptionRefsHaveIds = itemEntity.getOptions().stream().allMatch(ALL_OPTION_REFS_HAVE_IDS_PREDICATE);
+        boolean allOptionRefsHaveIds = true;
+        if (CollectionUtils.isNotEmpty(itemEntity.getOptions())) {
+            allOptionRefsHaveIds = itemEntity.getOptions().stream().allMatch(ALL_OPTION_REFS_HAVE_IDS_PREDICATE);
+        }
         return itemHasId && allOptionRefsHaveIds;
     };
 
@@ -68,8 +72,15 @@ public class MenuValidator {
      * Predicate that resolves to true, if the tested {@link MenuEntity}
      * and all referenced entities have non null ID properties.
      */
-    private static final Predicate<MenuEntity> ALL_MENU_REFS_HAVE_IDS_PREDICATE = menuEntity ->
-            menuEntity.getId() != null && menuEntity.getItems().stream().allMatch(ALL_ITEM_REFS_HAVE_IDS_PREDICATE);
+    private static final Predicate<MenuEntity> ALL_MENU_REFS_HAVE_IDS_PREDICATE = menuEntity -> {
+        if (CollectionUtils.isNotEmpty(menuEntity.getItems())) {
+            boolean allItemRefsHaveIds = menuEntity.getItems().stream().allMatch(ALL_ITEM_REFS_HAVE_IDS_PREDICATE);
+            if (!allItemRefsHaveIds) {
+                return false;
+            }
+        }
+        return menuEntity.getId() != null;
+    };
 
     void assertNewMenuValid(MenuEntity menuEntity) {
         // Make sure that we do not update existing entities by checking if the ID fields are not
@@ -84,7 +95,7 @@ public class MenuValidator {
         // Make sure that we do not create new entities by checking if the ID fields of
         // all reachable entities is set.
         if (!ALL_MENU_REFS_HAVE_IDS_PREDICATE.test(menuEntity)) {
-            throw new IllegalArgumentException(String.format("Updated entities must contain ids. Found at least" +
+            throw new IllegalArgumentException(String.format("Updated entities must contain ids. Found at least " +
                     "one offending entity referenced from menu %s", menuEntity));
         }
     }

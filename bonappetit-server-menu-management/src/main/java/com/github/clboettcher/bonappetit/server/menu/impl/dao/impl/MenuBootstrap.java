@@ -22,7 +22,6 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 /**
  * This class bootstraps some testdata into the db and will be deleted at some point.
@@ -63,12 +62,12 @@ public class MenuBootstrap {
 
     private MenuEntity createMenu() {
         return MenuEntity.builder()
-                .items(Sets.newLinkedHashSet(Lists.newArrayList(
+                .items(Lists.newArrayList(
                         ItemEntity.builder()
                                 .title("Pommes")
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
-                                .options(Sets.newLinkedHashSet(Lists.newArrayList(
+                                .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .title("Extra Salz")
                                                 .index(0)
@@ -81,20 +80,20 @@ public class MenuBootstrap {
                                                 .defaultValue(2)
                                                 .priceDiff(BigDecimal.ZERO)
                                                 .build()
-                                )))
+                                ))
                                 .build(),
                         ItemEntity.builder()
                                 .title("Nachos")
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
-                                .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
+                                .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .title("Käsesoße")
                                                 .index(0)
                                                 .defaultChecked(true)
                                                 .priceDiff(new BigDecimal("0.5"))
                                                 .build()
-                                )))
+                                ))
                                 .build(),
                         ItemEntity.builder()
                                 .title("Mineralwasser")
@@ -105,7 +104,7 @@ public class MenuBootstrap {
                                 .title("Augustinger")
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)
-                                .options(Sets.<AbstractOptionEntity>newHashSet(
+                                .options(Lists.newArrayList(
                                         createRadioOption("Größe", 0,
                                                 RadioItemEntity.builder()
                                                         .title("groß")
@@ -119,12 +118,12 @@ public class MenuBootstrap {
                                                         .build())
                                 ))
                                 .build()
-                )))
+                ))
                 .build();
     }
 
     private static RadioOptionEntity createRadioOption(String title, int index, RadioItemEntity defaultSelected, RadioItemEntity... otherItems) {
-        Set<RadioItemEntity> items = Sets.newHashSet(otherItems);
+        List<RadioItemEntity> items = Lists.newArrayList(otherItems);
         items.add(defaultSelected);
 
         return RadioOptionEntity.builder()

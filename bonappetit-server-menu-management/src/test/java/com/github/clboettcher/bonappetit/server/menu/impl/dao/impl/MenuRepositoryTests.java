@@ -20,7 +20,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -54,7 +54,7 @@ public class MenuRepositoryTests {
                 .build();
 
         MenuEntity menu = MenuEntity.builder()
-                .items(Sets.newHashSet(item))
+                .items(Lists.newArrayList(item))
                 .build();
 
         // Test
@@ -78,7 +78,7 @@ public class MenuRepositoryTests {
                 .title("Item Title")
                 .price(new BigDecimal("1.9"))
                 .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
-                .options(Sets.<AbstractOptionEntity>newHashSet(
+                .options(Lists.newArrayList(
                         ValueOptionEntity.builder()
                                 .title("Value Option")
                                 .index(17)
@@ -89,7 +89,7 @@ public class MenuRepositoryTests {
                 .build();
 
         MenuEntity menu = MenuEntity.builder()
-                .items(Sets.newHashSet(item))
+                .items(Lists.newArrayList(item))
                 .build();
 
         // Test
@@ -120,12 +120,12 @@ public class MenuRepositoryTests {
                 .title("Item Title")
                 .price(new BigDecimal("1.9"))
                 .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
-                .options(Sets.<AbstractOptionEntity>newHashSet(
+                .options(Lists.newArrayList(
                         RadioOptionEntity.builder()
                                 .title("Radio Option")
                                 .index(17)
                                 .defaultSelected(defaultSelected)
-                                .radioItems(Sets.newHashSet(
+                                .radioItems(Lists.newArrayList(
                                         defaultSelected,
                                         RadioItemEntity.builder()
                                                 .title("Radio Item 2")
@@ -138,7 +138,7 @@ public class MenuRepositoryTests {
                 .build();
 
         MenuEntity menu = MenuEntity.builder()
-                .items(Sets.newHashSet(item))
+                .items(Lists.newArrayList(item))
                 .build();
 
         menuRepository.save(menu);

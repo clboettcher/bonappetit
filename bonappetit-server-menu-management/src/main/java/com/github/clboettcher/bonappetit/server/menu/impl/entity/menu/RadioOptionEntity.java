@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * An option that consists of multiple items of which one must be selected.
@@ -52,7 +52,7 @@ public class RadioOptionEntity extends AbstractOptionEntity {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "OPTION_ID", nullable = false)
-    private Set<RadioItemEntity> radioItems;
+    private List<RadioItemEntity> radioItems;
 
     /**
      * Constructor setting the specified properties.
@@ -64,7 +64,11 @@ public class RadioOptionEntity extends AbstractOptionEntity {
      * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public RadioOptionEntity(long id, String title, Integer index, RadioItemEntity defaultSelected, Set<RadioItemEntity> radioItems) {
+    public RadioOptionEntity(long id,
+                             String title,
+                             Integer index,
+                             RadioItemEntity defaultSelected,
+                             List<RadioItemEntity> radioItems) {
         super(id, title, index);
         this.defaultSelected = defaultSelected;
         this.radioItems = radioItems;
@@ -78,11 +82,11 @@ public class RadioOptionEntity extends AbstractOptionEntity {
         this.defaultSelected = defaultSelected;
     }
 
-    public Set<RadioItemEntity> getRadioItems() {
+    public List<RadioItemEntity> getRadioItems() {
         return radioItems;
     }
 
-    public void setRadioItems(Set<RadioItemEntity> radioItems) {
+    public void setRadioItems(List<RadioItemEntity> radioItems) {
         this.radioItems = radioItems;
     }
 }

@@ -45,7 +45,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 /**
  * A menu item.
@@ -87,7 +87,7 @@ public class ItemEntity {
      */
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID")
-    private Set<AbstractOptionEntity> options;
+    private List<AbstractOptionEntity> options;
 
     /**
      * The side dishes available for this item (optional).
@@ -96,7 +96,7 @@ public class ItemEntity {
     @JoinTable(name = "ITEM_SIDE_DISH",
             joinColumns = @JoinColumn(name = "ITEM_ID"),
             inverseJoinColumns = @JoinColumn(name = "SIDE_DISH_ID", referencedColumnName = "ITEM_ID"))
-    private Set<ItemEntity> sideDishes;
+    private List<ItemEntity> sideDishes;
 
     /**
      * Constructor setting the specified properties.
@@ -113,8 +113,8 @@ public class ItemEntity {
                       String title,
                       BigDecimal price,
                       ItemEntityType type,
-                      Set<AbstractOptionEntity> options,
-                      Set<ItemEntity> sideDishes) {
+                      List<AbstractOptionEntity> options,
+                      List<ItemEntity> sideDishes) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -155,19 +155,19 @@ public class ItemEntity {
         this.type = type;
     }
 
-    public Set<AbstractOptionEntity> getOptions() {
+    public List<AbstractOptionEntity> getOptions() {
         return options;
     }
 
-    public void setOptions(Set<AbstractOptionEntity> options) {
+    public void setOptions(List<AbstractOptionEntity> options) {
         this.options = options;
     }
 
-    public Set<ItemEntity> getSideDishes() {
+    public List<ItemEntity> getSideDishes() {
         return sideDishes;
     }
 
-    public void setSideDishes(Set<ItemEntity> sideDishes) {
+    public void setSideDishes(List<ItemEntity> sideDishes) {
         this.sideDishes = sideDishes;
     }
 

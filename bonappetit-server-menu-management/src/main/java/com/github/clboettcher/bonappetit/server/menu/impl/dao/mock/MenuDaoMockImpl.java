@@ -22,7 +22,6 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao.mock;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +29,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Impl of {@link MenuDao} that returns static testdata.
@@ -76,13 +74,13 @@ public class MenuDaoMockImpl implements MenuDao {
     private MenuEntity createMenu() {
         return MenuEntity.builder()
                 .id(this.getNewMenuId())
-                .items(Sets.newLinkedHashSet(Lists.newArrayList(
+                .items(Lists.newArrayList(
                         ItemEntity.builder()
                                 .id(1L)
                                 .title("Pommes")
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
-                                .options(Sets.newLinkedHashSet(Lists.newArrayList(
+                                .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .id(1L)
                                                 .title("Extra Salz")
@@ -97,14 +95,14 @@ public class MenuDaoMockImpl implements MenuDao {
                                                 .priceDiff(BigDecimal.ZERO)
                                                 .index(1)
                                                 .build()
-                                )))
+                                ))
                                 .build(),
                         ItemEntity.builder()
                                 .id(2L)
                                 .title("Nachos")
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
-                                .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
+                                .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .id(3L)
                                                 .title("Käsesoße")
@@ -112,7 +110,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                                 .defaultChecked(true)
                                                 .priceDiff(new BigDecimal("0.5"))
                                                 .build()
-                                )))
+                                ))
                                 .build(),
                         ItemEntity.builder()
                                 .id(3L)
@@ -125,7 +123,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                 .title("Augustinger")
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)
-                                .options(Sets.<AbstractOptionEntity>newHashSet(
+                                .options(Lists.newArrayList(
                                         createRadioOptionEntity(1L, 0, "Größe",
                                                 RadioItemEntity.builder()
                                                         .id(1L)
@@ -141,7 +139,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                                         .build())
                                 ))
                                 .build()
-                )))
+                ))
                 .build();
     }
 
@@ -150,7 +148,7 @@ public class MenuDaoMockImpl implements MenuDao {
                                                              String title,
                                                              RadioItemEntity defaultSelected,
                                                              RadioItemEntity... otherItemEntities) {
-        Set<RadioItemEntity> items = Sets.newHashSet(otherItemEntities);
+        List<RadioItemEntity> items = Lists.newArrayList(otherItemEntities);
         items.add(defaultSelected);
 
         return RadioOptionEntity.builder()
