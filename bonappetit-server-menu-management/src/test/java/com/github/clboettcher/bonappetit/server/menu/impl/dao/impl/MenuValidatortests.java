@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 /**
  * Tests for {@link MenuValidator}.
  */
-public class MenuValidatorTestsFoo {
+public class MenuValidatorTests {
 
     private MenuValidator validator;
 
