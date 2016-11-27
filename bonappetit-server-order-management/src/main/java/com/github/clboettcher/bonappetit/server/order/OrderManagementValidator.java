@@ -149,7 +149,7 @@ public class OrderManagementValidator {
         Set<Long> radioItemIds = new HashSet<>();
         orderedItem.getOptions().stream().filter(RADIO_OPTION_PREDICATE).forEach(abstractOptionEntity -> {
             RadioOptionEntity radioOptionEntity = (RadioOptionEntity) abstractOptionEntity;
-            Set<RadioItemEntity> radioItems = radioOptionEntity.getRadioItems();
+            List<RadioItemEntity> radioItems = radioOptionEntity.getRadioItems();
             radioItemIds.addAll(radioItems
                     .stream()
                     .map(RadioItemEntity::getId)
