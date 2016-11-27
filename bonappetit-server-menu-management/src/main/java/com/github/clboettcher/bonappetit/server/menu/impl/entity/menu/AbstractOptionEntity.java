@@ -62,7 +62,7 @@ public abstract class AbstractOptionEntity {
     @Id
     @GeneratedValue
     @Column(name = "OPTION_ID")
-    private long id;
+    private Long id;
 
     /**
      * The title / name of this option, e.g. 'Size'.
@@ -77,11 +77,11 @@ public abstract class AbstractOptionEntity {
     @Column(name = "OPTION_INDEX", nullable = false)
     private Integer index;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

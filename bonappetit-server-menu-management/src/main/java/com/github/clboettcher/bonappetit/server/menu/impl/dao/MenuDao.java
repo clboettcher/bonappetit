@@ -42,7 +42,15 @@ public interface MenuDao {
      * @param menuEntity The menu to save.
      * @return The saved instance (including non null IDs).
      */
-    MenuEntity save(MenuEntity menuEntity);
+    MenuEntity create(MenuEntity menuEntity);
+
+    /**
+     * Updates the given {@link MenuEntity} in the database.
+     *
+     * @param menuEntity The existing database (with IDs set).
+     * @return The saved instance.
+     */
+    MenuEntity update(MenuEntity menuEntity);
 
     /**
      * Returns the {@link MenuEntity} with the given ID.

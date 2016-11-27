@@ -61,7 +61,7 @@ public class MenuDaoMockImpl implements MenuDao {
     }
 
     @Override
-    public MenuEntity save(MenuEntity menuEntity) {
+    public MenuEntity create(MenuEntity menuEntity) {
         Long id = getNewMenuId();
         menuEntity.setId(id);
         this.menus.put(id, menuEntity);
@@ -78,20 +78,20 @@ public class MenuDaoMockImpl implements MenuDao {
                 .id(this.getNewMenuId())
                 .items(Sets.newLinkedHashSet(Lists.newArrayList(
                         ItemEntity.builder()
-                                .id(1)
+                                .id(1L)
                                 .title("Pommes")
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.newLinkedHashSet(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
-                                                .id(1)
+                                                .id(1L)
                                                 .title("Extra Salz")
                                                 .index(0)
                                                 .defaultChecked(false)
                                                 .priceDiff(BigDecimal.ZERO)
                                                 .build(),
                                         ValueOptionEntity.builder()
-                                                .id(2)
+                                                .id(2L)
                                                 .title("Ketchup")
                                                 .defaultValue(2)
                                                 .priceDiff(BigDecimal.ZERO)
@@ -100,13 +100,13 @@ public class MenuDaoMockImpl implements MenuDao {
                                 )))
                                 .build(),
                         ItemEntity.builder()
-                                .id(2)
+                                .id(2L)
                                 .title("Nachos")
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
                                 .options(Sets.<AbstractOptionEntity>newLinkedHashSet(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
-                                                .id(3)
+                                                .id(3L)
                                                 .title("Käsesoße")
                                                 .index(0)
                                                 .defaultChecked(true)
@@ -115,26 +115,26 @@ public class MenuDaoMockImpl implements MenuDao {
                                 )))
                                 .build(),
                         ItemEntity.builder()
-                                .id(3)
+                                .id(3L)
                                 .title("Mineralwasser")
                                 .price(new BigDecimal("1.9"))
                                 .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
                                 .build(),
                         ItemEntity.builder()
-                                .id(4)
+                                .id(4L)
                                 .title("Augustinger")
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)
                                 .options(Sets.<AbstractOptionEntity>newHashSet(
-                                        createRadioOptionEntity(1, 0, "Größe",
+                                        createRadioOptionEntity(1L, 0, "Größe",
                                                 RadioItemEntity.builder()
-                                                        .id(1)
+                                                        .id(1L)
                                                         .index(0)
                                                         .title("groß")
                                                         .priceDiff(BigDecimal.ZERO)
                                                         .build(),
                                                 RadioItemEntity.builder()
-                                                        .id(2)
+                                                        .id(2L)
                                                         .index(1)
                                                         .title("klein")
                                                         .priceDiff(new BigDecimal("0.5"))
@@ -145,7 +145,11 @@ public class MenuDaoMockImpl implements MenuDao {
                 .build();
     }
 
-    private static RadioOptionEntity createRadioOptionEntity(long id, int index, String title, RadioItemEntity defaultSelected, RadioItemEntity... otherItemEntities) {
+    private static RadioOptionEntity createRadioOptionEntity(Long id,
+                                                             int index,
+                                                             String title,
+                                                             RadioItemEntity defaultSelected,
+                                                             RadioItemEntity... otherItemEntities) {
         Set<RadioItemEntity> items = Sets.newHashSet(otherItemEntities);
         items.add(defaultSelected);
 
@@ -156,6 +160,11 @@ public class MenuDaoMockImpl implements MenuDao {
                 .title(title)
                 .radioItems(items)
                 .build();
+    }
+
+    @Override
+    public MenuEntity update(MenuEntity menuEntity) {
+        throw new UnsupportedOperationException("Not yet implemented: ");
     }
 
     private Long getNewMenuId() {

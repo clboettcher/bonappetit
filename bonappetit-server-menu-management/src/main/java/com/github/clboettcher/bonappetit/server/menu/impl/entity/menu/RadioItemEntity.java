@@ -43,7 +43,7 @@ public class RadioItemEntity {
     @Id
     @GeneratedValue
     @Column(name = "RADIO_ITEM_ID")
-    private long id;
+    private Long id;
 
     /**
      * The title / name of this item, e.g. "small".
@@ -75,18 +75,18 @@ public class RadioItemEntity {
      * @param priceDiff see {@link #priceDiff}.
      */
     @Builder
-    public RadioItemEntity(long id, String title, Integer index, BigDecimal priceDiff) {
+    public RadioItemEntity(Long id, String title, Integer index, BigDecimal priceDiff) {
         this.id = id;
         this.title = title;
         this.index = index;
         this.priceDiff = priceDiff;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

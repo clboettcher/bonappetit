@@ -121,7 +121,7 @@ public class MenuManagementImpl implements MenuManagement {
         LOGGER.info(String.format("Creating menu from DTO %s", menuDto));
 
         MenuEntity menuEntity = this.menuEntityMapper.mapToMenuEntity(menuDto);
-        MenuEntity saved = menuDao.save(menuEntity);
+        MenuEntity saved = menuDao.create(menuEntity);
 
         String location = String.format("%s/%d", MENUS_PATH, saved.getId());
         UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(location);

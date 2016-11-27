@@ -56,6 +56,9 @@ public class MenuDaoImpl implements MenuDao {
     @Autowired
     private MenuRepository menuRepository;
 
+    @Autowired
+    private MenuValidator menuValidator;
+
     @Override
     public MenuEntity getCurrentMenu() {
         Iterable<MenuConfig> all = menuConfigRepository.findAll();
@@ -81,7 +84,8 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
-    public MenuEntity save(MenuEntity menuEntity) {
+    public MenuEntity create(MenuEntity menuEntity) {
+        menuValidator.assertNewMenuValid(menuEntity);
         Set<ItemEntity> items = menuEntity.getItems();
         items.stream()
                 .filter(ItemEntity::hasOptions)
@@ -89,6 +93,12 @@ public class MenuDaoImpl implements MenuDao {
                         .stream()
                         .filter(option -> option instanceof RadioOptionEntity)
                         .forEach(option -> prepareRadioOption(item, (RadioOptionEntity) option)));
+        return menuRepository.save(menuEntity);
+    }
+
+    @Override
+    public MenuEntity update(MenuEntity menuEntity) {
+        menuValidator.assertMenuUpdateValid(menuEntity);
         return menuRepository.save(menuEntity);
     }
 

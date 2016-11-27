@@ -59,7 +59,7 @@ public class ItemEntity {
     @Id
     @GeneratedValue
     @Column(name = "ITEM_ID")
-    private long id;
+    private Long id;
 
     /**
      * The title / name of this item, e.g. "Cola".
@@ -109,7 +109,12 @@ public class ItemEntity {
      * @param sideDishes see {@link #sideDishes}.
      */
     @Builder
-    public ItemEntity(long id, String title, BigDecimal price, ItemEntityType type, Set<AbstractOptionEntity> options, Set<ItemEntity> sideDishes) {
+    public ItemEntity(Long id,
+                      String title,
+                      BigDecimal price,
+                      ItemEntityType type,
+                      Set<AbstractOptionEntity> options,
+                      Set<ItemEntity> sideDishes) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -118,11 +123,11 @@ public class ItemEntity {
         this.sideDishes = sideDishes;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
