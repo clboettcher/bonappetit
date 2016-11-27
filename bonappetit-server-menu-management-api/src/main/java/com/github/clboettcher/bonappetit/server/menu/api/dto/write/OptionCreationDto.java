@@ -36,48 +36,40 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.menu.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.write;
 
-import io.swagger.annotations.ApiModel;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.Set;
-
+/**
+ * Abstract base class for menu item options.
+ */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "A menu item")
-public class ItemDto {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = RadioOptionCreationDto.class, name = "radioOption"),
+        @JsonSubTypes.Type(value = CheckboxOptionCreationDto.class, name = "checkboxOption"),
+        @JsonSubTypes.Type(value = ValueOptionCreationDto.class, name = "valueOption")})
+public abstract class OptionCreationDto {
 
-    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
-    private Long id;
-
-    @ApiModelProperty(value = "The title / name of this item", required = true, example = "Cola")
+    @ApiModelProperty(value = "The title / name of this option",
+            required = true,
+            example = "Size")
     private String title;
 
-    @ApiModelProperty(value = "The price of this item. This is the 'raw' price of the item, not consisting " +
-            "any options which might have effects on the total price.", required = true, example = "2.50")
-    private BigDecimal price;
-
-    @ApiModelProperty(value = "The type of this item", required = true)
-    private ItemDtoType type;
-
-    @ApiModelProperty(value = "The options available for this item")
-    private Set<OptionDto> options;
-
-    @ApiModelProperty(value = "The side dishes available for this item")
-    private Set<ItemDto> sideDishes;
-
-    @Builder
-    public ItemDto(Long id, String title, BigDecimal price, ItemDtoType type, Set<OptionDto> options, Set<ItemDto> sideDishes) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.type = type;
-        this.options = options;
-        this.sideDishes = sideDishes;
-    }
+    @ApiModelProperty(value = "The zero based index that this option should be displayed at in a " +
+            "list of options.",
+            required = true,
+            example = "1",
+            allowableValues = "[0, infinity]")
+    private Integer index;
 }

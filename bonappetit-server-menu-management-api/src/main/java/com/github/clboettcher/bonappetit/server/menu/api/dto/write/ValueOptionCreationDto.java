@@ -17,42 +17,43 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.write;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-/**
- * A single item of a {@link RadioOptionDto}.
- */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "A single item of a radio option")
-public class RadioItemDto {
+@ApiModel(description = "An option consisting of an integer value")
+public class ValueOptionCreationDto extends OptionCreationDto {
 
-    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
-    private Long id;
-
-    @ApiModelProperty(value = "The title / name of this item", required = true, example = "small")
-    private String title;
-
-    @ApiModelProperty(value = "The price difference of this radio item. The total price of an order for an item " +
-            "can be calculated using the items price and the price diff of all options.", required = true, example = "2.50")
+    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
+            "using the items price and the price diff of all options.", required = true, example = "2.50")
     private BigDecimal priceDiff;
 
-    @ApiModelProperty(value = "The index this item should be displayed at", required = true, example = "0")
-    private Integer index;
+    @ApiModelProperty(value = "The default value for this option. That is the initial ordered count.",
+            required = true, example = "2")
+    private int defaultValue;
 
+    /**
+     * Constructor setting the specified properties.
+     *
+     * @param title        see {@link #getTitle()}.
+     * @param index        see {@link #index}.
+     * @param priceDiff    see {@link #getPriceDiff()}.
+     * @param defaultValue see {@link  #getDefaultValue()}.
+     */
     @Builder
-    public RadioItemDto(Long id, String title, BigDecimal priceDiff, Integer index) {
-        this.id = id;
-        this.title = title;
+    public ValueOptionCreationDto(String title, Integer index, BigDecimal priceDiff, int defaultValue) {
+        super(title, index);
         this.priceDiff = priceDiff;
-        this.index = index;
+        this.defaultValue = defaultValue;
     }
 }

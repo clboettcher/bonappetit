@@ -19,34 +19,20 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDto;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDtoType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntityType;
 import org.mapstruct.Mapper;
 
-import java.util.Set;
+import java.util.List;
 
 @Mapper(uses = OptionEntityMapper.class, componentModel = "spring")
 public interface ItemEntityMapper {
 
-    /**
-     * Converts the given {@link ItemDto}s to {@link ItemEntity}s.
-     *
-     * @param items The items to map.
-     * @return The mapping result.
-     */
-    Set<ItemEntity> mapToItemEntity(Set<ItemDto> items);
+    List<ItemEntity> mapToItemEntity(List<ItemCreationDto> items);
 
-    /**
-     * @param item The {@link ItemDto} to map.
-     * @return The mapping result.
-     */
-    ItemEntity mapToItemEntity(ItemDto item);
+    ItemEntity mapToItemEntity(ItemCreationDto item);
 
-    /**
-     * @param itemType The {@link ItemDtoType} to map.
-     * @return The mapping result.
-     */
     ItemEntityType mapToItemEntityType(ItemDtoType itemType);
 }

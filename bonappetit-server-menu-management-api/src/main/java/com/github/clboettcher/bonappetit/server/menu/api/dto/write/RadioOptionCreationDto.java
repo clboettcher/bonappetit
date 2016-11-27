@@ -17,9 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto.read;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.write;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -27,27 +26,32 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "An option that consists of multiple items of which one must be selected")
+public class RadioOptionCreationDto extends OptionCreationDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto valueOption;
+    @ApiModelProperty(value = "The raiod itme that should be selected per default.", required = true)
+    private RadioItemCreationDto defaultSelected;
 
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    @ApiModelProperty(value = "The items that this option consists of.", required = true)
+    private Set<RadioItemCreationDto> radioItems;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param valueOption see {@link #valueOption}.
-     * @param value  see {@link #value}.
+     * @param title           see {@link #getTitle()}.
+     * @param index           see {@link #index}.
+     * @param defaultSelected see {@link #getDefaultSelected()}.
+     * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto valueOption, int value) {
-        this.valueOption = valueOption;
-        this.value = value;
+    public RadioOptionCreationDto(String title, Integer index, RadioItemCreationDto defaultSelected, Set<RadioItemCreationDto> radioItems) {
+        super(title, index);
+        this.defaultSelected = defaultSelected;
+        this.radioItems = radioItems;
     }
 }

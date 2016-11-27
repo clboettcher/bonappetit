@@ -19,8 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDto;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.ItemDtoType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntityType;
 import org.mapstruct.Mapper;

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
 import com.github.clboettcher.bonappetit.common.JsonUtils;
 import com.github.clboettcher.bonappetit.common.ObjectMapperFactory;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

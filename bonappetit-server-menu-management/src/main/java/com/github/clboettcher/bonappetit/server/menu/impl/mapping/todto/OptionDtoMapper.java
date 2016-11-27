@@ -1,9 +1,9 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto;
 
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.CheckboxOptionDto;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.OptionDto;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.ValueOptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.OptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.AbstractOptionEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.CheckboxOptionEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioOptionEntity;

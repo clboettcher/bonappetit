@@ -17,9 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto.read;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.read;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -27,27 +26,34 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "An option consisting of a boolean checkbox")
+public class CheckboxOptionDto extends OptionDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto valueOption;
+    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
+            "using the items price and the price diff of all options.", required = true, example = "0.50")
+    private BigDecimal priceDiff;
 
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    @ApiModelProperty(value = "The default value to set when this option is ordered", required = true)
+    private Boolean defaultChecked;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param valueOption see {@link #valueOption}.
-     * @param value  see {@link #value}.
+     * @param id             see {@link #getId()}.
+     * @param title          see {@link #getTitle()}.
+     * @param index          see {@link #index}.
+     * @param priceDiff      see {@link #getPriceDiff()}.
+     * @param defaultChecked see {@link #getDefaultChecked()}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto valueOption, int value) {
-        this.valueOption = valueOption;
-        this.value = value;
+    public CheckboxOptionDto(Long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+        super(id, title, index);
+        this.priceDiff = priceDiff;
+        this.defaultChecked = defaultChecked;
     }
 }

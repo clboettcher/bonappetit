@@ -36,33 +36,33 @@
 * You should have received a copy of the GNU General Public License
 * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.github.clboettcher.bonappetit.server.menu.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.read;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 /**
- * Enumerates different types of menu items.
+ * The menu represents the items that can be ordered.
  */
-public enum ItemDtoType {
-    /**
-     * A food item.
-     * <p/>
-     * E.g. pommes.
-     */
-    FOOD,
+@NoArgsConstructor
+@Data
+@ApiModel(description = "The menu contains the items that can be ordered")
+public class MenuDto {
 
-    /**
-     * An alcoholic drink.
-     */
-    DRINK_ALCOHOLIC,
+    @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
+    private Long id;
 
-    /**
-     * A non alcoholic drink.
-     * <p/>
-     * E.g. juice.
-     */
-    DRINK_NON_ALCOHOLIC,
+    @ApiModelProperty(value = "The items that this menu consists of")
+    private Set<ItemDto> items;
 
-    /**
-     * A side dish, e.g. 'Ketchup'.
-     */
-    SIDE_DISH
+    @Builder
+    public MenuDto(Long id, Set<ItemDto> items) {
+        this.id = id;
+        this.items = items;
+    }
 }

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.menu.api.dto;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.read;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,34 +26,33 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An option consisting of a boolean checkbox")
-public class CheckboxOptionDto extends OptionDto {
+@ApiModel(description = "An option that consists of multiple items of which one must be selected")
+public class RadioOptionDto extends OptionDto {
 
-    @ApiModelProperty(value = "The price difference of this option. The total price of an order for an item can be calculated " +
-            "using the items price and the price diff of all options.", required = true, example = "0.50")
-    private BigDecimal priceDiff;
+    @ApiModelProperty(value = "The raiod itme that should be selected per default.", required = true)
+    private RadioItemDto defaultSelected;
 
-    @ApiModelProperty(value = "The default value to set when this option is ordered", required = true)
-    private Boolean defaultChecked;
+    @ApiModelProperty(value = "The items that this option consists of.", required = true)
+    private Set<RadioItemDto> radioItems;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #getId()}.
-     * @param title          see {@link #getTitle()}.
-     * @param index          see {@link #index}.
-     * @param priceDiff      see {@link #getPriceDiff()}.
-     * @param defaultChecked see {@link #getDefaultChecked()}.
+     * @param id              see {@link #getId()}.
+     * @param title           see {@link #getTitle()}.
+     * @param index           see {@link #index}.
+     * @param defaultSelected see {@link #getDefaultSelected()}.
+     * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public CheckboxOptionDto(Long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+    public RadioOptionDto(Long id, String title, Integer index, RadioItemDto defaultSelected, Set<RadioItemDto> radioItems) {
         super(id, title, index);
-        this.priceDiff = priceDiff;
-        this.defaultChecked = defaultChecked;
+        this.defaultSelected = defaultSelected;
+        this.radioItems = radioItems;
     }
 }

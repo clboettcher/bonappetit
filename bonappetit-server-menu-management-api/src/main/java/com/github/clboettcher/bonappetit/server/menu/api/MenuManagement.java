@@ -20,7 +20,8 @@
 package com.github.clboettcher.bonappetit.server.menu.api;
 
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -116,7 +117,7 @@ public interface MenuManagement {
                     response = ErrorResponse.class
             )
     )
-    Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto);
+    Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuCreationDto menuDto);
 
     @PUT
     @Path(CURRENT_MENU_PATH + "/{menuId}")

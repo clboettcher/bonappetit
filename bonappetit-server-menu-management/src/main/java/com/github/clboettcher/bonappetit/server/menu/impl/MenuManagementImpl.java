@@ -20,7 +20,8 @@
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
@@ -112,7 +113,7 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
-    public Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuDto menuDto) {
+    public Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuCreationDto menuDto) {
         if (menuDto == null) {
             throw new BadRequestException("Menu that should be created must be present");
         }

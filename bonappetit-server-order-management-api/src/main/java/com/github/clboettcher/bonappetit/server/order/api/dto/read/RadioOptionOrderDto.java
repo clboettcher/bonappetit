@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.RadioItemDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.RadioItemDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

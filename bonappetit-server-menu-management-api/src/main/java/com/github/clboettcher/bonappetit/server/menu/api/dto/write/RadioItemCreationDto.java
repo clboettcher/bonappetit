@@ -17,37 +17,38 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.order.api.dto.read;
+package com.github.clboettcher.bonappetit.server.menu.api.dto.write;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
+/**
+ * A single item of a {@link RadioOptionCreationDto}.
+ */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ApiModel(description = "An order for a value option")
-public class ValueOptionOrderDto extends OptionOrderDto {
+@ApiModel(description = "A single item of a radio option")
+public class RadioItemCreationDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto valueOption;
+    @ApiModelProperty(value = "The title / name of this item", required = true, example = "small")
+    private String title;
 
-    @ApiModelProperty(value = "The ordered value", required = true, example = "2")
-    private int value;
+    @ApiModelProperty(value = "The price difference of this radio item. The total price of an order for an item " +
+            "can be calculated using the items price and the price diff of all options.", required = true, example = "2.50")
+    private BigDecimal priceDiff;
 
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param valueOption see {@link #valueOption}.
-     * @param value  see {@link #value}.
-     */
+    @ApiModelProperty(value = "The index this item should be displayed at", required = true, example = "0")
+    private Integer index;
+
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto valueOption, int value) {
-        this.valueOption = valueOption;
-        this.value = value;
+    public RadioItemCreationDto(String title, BigDecimal priceDiff, Integer index) {
+        this.title = title;
+        this.priceDiff = priceDiff;
+        this.index = index;
     }
 }
