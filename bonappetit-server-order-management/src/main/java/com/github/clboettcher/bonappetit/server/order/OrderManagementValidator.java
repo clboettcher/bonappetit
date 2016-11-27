@@ -94,8 +94,8 @@ public class OrderManagementValidator {
 
         optionOrders.forEach(optionOrderDto -> {
             if (optionOrderDto instanceof ValueOptionOrderCreationDto) {
-                ValueOptionOrderCreationDto valuOptionOrderDto = (ValueOptionOrderCreationDto) optionOrderDto;
-                assertValid(valuOptionOrderDto);
+                ValueOptionOrderCreationDto valueOptionOrderDto = (ValueOptionOrderCreationDto) optionOrderDto;
+                assertValid(valueOptionOrderDto);
             } else if (optionOrderDto instanceof CheckboxOptionOrderCreationDto) {
                 CheckboxOptionOrderCreationDto orderDto = (CheckboxOptionOrderCreationDto) optionOrderDto;
                 assertValid(orderDto);
