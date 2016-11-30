@@ -29,6 +29,9 @@ In order of appearance.
 
 Claudius Boettcher, <pos.bonappetit@gmail.com>.
 
+## Sponsor
+[![QAware GmbH](https://github.com/clboettcher/bonappetit/blob/develop/qaware.png?raw=true)](http://www.qaware.de)
+
 ## GNU GPL v3 License
 
 BonAppetit is free software: you can redistribute it and/or modify
