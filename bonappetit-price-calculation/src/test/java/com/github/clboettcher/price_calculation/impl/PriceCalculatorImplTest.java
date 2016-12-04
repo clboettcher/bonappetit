@@ -19,8 +19,8 @@
  */
 package com.github.clboettcher.price_calculation.impl;
 
-import com.gihub.clboettcher.price_calculation.api.entity.*;
 import com.gihub.clboettcher.price_calculation.impl.PriceCalculatorImpl;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Rule;
@@ -49,8 +49,8 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testItemWithoutOptions() throws Exception {
-        ItemOrderPrices order = ItemOrderPrices.builder()
-                .price(new BigDecimal("3.125"))
+        ItemOrderDto order = ItemOrderDto.builder()
+                .itemPrice(new BigDecimal("3.125"))
                 .build();
         BigDecimal totalPrice = priceCalculator.calculateTotalPrice(order);
         assertThat(totalPrice, is(new BigDecimal("3.13")));
@@ -58,11 +58,11 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testValueOptionWithValueZeroHasNoEffect() throws Exception {
-        ItemOrderPrices order = ItemOrderPrices.builder()
-                .price(new BigDecimal("3.00"))
-                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(ValueOptionOrderPrices.builder()
+        ItemOrderDto order = ItemOrderDto.builder()
+                .itemPrice(new BigDecimal("3.00"))
+                .optionOrders(Lists.<OptionOrderDto>newArrayList(ValueOptionOrderDto.builder()
                         .value(0)
-                        .priceDiff(BigDecimal.ONE)
+                        .optionPriceDiff(BigDecimal.ONE)
                         .build()
                 ))
                 .build();
@@ -73,12 +73,12 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testUncheckedCheckboxHasNoEffect() throws Exception {
-        ItemOrderPrices order = ItemOrderPrices.builder()
-                .price(new BigDecimal("3.00"))
-                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(
-                        CheckboxOptionOrderPrices.builder()
+        ItemOrderDto order = ItemOrderDto.builder()
+                .itemPrice(new BigDecimal("3.00"))
+                .optionOrders(Lists.<OptionOrderDto>newArrayList(
+                        CheckboxOptionOrderDto.builder()
                                 .checked(false)
-                                .priceDiff(new BigDecimal("0.5"))
+                                .optionPriceDiff(new BigDecimal("0.5"))
                                 .build()
                 ))
                 .build();
@@ -89,19 +89,19 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testMixedOptions() throws Exception {
-        ItemOrderPrices order = ItemOrderPrices.builder()
-                .price(new BigDecimal("3.00"))
-                .optionOrderPrices(Lists.newArrayList(
-                        ValueOptionOrderPrices.builder()
+        ItemOrderDto order = ItemOrderDto.builder()
+                .itemPrice(new BigDecimal("3.00"))
+                .optionOrders(Lists.newArrayList(
+                        ValueOptionOrderDto.builder()
                                 .value(2)
-                                .priceDiff(BigDecimal.ONE)
+                                .optionPriceDiff(BigDecimal.ONE)
                                 .build(),
-                        CheckboxOptionOrderPrices.builder()
+                        CheckboxOptionOrderDto.builder()
                                 .checked(true)
-                                .priceDiff(new BigDecimal("0.5"))
+                                .optionPriceDiff(new BigDecimal("0.5"))
                                 .build(),
-                        RadioOptionOrderPrices.builder()
-                                .selectedItemPriceDiff(new BigDecimal("-0.25"))
+                        RadioOptionOrderDto.builder()
+                                .optionPriceDiff(new BigDecimal("-0.25"))
                                 .build()
                 ))
                 .build();
@@ -112,10 +112,10 @@ public class PriceCalculatorImplTest {
 
     @Test
     public void testUnknownOptionType() throws Exception {
-        ItemOrderPrices itemOrder = ItemOrderPrices.builder()
-                .price(BigDecimal.ONE)
-                .optionOrderPrices(Lists.<OptionOrderPrices>newArrayList(
-                        new OptionOrderPrices() {
+        ItemOrderDto itemOrder = ItemOrderDto.builder()
+                .itemPrice(BigDecimal.ONE)
+                .optionOrders(Lists.<OptionOrderDto>newArrayList(
+                        new OptionOrderDto() {
                         }
                 ))
                 .build();

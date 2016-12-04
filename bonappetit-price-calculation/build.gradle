@@ -7,6 +7,7 @@ description = "This module calculates prices for orders."
 
 dependencies {
     compile project(':bonappetit-common')
+    compile project(':bonappetit-server-order-management-api')
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
     testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"

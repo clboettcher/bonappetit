@@ -19,8 +19,7 @@
  */
 package com.gihub.clboettcher.price_calculation.api;
 
-import com.gihub.clboettcher.price_calculation.api.entity.ItemOrderPrices;
-import com.gihub.clboettcher.price_calculation.api.entity.OptionOrderPrices;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 
 import java.math.BigDecimal;
 
@@ -30,12 +29,12 @@ import java.math.BigDecimal;
 public interface PriceCalculator {
 
     /**
-     * Calculates the total price of the given {@link ItemOrderPrices} taking all
-     * ordered {@link OptionOrderPrices}s into account.
+     * Calculates the total price of the given item order taking all
+     * ordered options into account.
      *
      * @param itemOrder The order to calculate the total price of.
      * @return The calculated price.
      */
-    BigDecimal calculateTotalPrice(ItemOrderPrices itemOrder);
+    BigDecimal calculateTotalPrice(ItemOrderDto itemOrder);
 
 }

@@ -20,7 +20,7 @@
 package com.gihub.clboettcher.price_calculation.impl;
 
 import com.gihub.clboettcher.price_calculation.api.PriceCalculator;
-import com.gihub.clboettcher.price_calculation.api.entity.*;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -34,26 +34,26 @@ import java.util.List;
 public class PriceCalculatorImpl implements PriceCalculator {
 
     @Override
-    public BigDecimal calculateTotalPrice(ItemOrderPrices itemOrder) {
+    public BigDecimal calculateTotalPrice(ItemOrderDto itemOrder) {
         Preconditions.checkNotNull(itemOrder, "itemOrder");
-        Preconditions.checkNotNull(itemOrder.getPrice(), "itemOrder.getPrice()");
-        BigDecimal result = itemOrder.getPrice();
+        Preconditions.checkNotNull(itemOrder.getItemPrice(), "itemOrder.getPrice()");
+        BigDecimal result = itemOrder.getItemPrice();
 
-        final List<OptionOrderPrices> optionOrders = itemOrder.getOptionOrderPrices();
+        final List<OptionOrderDto> optionOrders = itemOrder.getOptionOrders();
         if (CollectionUtils.isNotEmpty(optionOrders)) {
-            for (OptionOrderPrices optionOrder : optionOrders) {
-                if (optionOrder instanceof ValueOptionOrderPrices) {
-                    ValueOptionOrderPrices valueOptionOrder = (ValueOptionOrderPrices) optionOrder;
-                    final BigDecimal valueOptionOrderPrice = valueOptionOrder.getPriceDiff().multiply(
+            for (OptionOrderDto optionOrder : optionOrders) {
+                if (optionOrder instanceof ValueOptionOrderDto) {
+                    ValueOptionOrderDto valueOptionOrder = (ValueOptionOrderDto) optionOrder;
+                    final BigDecimal valueOptionOrderPrice = valueOptionOrder.getOptionPriceDiff().multiply(
                             new BigDecimal(String.valueOf(valueOptionOrder.getValue())));
                     result = result.add(valueOptionOrderPrice);
-                } else if (optionOrder instanceof RadioOptionOrderPrices) {
-                    RadioOptionOrderPrices radioOptionOrder = (RadioOptionOrderPrices) optionOrder;
-                    result = result.add(radioOptionOrder.getSelectedItemPriceDiff());
-                } else if (optionOrder instanceof CheckboxOptionOrderPrices) {
-                    CheckboxOptionOrderPrices checkboxOptionOrder = (CheckboxOptionOrderPrices) optionOrder;
+                } else if (optionOrder instanceof RadioOptionOrderDto) {
+                    RadioOptionOrderDto radioOptionOrder = (RadioOptionOrderDto) optionOrder;
+                    result = result.add(radioOptionOrder.getOptionPriceDiff());
+                } else if (optionOrder instanceof CheckboxOptionOrderDto) {
+                    CheckboxOptionOrderDto checkboxOptionOrder = (CheckboxOptionOrderDto) optionOrder;
                     if (checkboxOptionOrder.getChecked()) {
-                        result = result.add(checkboxOptionOrder.getPriceDiff());
+                        result = result.add(checkboxOptionOrder.getOptionPriceDiff());
                     }
                 } else {
                     throw new IllegalArgumentException(String.format("Could not calculate price for option " +
