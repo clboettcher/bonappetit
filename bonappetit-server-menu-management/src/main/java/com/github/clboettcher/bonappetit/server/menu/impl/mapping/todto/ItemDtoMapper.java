@@ -25,7 +25,7 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntityType;
 import org.mapstruct.Mapper;
 
-import java.util.Set;
+import java.util.List;
 
 @Mapper(uses = OptionDtoMapper.class, componentModel = "spring")
 public interface ItemDtoMapper {
@@ -36,7 +36,7 @@ public interface ItemDtoMapper {
      * @param items The items to map.
      * @return The mapping result.
      */
-    Set<ItemDto> mapToItemEntityDtos(Set<ItemEntity> items);
+    List<ItemDto> mapToItemEntityDtos(List<ItemEntity> items);
 
     /**
      * @param item The {@link ItemEntity} to map.

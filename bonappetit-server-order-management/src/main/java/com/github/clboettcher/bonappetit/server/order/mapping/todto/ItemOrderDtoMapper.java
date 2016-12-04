@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.todto;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OrderStatusDto;
@@ -30,6 +31,7 @@ import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -39,6 +41,9 @@ import java.util.List;
 public abstract class ItemOrderDtoMapper {
 
     public abstract List<ItemOrderDto> mapToItemOrderDtos(List<ItemOrderEntity> orderEntities);
+
+    @Autowired
+    private ItemDtoMapper itemDtoMapper;
 
     public ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrderEntity) {
 
@@ -52,7 +57,7 @@ public abstract class ItemOrderDtoMapper {
 
         return ItemOrderDto.builder()
                 .id(itemOrderEntity.getId())
-                .itemId(item.getId())
+                .orderedItem(itemDtoMapper.mapToItemEntityDto(item))
                 .optionOrders(this.mapToOptionOrderDtos(optionOrders))
                 .deliverTo(itemOrderEntity.getDeliverTo())
                 .staffMemberId(staffMember.getId())

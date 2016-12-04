@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -36,8 +37,8 @@ public class ItemOrderDto {
     @ApiModelProperty(value = "The ID of the order", required = true)
     private Long id;
 
-    @ApiModelProperty(value = "The ID of the ordered item", required = true)
-    private Long itemId;
+    @ApiModelProperty(value = "The ordered item", required = true)
+    private ItemDto orderedItem;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
     private List<OptionOrderDto> optionOrders;
@@ -59,11 +60,17 @@ public class ItemOrderDto {
     private OrderStatusDto orderStatus;
 
     @Builder
-    public ItemOrderDto(Long id, Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
-                        Long staffMemberId, DateTime orderTime, String note, OrderStatusDto orderStatus) {
+    public ItemOrderDto(Long id,
+                        ItemDto orderedItem,
+                        List<OptionOrderDto> optionOrders,
+                        String deliverTo,
+                        Long staffMemberId,
+                        DateTime orderTime,
+                        String note,
+                        OrderStatusDto orderStatus) {
 
         this.id = id;
-        this.itemId = itemId;
+        this.orderedItem = orderedItem;
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
         this.staffMemberId = staffMemberId;
