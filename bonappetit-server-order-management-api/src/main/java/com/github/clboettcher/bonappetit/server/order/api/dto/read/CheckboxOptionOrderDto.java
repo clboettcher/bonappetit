@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.CheckboxOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -35,8 +34,8 @@ import java.math.BigDecimal;
 @ApiModel(description = "An order for a checkbox option")
 public class CheckboxOptionOrderDto extends OptionOrderDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private CheckboxOptionDto checkboxOption;
+    @ApiModelProperty(value = "The id of the ordered option", required = true)
+    private Long checkboxOptionId;
 
     @ApiModelProperty(value = "Whether the option has been checked or not", required = true)
     private Boolean checked;
@@ -44,18 +43,18 @@ public class CheckboxOptionOrderDto extends OptionOrderDto {
     /**
      * Constructor setting the specified properties.
      *
-     * @param checkboxOption  see {@link #checkboxOption}.
-     * @param checked         see {@link #checked}.
-     * @param optionTitle     see {@link #optionTitle}.
-     * @param optionPriceDiff see {@link #optionPriceDiff}.
+     * @param checkboxOptionId see {@link #checkboxOptionId}.
+     * @param checked          see {@link #checked}.
+     * @param optionTitle      see {@link #optionTitle}.
+     * @param optionPriceDiff  see {@link #optionPriceDiff}.
      */
     @Builder
-    public CheckboxOptionOrderDto(CheckboxOptionDto checkboxOption,
+    public CheckboxOptionOrderDto(Long checkboxOptionId,
                                   Boolean checked,
                                   String optionTitle,
                                   BigDecimal optionPriceDiff) {
         super(optionTitle, optionPriceDiff);
-        this.checkboxOption = checkboxOption;
+        this.checkboxOptionId = checkboxOptionId;
         this.checked = checked;
     }
 }

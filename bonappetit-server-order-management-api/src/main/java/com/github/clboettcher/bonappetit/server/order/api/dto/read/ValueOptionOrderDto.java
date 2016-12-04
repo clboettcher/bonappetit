@@ -19,7 +19,6 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -35,8 +34,8 @@ import java.math.BigDecimal;
 @ApiModel(description = "An order for a value option")
 public class ValueOptionOrderDto extends OptionOrderDto {
 
-    @ApiModelProperty(value = "The ordered option", required = true)
-    private ValueOptionDto valueOption;
+    @ApiModelProperty(value = "The id of the ordered option", required = true)
+    private Long valueOptionId;
 
     @ApiModelProperty(value = "The ordered value", required = true, example = "2")
     private int value;
@@ -44,15 +43,18 @@ public class ValueOptionOrderDto extends OptionOrderDto {
     /**
      * Constructor setting the specified properties.
      *
-     * @param valueOption     see {@link #valueOption}.
+     * @param valueOptionId   see {@link #valueOptionId}.
      * @param value           see {@link #value}.
      * @param optionTitle     see {@link #optionTitle}.
      * @param optionPriceDiff see {@link #optionPriceDiff}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto valueOption, int value, String optionTitle, BigDecimal optionPriceDiff) {
+    public ValueOptionOrderDto(Long valueOptionId,
+                               int value,
+                               String optionTitle,
+                               BigDecimal optionPriceDiff) {
         super(optionTitle, optionPriceDiff);
-        this.valueOption = valueOption;
+        this.valueOptionId = valueOptionId;
         this.value = value;
     }
 }

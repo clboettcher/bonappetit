@@ -24,7 +24,7 @@ public abstract class RadioOptionOrderDtoMapper {
         RadioOptionOrderDto result = new RadioOptionOrderDto();
 
         RadioItemEntity selectedRadioItem = radioOrder.getSelectedRadioItem();
-        result.setSelectedRadioItem(radioItemDtoMapper.mapToRadioItemDto(selectedRadioItem));
+        result.setSelectedRadioItemId(selectedRadioItem.getId());
         result.setOptionTitle(radioOrder.getOptionTitle());
         result.setOptionPriceDiff(radioOrder.getOptionPriceDiff());
 
