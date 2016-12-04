@@ -1,6 +1,7 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.RadioItemDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioItemEntity;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.RadioOptionOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.entity.RadioOptionOrderEntity;
 import org.mapstruct.Mapper;
@@ -20,7 +21,10 @@ public abstract class RadioOptionOrderEntityMapper {
         RadioOptionOrderEntity result = new RadioOptionOrderEntity();
 
         // Existence of referenced radio item has been validate before.
-        result.setSelectedRadioItem(radioItemDao.getRadioItemById(radioOption.getSelectedRadioItemId()));
+        RadioItemEntity radioItem = radioItemDao.getRadioItemById(radioOption.getSelectedRadioItemId());
+        result.setSelectedRadioItem(radioItem);
+        result.setOptionTitle(radioItem.getTitle());
+        result.setOptionPriceDiff(radioItem.getPriceDiff());
 
         return result;
     }

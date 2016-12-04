@@ -25,14 +25,19 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Abstract base class for option order entities.
+ * <p>
+ * Option orders are orders for options. They are not used on their own but
+ * always belong to an item order.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OPTION_ORDER_TYPE")
-// Force usage of the discriminator value when querying a specific subclass to prevent loading of the wrong subtype.
+// Force usage of the discriminator value when querying a specific subclass to prevent
+// loading of the wrong subtype.
 @DiscriminatorOptions(force = true)
 @Table(name = "OPTION_ORDER")
 @Data
@@ -47,4 +52,29 @@ public abstract class AbstractOptionOrderEntity {
     @GeneratedValue
     @Column(name = "OPTION_ORDER_ID")
     private Long id;
+
+    /**
+     * The title / name of the referenced option.
+     * <p>
+     * Use this property rather than the title of
+     * the option referenced in subclasses because the referenced
+     * option might have changed since
+     * the order was created.
+     */
+    @Column(name = "OPTION_TITLE", nullable = false)
+    private String optionTitle;
+
+
+    /**
+     * The price difference of the referenced option or radio item.
+     * <p>
+     * The total price of an order for an item order can be calculated
+     * using the items price and the price diff of all options.
+     * <p>
+     * Use this property rather than the price diff of the referenced option
+     * because the referenced option might have changed since
+     * the order was created.
+     */
+    @Column(name = "OPTION_PRICE_DIFF", nullable = false)
+    private BigDecimal optionPriceDiff;
 }

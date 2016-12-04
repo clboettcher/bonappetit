@@ -29,6 +29,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 /**
  * An order for a value option.
@@ -50,19 +51,25 @@ public class ValueOptionOrderEntity extends AbstractOptionOrderEntity {
      * The value describing how often the option was ordered.
      */
     @Column(name = "VALUE", nullable = true)
-    private int value;
+    private Integer value;
 
     /**
      * Constructor setting the specified properties.
      *
-     * @param id          see {@link #getId()}.
-     * @param valueOption see {@link #getValueOption()}.
-     * @param value       see {@link #getValue()}.
+     * @param id              see {@link #id}.
+     * @param optionTitle     see {@link #optionTitle}.
+     * @param optionPriceDiff see {@link #optionPriceDiff}.
+     * @param value           see {@link #value}.
+     * @param valueOption     see {@link #valueOption}.
      */
     @Builder
-    public ValueOptionOrderEntity(long id, ValueOptionEntity valueOption, int value) {
-        super(id);
-        this.valueOption = valueOption;
+    public ValueOptionOrderEntity(Long id,
+                                  String optionTitle,
+                                  BigDecimal optionPriceDiff,
+                                  Integer value,
+                                  ValueOptionEntity valueOption) {
+        super(id, optionTitle, optionPriceDiff);
         this.value = value;
+        this.valueOption = valueOption;
     }
 }

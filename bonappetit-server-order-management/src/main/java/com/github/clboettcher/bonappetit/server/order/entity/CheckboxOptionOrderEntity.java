@@ -29,6 +29,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 /**
  * An order for a checkbox option.
@@ -55,14 +56,20 @@ public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id             see {@link #id}.
-     * @param checkboxOption see {@link #checkboxOption}.
-     * @param checked        see {@link #checked}.
+     * @param id              see {@link #id}.
+     * @param optionTitle     see {@link #optionTitle}.
+     * @param optionPriceDiff see {@link #optionPriceDiff}.
+     * @param checked         see {@link #checked}.
+     * @param checkboxOption  see {@link #checkboxOption}.
      */
     @Builder
-    public CheckboxOptionOrderEntity(long id, CheckboxOptionEntity checkboxOption, Boolean checked) {
-        super(id);
-        this.checkboxOption = checkboxOption;
+    public CheckboxOptionOrderEntity(long id,
+                                     String optionTitle,
+                                     BigDecimal optionPriceDiff,
+                                     Boolean checked,
+                                     CheckboxOptionEntity checkboxOption) {
+        super(id, optionTitle, optionPriceDiff);
         this.checked = checked;
+        this.checkboxOption = checkboxOption;
     }
 }

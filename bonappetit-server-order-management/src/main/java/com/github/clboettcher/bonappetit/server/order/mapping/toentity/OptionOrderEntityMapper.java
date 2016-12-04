@@ -2,7 +2,6 @@ package com.github.clboettcher.bonappetit.server.order.mapping.toentity;
 
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.OptionDao;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.AbstractOptionEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.CheckboxOptionEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ValueOptionEntity;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.CheckboxOptionOrderCreationDto;
@@ -50,6 +49,8 @@ public abstract class OptionOrderEntityMapper {
         CheckboxOptionEntity checkboxOption = (CheckboxOptionEntity) optionDao.getOptionById(option.getOptionId());
 
         result.setCheckboxOption(checkboxOption);
+        result.setOptionTitle(checkboxOption.getTitle());
+        result.setOptionPriceDiff(checkboxOption.getPriceDiff());
         result.setChecked(option.getChecked());
 
         return result;
@@ -65,8 +66,10 @@ public abstract class OptionOrderEntityMapper {
         result.setValue(valueOption.getValue());
 
         // Existence and correct type of referenced option have been validated before.
-        AbstractOptionEntity optionEntity = optionDao.getOptionById(valueOption.getOptionId());
-        result.setValueOption((ValueOptionEntity) optionEntity);
+        ValueOptionEntity valueOptionEntity = (ValueOptionEntity) optionDao.getOptionById(valueOption.getOptionId());
+        result.setValueOption(valueOptionEntity);
+        result.setOptionTitle(valueOptionEntity.getTitle());
+        result.setOptionPriceDiff(valueOptionEntity.getPriceDiff());
 
         return result;
     }

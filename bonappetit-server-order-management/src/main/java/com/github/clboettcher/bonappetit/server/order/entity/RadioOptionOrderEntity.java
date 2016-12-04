@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 /**
  * An order for a radio option.
@@ -48,12 +49,17 @@ public class RadioOptionOrderEntity extends AbstractOptionOrderEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id                see {@link #getId()}.
-     * @param selectedRadioItem see {@link #getSelectedRadioItem()}.
+     * @param id                see {@link #id}.
+     * @param optionTitle       see {@link #optionTitle}.
+     * @param optionPriceDiff   see {@link #optionPriceDiff}.
+     * @param selectedRadioItem see {@link #selectedRadioItem}-
      */
     @Builder
-    public RadioOptionOrderEntity(long id, RadioItemEntity selectedRadioItem) {
-        super(id);
+    public RadioOptionOrderEntity(Long id,
+                                  String optionTitle,
+                                  BigDecimal optionPriceDiff,
+                                  RadioItemEntity selectedRadioItem) {
+        super(id, optionTitle, optionPriceDiff);
         this.selectedRadioItem = selectedRadioItem;
     }
 }

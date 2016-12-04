@@ -59,14 +59,14 @@ public abstract class ItemOrderEntityMapper {
 
         abstractOptionOrderEntities.forEach(abstractOptionOrderEntity -> {
             if (abstractOptionOrderEntity instanceof CheckboxOptionOrderEntity) {
-                CheckboxOptionOrderEntity checkboxOptionOrderEntity = (CheckboxOptionOrderEntity) abstractOptionOrderEntity;
-                checkboxOptionOrderEntities.add(checkboxOptionOrderEntity);
+                CheckboxOptionOrderEntity checkboxOrder = (CheckboxOptionOrderEntity) abstractOptionOrderEntity;
+                checkboxOptionOrderEntities.add(checkboxOrder);
             } else if (abstractOptionOrderEntity instanceof ValueOptionOrderEntity) {
-                ValueOptionOrderEntity optionOrderEntity = (ValueOptionOrderEntity) abstractOptionOrderEntity;
-                valueOptionOrderEntities.add(optionOrderEntity);
+                ValueOptionOrderEntity valueOrder = (ValueOptionOrderEntity) abstractOptionOrderEntity;
+                valueOptionOrderEntities.add(valueOrder);
             } else if (abstractOptionOrderEntity instanceof RadioOptionOrderEntity) {
-                RadioOptionOrderEntity radioOptionOrderEntity = (RadioOptionOrderEntity) abstractOptionOrderEntity;
-                radioOptionOrderEntities.add(radioOptionOrderEntity);
+                RadioOptionOrderEntity radioOrder = (RadioOptionOrderEntity) abstractOptionOrderEntity;
+                radioOptionOrderEntities.add(radioOrder);
             } else {
                 throw new IllegalArgumentException(String.format("Unknown subtype %s of %s",
                         abstractOptionOrderEntity.getClass().getName(),
@@ -76,6 +76,9 @@ public abstract class ItemOrderEntityMapper {
 
         return ItemOrderEntity.builder()
                 .item(item)
+                .itemTitle(item.getTitle())
+                .itemPrice(item.getPrice())
+                .itemType(item.getType())
                 .checkboxOptionOrders(checkboxOptionOrderEntities)
                 .valueOptionOrders(valueOptionOrderEntities)
                 .radioOptionOrders(radioOptionOrderEntities)

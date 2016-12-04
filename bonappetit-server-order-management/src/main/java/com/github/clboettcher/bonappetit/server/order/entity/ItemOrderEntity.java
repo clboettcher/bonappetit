@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.order.entity;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntityType;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +56,43 @@ public class ItemOrderEntity {
     @OneToOne(optional = false)
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private ItemEntity item;
+
+    /**
+     * The title / name of the ordered item.
+     * <p>
+     * Use this property rather than {@link #item#getTitle()}
+     * because the referenced item might have changed since
+     * the order was created.
+     */
+    @Column(name = "ITEM_TITLE", nullable = false)
+    private String itemTitle;
+
+    /**
+     * The price of the ordered item.
+     * <p>
+     * This is the 'raw' price of the ordered item, not considering any
+     * options which might have effects on the total price.
+     * <p>
+     * Use this property rather than {@link #item#getPrice()}
+     * because the referenced item might have changed since
+     * the order was created.
+     *
+     * @see #checkboxOptionOrders
+     * @see #radioOptionOrders
+     * @see #valueOptionOrders
+     */
+    @Column(name = "ITEM_PRICE", nullable = false)
+    private BigDecimal itemPrice;
+
+    /**
+     * The type of the ordered item.
+     * <p>
+     * Use this property rather than {@link #item#getType()}
+     * because the referenced item might have changed since
+     * the order was created.
+     */
+    @Column(name = "ITEM_TYPE", nullable = false)
+    private ItemEntityType itemType;
 
     // We need to model the ordered options for each type separately so that hibernate
     // is able to query the it via WHEN clause on the discriminator value. Otherwise
@@ -118,6 +157,9 @@ public class ItemOrderEntity {
      * Constructor setting the specified properties.
      *
      * @param item                 see {@link #item}.
+     * @param itemTitle            see {@link #itemTitle}.
+     * @param itemPrice            see {@link #itemPrice}.
+     * @param itemType             see {@link #itemType}.
      * @param checkboxOptionOrders see {@link #checkboxOptionOrders}.
      * @param deliverTo            see {@link #deliverTo}.
      * @param staffMember          see {@link #staffMember}.
@@ -127,6 +169,9 @@ public class ItemOrderEntity {
      */
     @Builder
     public ItemOrderEntity(ItemEntity item,
+                           String itemTitle,
+                           BigDecimal itemPrice,
+                           ItemEntityType itemType,
                            List<CheckboxOptionOrderEntity> checkboxOptionOrders,
                            List<ValueOptionOrderEntity> valueOptionOrders,
                            List<RadioOptionOrderEntity> radioOptionOrders,
@@ -136,6 +181,9 @@ public class ItemOrderEntity {
                            String note,
                            OrderEntityStatus status) {
         this.item = item;
+        this.itemTitle = itemTitle;
+        this.itemPrice = itemPrice;
+        this.itemType = itemType;
         this.checkboxOptionOrders = checkboxOptionOrders;
         this.valueOptionOrders = valueOptionOrders;
         this.radioOptionOrders = radioOptionOrders;
