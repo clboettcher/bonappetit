@@ -27,6 +27,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -42,11 +44,14 @@ public class ValueOptionOrderDto extends OptionOrderDto {
     /**
      * Constructor setting the specified properties.
      *
-     * @param valueOption see {@link #valueOption}.
-     * @param value  see {@link #value}.
+     * @param valueOption     see {@link #valueOption}.
+     * @param value           see {@link #value}.
+     * @param optionTitle     see {@link #optionTitle}.
+     * @param optionPriceDiff see {@link #optionPriceDiff}.
      */
     @Builder
-    public ValueOptionOrderDto(ValueOptionDto valueOption, int value) {
+    public ValueOptionOrderDto(ValueOptionDto valueOption, int value, String optionTitle, BigDecimal optionPriceDiff) {
+        super(optionTitle, optionPriceDiff);
         this.valueOption = valueOption;
         this.value = value;
     }

@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -26,6 +27,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -38,6 +40,15 @@ public class ItemOrderDto {
 
     @ApiModelProperty(value = "The ID of the ordered item", required = true)
     private Long itemId;
+
+    @ApiModelProperty(value = "The title of the ordered item", required = true)
+    private String itemTitle;
+
+    @ApiModelProperty(value = "The price of the ordered item", required = true)
+    private BigDecimal itemPrice;
+
+    @ApiModelProperty(value = "The type of the ordered item", required = true)
+    private ItemDtoType itemType;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
     private List<OptionOrderDto> optionOrders;
@@ -59,8 +70,14 @@ public class ItemOrderDto {
     private OrderStatusDto orderStatus;
 
     @Builder
-    public ItemOrderDto(Long id, Long itemId, List<OptionOrderDto> optionOrders, String deliverTo,
-                        Long staffMemberId, DateTime orderTime, String note, OrderStatusDto orderStatus) {
+    public ItemOrderDto(Long id,
+                        Long itemId,
+                        String itemTitle, BigDecimal itemPrice, ItemDtoType itemType, List<OptionOrderDto> optionOrders,
+                        String deliverTo,
+                        Long staffMemberId,
+                        DateTime orderTime,
+                        String note,
+                        OrderStatusDto orderStatus) {
 
         this.id = id;
         this.itemId = itemId;
@@ -70,5 +87,8 @@ public class ItemOrderDto {
         this.orderTime = orderTime;
         this.note = note;
         this.orderStatus = orderStatus;
+        this.itemTitle = itemTitle;
+        this.itemPrice = itemPrice;
+        this.itemType = itemType;
     }
 }

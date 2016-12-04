@@ -16,15 +16,18 @@ public abstract class RadioOptionOrderDtoMapper {
     private RadioItemDtoMapper radioItemDtoMapper;
 
     // Sadly mapstruct does not use mappers from other modules out of the box so we do it manually for now.
-    RadioOptionOrderDto mapToRadioOptionDto(RadioOptionOrderEntity radioOption) {
-        if (radioOption == null) {
+    RadioOptionOrderDto mapToRadioOptionDto(RadioOptionOrderEntity radioOrder) {
+        if (radioOrder == null) {
             return null;
         }
 
         RadioOptionOrderDto result = new RadioOptionOrderDto();
 
-        RadioItemEntity selectedRadioItem = radioOption.getSelectedRadioItem();
+        RadioItemEntity selectedRadioItem = radioOrder.getSelectedRadioItem();
         result.setSelectedRadioItem(radioItemDtoMapper.mapToRadioItemDto(selectedRadioItem));
+        result.setOptionTitle(radioOrder.getOptionTitle());
+        result.setOptionPriceDiff(radioOrder.getOptionPriceDiff());
+
 
         return result;
     }

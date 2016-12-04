@@ -27,6 +27,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * An order for a radio option.
  */
@@ -43,9 +45,14 @@ public class RadioOptionOrderDto extends OptionOrderDto {
      * Constructor setting the specified properties.
      *
      * @param selectedRadioItem see {@link #selectedRadioItem}.
+     * @param optionTitle       see {@link #optionTitle}.
+     * @param optionPriceDiff   see {@link #optionPriceDiff}.
      */
     @Builder
-    public RadioOptionOrderDto(RadioItemDto selectedRadioItem) {
+    public RadioOptionOrderDto(RadioItemDto selectedRadioItem,
+                               String optionTitle,
+                               BigDecimal optionPriceDiff) {
+        super(optionTitle, optionPriceDiff);
         this.selectedRadioItem = selectedRadioItem;
     }
 

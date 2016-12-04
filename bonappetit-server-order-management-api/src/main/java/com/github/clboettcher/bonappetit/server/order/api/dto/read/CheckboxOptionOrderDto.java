@@ -27,6 +27,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -43,10 +45,16 @@ public class CheckboxOptionOrderDto extends OptionOrderDto {
      * Constructor setting the specified properties.
      *
      * @param checkboxOption  see {@link #checkboxOption}.
-     * @param checked see {@link #checked}.
+     * @param checked         see {@link #checked}.
+     * @param optionTitle     see {@link #optionTitle}.
+     * @param optionPriceDiff see {@link #optionPriceDiff}.
      */
     @Builder
-    public CheckboxOptionOrderDto(CheckboxOptionDto checkboxOption, Boolean checked) {
+    public CheckboxOptionOrderDto(CheckboxOptionDto checkboxOption,
+                                  Boolean checked,
+                                  String optionTitle,
+                                  BigDecimal optionPriceDiff) {
+        super(optionTitle, optionPriceDiff);
         this.checkboxOption = checkboxOption;
         this.checked = checked;
     }

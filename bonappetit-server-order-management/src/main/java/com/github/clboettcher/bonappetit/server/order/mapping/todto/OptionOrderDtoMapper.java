@@ -60,6 +60,8 @@ public abstract class OptionOrderDtoMapper {
         result.setChecked(checkboxOptionOrderEntity.getChecked());
         CheckboxOptionEntity checkboxOption = checkboxOptionOrderEntity.getCheckboxOption();
         result.setCheckboxOption(this.optionDtoMapper.mapToCheckboxOptionDto(checkboxOption));
+        result.setOptionTitle(checkboxOptionOrderEntity.getOptionTitle());
+        result.setOptionPriceDiff(checkboxOptionOrderEntity.getOptionPriceDiff());
 
         return result;
     }
@@ -75,6 +77,9 @@ public abstract class OptionOrderDtoMapper {
         ValueOptionEntity valueOption = valueOptionOrderEntity.getValueOption();
         result.setValueOption(optionDtoMapper.mapToValueOptionDto(valueOption));
         result.setValue(valueOptionOrderEntity.getValue());
+        result.setOptionTitle(valueOptionOrderEntity.getOptionTitle());
+        result.setOptionPriceDiff(valueOptionOrderEntity.getOptionPriceDiff());
+
 
         return result;
     }

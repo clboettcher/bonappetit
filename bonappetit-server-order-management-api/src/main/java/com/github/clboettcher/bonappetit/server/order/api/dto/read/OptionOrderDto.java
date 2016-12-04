@@ -21,6 +21,12 @@ package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
  * Abstract base class for option order entities.
@@ -33,6 +39,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = RadioOptionOrderDto.class, name = "radioOptionOrder"),
         @JsonSubTypes.Type(value = CheckboxOptionOrderDto.class, name = "checkboxOptionOrder"),
         @JsonSubTypes.Type(value = ValueOptionOrderDto.class, name = "valueOptionOrder")})
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class OptionOrderDto {
+
+    @ApiModelProperty(value = "The title of the ordered option", required = true)
+    private String optionTitle;
+
+    @ApiModelProperty(value = "The price difference of the ordered option", required = true)
+    private BigDecimal optionPriceDiff;
 
 }
