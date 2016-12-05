@@ -120,7 +120,6 @@ public class ItemOrderEntity {
     @JoinColumn(name = "ITEM_ORDER_ID")
     private List<RadioOptionOrderEntity> radioOptionOrders;
 
-
     /**
      * The person or place (eg table) that the order should be delivered to.
      */
@@ -133,6 +132,26 @@ public class ItemOrderEntity {
     @OneToOne(optional = false)
     @JoinColumn(name = "STAFF_MEMBER_ID", nullable = false)
     private StaffMemberEntity staffMember;
+
+    /**
+     * The first name of the staff member who took the order.
+     * <p>
+     * Use this property rather than {@link #staffMember#getFirstName()}
+     * because the referenced staff member might have changed since
+     * the order was created.
+     */
+    @Column(name = "STAFF_MEMBER_FIRST_NAME", nullable = false)
+    private String staffMemberFirstName;
+
+    /**
+     * The last name of the staff member who took the order.
+     * <p>
+     * Use this property rather than {@link #staffMember#getLastName()}
+     * because the referenced staff member might have changed since
+     * the order was created.
+     */
+    @Column(name = "STAFF_MEMBER_LAST_NAME", nullable = false)
+    private String staffMemberLastName;
 
     /**
      * The timestamp that the order was taken.
@@ -177,6 +196,8 @@ public class ItemOrderEntity {
                            List<RadioOptionOrderEntity> radioOptionOrders,
                            String deliverTo,
                            StaffMemberEntity staffMember,
+                           String staffMemberFirstName,
+                           String staffMemberLastName,
                            Date orderTime,
                            String note,
                            OrderEntityStatus status) {
@@ -189,6 +210,8 @@ public class ItemOrderEntity {
         this.radioOptionOrders = radioOptionOrders;
         this.deliverTo = deliverTo;
         this.staffMember = staffMember;
+        this.staffMemberFirstName = staffMemberFirstName;
+        this.staffMemberLastName = staffMemberLastName;
         this.orderTime = orderTime;
         this.note = note;
         this.status = status;

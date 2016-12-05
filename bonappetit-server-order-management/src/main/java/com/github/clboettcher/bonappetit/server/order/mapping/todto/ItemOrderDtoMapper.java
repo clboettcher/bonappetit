@@ -45,28 +45,30 @@ public abstract class ItemOrderDtoMapper {
 
     public abstract List<ItemOrderDto> mapToItemOrderDtos(List<ItemOrderEntity> orderEntities);
 
-    public ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrderEntity) {
+    public ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrder) {
 
-        ItemEntity item = itemOrderEntity.getItem();
-        StaffMemberEntity staffMember = itemOrderEntity.getStaffMember();
+        ItemEntity item = itemOrder.getItem();
+        StaffMemberEntity staffMember = itemOrder.getStaffMember();
 
         List<AbstractOptionOrderEntity> optionOrders = Lists.newArrayList();
-        optionOrders.addAll(itemOrderEntity.getCheckboxOptionOrders());
-        optionOrders.addAll(itemOrderEntity.getValueOptionOrders());
-        optionOrders.addAll(itemOrderEntity.getRadioOptionOrders());
+        optionOrders.addAll(itemOrder.getCheckboxOptionOrders());
+        optionOrders.addAll(itemOrder.getValueOptionOrders());
+        optionOrders.addAll(itemOrder.getRadioOptionOrders());
 
         return ItemOrderDto.builder()
-                .id(itemOrderEntity.getId())
+                .id(itemOrder.getId())
                 .itemId(item.getId())
-                .itemTitle(itemOrderEntity.getItemTitle())
-                .itemPrice(itemOrderEntity.getItemPrice())
-                .itemType(itemDtoMapper.mapToItemEntityDtoType(itemOrderEntity.getItemType()))
+                .itemTitle(itemOrder.getItemTitle())
+                .itemPrice(itemOrder.getItemPrice())
+                .itemType(itemDtoMapper.mapToItemEntityDtoType(itemOrder.getItemType()))
                 .optionOrders(this.mapToOptionOrderDtos(optionOrders))
-                .deliverTo(itemOrderEntity.getDeliverTo())
+                .deliverTo(itemOrder.getDeliverTo())
                 .staffMemberId(staffMember.getId())
-                .orderTime(new DateTime(itemOrderEntity.getOrderTime()))
-                .note(itemOrderEntity.getNote())
-                .orderStatus(this.mapToOrderStatusDto(itemOrderEntity.getStatus()))
+                .staffMemberFirstName(itemOrder.getStaffMemberFirstName())
+                .staffMemberLastName(itemOrder.getStaffMemberLastName())
+                .orderTime(new DateTime(itemOrder.getOrderTime()))
+                .note(itemOrder.getNote())
+                .orderStatus(this.mapToOrderStatusDto(itemOrder.getStatus()))
                 .build();
     }
 

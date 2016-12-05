@@ -84,6 +84,8 @@ public abstract class ItemOrderEntityMapper {
                 .radioOptionOrders(radioOptionOrderEntities)
                 .deliverTo(itemOrderCreationDto.getDeliverTo())
                 .staffMember(staffMember)
+                .staffMemberFirstName(staffMember.getFirstName())
+                .staffMemberLastName(staffMember.getLastName())
                 .orderTime(itemOrderCreationDto.getOrderTime().toDate())
                 .note(itemOrderCreationDto.getNote())
                 .build();

@@ -60,6 +60,14 @@ public class ItemOrderDto {
     @ApiModelProperty(value = "The ID of the staff member who took this order", required = true)
     private Long staffMemberId;
 
+    @ApiModelProperty(value = "The first name of the staff member who took this order", required = true,
+            example = "John")
+    private String staffMemberFirstName;
+
+    @ApiModelProperty(value = "The last name of the staff member who took this order", required = true,
+            example = "Cena")
+    private String staffMemberLastName;
+
     @ApiModelProperty(value = "The time this order was taken", required = true)
     private DateTime orderTime;
 
@@ -72,9 +80,14 @@ public class ItemOrderDto {
     @Builder
     public ItemOrderDto(Long id,
                         Long itemId,
-                        String itemTitle, BigDecimal itemPrice, ItemDtoType itemType, List<OptionOrderDto> optionOrders,
+                        String itemTitle,
+                        BigDecimal itemPrice,
+                        ItemDtoType itemType,
+                        List<OptionOrderDto> optionOrders,
                         String deliverTo,
                         Long staffMemberId,
+                        String staffMemberFirstName,
+                        String staffMemberLastName,
                         DateTime orderTime,
                         String note,
                         OrderStatusDto orderStatus) {
@@ -84,6 +97,8 @@ public class ItemOrderDto {
         this.optionOrders = optionOrders;
         this.deliverTo = deliverTo;
         this.staffMemberId = staffMemberId;
+        this.staffMemberFirstName = staffMemberFirstName;
+        this.staffMemberLastName = staffMemberLastName;
         this.orderTime = orderTime;
         this.note = note;
         this.orderStatus = orderStatus;
