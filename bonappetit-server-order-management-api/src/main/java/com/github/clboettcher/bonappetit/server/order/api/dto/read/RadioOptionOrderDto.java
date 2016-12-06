@@ -21,10 +21,7 @@ package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -35,6 +32,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @ApiModel("An order for a radio option")
+@ToString(callSuper = true)
 public class RadioOptionOrderDto extends OptionOrderDto {
 
     @ApiModelProperty(value = "The id of the radio item that was selected", required = true)
@@ -44,14 +42,14 @@ public class RadioOptionOrderDto extends OptionOrderDto {
      * Constructor setting the specified properties.
      *
      * @param selectedRadioItemId see {@link #selectedRadioItemId}.
-     * @param optionTitle         see {@link #optionTitle}.
-     * @param optionPriceDiff     see {@link #optionPriceDiff}.
+     * @param selectedRadioItemTitle         see {@link #optionTitle}.
+     * @param selectedRadioItemPriceDiff     see {@link #optionPriceDiff}.
      */
     @Builder
     public RadioOptionOrderDto(Long selectedRadioItemId,
-                               String optionTitle,
-                               BigDecimal optionPriceDiff) {
-        super(optionTitle, optionPriceDiff);
+                               String selectedRadioItemTitle,
+                               BigDecimal selectedRadioItemPriceDiff) {
+        super(selectedRadioItemTitle, selectedRadioItemPriceDiff);
         this.selectedRadioItemId = selectedRadioItemId;
     }
 

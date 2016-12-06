@@ -101,7 +101,7 @@ public class PriceCalculatorImplTest {
                                 .optionPriceDiff(new BigDecimal("0.5"))
                                 .build(),
                         RadioOptionOrderDto.builder()
-                                .optionPriceDiff(new BigDecimal("-0.25"))
+                                .selectedRadioItemPriceDiff(new BigDecimal("-0.25"))
                                 .build()
                 ))
                 .build();

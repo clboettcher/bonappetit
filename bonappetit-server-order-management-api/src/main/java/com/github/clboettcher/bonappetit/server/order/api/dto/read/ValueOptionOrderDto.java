@@ -21,10 +21,7 @@ package com.github.clboettcher.bonappetit.server.order.api.dto.read;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -32,6 +29,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @ApiModel(description = "An order for a value option")
+@ToString(callSuper = true)
 public class ValueOptionOrderDto extends OptionOrderDto {
 
     @ApiModelProperty(value = "The id of the ordered option", required = true)
