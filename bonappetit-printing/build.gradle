@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 dependencies {
     compile project(':bonappetit-common')
-    compile project(':bonappetit-domain')
+    compile project(':bonappetit-server-order-management-api')
 
     // Spring
     // http://mvnrepository.com/artifact/org.springframework/spring-core
@@ -14,5 +14,6 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
     // Testing
-    testCompile "junit:junit:${junitVersion}"
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testCompile project(":bonappetit-common")
 }

@@ -21,7 +21,7 @@ package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Contract for a bean that converts {@link Bon}s to a string that can directly be printed
@@ -35,5 +35,5 @@ public interface BonStringConverter {
      * @param bons The bons.
      * @return The string which can be printed using a physical device.
      */
-    String toString(Set<Bon> bons);
+    String toString(List<Bon> bons);
 }

@@ -21,14 +21,14 @@ package com.github.clboettcher.bonappetit.printing.config;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Default impl of {@link ConfigProvider}.
@@ -39,12 +39,12 @@ public class ConfigProviderImpl implements ConfigProvider {
     /**
      * The titles of the options or radio items which should be printed in an emphasised way.
      */
-    private Set<String> emphasisedOptionTitles;
+    private List<String> emphasisedOptionTitles;
 
     /**
      * The titles of the options or radio items which should not be printed at all.
      */
-    private Set<String> notPrintedOptionTitles;
+    private List<String> notPrintedOptionTitles;
 
 
     /**
@@ -65,24 +65,24 @@ public class ConfigProviderImpl implements ConfigProvider {
      * @param string The string to split, may be null or empty.
      * @return The splitted string.
      */
-    private Set<String> split(String string) {
+    private List<String> split(String string) {
         if (StringUtils.isBlank(string)) {
-            return Collections.emptySet();
+            return Collections.emptyList();
         }
 
-        return Sets.newHashSet(Splitter.on(',')
+        return Lists.newArrayList(Splitter.on(',')
                 .omitEmptyStrings()
                 .trimResults()
                 .split(string));
     }
 
     @Override
-    public Set<String> getEmphasisedOptionTitles() {
+    public List<String> getEmphasisedOptionTitles() {
         return emphasisedOptionTitles;
     }
 
     @Override
-    public Set<String> getNotPrintedOptionTitles() {
+    public List<String> getNotPrintedOptionTitles() {
         return notPrintedOptionTitles;
     }
 }

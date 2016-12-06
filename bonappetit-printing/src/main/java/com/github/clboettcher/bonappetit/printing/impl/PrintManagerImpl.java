@@ -19,24 +19,26 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
-import com.github.clboettcher.bonappetit.domain.order.ItemOrder;
 import com.github.clboettcher.bonappetit.printing.api.PrintManager;
 import com.github.clboettcher.bonappetit.printing.conversion.BonConverter;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.print.PrintException;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Default impl of {@link PrintManager}.
  */
+@Component
 public class PrintManagerImpl implements PrintManager {
 
     /**
-     * Bean that converts {@link ItemOrder}s to {@link Bon}s.
+     * Bean that converts {@link ItemOrderDto}s to {@link Bon}s.
      */
     private BonConverter bonConverter;
 
@@ -53,21 +55,23 @@ public class PrintManagerImpl implements PrintManager {
     /**
      * Constructor setting the specified properties.
      *
-     * @param bonConverter    see {@link #bonConverter}.
-     * @param bonStringConverter      see {@link #bonStringConverter}.
-     * @param physicalPrinter see {@link #physicalPrinter}.
+     * @param bonConverter       see {@link #bonConverter}.
+     * @param bonStringConverter see {@link #bonStringConverter}.
+     * @param physicalPrinter    see {@link #physicalPrinter}.
      */
     @Autowired
-    public PrintManagerImpl(BonConverter bonConverter, BonStringConverter bonStringConverter, PhysicalPrinter physicalPrinter) {
+    public PrintManagerImpl(BonConverter bonConverter,
+                            BonStringConverter bonStringConverter,
+                            PhysicalPrinter physicalPrinter) {
         this.bonConverter = bonConverter;
         this.bonStringConverter = bonStringConverter;
         this.physicalPrinter = physicalPrinter;
     }
 
     @Override
-    public void print(Set<ItemOrder> orders) throws PrintException {
+    public void print(List<ItemOrderDto> orders) throws PrintException {
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(orders), "orders empty");
-        Set<Bon> bons = bonConverter.toBons(orders);
+        List<Bon> bons = bonConverter.toBons(orders);
         String output = bonStringConverter.toString(bons);
         physicalPrinter.print(output);
     }
@@ -79,7 +83,7 @@ public class PrintManagerImpl implements PrintManager {
 //     * @param orders
 //     * @return
 //     */
-//    private String toSummaryString(Set<ItemOrder> orders) {
+//    private String toSummaryString(Set<ItemOrderDto> orders) {
 //        BonStringBuilder builder = BonStringBuilder.newInstance(new ControlCharProviderCITIZENCTS310IIImpl());
 //
 //        PriceCalculator priceCalculator = new PriceCalculatorImpl();
@@ -87,9 +91,9 @@ public class PrintManagerImpl implements PrintManager {
 //        builder.doubleWidthDoubleHeight(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
 //        builder.newline();
 //        BigDecimal grandTotal = BigDecimal.ZERO;
-//        for (ItemOrder order : orders) {
+//        for (ItemOrderDto order : orders) {
     // // TODO MappingHelper has been removed since we dont need separate entities for price calcualtion anymore
-//            final ItemOrderPrices orderPrices = de.bonappetit.posprinter.util.MappingHelper.mapToItemOrderForPriceCalculation(order);
+//            final ItemOrderDtoPrices orderPrices = de.bonappetit.posprinter.util.MappingHelper.mapToItemOrderDtoForPriceCalculation(order);
 //            final BigDecimal totalPrice = priceCalculator.calculateTotalPrice(orderPrices);
 //            grandTotal = grandTotal.add(totalPrice);
 //            builder.appendLine(String.format("%s %s %s EUR", order.getItem().getName(), getEmphasisedOptionsString(order), totalPrice));
@@ -101,7 +105,7 @@ public class PrintManagerImpl implements PrintManager {
 //        return builder.build();
 //    }
 //
-//    private String getEmphasisedOptionsString(ItemOrder order) {
+//    private String getEmphasisedOptionsString(ItemOrderDto order) {
 //        List<String> emph = new ArrayList<>();
 //        for (OrderOption orderOption : (Set<OrderOption>)InvokerHelper.invokeMethod(order, "getOrderOptions", InvokerHelper.EMPTY_ARGS)) {
 //            if (orderOption instanceof IntegerOrderOption) {

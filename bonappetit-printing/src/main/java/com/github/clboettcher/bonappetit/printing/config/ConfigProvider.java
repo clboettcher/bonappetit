@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.printing.config;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Provides configuration for the printing module.
@@ -29,11 +29,11 @@ public interface ConfigProvider {
     /**
      * @return The titles of the options which should be printed in an emphasised way.
      */
-    Set<String> getEmphasisedOptionTitles();
+    List<String> getEmphasisedOptionTitles();
 
     /**
      * @return The titles of the options which should not be printed.
      */
-    Set<String> getNotPrintedOptionTitles();
+    List<String> getNotPrintedOptionTitles();
 
 }

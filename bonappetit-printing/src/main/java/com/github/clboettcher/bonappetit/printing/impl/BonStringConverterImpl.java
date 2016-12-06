@@ -19,21 +19,21 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
-import com.github.clboettcher.bonappetit.domain.menu.ItemType;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.printing.util.DateUtils;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
+@Component
 public class BonStringConverterImpl implements BonStringConverter {
 
     /**
@@ -52,6 +52,7 @@ public class BonStringConverterImpl implements BonStringConverter {
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
      */
+    @Autowired
     public BonStringConverterImpl(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
@@ -60,13 +61,13 @@ public class BonStringConverterImpl implements BonStringConverter {
     }
 
     @Override
-    public String toString(Set<Bon> bons) {
+    public String toString(List<Bon> bons) {
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(bons), "bons empty");
-
-        BonStringBuilder bonStringBuilder = BonStringBuilder.newInstance(controlCharProvider, specialCharEncoder);
-        List<Bon> bonsInput = Lists.newArrayList(bons);
-        sortByItemType(bonsInput);
-        for (Bon bon : bonsInput) {
+        BonStringBuilder bonStringBuilder = BonStringBuilder.newInstance(
+                controlCharProvider,
+                specialCharEncoder);
+        sortByItemTypeAndTime(bons);
+        for (Bon bon : bons) {
             appendBon(bon, bonStringBuilder);
         }
 
@@ -83,7 +84,7 @@ public class BonStringConverterImpl implements BonStringConverter {
         Optional<String> emphOptionsOpt = sortAndJoin(bon.getEmphasisedOptions());
         bonStringBuilder.appendLine(String.format("Kunde: %s", bon.getDeliverTo()), BonStringBuilder.Align.CENTER)
                 .heading(StringUtils.trim(String.format("%s %s",
-                        bon.getItemName(),
+                        bon.getItemTitle(),
                         emphOptionsOpt.or(""))))
                 .appendLineFeed();
 
@@ -115,29 +116,35 @@ public class BonStringConverterImpl implements BonStringConverter {
      * @param strings The strings, may be null or empty.
      * @return A string created from joining the given {@code strings} after sorting them alphabetically.
      */
-    private Optional<String> sortAndJoin(Set<String> strings) {
+    private Optional<String> sortAndJoin(List<String> strings) {
         if (CollectionUtils.isEmpty(strings)) {
             return Optional.absent();
         }
 
-        final List<String> asList = Lists.newArrayList(strings);
-        sortAlphabetically(asList);
+        sortAlphabetically(strings);
         return Optional.of(Joiner.on(" ")
                 .skipNulls()
-                .join(asList));
+                .join(strings));
     }
 
     /**
-     * @param bons The given {@code bons} sorted by {@link Bon#getItemType()}.
+     * @param bons The given {@code bons} sorted by {@link Bon#getItemType()}, then by
+     *             {@link Bon#getOrderTime()}.
      */
-    private void sortByItemType(List<Bon> bons) {
-        Collections.sort(bons, new Comparator<Bon>() {
-            @Override
-            public int compare(Bon lhs, Bon rhs) {
-                ItemType lhsType = lhs.getItemType();
-                ItemType rhsType = rhs.getItemType();
+    private void sortByItemTypeAndTime(List<Bon> bons) {
+        Collections.sort(bons, (lhs, rhs) -> {
+            ItemDtoType lhsType = lhs.getItemType();
+            ItemDtoType rhsType = rhs.getItemType();
 
-                return lhsType.name().compareTo(rhsType.name());
+
+            int typeCompare = lhsType.name().compareTo(rhsType.name());
+
+            if (typeCompare == 0) {
+                // Sort ascending by order time so the oldest order is
+                // printed last.
+                return rhs.getOrderTime().compareTo(lhs.getOrderTime());
+            } else {
+                return typeCompare;
             }
         });
     }
@@ -150,11 +157,6 @@ public class BonStringConverterImpl implements BonStringConverter {
             return;
         }
 
-        Collections.sort(strings, new Comparator<String>() {
-            @Override
-            public int compare(String lhs, String rhs) {
-                return lhs.compareTo(rhs);
-            }
-        });
+        Collections.sort(strings, String::compareTo);
     }
 }

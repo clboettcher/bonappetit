@@ -41,7 +41,7 @@ public class PhysicalPrinterTest {
 //        calendar.set(Calendar.SECOND, 33);
 //
 //        Bon b = new Bon();
-//        b.setItemName("Item-Name");
+//        b.setItemTitle("Item-Name");
 //        b.setNote("Note");
 //        b.setItemType(ItemType.DRINK_ALCOHOLIC);
 //        b.setCustomer("Customer");

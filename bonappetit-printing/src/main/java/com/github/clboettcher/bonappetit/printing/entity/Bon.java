@@ -20,13 +20,14 @@
 package com.github.clboettcher.bonappetit.printing.entity;
 
 
-import com.github.clboettcher.bonappetit.domain.menu.ItemType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An order to be printed.
@@ -41,9 +42,9 @@ public class Bon {
     private String note;
 
     /**
-     * The name of the item which is printed.
+     * The title of the item which is printed.
      */
-    private String itemName;
+    private String itemTitle;
 
     /**
      * The name of the staff member that took the order.
@@ -63,23 +64,23 @@ public class Bon {
     /**
      * The type of the ordered item.
      */
-    private ItemType itemType;
+    private ItemDtoType itemType;
 
     /**
      * The options which should be printed normally (not emphasised).
      */
-    private Set<String> defaultOptions;
+    private List<String> defaultOptions = new ArrayList<>();
 
     /**
      * The options which should be printed in an emphasised way.
      */
-    private Set<String> emphasisedOptions;
+    private List<String> emphasisedOptions = new ArrayList<>();
 
     /**
      * Constructor setting the specified properties.
      *
      * @param note              see {@link #note}.
-     * @param itemName          see {@link #itemName}.
+     * @param itemTitle         see {@link #itemTitle}.
      * @param staffMemberName   see {@link #staffMemberName}.
      * @param deliverTo         see {@link #deliverTo}.
      * @param orderTime         see {@link #orderTime}.
@@ -88,14 +89,37 @@ public class Bon {
      * @param emphasisedOptions see {@link #emphasisedOptions}.
      */
     @Builder
-    public Bon(String note, String itemName, String staffMemberName, String deliverTo, DateTime orderTime, ItemType itemType, Set<String> defaultOptions, Set<String> emphasisedOptions) {
+    public Bon(String note,
+               String itemTitle,
+               String staffMemberName,
+               String deliverTo,
+               DateTime orderTime,
+               ItemDtoType itemType,
+               List<String> defaultOptions,
+               List<String> emphasisedOptions) {
         this.note = note;
-        this.itemName = itemName;
+        this.itemTitle = itemTitle;
         this.staffMemberName = staffMemberName;
         this.deliverTo = deliverTo;
         this.orderTime = orderTime;
         this.itemType = itemType;
         this.defaultOptions = defaultOptions;
         this.emphasisedOptions = emphasisedOptions;
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param toCopy The bon to copy.
+     */
+    public Bon(Bon toCopy) {
+        this(toCopy.getNote(),
+                toCopy.getItemTitle(),
+                toCopy.getStaffMemberName(),
+                toCopy.getDeliverTo(),
+                toCopy.getOrderTime(),
+                toCopy.getItemType(),
+                toCopy.getDefaultOptions(),
+                toCopy.getEmphasisedOptions());
     }
 }

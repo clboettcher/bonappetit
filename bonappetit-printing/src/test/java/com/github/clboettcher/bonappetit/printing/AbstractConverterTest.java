@@ -19,130 +19,56 @@
  */
 package com.github.clboettcher.bonappetit.printing;
 
-import com.github.clboettcher.bonappetit.domain.menu.*;
-import com.github.clboettcher.bonappetit.domain.order.*;
-import com.github.clboettcher.bonappetit.domain.staff.StaffMember;
-import com.google.common.collect.Sets;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
+import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 /**
  * Base class for converter tests in the context of printing.
  */
 public abstract class AbstractConverterTest {
 
-    /**
-     * @param item The selected item.
-     * @return A new {@link RadioOptionOrder} for the given {@code item}.
-     */
-    protected RadioOptionOrder orderForRadioItem(RadioItem item) {
-        return RadioOptionOrder.builder()
-                .selectedItem(item)
+    protected RadioOptionOrderDto orderForRadioOption(Long selectedRadioItemId,
+                                                      String selectedRadioItemTitle,
+                                                      BigDecimal selectedRadioItemPriceDiff) {
+        return RadioOptionOrderDto.builder()
+                .selectedRadioItemId(selectedRadioItemId)
+                .selectedRadioItemTitle(selectedRadioItemTitle)
+                .selectedRadioItemPriceDiff(selectedRadioItemPriceDiff)
                 .build();
     }
 
-    /**
-     * @param title The {@link RadioItem}s title.
-     * @return A new {@link RadioItem} with the given {@code title}.
-     */
-    protected RadioItem radioItem(String title) {
-        return RadioItem.builder()
-                .title(title)
-                .build();
-    }
-
-    /**
-     * @param title The {@link ValueOption}s title.
-     * @return A new {@link ValueOption} with the given {@code title}.
-     */
-    protected ValueOption valueOption(String title) {
-        return ValueOption.builder()
-                .title(title)
-                .build();
-    }
-
-    /**
-     * @param option The {@link ValueOption} the order is taken for.
-     * @param value  The ordered value.
-     * @return A new {@link ValueOptionOrder} for the given {@code option} with the given value.
-     */
-    protected ValueOptionOrder orderForValueOption(ValueOption option, int value) {
-        return ValueOptionOrder.builder()
+    protected ValueOptionOrderDto orderForValueOption(int value, String optionTitle, BigDecimal optionPriceDiff) {
+        return ValueOptionOrderDto.builder()
                 .value(value)
-                .option(option)
+                .optionTitle(optionTitle)
+                .optionPriceDiff(optionPriceDiff)
                 .build();
     }
 
-    /**
-     * @param title The options title.
-     * @return A new {@link CheckboxOption} with the given {@code title}.
-     */
-    protected CheckboxOption checkboxOption(String title) {
-        return CheckboxOption.builder()
-                .title(title)
+    protected CheckboxOptionOrderDto orderForCheckboxOption(Long checkboxOptionId,
+                                                            Boolean checked, String optionTitle,
+                                                            BigDecimal optionPriceDiff) {
+        return CheckboxOptionOrderDto.builder()
+                .checkboxOptionId(checkboxOptionId)
+                .checked(checked)
+                .optionTitle(optionTitle)
+                .optionPriceDiff(optionPriceDiff)
                 .build();
     }
 
-    /**
-     * @param checkboxOption The {@link CheckboxOption} the order is taken for.
-     * @return A new {@link CheckboxOptionOrder} for the given {@code checkboxOption}.
-     */
-    protected CheckboxOptionOrder orderForCheckboxOption(CheckboxOption checkboxOption) {
-        return CheckboxOptionOrder.builder()
-                .option(checkboxOption)
-                .build();
-    }
-
-    /**
-     * @param name    The item name.
-     * @param options The items options.
-     * @return A new {@link Item} with the given {@code name} and {@code options}.
-     */
-    protected Item createItem(String name, Option... options) {
-        return Item.builder()
-                .title(name)
-                .price(BigDecimal.ONE)
-                .options(Sets.newHashSet(options))
-                .type(ItemType.FOOD)
-                .build();
-    }
-
-    /**
-     * @param item         The ordered item.
-     * @param note         A note.
-     * @param optionOrders The ordered options.
-     * @return A new {@link ItemOrder} for the given {@code item} with the given properties.
-     */
-    protected ItemOrder orderForItem(Item item, String note, OptionOrder... optionOrders) {
-        return ItemOrder.builder()
+    protected ItemOrderDto orderForItem(Long itemId, String note, OptionOrderDto... optionOrders) {
+        return ItemOrderDto.builder()
+                .itemId(itemId)
                 .deliverTo("Tisch 12")
                 .note(note)
-                .staffMember(StaffMember.builder()
-                        .firstName("John")
-                        .lastName("Smith")
-                        .build())
-                .item(item)
-                .orderTime(DateTime.now())
-                .optionOrders(Sets.newHashSet(optionOrders))
-                .build();
-    }
-
-    /**
-     * @param title           The option title.
-     * @param defaultSelected The {@link RadioItem} which is selected per default.
-     * @param other           The other {@link RadioItem} that constitue the {@link RadioOption} (not selected).
-     * @return A new {@link RadioOption} with the given properties.
-     */
-    public RadioOption radioOption(String title, RadioItem defaultSelected, RadioItem... other) {
-        final Set<RadioItem> radioItems = Sets.newHashSet(other);
-        radioItems.add(defaultSelected);
-
-        return RadioOption.builder()
-                .title(title)
-                .id(-1L)
-                .radioItems(radioItems)
+                .staffMemberFirstName("John")
+                .staffMemberLastName("Smith")
+                .orderTime(DateTime.now(DateTimeZone.UTC))
+                .optionOrders(Lists.newArrayList(optionOrders))
                 .build();
     }
 }

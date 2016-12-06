@@ -19,13 +19,13 @@
  */
 package com.github.clboettcher.bonappetit.printing.conversion;
 
-import com.github.clboettcher.bonappetit.domain.order.ItemOrder;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 
-import java.util.Set;
+import java.util.List;
 
 /**
- * Contract for a converter from {@link ItemOrder} to {@link Bon}.
+ * Contract for a converter from {@link ItemOrderDto} to {@link Bon}.
  */
 public interface BonConverter {
 
@@ -35,5 +35,5 @@ public interface BonConverter {
      * @param orders The orders to convert.
      * @return The conversion result.
      */
-    Set<Bon> toBons(Set<ItemOrder> orders);
+    List<Bon> toBons(List<ItemOrderDto> orders);
 }

@@ -20,10 +20,10 @@
 package com.github.clboettcher.bonappetit.printing.api;
 
 
-import com.github.clboettcher.bonappetit.domain.order.ItemOrder;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 
 import javax.print.PrintException;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Contract for the connection to the bon printer.
@@ -36,5 +36,5 @@ public interface PrintManager {
      * @param orders The orders to print.
      * @throws PrintException If printing fails.
      */
-    void print(Set<ItemOrder> orders) throws PrintException;
+    void print(List<ItemOrderDto> orders) throws PrintException;
 }

@@ -19,21 +19,21 @@
  */
 package com.github.clboettcher.bonappetit.printing.conversion;
 
-import com.github.clboettcher.bonappetit.domain.order.OptionOrder;
-import com.github.clboettcher.bonappetit.printing.entity.OrderOptionStrings;
+import com.github.clboettcher.bonappetit.printing.entity.OptionOrderStrings;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
 
-import java.util.Set;
+import java.util.List;
 
 /**
- * Converts {@link OptionOrder}s to a form that can be printed easily.
+ * Converts {@link OptionOrderDto}s to a form that can be printed easily.
  */
-public interface OptionOrderConverter {
+public interface OptionOrderStringsConverter {
 
     /**
      * Converts the given options to the strings ready to be printed.
      *
-     * @param optionOrders The {@link OptionOrder}s to convert, may be null or empty.
+     * @param optionOrderDtos The {@link OptionOrderDto}s to convert, may be null or empty.
      * @return The given options as string, empty strings if options is null or empty.
      */
-    OrderOptionStrings convert(Set<OptionOrder> optionOrders);
+    OptionOrderStrings convert(List<OptionOrderDto> optionOrderDtos);
 }

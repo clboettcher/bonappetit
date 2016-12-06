@@ -23,24 +23,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains sets of categorized order options.
  */
 @Data
 @NoArgsConstructor
-public class OrderOptionStrings {
+public class OptionOrderStrings {
 
     /**
      * The options which should be printed in an emphasised way.
      */
-    private Set<String> emphasisedOptions;
+    private List<String> emphasisedOptions = new ArrayList<>();
 
     /**
      * The options which should be printed normally, not emphasised.
      */
-    private Set<String> defaultOptions;
+    private List<String> defaultOptions = new ArrayList<>();
 
     /**
      * Constructor setting the specified properties.
@@ -49,7 +50,7 @@ public class OrderOptionStrings {
      * @param defaultOptions    see {@link #defaultOptions}.
      */
     @Builder
-    public OrderOptionStrings(Set<String> emphasisedOptions, Set<String> defaultOptions) {
+    public OptionOrderStrings(List<String> emphasisedOptions, List<String> defaultOptions) {
         this.emphasisedOptions = emphasisedOptions;
         this.defaultOptions = defaultOptions;
     }
