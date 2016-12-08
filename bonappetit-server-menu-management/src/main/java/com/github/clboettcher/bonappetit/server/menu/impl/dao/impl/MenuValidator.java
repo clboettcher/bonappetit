@@ -68,6 +68,13 @@ public class MenuValidator {
         return itemHasId && allOptionRefsHaveIds;
     };
 
+
+    /**
+     * Predicate that resolves to true, if the tested {@link MenuEntity} has
+     * a non null ID property.
+     */
+    private static final Predicate<MenuEntity> MENU_HAS_ID_PREDICATE = menuEntity -> menuEntity.getId() != null;
+
     /**
      * Predicate that resolves to true, if the tested {@link MenuEntity}
      * and all referenced entities have non null ID properties.
@@ -78,8 +85,9 @@ public class MenuValidator {
             if (!allItemRefsHaveIds) {
                 return false;
             }
+
         }
-        return menuEntity.getId() != null;
+        return MENU_HAS_ID_PREDICATE.test(menuEntity);
     };
 
     void assertNewMenuValid(MenuEntity menuEntity) {
@@ -94,9 +102,9 @@ public class MenuValidator {
     void assertMenuUpdateValid(MenuEntity menuEntity) {
         // Make sure that we do not create new entities by checking if the ID fields of
         // all reachable entities is set.
-        if (!ALL_MENU_REFS_HAVE_IDS_PREDICATE.test(menuEntity)) {
-            throw new IllegalArgumentException(String.format("Updated entities must contain ids. Found at least " +
-                    "one offending entity referenced from menu %s", menuEntity));
+        if (!MENU_HAS_ID_PREDICATE.test(menuEntity)) {
+            throw new IllegalArgumentException(String.format("Updated entity must contain an id. " +
+                    "Offending entity:  %s", menuEntity));
         }
     }
 }
