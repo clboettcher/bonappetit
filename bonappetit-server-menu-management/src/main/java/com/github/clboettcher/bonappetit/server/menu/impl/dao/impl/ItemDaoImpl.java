@@ -36,7 +36,7 @@ public class ItemDaoImpl implements ItemDao {
     private ItemRepository repository;
 
     @Autowired
-    private MenuValidator validator;
+    private EntityValidator validator;
 
     @Autowired
     private EntityPreprocessor preprocessor;

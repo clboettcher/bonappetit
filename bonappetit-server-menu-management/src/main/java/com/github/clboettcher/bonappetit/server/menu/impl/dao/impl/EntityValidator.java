@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 import java.util.function.Predicate;
 
 @Component
-public class MenuValidator {
+public class EntityValidator {
 
     /**
      * Predicate that resolves to true, if the tested {@link RadioItemEntity} has a non null ID property.

@@ -53,7 +53,7 @@ public class MenuDaoImpl implements MenuDao {
     private MenuRepository menuRepository;
 
     @Autowired
-    private MenuValidator menuValidator;
+    private EntityValidator entityValidator;
 
     @Autowired
     private EntityPreprocessor preprocessor;
@@ -84,7 +84,7 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public MenuEntity create(MenuEntity menuEntity) {
-        menuValidator.assertNewMenuValid(menuEntity);
+        entityValidator.assertNewMenuValid(menuEntity);
         List<ItemEntity> items = menuEntity.getItems();
         items.stream().forEach(preprocessor::prepareOptions);
         return menuRepository.save(menuEntity);
@@ -92,7 +92,7 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public MenuEntity update(MenuEntity menuEntity) {
-        menuValidator.assertMenuUpdateValid(menuEntity);
+        entityValidator.assertMenuUpdateValid(menuEntity);
 //        return menuRepository.save(menuEntity);
         throw new UnsupportedOperationException("Currently not supported. We support only updating menu items " +
                 "individually");

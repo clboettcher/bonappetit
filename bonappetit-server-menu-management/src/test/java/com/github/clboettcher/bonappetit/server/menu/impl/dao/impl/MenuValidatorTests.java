@@ -27,18 +27,18 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Tests for {@link MenuValidator}.
+ * Tests for {@link EntityValidator}.
  */
 public class MenuValidatorTests {
 
-    private MenuValidator validator;
+    private EntityValidator validator;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
-        this.validator = new MenuValidator();
+        this.validator = new EntityValidator();
     }
 
     @Test
