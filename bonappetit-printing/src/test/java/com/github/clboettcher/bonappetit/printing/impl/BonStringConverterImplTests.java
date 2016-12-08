@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -102,15 +103,25 @@ public class BonStringConverterImplTests {
     }
 
     @Test
-    @Ignore
     public void testEmphasisedOptions() throws Exception {
-        Assert.fail();
+        Bon input = minimalBon()
+                .itemTitle("Weissbier")
+                .emphasisedOptions(Arrays.asList("Klein", "Alkoholfrei"))
+                .build();
+        String actual = converter.toString(Collections.singletonList(input));
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-emphasised-options.txt");
+        assertThat(actual, is(expected));
     }
 
     @Test
-    @Ignore
     public void testDefaultOptions() throws Exception {
-        Assert.fail();
+        Bon input = minimalBon()
+                .itemTitle("Nachos")
+                .defaultOptions(Arrays.asList("Cheese-Sauce", "Chilli-Dip"))
+                .build();
+        String actual = converter.toString(Collections.singletonList(input));
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-default-options.txt");
+        assertThat(actual, is(expected));
     }
 
     @Test

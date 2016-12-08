@@ -1,0 +1,11 @@
+<init/>
+    <center>Kunde: Tisch 12</center>
+    <center><strong>Weissbier Alkoholfrei Klein</strong></center>
+
+
+
+Bedienung: John Smith, 06.12., 21:33:00 Uhr
+
+
+
+----------------------- ** -----------------------

@@ -1,0 +1,12 @@
+<init/>
+    <center>Kunde: Tisch 12</center>
+    <center><strong>Nachos</strong></center>
+
+
+Cheese-Sauce, Chilli-Dip
+
+Bedienung: John Smith, 06.12., 21:33:00 Uhr
+
+
+
+----------------------- ** -----------------------

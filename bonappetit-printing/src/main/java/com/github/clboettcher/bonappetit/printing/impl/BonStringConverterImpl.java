@@ -92,7 +92,7 @@ public class BonStringConverterImpl implements BonStringConverter {
                 .appendLineFeed();
 
         // Append separate line for default options only if present
-        Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions());
+        Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions(), ", ");
         if (defaultOptionsOpt.isPresent()) {
             bonStringBuilder.appendLine(defaultOptionsOpt.get());
         }
@@ -117,15 +117,26 @@ public class BonStringConverterImpl implements BonStringConverter {
 
     /**
      * @param strings The strings, may be null or empty.
-     * @return A string created from joining the given {@code strings} after sorting them alphabetically.
+     * @return A string created from joining the given {@code strings} with spaces
+     * after sorting them alphabetically.
      */
     private Optional<String> sortAndJoin(List<String> strings) {
+        return sortAndJoin(strings, " ");
+    }
+
+    /**
+     * @param strings   The strings, may be null or empty.
+     * @param separator The separator to write between elements.
+     * @return A string created from joining the given {@code strings}
+     * with the given {@code separator} after sorting them alphabetically.
+     */
+    private Optional<String> sortAndJoin(List<String> strings, String separator) {
         if (CollectionUtils.isEmpty(strings)) {
             return Optional.absent();
         }
 
         sortAlphabetically(strings);
-        return Optional.of(Joiner.on(" ")
+        return Optional.of(Joiner.on(separator)
                 .skipNulls()
                 .join(strings));
     }
