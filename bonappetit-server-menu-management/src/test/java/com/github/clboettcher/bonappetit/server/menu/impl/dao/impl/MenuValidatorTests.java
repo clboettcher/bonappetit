@@ -129,4 +129,25 @@ public class MenuValidatorTests {
         radioOption.getRadioItems().get(1).setId(5L);
         validator.assertMenuUpdateValid(menu);
     }
+
+    @Test
+    public void testItemUpdate() throws Exception {
+        ItemEntity input = ItemEntity.builder()
+                .id(1L)
+                .title("Pommes")
+                .options(Lists.newArrayList(
+                        ValueOptionEntity.builder()
+                                .title("Ketchup")
+                                .build(),
+                        CheckboxOptionEntity.builder()
+                                .title("Extra Salz")
+                                .build()
+                ))
+                .build();
+
+        validator.assertItemUpdateValid(input);
+        input.setId(null);
+        exception.expect(IllegalArgumentException.class);
+        validator.assertItemUpdateValid(input);
+    }
 }

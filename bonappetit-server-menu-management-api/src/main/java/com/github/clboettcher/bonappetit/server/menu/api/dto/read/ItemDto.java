@@ -46,7 +46,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -67,13 +67,18 @@ public class ItemDto {
     private ItemDtoType type;
 
     @ApiModelProperty(value = "The options available for this item")
-    private Set<OptionDto> options;
+    private List<OptionDto> options;
 
     @ApiModelProperty(value = "The side dishes available for this item")
-    private Set<ItemDto> sideDishes;
+    private List<ItemDto> sideDishes;
 
     @Builder
-    public ItemDto(Long id, String title, BigDecimal price, ItemDtoType type, Set<OptionDto> options, Set<ItemDto> sideDishes) {
+    public ItemDto(Long id,
+                   String title,
+                   BigDecimal price,
+                   ItemDtoType type,
+                   List<OptionDto> options,
+                   List<ItemDto> sideDishes) {
         this.id = id;
         this.title = title;
         this.price = price;

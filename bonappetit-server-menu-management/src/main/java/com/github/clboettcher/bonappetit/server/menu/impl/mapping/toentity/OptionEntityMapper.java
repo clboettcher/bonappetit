@@ -1,6 +1,10 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
 
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.CheckboxOptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.OptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.RadioOptionDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ValueOptionDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.CheckboxOptionCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.OptionCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.RadioOptionCreationDto;
@@ -33,7 +37,23 @@ public abstract class OptionEntityMapper {
         }
     }
 
+    public AbstractOptionEntity mapToOptionEntity(OptionDto option) {
+        if (option instanceof RadioOptionDto) {
+            return radioOptionEntityMapper.mapToRadioOptionEntity((RadioOptionDto) option);
+        } else if (option instanceof ValueOptionDto) {
+            return mapToValueOptionEntity((ValueOptionDto) option);
+        } else if (option instanceof CheckboxOptionDto) {
+            return mapToCheckboxOptionEntity((CheckboxOptionDto) option);
+        } else {
+            throw new IllegalArgumentException(String.format("Unknown subtype: %s", option.getClass().getName()));
+        }
+    }
+
     public abstract CheckboxOptionEntity mapToCheckboxOptionEntity(CheckboxOptionCreationDto option);
 
+    public abstract CheckboxOptionEntity mapToCheckboxOptionEntity(CheckboxOptionDto option);
+
     public abstract ValueOptionEntity mapToValueOptionEntity(ValueOptionCreationDto valueOption);
+
+    public abstract ValueOptionEntity mapToValueOptionEntity(ValueOptionDto valueOption);
 }

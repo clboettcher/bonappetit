@@ -26,7 +26,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -38,7 +38,7 @@ public class RadioOptionDto extends OptionDto {
     private RadioItemDto defaultSelected;
 
     @ApiModelProperty(value = "The items that this option consists of.", required = true)
-    private Set<RadioItemDto> radioItems;
+    private List<RadioItemDto> radioItems;
 
     /**
      * Constructor setting the specified properties.
@@ -50,7 +50,7 @@ public class RadioOptionDto extends OptionDto {
      * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public RadioOptionDto(Long id, String title, Integer index, RadioItemDto defaultSelected, Set<RadioItemDto> radioItems) {
+    public RadioOptionDto(Long id, String title, Integer index, RadioItemDto defaultSelected, List<RadioItemDto> radioItems) {
         super(id, title, index);
         this.defaultSelected = defaultSelected;
         this.radioItems = radioItems;

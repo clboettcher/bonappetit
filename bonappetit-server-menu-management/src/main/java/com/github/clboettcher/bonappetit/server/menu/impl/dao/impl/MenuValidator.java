@@ -38,7 +38,7 @@ public class MenuValidator {
      * Predicate that resolves to true, if the tested {@link AbstractOptionEntity}
      * and all referenced entities have non null ID properties.
      */
-    public static final Predicate<AbstractOptionEntity> ALL_OPTION_REFS_HAVE_IDS_PREDICATE = optionEntity -> {
+    public static final Predicate<AbstractOptionEntity> OPTION_REFS_HAVE_IDS_PREDICATE = optionEntity -> {
         // Check if all entities referenced by a radio option have ids set to non null.
         if (optionEntity instanceof RadioOptionEntity) {
             RadioOptionEntity radioOptionEntity = (RadioOptionEntity) optionEntity;
@@ -55,18 +55,24 @@ public class MenuValidator {
         return optionEntity.getId() != null;
     };
 
+    private static final Predicate<ItemEntity> ITEM_HAS_ID_PREDICATE = itemEntity -> itemEntity.getId() != null;
+
+    private static final Predicate<ItemEntity> ALL_OPTIONS_HAVE_ID_PREDICATES = itemEntity -> {
+        if (CollectionUtils.isNotEmpty(itemEntity.getOptions())) {
+            return itemEntity.getOptions().stream().allMatch(OPTION_REFS_HAVE_IDS_PREDICATE);
+        }
+
+        return true;
+    };
+
     /**
      * Predicate that resolves to true, if the tested {@link ItemEntity}
      * and all referenced entities have non null ID properties.
      */
-    private static final Predicate<ItemEntity> ALL_ITEM_REFS_HAVE_IDS_PREDICATE = itemEntity -> {
-        boolean itemHasId = itemEntity.getId() != null;
-        boolean allOptionRefsHaveIds = true;
-        if (CollectionUtils.isNotEmpty(itemEntity.getOptions())) {
-            allOptionRefsHaveIds = itemEntity.getOptions().stream().allMatch(ALL_OPTION_REFS_HAVE_IDS_PREDICATE);
-        }
-        return itemHasId && allOptionRefsHaveIds;
-    };
+    private static final Predicate<ItemEntity> ITEM_REFS_HAVE_IDS_PREDICATE = itemEntity ->
+            ITEM_HAS_ID_PREDICATE
+                    .and(ALL_OPTIONS_HAVE_ID_PREDICATES)
+                    .test(itemEntity);
 
 
     /**
@@ -79,9 +85,9 @@ public class MenuValidator {
      * Predicate that resolves to true, if the tested {@link MenuEntity}
      * and all referenced entities have non null ID properties.
      */
-    private static final Predicate<MenuEntity> ALL_MENU_REFS_HAVE_IDS_PREDICATE = menuEntity -> {
+    private static final Predicate<MenuEntity> MENU_REFS_HAVE_IDS_PREDICATE = menuEntity -> {
         if (CollectionUtils.isNotEmpty(menuEntity.getItems())) {
-            boolean allItemRefsHaveIds = menuEntity.getItems().stream().allMatch(ALL_ITEM_REFS_HAVE_IDS_PREDICATE);
+            boolean allItemRefsHaveIds = menuEntity.getItems().stream().allMatch(ITEM_REFS_HAVE_IDS_PREDICATE);
             if (!allItemRefsHaveIds) {
                 return false;
             }
@@ -93,7 +99,7 @@ public class MenuValidator {
     void assertNewMenuValid(MenuEntity menuEntity) {
         // Make sure that we do not update existing entities by checking if the ID fields are not
         // set on all entities reachable from the given menu entity.
-        if (ALL_MENU_REFS_HAVE_IDS_PREDICATE.test(menuEntity)) {
+        if (MENU_REFS_HAVE_IDS_PREDICATE.test(menuEntity)) {
             throw new IllegalArgumentException(String.format("New entities to be saved must not contain ids. " +
                     "Found at least one offending entity referenced from menu %s", menuEntity));
         }
@@ -105,6 +111,13 @@ public class MenuValidator {
         if (!MENU_HAS_ID_PREDICATE.test(menuEntity)) {
             throw new IllegalArgumentException(String.format("Updated entity must contain an id. " +
                     "Offending entity:  %s", menuEntity));
+        }
+    }
+
+    public void assertItemUpdateValid(ItemEntity itemEntity) {
+        if (!ITEM_HAS_ID_PREDICATE.test(itemEntity)) {
+            throw new IllegalArgumentException(String.format("Updated entity must contain an id. " +
+                    "Offending entity:  %s", itemEntity));
         }
     }
 }

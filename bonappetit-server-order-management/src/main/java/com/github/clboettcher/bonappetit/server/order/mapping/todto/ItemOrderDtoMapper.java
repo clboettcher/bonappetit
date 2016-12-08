@@ -60,7 +60,7 @@ public abstract class ItemOrderDtoMapper {
                 .itemId(item.getId())
                 .itemTitle(itemOrder.getItemTitle())
                 .itemPrice(itemOrder.getItemPrice())
-                .itemType(itemDtoMapper.mapToItemEntityDtoType(itemOrder.getItemType()))
+                .itemType(itemDtoMapper.mapToItemDtoType(itemOrder.getItemType()))
                 .optionOrders(this.mapToOptionOrderDtos(optionOrders))
                 .deliverTo(itemOrder.getDeliverTo())
                 .staffMemberId(staffMember.getId())

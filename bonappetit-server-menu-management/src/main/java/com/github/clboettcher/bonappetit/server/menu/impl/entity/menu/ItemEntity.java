@@ -85,7 +85,7 @@ public class ItemEntity {
     /**
      * The options available for this item (optional).
      */
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID")
     private List<AbstractOptionEntity> options;
 

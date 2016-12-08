@@ -33,7 +33,15 @@ public interface ItemDao {
      * @param id The ID.
      * @return The item, or null if it does not exist.
      */
-    ItemEntity getItem(long id);
+    ItemEntity getItem(Long id);
+
+    /**
+     * Updates the given entity.
+     *
+     * @param entity The entity to update.
+     * @return The updated entity.
+     */
+    ItemEntity update(ItemEntity entity);
 
     /**
      * Returns whether an item exists in the db with the given id.

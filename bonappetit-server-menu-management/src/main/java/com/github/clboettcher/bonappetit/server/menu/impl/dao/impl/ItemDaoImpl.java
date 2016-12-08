@@ -20,14 +20,13 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
-import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
- * Default impl of {@link MenuDao}.
+ * Default impl of {@link ItemDao}.
  */
 @Component
 @Profile("default")
@@ -36,9 +35,23 @@ public class ItemDaoImpl implements ItemDao {
     @Autowired
     private ItemRepository repository;
 
+    @Autowired
+    private MenuValidator validator;
+
+    @Autowired
+    private EntityPreprocessor preprocessor;
+
     @Override
-    public ItemEntity getItem(long id) {
+    public ItemEntity getItem(Long id) {
         return repository.findOne(id);
+    }
+
+    @Override
+    public ItemEntity update(ItemEntity item) {
+        validator.assertItemUpdateValid(item);
+        preprocessor.prepareOptions(item);
+
+        return repository.save(item);
     }
 
     @Override

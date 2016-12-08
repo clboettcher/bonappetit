@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntityType;
@@ -33,6 +34,8 @@ public interface ItemEntityMapper {
     List<ItemEntity> mapToItemEntity(List<ItemCreationDto> items);
 
     ItemEntity mapToItemEntity(ItemCreationDto item);
+
+    ItemEntity mapToItemEntity(ItemDto item);
 
     ItemEntityType mapToItemEntityType(ItemDtoType itemType);
 }

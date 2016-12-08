@@ -1,5 +1,6 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.RadioOptionDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.RadioOptionCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.RadioOptionEntity;
 import org.mapstruct.Mapper;
@@ -8,4 +9,6 @@ import org.mapstruct.Mapper;
 public interface RadioOptionEntityMapper {
 
     RadioOptionEntity mapToRadioOptionEntity(RadioOptionCreationDto radioOption);
+
+    RadioOptionEntity mapToRadioOptionEntity(RadioOptionDto radioOption);
 }

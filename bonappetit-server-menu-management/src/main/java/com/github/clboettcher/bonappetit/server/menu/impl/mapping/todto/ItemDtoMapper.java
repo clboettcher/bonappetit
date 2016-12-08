@@ -36,17 +36,17 @@ public interface ItemDtoMapper {
      * @param items The items to map.
      * @return The mapping result.
      */
-    List<ItemDto> mapToItemEntityDtos(List<ItemEntity> items);
+    List<ItemDto> mapToItemDtos(List<ItemEntity> items);
 
     /**
      * @param item The {@link ItemEntity} to map.
      * @return The mapping result.
      */
-    ItemDto mapToItemEntityDto(ItemEntity item);
+    ItemDto mapToItemDto(ItemEntity item);
 
     /**
      * @param itemType The {@link ItemEntityType} to map.
      * @return The mapping result.
      */
-    ItemDtoType mapToItemEntityDtoType(ItemEntityType itemType);
+    ItemDtoType mapToItemDtoType(ItemEntityType itemType);
 }

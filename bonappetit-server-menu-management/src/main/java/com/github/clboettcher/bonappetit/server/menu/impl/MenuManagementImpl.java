@@ -20,11 +20,16 @@
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.ItemEntityMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -55,29 +60,32 @@ public class MenuManagementImpl implements MenuManagement {
     /**
      * The DAO for stored menus.
      */
+    @Autowired
     private MenuDao menuDao;
+
+    /**
+     * The DAO for stored items.
+     */
+    @Autowired
+    private ItemDao itemDao;
 
     /**
      * The entity to dto mapper.
      */
     @Autowired
-    private MenuDtoMapper dtoMapper;
+    private MenuDtoMapper menuDtoMapper;
+
+    @Autowired
+    private ItemDtoMapper itemDtoMapper;
+
+    @Autowired
+    private ItemEntityMapper itemEntityMapper;
 
     /**
      * The dto to entity mapper.
      */
     @Autowired
     private MenuEntityMapper menuEntityMapper;
-
-    /**
-     * Constructor setting the specified properties.
-     *
-     * @param menuDao see {@link #menuDao}.
-     */
-    @Autowired
-    public MenuManagementImpl(MenuDao menuDao) {
-        this.menuDao = menuDao;
-    }
 
     @Override
     public MenuDto getCurrentMenu() {
@@ -87,14 +95,14 @@ public class MenuManagementImpl implements MenuManagement {
             throw new InternalServerErrorException("No menu has been configured as current.");
         }
 
-        return dtoMapper.mapToMenuDto(currentMenu);
+        return menuDtoMapper.mapToMenuDto(currentMenu);
     }
 
     @Override
     public List<MenuDto> getAllMenus() {
         List<MenuEntity> allMenus = menuDao.getAllMenus();
         LOGGER.info(String.format("Returning %d menu(s)", allMenus.size()));
-        return dtoMapper.mapToMenuDtos(allMenus);
+        return menuDtoMapper.mapToMenuDtos(allMenus);
     }
 
     @Override
@@ -109,7 +117,7 @@ public class MenuManagementImpl implements MenuManagement {
             throw new NotFoundException(String.format("Menu with ID %d does not exist.", id));
         }
 
-        return dtoMapper.mapToMenuDto(menu);
+        return menuDtoMapper.mapToMenuDto(menu);
     }
 
     @Override
@@ -123,12 +131,7 @@ public class MenuManagementImpl implements MenuManagement {
         MenuEntity menuEntity = this.menuEntityMapper.mapToMenuEntity(menuDto);
         MenuEntity saved = menuDao.create(menuEntity);
 
-        String location = String.format("%s/%d", MENUS_PATH, saved.getId());
-        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(location);
-
-        return Response.ok()
-                .location(baseUriBuilder.build())
-                .build();
+        return okWithLocationHeader(MENUS_PATH, saved.getId());
     }
 
     @Override
@@ -147,5 +150,41 @@ public class MenuManagementImpl implements MenuManagement {
         menuDao.setCurrent(newCurrent);
 
         return Response.noContent().build();
+    }
+
+    @Override
+    public ItemDto getItemById(Long id) {
+        ItemEntity item = itemDao.getItem(id);
+
+        if (item == null) {
+            throw new NotFoundException(String.format("Item with ID %d does not exist.", id));
+        }
+
+        return itemDtoMapper.mapToItemDto(item);
+    }
+
+    @Override
+    public Response updateItem(Long id, ItemDto itemDto) {
+        if (!itemDao.exists(id)) {
+            throw new NotFoundException(String.format("Item with ID %d does not exist.", id));
+        }
+
+        if (!id.equals(itemDto.getId())) {
+            throw new BadRequestException(String.format("Param id (%d) and id of the item data in " +
+                    "the request body (%d) must be equal", id, itemDto.getId()));
+        }
+        ItemEntity updateEntity = itemEntityMapper.mapToItemEntity(itemDto);
+        ItemEntity saved = itemDao.update(updateEntity);
+
+        return okWithLocationHeader(ITEMS_PATH, saved.getId());
+    }
+
+    private Response okWithLocationHeader(String path, Long id) {
+        String location = String.format("%s/%d", path, id);
+        UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(location);
+
+        return Response.ok()
+                .location(baseUriBuilder.build())
+                .build();
     }
 }
