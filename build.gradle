@@ -34,7 +34,7 @@ subprojects {
         mapping {
             java = 'SLASHSTAR_STYLE'
         }
-        header file("$rootProject.projectDir/LICENSE-header")
+        header file("${rootProject.projectDir}/LICENSE-header")
         strictCheck true
         include '**/*.java'
         exclude '**/*Mapper*.java'
