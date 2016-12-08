@@ -105,10 +105,10 @@ public class BonStringBuilder {
     public BonStringBuilder appendLine(String string, Align alignment) {
         switch (alignment) {
             case CENTER:
-                builder.append(controlCharProvider.getAlignCenterString());
+                builder.append(centered(string));
                 break;
             case LEFT:
-                builder.append(controlCharProvider.getAlignLeftString());
+                builder.append(string);
                 break;
             default:
                 throw new UnsupportedOperationException(String.format("%s %s is not supported.",
@@ -117,16 +117,6 @@ public class BonStringBuilder {
                 ));
         }
 
-        builder.append(string);
-        builder.append(controlCharProvider.getAlignLeftString());
-        this.appendLineFeed();
-        return this;
-    }
-
-    public BonStringBuilder doubleWidthDoubleHeight(String s) {
-        builder.append(controlCharProvider.getDoubleWidthDoubleHeightString())
-                .append(s)
-                .append(controlCharProvider.getNormalWidthNormalHeightString());
         this.appendLineFeed();
         return this;
     }
@@ -138,15 +128,21 @@ public class BonStringBuilder {
      * @return This builder.
      */
     public BonStringBuilder heading(String string) {
-        builder.append(controlCharProvider.getDoubleWidthDoubleHeightString())
-                .append(controlCharProvider.getAlignCenterString())
-                .append(string)
-                .append(controlCharProvider.getAlignLeftString())
-                .append(controlCharProvider.getNormalWidthNormalHeightString())
-        ;
-
+        this.appendLine(centered(doubleWidthDoubleHeight(string)));
         this.appendLineFeed();
         return this;
+    }
+
+    public String centered(String string) {
+        return controlCharProvider.getAlignCenterString()
+                + string
+                + controlCharProvider.getAlignLeftString();
+    }
+
+    public String doubleWidthDoubleHeight(String s) {
+        return controlCharProvider.getDoubleWidthDoubleHeightString()
+                + s
+                + controlCharProvider.getNormalWidthNormalHeightString();
     }
 
     /**

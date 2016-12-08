@@ -1,9 +1,11 @@
-[INIT][ALIGN-CENTER]Kunde: Tisch 12[ALIGN-LEFT][LF]
-[DOUBLE-WIDTH-HEIGHT][ALIGN-CENTER]Mineralwasser[ALIGN-LEFT][NORMAL-WIDTH-NORMAL-HEIGHT][LF]
-[LF]
-[LF]
-[ALIGN-LEFT]Bedienung: John Smith, 06.12., 21:33:00 Uhr[ALIGN-LEFT][LF]
-[LF]
-[LF]
-[LF]
-[PARTIAL-CUT]
+<init/>
+    <center>Kunde: Tisch 12</center>
+    <center><strong>Mineralwasser</strong></center>
+
+
+
+Bedienung: John Smith, 06.12., 21:33:00 Uhr
+
+
+
+----------------------- ** -----------------------

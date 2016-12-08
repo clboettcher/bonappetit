@@ -82,7 +82,10 @@ public class BonStringConverterImpl implements BonStringConverter {
      */
     private void appendBon(Bon bon, BonStringBuilder bonStringBuilder) {
         Optional<String> emphOptionsOpt = sortAndJoin(bon.getEmphasisedOptions());
-        bonStringBuilder.appendLine(String.format("Kunde: %s", bon.getDeliverTo()), BonStringBuilder.Align.CENTER)
+        bonStringBuilder
+                .appendLine(String.format("Kunde: %s",
+                        bon.getDeliverTo()),
+                        BonStringBuilder.Align.CENTER)
                 .heading(StringUtils.trim(String.format("%s %s",
                         bon.getItemTitle(),
                         emphOptionsOpt.or(""))))

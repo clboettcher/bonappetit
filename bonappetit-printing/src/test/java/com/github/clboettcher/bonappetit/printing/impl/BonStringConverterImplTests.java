@@ -103,12 +103,6 @@ public class BonStringConverterImplTests {
 
     @Test
     @Ignore
-    public void testOptionsAreSortedByTitle() throws Exception {
-        Assert.fail();
-    }
-
-    @Test
-    @Ignore
     public void testEmphasisedOptions() throws Exception {
         Assert.fail();
     }

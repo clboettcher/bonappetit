@@ -1,10 +1,12 @@
-[INIT][ALIGN-CENTER]Kunde: Tisch 12[ALIGN-LEFT][LF]
-[DOUBLE-WIDTH-HEIGHT][ALIGN-CENTER]Burger[ALIGN-LEFT][NORMAL-WIDTH-NORMAL-HEIGHT][LF]
-[LF]
-[ALIGN-LEFT]Bemerkung: ohne Zwiebeln[ALIGN-LEFT][LF]
-[LF]
-[ALIGN-LEFT]Bedienung: John Smith, 06.12., 21:33:00 Uhr[ALIGN-LEFT][LF]
-[LF]
-[LF]
-[LF]
-[PARTIAL-CUT]
+<init/>
+    <center>Kunde: Tisch 12</center>
+    <center><strong>Burger</strong></center>
+
+
+Bemerkung: ohne Zwiebeln
+
+Bedienung: John Smith, 06.12., 21:33:00 Uhr
+
+
+
+----------------------- ** -----------------------
