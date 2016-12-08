@@ -44,6 +44,12 @@ public final class DateUtils {
     private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE = DateTimeFormat.forPattern("dd.MM., HH:mm 'Uhr'");
 
     /**
+     * Short format for day month hour minute.
+     */
+    private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE_SHORT = DateTimeFormat.forPattern("dd.MM., HH:mm");
+
+
+    /**
      * Format for day month hour minute second.
      */
     private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE_SECOND = DateTimeFormat.forPattern("dd.MM., HH:mm:ss 'Uhr'");
@@ -60,6 +66,14 @@ public final class DateUtils {
      */
     public static String formatDayMonthTime(DateTime dateTime) {
         return dateTime.toString(DAY_MONTH_HOUR_MINUTE);
+    }
+
+    /**
+     * @param dateTime A {@link DateTime}.
+     * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE_SHORT}.
+     */
+    public static String formatDayMonthHourMinuteShort(DateTime dateTime) {
+        return dateTime.toString(DAY_MONTH_HOUR_MINUTE_SHORT);
     }
 
     /**

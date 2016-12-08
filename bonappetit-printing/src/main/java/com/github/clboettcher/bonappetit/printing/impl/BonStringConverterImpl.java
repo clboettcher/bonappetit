@@ -108,7 +108,7 @@ public class BonStringConverterImpl implements BonStringConverter {
         // Staff member name + order time
         bonStringBuilder.appendLine(String.format("Bedienung: %s, %s",
                 bon.getStaffMemberName(),
-                DateUtils.formatDayMonthTimeWithSeconds(bon.getOrderTime())))
+                DateUtils.formatDayMonthHourMinuteShort(bon.getOrderTime())))
                 .appendLineFeed()
                 .appendLineFeed()
                 .appendLineFeed()

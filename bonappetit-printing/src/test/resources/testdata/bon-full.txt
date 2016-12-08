@@ -1,9 +1,10 @@
 <init/>
     <center>Kunde: Tisch 12</center>
-    <center><strong>Nachos</strong></center>
+    <center><strong>Weissbier Alkoholfrei Klein</strong></center>
 
 
-Cheese-Sauce, Chilli-Dip
+im Tonkrug, mit Orangenscheibe
+Bemerkung: mit wenig Schaum
 
 Bedienung: John Smith, 06.12., 21:33
 

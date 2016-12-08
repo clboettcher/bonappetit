@@ -23,10 +23,8 @@ import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.google.common.collect.Lists;
-import junit.framework.Assert;
 import org.joda.time.DateTime;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -60,8 +58,6 @@ public class BonStringConverterImplTests {
         String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-minimal.txt");
         assertThat(actual, is(expected));
     }
-
-    // TODO add missing test cases.
 
     @Test
     public void testBonWithNote() throws Exception {
@@ -125,9 +121,16 @@ public class BonStringConverterImplTests {
     }
 
     @Test
-    @Ignore
-    public void testEmphasisedAndDefaultOptions() throws Exception {
-        Assert.fail();
+    public void testFullBon() throws Exception {
+        Bon input = minimalBon()
+                .itemTitle("Weissbier")
+                .emphasisedOptions(Arrays.asList("Klein", "Alkoholfrei"))
+                .defaultOptions(Arrays.asList("im Tonkrug", "mit Orangenscheibe"))
+                .note("mit wenig Schaum")
+                .build();
+        String actual = converter.toString(Collections.singletonList(input));
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-full.txt");
+        assertThat(actual, is(expected));
     }
 
     private Bon.BonBuilder minimalBon() {

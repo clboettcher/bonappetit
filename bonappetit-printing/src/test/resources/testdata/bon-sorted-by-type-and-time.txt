@@ -4,7 +4,7 @@
 
 
 
-Bedienung: John Smith, 06.12., 19:00:00 Uhr
+Bedienung: John Smith, 06.12., 19:00
 
 
 
@@ -14,7 +14,7 @@ Bedienung: John Smith, 06.12., 19:00:00 Uhr
 
 
 
-Bedienung: John Smith, 06.12., 21:02:00 Uhr
+Bedienung: John Smith, 06.12., 21:02
 
 
 
@@ -24,7 +24,7 @@ Bedienung: John Smith, 06.12., 21:02:00 Uhr
 
 
 
-Bedienung: John Smith, 06.12., 21:01:00 Uhr
+Bedienung: John Smith, 06.12., 21:01
 
 
 
@@ -34,7 +34,7 @@ Bedienung: John Smith, 06.12., 21:01:00 Uhr
 
 
 
-Bedienung: John Smith, 06.12., 21:00:00 Uhr
+Bedienung: John Smith, 06.12., 21:00
 
 
 
@@ -44,7 +44,7 @@ Bedienung: John Smith, 06.12., 21:00:00 Uhr
 
 
 
-Bedienung: John Smith, 06.12., 20:01:00 Uhr
+Bedienung: John Smith, 06.12., 20:01
 
 
 
@@ -54,7 +54,7 @@ Bedienung: John Smith, 06.12., 20:01:00 Uhr
 
 
 
-Bedienung: John Smith, 06.12., 20:00:00 Uhr
+Bedienung: John Smith, 06.12., 20:00
 
 
 
