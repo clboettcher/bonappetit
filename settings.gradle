@@ -2,7 +2,6 @@ rootProject.name = 'bonappetit'
 
 // Subprojects
 include 'bonappetit-common'
-include 'bonappetit-domain'
 
 include 'bonappetit-price-calculation'
 include 'bonappetit-printing'
