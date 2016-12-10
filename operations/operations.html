@@ -605,16 +605,24 @@ configuration for your database. This is also the location where the server writ
 </div>
 </div>
 <div class="sect3">
+<h4 id="authentication-and-authorization">Authentication and Authorization</h4>
+<div class="paragraph">
+<p>All server endpoints are secured via basic auth. Username and password are expected in form of an authorization
+header in all requests to the server (see <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic Auth @ <strong>Wikipedia</strong></a>.</p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="external-configuration">External Configuration</h4>
 <div class="paragraph">
 <p>The main external configuration is read from <code>${BONAPPETIT_BASE}/content/config/bonappetit.properties</code> (see <a href="#bonappetit-base">Base Directory (aka BONAPPETIT_BASE)</a>). The BonAppetit Server
 project is a <a href="http://projects.spring.io/spring-boot/">Spring Boot</a> application. Therefore the <code>bonappetit.properties</code> file
 can be used to provide or override any
 <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">common Spring Boot application property</a>
-that you would define in <code>application.properties</code>.</p>
+that can be used in the standard <code>application.properties</code>.</p>
 </div>
 <div class="paragraph">
-<p>The following properties are especially important:</p>
+<p>The following properties consisting of standard spring boot as well as of bonappetit specific properties are
+especially important:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. External configuration via bonappetit.properties</caption>
@@ -636,11 +644,18 @@ that you would define in <code>application.properties</code>.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">security.user.password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">security.admin.username</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password expected in the authorization head of requests to the server (see <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic Auth @ <strong>Wikipedia</strong></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the admin user. This is the only user that is authorized to manage API users via the <code>/api/users</code> REST endpoints.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">s3cret</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">admin</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">security.admin.passwordHash</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The salted password hash of the admin user (see <code>security.admin.username</code>). Must be computed using the open source library <a href="https://github.com/qaware/heimdall">Heimdall</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1:1:unf6gJNOOlayrKyEQgfEk7K4RvwhW9WI:i=4e20:gH613KUcJOtL1UcPUadsVvAUoUfvPBoS</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.datasource.url</p></td>
@@ -655,7 +670,7 @@ that you would define in <code>application.properties</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The database user that is used to access the database</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">bonappetit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"bonappetit", "peter"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">peter</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">spring.datasource.password</p></td>
@@ -683,7 +698,7 @@ always contains surprises). Then apply the migration manually to the production 
 BonAppetit server you don&#8217;t need to bother much with profiles.</p>
 </div>
 <div class="paragraph">
-<p>Table <a href="#table_profiles">Profiles</a>) lists the existing profiles.</p>
+<p>Table <a href="#table_profiles">Profiles</a> lists the existing profiles.</p>
 </div>
 <table id="table_profiles" class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. Profiles</caption>
@@ -709,7 +724,7 @@ BonAppetit server you don&#8217;t need to bother much with profiles.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>See <a href="#jvm-parameters">JVM Parameters</a> to learn how you select the used profile.</p>
+<p>See <a href="#jvm-parameters">JVM Parameters</a> to learn how you select the profile.</p>
 </div>
 </div>
 <div class="sect3">
@@ -788,7 +803,7 @@ that contains only test data.</p></td>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-29 20:31:23 +02:00
+Last updated 2016-12-10 18:27:55 +01:00
 </div>
 </div>
 </body>
