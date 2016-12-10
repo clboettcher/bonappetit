@@ -24,9 +24,12 @@ import com.github.clboettcher.bonappetit.server.users.api.dto.UserCreationDto;
 import com.github.clboettcher.bonappetit.server.users.api.dto.UserDto;
 import com.github.clboettcher.bonappetit.server.users.dao.UserDao;
 import com.github.clboettcher.bonappetit.server.users.entity.UserEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -49,6 +52,13 @@ public class UserManagementImpl implements UserManagement {
     @Autowired
     private UserDtoMapper toDtoMapper;
 
+    private String adminUsername;
+
+    @Autowired
+    public UserManagementImpl(Environment environment) {
+        this.adminUsername = environment.getRequiredProperty("security.admin.username");
+    }
+
     @Override
     public List<UserDto> getUsers() {
         return toDtoMapper.mapToUserDtos(userDao.getAllUsers());
@@ -69,9 +79,9 @@ public class UserManagementImpl implements UserManagement {
 
     @Override
     public Response createUser(UserCreationDto userCreationDto) {
+        assertValid(userCreationDto);
+
         UserEntity toSave = toEntityMapper.mapToUserEntity(userCreationDto);
-
-
         UserEntity saved = this.userDao.create(toSave);
 
         String location = String.format("%s/%d", USERS_PATH, saved.getId());
@@ -87,5 +97,21 @@ public class UserManagementImpl implements UserManagement {
         UserEntity userEntity = getUserOrThrowBRE(id);
         this.userDao.delete(userEntity);
         return Response.noContent().build();
+    }
+
+    private void assertValid(UserCreationDto userCreationDto) {
+        if (userCreationDto == null) {
+            throw new BadRequestException("No user data provided.");
+        }
+        if (StringUtils.isBlank(userCreationDto.getUsername())) {
+            throw new BadRequestException("Username must be provided");
+        }
+        if (this.adminUsername.equals(userCreationDto.getUsername())) {
+            throw new BadRequestException(String.format("Username '%s' is a reserved username.",
+                    this.adminUsername));
+        }
+        if (StringUtils.isBlank(userCreationDto.getPassword())) {
+            throw new BadRequestException("Password must be provided");
+        }
     }
 }
