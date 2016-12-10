@@ -1,6 +1,8 @@
 SHOW TABLES;
-SELECT * FROM staff_member;
+
 SELECT * FROM schema_version;
+SELECT * FROM staff_member;
+SELECT * FROM `bonappetit-local`.user;
 
 select * from `bonappetit-local`.menu_config;
 select * from `bonappetit-local`.menu;

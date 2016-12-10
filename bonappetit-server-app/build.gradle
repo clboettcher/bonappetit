@@ -19,6 +19,7 @@ dependencies {
     compile project(':bonappetit-server-staff-management')
     compile project(':bonappetit-server-menu-management')
     compile project(':bonappetit-server-order-management')
+    compile project(':bonappetit-server-user-management')
 
     // Web
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")

@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
+                // TODO: enable CSRF protection and configure properly.
+                .csrf().disable()
                 .authorizeRequests()
                     .anyRequest().hasRole("USER")
                 .and()
