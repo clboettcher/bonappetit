@@ -55,7 +55,11 @@ class ItemOrder {
     discount : Integer
 }
 
-abstract class  OptionOrder
+abstract class  OptionOrder {
+    optionTitle : String,
+    optionPriceDiff : BigDecimal
+}
+
 class ValueOptionOrder {
     value : Integer
 }
