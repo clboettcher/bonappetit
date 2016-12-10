@@ -42,6 +42,12 @@ class CheckboxOption {
 ' Orders
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 class ItemOrder {
+    itemId : Long,
+    itemTitle : String,
+    itemPrice : BigDecimal,
+    staffMemberId: Long,
+    staffMemberFirstName : String,
+    staffMemberLastName : String,
     deliverTo : String
     orderTime : DateTime
     note : String
@@ -55,7 +61,7 @@ class ValueOptionOrder {
 }
 class RadioOptionOrder
 class CheckboxOptionOrder
-enum OrderState {
+enum OrderStatus {
     ORDERED
     PRINTED
     PAID
@@ -85,10 +91,11 @@ Option <|-- CheckboxOption
 RadioOption --> "1" RadioItem : defaultSelected
 RadioOption --> "2..n" RadioItem : radoioItems
 
-ItemOrder --> "1" OrderState : state
+ItemOrder --> "1" OrderStatus : status
 ItemOrder --> "1" StaffMember : orderedBy
 ItemOrder --> "1" Item : item
 ItemOrder --> "0..n" OptionOrder : optionOrders
+ItemOrder --> ItemType : itemType
 
 OptionOrder <|-- ValueOptionOrder
 OptionOrder <|-- RadioOptionOrder
