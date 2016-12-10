@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/clboettcher/bonappetit.svg?branch=develop)](https://travis-ci.org/clboettcher/bonappetit) [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/clboettcher/bonappetit)
 
-BonAppetit is a free Point-of-Sale solution for small and medium restaurants. It consists of an Android client and a Java
-server application connected to a receipt printer.
+BonAppetit is a free Point-of-Sale solution for small and medium restaurants. It consists of an [Android App](https://github.com/clboettcher/bonappetit-android-app) and a Java
+server application (this project) connected to a receipt printer.
 
 The client app provides the ability to record, edit and delete
 orders for menu items configured in the server. Orders are transferred to the server via WLAN.
@@ -14,38 +14,7 @@ additional free text notes as well as the service member who took the order and 
 
 This project is being refactored, modernized and moved to github. More stuff coming soon. Stay tuned.
 
-## Server
-
-The `:bonappetit-server` project contains the server application that provides the data via RESTful APIs.
-
-### Endpoints
-
-To get started working with the server have a look at the following endpoints.
-
-| URL                                       | Description                            |
-|-------------------------------------------|----------------------------------------|
-| `/v1/doc/index.html`                      | Shows an interactive API documentation |
-| `/health`                                 | Shows application health information   |
-
-### Running the server application
-
-The `:bonappetit-server` project contains a spring-boot application that can be started in an embedded application server via 
-
-```bash
-./gradlew bootRun
-```
-
-Per default the application is deployed on `http://localhost:8080`
-
-In addition to running the server as a standalone application you can create a traditional war file for deployment to an external application server
-
-Run the following command to generate the war
-
-```bash
-./gradlew war
-```
-
-You find the archive at `/bonappetit-server/build/libs/bonappetit-server-${major.minor.bugfix}.war`
+For instructions on how to operate and develop BonAppetit, please see the [Reference Documentation](https://clboettcher.github.io/bonappetit/) 
 
 ## Contributors
 
@@ -59,6 +28,9 @@ In order of appearance.
 ## Maintainer
 
 Claudius Boettcher, <pos.bonappetit@gmail.com>.
+
+## Sponsor
+[![QAware GmbH](https://github.com/clboettcher/bonappetit/blob/develop/qaware.png?raw=true)](http://www.qaware.de)
 
 ## GNU GPL v3 License
 
