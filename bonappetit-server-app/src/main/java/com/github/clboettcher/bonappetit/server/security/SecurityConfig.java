@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // TODO: enable CSRF protection and configure properly.
                 .csrf().disable()
                 .authorizeRequests()
-                    .anyRequest().authenticated()
+                    .antMatchers("/api/users/**").hasAuthority(Authority.ADMIN.toString())
+                    .antMatchers("/**").hasAuthority(Authority.USER.toString())
                 .and()
                     .httpBasic();
         // @formatter:on

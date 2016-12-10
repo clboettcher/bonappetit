@@ -21,10 +21,11 @@ package com.github.clboettcher.bonappetit.server.security;
 
 import com.github.clboettcher.bonappetit.server.users.dao.UserDao;
 import com.github.clboettcher.bonappetit.server.users.entity.UserEntity;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,23 +36,40 @@ import org.springframework.stereotype.Component;
 public class BonAppetitUserDetailsService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BonAppetitUserDetailsService.class);
+    private final String adminUsername;
+    private final String adminPasswordHash;
+
+    private UserDao userDao;
 
     @Autowired
-    private UserDao userDao;
+    public BonAppetitUserDetailsService(UserDao userDao, Environment environment) {
+        this.userDao = userDao;
+        this.adminUsername = environment.getRequiredProperty("security.admin.username");
+        this.adminPasswordHash = environment.getRequiredProperty("security.admin.passwordHash");
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userDao.getUserByUsername(username).orElseThrow(() -> {
-            LOGGER.warn(String.format("Denying access for user with username '%s' because " +
-                            "the user does not exist.",
-                    username));
-            return new UsernameNotFoundException(String.format("Username '%s' not found", username));
-        });
+        if (this.adminUsername.equals(username)) {
+            // The admin username is treated differently since it is not stored in the db.
+            return new User(
+                    adminUsername,
+                    adminPasswordHash,
+                    AuthorityUtils.createAuthorityList(Authority.ADMIN.toString(), Authority.USER.toString())
+            );
+        } else {
+            UserEntity userEntity = userDao.getUserByUsername(username).orElseThrow(() -> {
+                LOGGER.warn(String.format("Denying access for user with username '%s' because " +
+                                "the user does not exist.",
+                        username));
+                return new UsernameNotFoundException(String.format("Username '%s' not found", username));
+            });
 
-        return new User(
-                userEntity.getUsername(),
-                userEntity.getPasswordHash(),
-                Lists.newArrayList()
-        );
+            return new User(
+                    userEntity.getUsername(),
+                    userEntity.getPasswordHash(),
+                    AuthorityUtils.createAuthorityList(Authority.USER.toString())
+            );
+        }
     }
 }
