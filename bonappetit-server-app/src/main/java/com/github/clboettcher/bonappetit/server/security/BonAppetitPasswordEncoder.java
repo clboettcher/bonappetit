@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.security;
 import de.qaware.heimdall.Password;
 import de.qaware.heimdall.PasswordException;
 import de.qaware.heimdall.SecureCharArray;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -31,8 +32,12 @@ import javax.ws.rs.InternalServerErrorException;
 @Component
 public class BonAppetitPasswordEncoder implements PasswordEncoder {
 
-    @Autowired
     private Password password;
+
+    @Autowired
+    public BonAppetitPasswordEncoder(Password password) {
+        this.password = password;
+    }
 
     @Override
     public String encode(CharSequence rawPassword) {
@@ -46,6 +51,9 @@ public class BonAppetitPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        if (StringUtils.isBlank(rawPassword)) {
+            return false;
+        }
         try (SecureCharArray cleartext = new SecureCharArray(((String) rawPassword).toCharArray())) {
             try {
                 return password.verify(cleartext, encodedPassword);
