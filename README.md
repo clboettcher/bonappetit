@@ -32,6 +32,7 @@ Claudius Boettcher, <pos.bonappetit@gmail.com>.
 ## Sponsors
 
 [![QAware GmbH](https://github.com/clboettcher/bonappetit/blob/develop/wiki/qaware.png?raw=true)](http://www.qaware.de)
+
 [![CVJM München e. V.](https://github.com/clboettcher/bonappetit/blob/develop/wiki/cvjm.jpg?raw=true)](https://www.cvjm-muenchen.org/)
 
 ## GNU GPL v3 License
