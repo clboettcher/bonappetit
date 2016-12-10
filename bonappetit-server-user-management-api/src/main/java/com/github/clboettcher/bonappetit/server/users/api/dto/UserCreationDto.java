@@ -28,7 +28,7 @@ import lombok.Data;
 public class UserCreationDto {
 
     @ApiModelProperty(value = "The unique username", required = true, example = "peter")
-    private String userName;
+    private String username;
 
     @ApiModelProperty(value = "The password", required = true, example = "3secret5me")
     private String password;

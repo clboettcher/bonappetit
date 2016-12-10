@@ -31,5 +31,5 @@ public class UserDto {
     private Long id;
 
     @ApiModelProperty(value = "The unique username", required = true, example = "peter")
-    private String userName;
+    private String username;
 }

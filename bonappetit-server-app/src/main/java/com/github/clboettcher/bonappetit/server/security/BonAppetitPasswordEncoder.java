@@ -17,58 +17,42 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server.users.dao.impl;
+package com.github.clboettcher.bonappetit.server.security;
 
-import com.github.clboettcher.bonappetit.server.users.dao.UserDao;
-import com.github.clboettcher.bonappetit.server.users.entity.UserEntity;
-import com.google.common.collect.Lists;
 import de.qaware.heimdall.Password;
 import de.qaware.heimdall.PasswordException;
 import de.qaware.heimdall.SecureCharArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.InternalServerErrorException;
-import java.util.List;
-import java.util.Optional;
 
 @Component
-public class UserDaoImpl implements UserDao {
+public class BonAppetitPasswordEncoder implements PasswordEncoder {
 
     @Autowired
     private Password password;
 
-    @Autowired
-    private UserEntityRepository userEntityRepository;
-
     @Override
-    public void delete(UserEntity userEntity) {
-        this.userEntityRepository.delete(userEntity);
-    }
-
-    @Override
-    public UserEntity create(UserEntity userEntity) {
-        try (SecureCharArray cleartext = new SecureCharArray(userEntity.getPasswordCleartext().toCharArray())) {
-            String hash = password.hash(cleartext);
-            userEntity.setPasswordHash(hash);
-            return this.userEntityRepository.save(userEntity);
+    public String encode(CharSequence rawPassword) {
+        try (SecureCharArray cleartext = new SecureCharArray(((String) rawPassword)
+                .toCharArray())) {
+            return password.hash(cleartext);
         } catch (PasswordException e) {
             throw new InternalServerErrorException("Password hashing failed", e);
         }
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
-        return Lists.newArrayList(this.userEntityRepository.findAll());
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        try (SecureCharArray cleartext = new SecureCharArray(((String) rawPassword).toCharArray())) {
+            try {
+                return password.verify(cleartext, encodedPassword);
+            } catch (PasswordException e) {
+                throw new InternalServerErrorException("Password processing failed", e);
+            }
+        }
     }
 
-    @Override
-    public Optional<UserEntity> getUserById(Long id) {
-        return Optional.ofNullable(this.userEntityRepository.findOne(id));
-    }
-
-    @Override
-    public Optional<UserEntity> getUserByUsername(String username) {
-        return this.userEntityRepository.findOneByUsername(username);
-    }
 }

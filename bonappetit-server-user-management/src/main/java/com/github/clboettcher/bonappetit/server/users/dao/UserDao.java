@@ -28,6 +28,8 @@ public interface UserDao {
 
     Optional<UserEntity> getUserById(Long id);
 
+    Optional<UserEntity> getUserByUsername(String username);
+
     List<UserEntity> getAllUsers();
 
     UserEntity create(UserEntity userEntity);

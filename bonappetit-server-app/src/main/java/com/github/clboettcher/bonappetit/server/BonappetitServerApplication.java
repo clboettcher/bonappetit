@@ -19,8 +19,11 @@
  */
 package com.github.clboettcher.bonappetit.server;
 
+import de.qaware.heimdall.Password;
+import de.qaware.heimdall.PasswordFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -31,6 +34,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "file:${BONAPPETIT_BASE}/content/config/bonappetit.properties"
 })
 public class BonappetitServerApplication {
+
+    @Bean
+    public Password password() {
+        return PasswordFactory.create();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(BonappetitServerApplication.class, args);

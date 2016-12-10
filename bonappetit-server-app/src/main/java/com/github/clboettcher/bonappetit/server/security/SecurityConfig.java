@@ -17,8 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.server;
+package com.github.clboettcher.bonappetit.server.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -31,6 +32,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private BonAppetitUserDetailsService bonAppetitUserDetailsService;
+
+    @Autowired
+    private BonAppetitPasswordEncoder passwordEncoder;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -46,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // TODO: enable CSRF protection and configure properly.
                 .csrf().disable()
                 .authorizeRequests()
-                    .anyRequest().hasRole("USER")
+                    .anyRequest().authenticated()
                 .and()
                     .httpBasic();
         // @formatter:on
@@ -55,9 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                // enable in memory based authentication with a user named "user" and "admin"
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER").and()
-                .withUser("admin").password("password").roles("USER", "ADMIN");
+                .userDetailsService(bonAppetitUserDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
 }
