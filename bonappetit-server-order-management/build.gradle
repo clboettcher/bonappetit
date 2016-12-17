@@ -13,10 +13,9 @@ dependencies {
     // API
     compile project(":bonappetit-server-menu-management-api")
     compile project(":bonappetit-server-order-management-api")
-
-    // Other business modules
     compile project(":bonappetit-server-menu-management")
     compile project(":bonappetit-server-staff-management")
+    compile project(":bonappetit-price-calculation")
 
     // Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")

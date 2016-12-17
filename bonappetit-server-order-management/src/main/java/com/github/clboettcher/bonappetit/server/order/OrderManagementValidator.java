@@ -27,14 +27,13 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.write.*;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -202,6 +201,25 @@ public class OrderManagementValidator {
         if (!staffMemberDao.exists(orderingStaffMemberId)) {
             throw new BadRequestException(String.format("Staff member with ID %d does not exist.",
                     orderingStaffMemberId));
+        }
+    }
+
+    void assertValidParamCombination(Optional<DateTime> orderedBeforeTimeOpt,
+                                     Optional<DateTime> orderedAfterTimeOpt,
+                                     Optional<LocalDate> orderedAtDateOpt) {
+        if ((orderedBeforeTimeOpt.isPresent() || orderedAfterTimeOpt.isPresent()) && orderedAtDateOpt.isPresent()) {
+            throw new BadRequestException("Only the params orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.");
+        }
+        if (orderedBeforeTimeOpt.isPresent() && orderedAfterTimeOpt.isPresent()) {
+            if (orderedBeforeTimeOpt.get().isAfter(orderedAfterTimeOpt.get())) {
+                throw new BadRequestException(String.format("Parameter orderedBefore (%s) cannot be after " +
+                                "parameter orderedAfter (%s)",
+                        orderedBeforeTimeOpt.get(),
+                        orderedAfterTimeOpt.get()
+                ));
+            }
         }
     }
 }

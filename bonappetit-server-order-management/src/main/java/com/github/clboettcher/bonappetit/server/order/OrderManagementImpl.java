@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.order;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import com.github.clboettcher.bonappetit.server.order.dao.OptionOrderDao;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
@@ -29,6 +30,7 @@ import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrder
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderDtoMapper;
+import com.github.clboettcher.bonappetit.server.order.mapping.todto.ItemOrderSummaryDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.todto.OptionOrderDtoMapper;
 import com.github.clboettcher.bonappetit.server.order.mapping.toentity.ItemOrderEntityMapper;
 import com.google.common.collect.Lists;
@@ -39,11 +41,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,10 +69,13 @@ public class OrderManagementImpl implements OrderManagement {
     private ItemOrderDtoMapper toDtoMapper;
 
     @Autowired
+    private ItemOrderSummaryDtoMapper itemOrderSummaryDtoMapper;
+
+    @Autowired
     private OptionOrderDtoMapper optionOrderDtoMapper;
 
     @Autowired
-    private OrderManagementParamParser orderManagementParamParser;
+    private OrderManagementParamParser paramParser;
 
     @Override
 
@@ -107,41 +110,8 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     @Override
-    public List<ItemOrderDto> getAllOrders(String orderedAfter, String orderedAt) {
-        Optional<DateTime> orderedAfterTimeOpt = orderManagementParamParser.parseOrderedBound(orderedAfter, "orderedAfter");
-        Optional<LocalDate> orderedAtDateOpt = orderManagementParamParser.parseOrderedAt(orderedAt, "orderedAt");
-
-        if (orderedAfterTimeOpt.isPresent() && orderedAtDateOpt.isPresent()) {
-            throw new BadRequestException("Only one of the parameters orderedAfter and orderedAt may be provided.");
-        }
-
-        List<ItemOrderEntity> allOrders = this.orderDao.getAllOrders();
-        List<ItemOrderEntity> filtered;
-
-        if (orderedAtDateOpt.isPresent()) {
-            filtered = allOrders.stream().filter(itemOrderEntity -> {
-                Date orderDate = itemOrderEntity.getOrderTime();
-                DateTime orderDateTime = new DateTime(orderDate);
-                LocalDate orderLocalDate = orderDateTime.toLocalDate();
-                return orderLocalDate.isEqual(orderedAtDateOpt.get());
-            }).collect(Collectors.toList());
-        } else if (orderedAfterTimeOpt.isPresent()) {
-            filtered = allOrders.stream().filter(itemOrderEntity -> {
-                Date orderDate = itemOrderEntity.getOrderTime();
-                DateTime orderDateTime = new DateTime(orderDate);
-                DateTime orderedAfterDateTime = orderedAfterTimeOpt.get();
-                return orderDateTime.isEqual(orderedAfterDateTime) || orderDateTime.isAfter(orderedAfterDateTime);
-            }).collect(Collectors.toList());
-        } else {
-            filtered = allOrders;
-        }
-        LOGGER.info(String.format("Returning %d out of a total of %d order(s) filtered by orderedAfter: %s, " +
-                        "orderedAt: %s",
-                filtered.size(),
-                allOrders.size(),
-                orderedAfterTimeOpt.isPresent() ? orderedAfterTimeOpt.get() : "<empty>",
-                orderedAtDateOpt.isPresent() ? orderedAtDateOpt.get() : "<empty>"
-        ));
+    public List<ItemOrderDto> getAllOrders(String orderedBefore, String orderedAfter, String orderedAt) {
+        List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
         return this.toDtoMapper.mapToItemOrderDtos(filtered);
     }
 
@@ -179,5 +149,42 @@ public class OrderManagementImpl implements OrderManagement {
     @Override
     public List<OptionOrderDto> getAllOptionOrders() {
         return this.optionOrderDtoMapper.mapToOptionOrderDtos(optionOrderDao.getAll());
+    }
+
+    @Override
+    public SummaryDto getSummary(String orderedBefore, String orderedAfter, String orderedAt) {
+        List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
+        return itemOrderSummaryDtoMapper.mapToSummaryDto(filtered);
+    }
+
+    @Override
+    public Response createPrintSummaryRequest(String orderedBefore, String orderedAfter, String orderedAt) {
+        List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
+        throw new UnsupportedOperationException("Not yet implemented: print summary"); // TODO implement: print summary
+//        return Response.noContent().build();
+    }
+
+    private List<ItemOrderEntity> getOrdersFilterBy(String orderedBefore, String orderedAfter, String orderedAt) {
+        Optional<DateTime> orderedBeforeTimeOpt = paramParser.parseOrderedBound(orderedBefore, "orderedBefore");
+        Optional<DateTime> orderedAfterTimeOpt = paramParser.parseOrderedBound(orderedAfter, "orderedAfter");
+        Optional<LocalDate> orderedAtDateOpt = paramParser.parseOrderedAt(orderedAt, "orderedAt");
+        validator.assertValidParamCombination(orderedBeforeTimeOpt, orderedAfterTimeOpt, orderedAtDateOpt);
+
+        List<ItemOrderEntity> allOrders = this.orderDao.getAllOrders();
+        List<ItemOrderEntity> filtered = allOrders.stream()
+                .filter(OrderManagementUtils.getOrderedAtPredicate(orderedAtDateOpt))
+                .filter(OrderManagementUtils.getOrderedBeforePredicate(orderedBeforeTimeOpt))
+                .filter(OrderManagementUtils.getOrderedAfterPredicate(orderedAfterTimeOpt))
+                .collect(Collectors.toList());
+
+        LOGGER.info(String.format("Working with %d out of a total of %d order(s) filtered by orderedBefore: %s, " +
+                        "orderedAfter: %s, orderedAt: %s",
+                filtered.size(),
+                allOrders.size(),
+                orderedBeforeTimeOpt.isPresent() ? orderedBeforeTimeOpt.get() : "<empty>",
+                orderedAfterTimeOpt.isPresent() ? orderedAfterTimeOpt.get() : "<empty>",
+                orderedAtDateOpt.isPresent() ? orderedAtDateOpt.get() : "<empty>"
+        ));
+        return filtered;
     }
 }

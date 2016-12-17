@@ -23,6 +23,7 @@ package com.github.clboettcher.bonappetit.server.order.api;
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.ItemOrderCreationDto;
 import io.swagger.annotations.*;
 
@@ -39,6 +40,8 @@ public interface OrderManagement {
     String TAG = "orders";
     String ORDERS_ROOT_PATH = "/orders";
     String OPTION_ORDERS_ROOT_PATH = "/optionOrders";
+    String PRINT_SUMMARY_REQUESTS_ROOT_PATH = "/printSummaryRequests";
+    String SUMMARY_ROOT_PATH = "/summary";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,7 +62,6 @@ public interface OrderManagement {
 
     /**
      * Returns all orders.
-     * d
      *
      * @param orderedAfter Indicates that the response should only contain resources
      *                     ordered after the specified time.
@@ -70,19 +72,30 @@ public interface OrderManagement {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns all orders.", tags = {TAG})
     List<ItemOrderDto> getAllOrders(
+            @ApiParam(value = "The orderedBefore parameter indicates that the API response " +
+                    "should only contain orders which were taken at or before the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @QueryParam("orderedBefore") String orderedBefore,
+
             @ApiParam(value = "The orderedAfter parameter indicates that the API response " +
                     "should only contain orders which were taken at or after the specified time. " +
                     "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
-                    "key word. Supported key words are: today. Only one of the params orderedAfter " +
-                    "and orderedAt can be used.", required = false)
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
             @QueryParam("orderedAfter") String orderedAfter,
 
-            @ApiParam(value = "The orderedAt parameter indicates that the API response " +
+            @ApiParam(value = "The orderedAt parameter indicates that the printed API response " +
                     "should only contain orders which were taken at the specified date. " +
                     "The value is an RFC 3339 formatted date value (1970-01-01) or a " +
-                    "key word. Supported key words are: today. Only one of the params orderedAfter " +
-                    "and orderedAt can be used.", required = false)
-            @QueryParam("orderedAt") String orderedAt);
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @QueryParam("orderedAt") String orderedAt
+    );
 
     /**
      * Returns the order with the specified id.
@@ -104,7 +117,7 @@ public interface OrderManagement {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value="Gets the option orders of the order with the given id.", tags = {TAG})
+    @ApiOperation(value = "Gets the option orders of the order with the given id.", tags = {TAG})
     @Path(ORDERS_ROOT_PATH + "/{id}/optionOrders")
     List<OptionOrderDto> getOptionOrdersForOrder(@ApiParam(value = "The id of the order to " +
             "return the option orders from.") @PathParam("id") Long id);
@@ -116,7 +129,86 @@ public interface OrderManagement {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value="Gets all stored option orders.", tags = {TAG})
+    @ApiOperation(value = "Gets all stored option orders.", tags = {TAG})
     @Path(OPTION_ORDERS_ROOT_PATH)
     List<OptionOrderDto> getAllOptionOrders();
+
+    /**
+     * Get a summary of a list of orders.
+     *
+     * @param orderedBefore Summary should only contain orders at or before this time (RFC 3339 formatted date-time value).
+     * @param orderedAfter  Summary should only contain orders at or after this time (RFC 3339 formatted date-time value).
+     * @param orderedAt     Summary should only contain orders at or before this date (RFC 3339 formatted date value).
+     * @return The order summary, may not contain any orders.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the summary data.", tags = {TAG})
+    @Path(SUMMARY_ROOT_PATH)
+    SummaryDto getSummary(
+            @ApiParam(value = "The orderedBefore parameter indicates that the API response " +
+                    "should only contain orders which were taken at or before the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @QueryParam("orderedBefore") String orderedBefore,
+
+            @ApiParam(value = "The orderedAfter parameter indicates that the API response " +
+                    "should only contain orders which were taken at or after the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @QueryParam("orderedAfter") String orderedAfter,
+
+            @ApiParam(value = "The orderedAt parameter indicates that the printed API response " +
+                    "should only contain orders which were taken at the specified date. " +
+                    "The value is an RFC 3339 formatted date value (1970-01-01) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @QueryParam("orderedAt") String orderedAt
+    );
+
+    /**
+     * Create a request to print a summary.
+     * <p>
+     * The summary is created and printed synchronously. Therefore the
+     * create summary request cannot be fetched or canceled. The endpoints returns 204.
+     *
+     * @param orderedBefore Summary should only contain orders at or before this time (RFC 3339 formatted date-time value).
+     * @param orderedAfter  Summary should only contain orders at or after this time (RFC 3339 formatted date-time value).
+     * @param orderedAt     Summary should only contain orders at or before this date (RFC 3339 formatted date value).
+     * @return A response indicating the success of the operation.
+     */
+    @POST
+    @ApiOperation(value = "Create a request to print the summary.", notes = "The summary contains a list" +
+            "of orders including the total prices and the sum of all orders.", tags = {TAG})
+    @Path(PRINT_SUMMARY_REQUESTS_ROOT_PATH)
+    Response createPrintSummaryRequest(
+            @ApiParam(value = "The orderedBefore parameter indicates that the summary " +
+                    "should only contain orders which were taken at or before the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @FormParam("orderedBefore") String orderedBefore,
+
+            @ApiParam(value = "The orderedAfter parameter indicates that the summary " +
+                    "should only contain orders which were taken at or after the specified time. " +
+                    "The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @FormParam("orderedAfter") String orderedAfter,
+
+            @ApiParam(value = "The orderedAt parameter indicates that the printed summary " +
+                    "should only contain orders which were taken at the specified date. " +
+                    "The value is an RFC 3339 formatted date value (1970-01-01) or a " +
+                    "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
+                    "can be used together. The orderedAt param must be used without orderedBefore and " +
+                    "orderedAfter.", required = false)
+            @FormParam("orderedAt") String orderedAt
+    );
 }
