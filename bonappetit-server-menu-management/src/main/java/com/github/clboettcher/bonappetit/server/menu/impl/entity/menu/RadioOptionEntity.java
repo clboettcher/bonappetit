@@ -22,7 +22,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,7 +34,6 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString(callSuper = true)
 public class RadioOptionEntity extends AbstractOptionEntity {
 
     /**
@@ -88,5 +88,14 @@ public class RadioOptionEntity extends AbstractOptionEntity {
 
     public void setRadioItems(List<RadioItemEntity> radioItems) {
         this.radioItems = radioItems;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("defaultSelected", defaultSelected)
+                .append("radioItems", radioItems)
+                .toString();
     }
 }

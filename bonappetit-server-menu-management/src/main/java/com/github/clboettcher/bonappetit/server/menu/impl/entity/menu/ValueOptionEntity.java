@@ -41,7 +41,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,7 +56,6 @@ import java.math.BigDecimal;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString(callSuper = true)
 public class ValueOptionEntity extends AbstractOptionEntity {
 
     /**
@@ -104,5 +104,13 @@ public class ValueOptionEntity extends AbstractOptionEntity {
 
     public void setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("priceDiff", priceDiff)
+                .append("defaultValue", defaultValue)
+                .toString();
     }
 }

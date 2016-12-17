@@ -22,7 +22,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,6 @@ import java.math.BigDecimal;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@ToString(callSuper = true)
 public class CheckboxOptionEntity extends AbstractOptionEntity {
 
     /**
@@ -85,5 +85,13 @@ public class CheckboxOptionEntity extends AbstractOptionEntity {
 
     public void setDefaultChecked(Boolean defaultChecked) {
         this.defaultChecked = defaultChecked;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("priceDiff", priceDiff)
+                .append("defaultChecked", defaultChecked)
+                .toString();
     }
 }
