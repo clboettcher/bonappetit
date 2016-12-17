@@ -27,6 +27,7 @@ import com.github.clboettcher.bonappetit.server.order.entity.*;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -57,22 +58,24 @@ public abstract class ItemOrderEntityMapper {
         List<ValueOptionOrderEntity> valueOptionOrderEntities = Lists.newArrayList();
         List<RadioOptionOrderEntity> radioOptionOrderEntities = Lists.newArrayList();
 
-        abstractOptionOrderEntities.forEach(abstractOptionOrderEntity -> {
-            if (abstractOptionOrderEntity instanceof CheckboxOptionOrderEntity) {
-                CheckboxOptionOrderEntity checkboxOrder = (CheckboxOptionOrderEntity) abstractOptionOrderEntity;
-                checkboxOptionOrderEntities.add(checkboxOrder);
-            } else if (abstractOptionOrderEntity instanceof ValueOptionOrderEntity) {
-                ValueOptionOrderEntity valueOrder = (ValueOptionOrderEntity) abstractOptionOrderEntity;
-                valueOptionOrderEntities.add(valueOrder);
-            } else if (abstractOptionOrderEntity instanceof RadioOptionOrderEntity) {
-                RadioOptionOrderEntity radioOrder = (RadioOptionOrderEntity) abstractOptionOrderEntity;
-                radioOptionOrderEntities.add(radioOrder);
-            } else {
-                throw new IllegalArgumentException(String.format("Unknown subtype %s of %s",
-                        abstractOptionOrderEntity.getClass().getName(),
-                        AbstractOptionOrderEntity.class.getName()));
-            }
-        });
+        if (CollectionUtils.isNotEmpty(abstractOptionOrderEntities)) {
+            abstractOptionOrderEntities.forEach(abstractOptionOrderEntity -> {
+                if (abstractOptionOrderEntity instanceof CheckboxOptionOrderEntity) {
+                    CheckboxOptionOrderEntity checkboxOrder = (CheckboxOptionOrderEntity) abstractOptionOrderEntity;
+                    checkboxOptionOrderEntities.add(checkboxOrder);
+                } else if (abstractOptionOrderEntity instanceof ValueOptionOrderEntity) {
+                    ValueOptionOrderEntity valueOrder = (ValueOptionOrderEntity) abstractOptionOrderEntity;
+                    valueOptionOrderEntities.add(valueOrder);
+                } else if (abstractOptionOrderEntity instanceof RadioOptionOrderEntity) {
+                    RadioOptionOrderEntity radioOrder = (RadioOptionOrderEntity) abstractOptionOrderEntity;
+                    radioOptionOrderEntities.add(radioOrder);
+                } else {
+                    throw new IllegalArgumentException(String.format("Unknown subtype %s of %s",
+                            abstractOptionOrderEntity.getClass().getName(),
+                            AbstractOptionOrderEntity.class.getName()));
+                }
+            });
+        }
 
         return ItemOrderEntity.builder()
                 .item(item)
