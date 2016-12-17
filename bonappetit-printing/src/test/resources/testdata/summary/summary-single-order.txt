@@ -1,13 +1,23 @@
 <init/>
     <center><strong>Zusammenfassung</strong></center>
 
-Von: 15.12.2016, 09:38 Uhr
-Bis: 16.12.2016, 01:45 Uhr
+Erste Bestellung:  15.12.2016, 09:38 Uhr
+Letzte Bestellung: 16.12.2016, 01:45 Uhr
 Bestellungen: 1
 
 1x Pommes je 2,50 EUR
 
-Total: 2,50 EUR
+Einnahmen laut BonAppetit: 2,50 EUR
+
+Tatsaechliches Bargeld (ohne Wechselgeld):  _____________________________ EUR
+
+Umbuchungsbelege:                           _____________________________ EUR
+
+Summe:                                      _____________________________ EUR
+
+Unterschrift KuechenmitarbeiterIn:          _________________________________
+
+Unterschrift ServicemitarbeiterIn:          _________________________________
 
 
 ----------------------- ** -----------------------

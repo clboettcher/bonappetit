@@ -1,12 +1,22 @@
 <init/>
     <center><strong>Zusammenfassung</strong></center>
 
-Von: --
-Bis: --
+Erste Bestellung:  --
+Letzte Bestellung: --
 Bestellungen: 0
 
 
-Total: 0,00 EUR
+Einnahmen laut BonAppetit: 0,00 EUR
+
+Tatsaechliches Bargeld (ohne Wechselgeld):  _____________________________ EUR
+
+Umbuchungsbelege:                           _____________________________ EUR
+
+Summe:                                      _____________________________ EUR
+
+Unterschrift KuechenmitarbeiterIn:          _________________________________
+
+Unterschrift ServicemitarbeiterIn:          _________________________________
 
 
 ----------------------- ** -----------------------

@@ -80,10 +80,10 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
 
         List<SummaryEntryDto> orderSummaries = summary.getOrderSummaries();
         builder.heading(StringUtils.trim("Zusammenfassung"))
-                .appendLine(String.format("Von: %s", summary.getOldestOrderTime() != null ?
+                .appendLine(String.format("Erste Bestellung:  %s", summary.getOldestOrderTime() != null ?
                         DateUtils.formatDayMonthYearTime(summary.getOldestOrderTime()) :
                         "--"))
-                .appendLine(String.format("Bis: %s", summary.getNewestOrderTime() != null ?
+                .appendLine(String.format("Letzte Bestellung: %s", summary.getNewestOrderTime() != null ?
                         DateUtils.formatDayMonthYearTime(summary.getNewestOrderTime()) :
                         "--"))
                 .appendLine(String.format("Bestellungen: %d", orderSummaries.stream()
@@ -98,7 +98,17 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
         }
 
         builder.appendLineFeed()
-                .appendLine(String.format("Total: %s EUR", priceFormat.format(summary.getTotalPrice())))
+                .appendLine(String.format("Einnahmen laut BonAppetit: %s EUR", priceFormat.format(summary.getTotalPrice())))
+                .appendLineFeed()
+                .appendLine("Tatsaechliches Bargeld (ohne Wechselgeld):  _____________________________ EUR")
+                .appendLineFeed()
+                .appendLine("Umbuchungsbelege:                           _____________________________ EUR")
+                .appendLineFeed()
+                .appendLine("Summe:                                      _____________________________ EUR")
+                .appendLineFeed()
+                .appendLine("Unterschrift KuechenmitarbeiterIn:          _________________________________")
+                .appendLineFeed()
+                .appendLine("Unterschrift ServicemitarbeiterIn:          _________________________________")
                 .appendLineFeed()
                 .appendLineFeed()
                 .appendPartialCut()
