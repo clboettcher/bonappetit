@@ -55,7 +55,7 @@ public class BonStringConverterImplTests {
     public void testMinimalBon() throws Exception {
         Bon input = minimalBon().build();
         String actual = converter.toString(Collections.singletonList(input));
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-minimal.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-minimal.txt");
         assertThat(actual, is(expected));
     }
 
@@ -65,7 +65,7 @@ public class BonStringConverterImplTests {
                 .note("ohne Zwiebeln")
                 .build();
         String actual = converter.toString(Collections.singletonList(input));
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-with-note.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-with-note.txt");
         assertThat(actual, is(expected));
     }
 
@@ -94,7 +94,7 @@ public class BonStringConverterImplTests {
         );
 
         String actual = converter.toString(input);
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-sorted-by-type-and-time.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-sorted-by-type-and-time.txt");
         assertThat(actual, is(expected));
     }
 
@@ -105,7 +105,7 @@ public class BonStringConverterImplTests {
                 .emphasisedOptions(Arrays.asList("Klein", "Alkoholfrei"))
                 .build();
         String actual = converter.toString(Collections.singletonList(input));
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-emphasised-options.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-emphasised-options.txt");
         assertThat(actual, is(expected));
     }
 
@@ -116,7 +116,7 @@ public class BonStringConverterImplTests {
                 .defaultOptions(Arrays.asList("Cheese-Sauce", "Chilli-Dip"))
                 .build();
         String actual = converter.toString(Collections.singletonList(input));
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-default-options.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-default-options.txt");
         assertThat(actual, is(expected));
     }
 
@@ -129,7 +129,7 @@ public class BonStringConverterImplTests {
                 .note("mit wenig Schaum")
                 .build();
         String actual = converter.toString(Collections.singletonList(input));
-        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon-full.txt");
+        String expected = BonAppetitResourceUtils.readFileContentAsString("testdata/bon/bon-full.txt");
         assertThat(actual, is(expected));
     }
 

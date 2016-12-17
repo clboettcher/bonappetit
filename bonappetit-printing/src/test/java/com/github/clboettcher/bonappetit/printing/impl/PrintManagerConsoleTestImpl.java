@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.printing.api.PrintManager;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 
 import javax.print.PrintException;
 import java.util.List;
@@ -29,7 +30,12 @@ public class PrintManagerConsoleTestImpl implements PrintManager {
 
     @Override
     public void print(List<ItemOrderDto> orders) throws PrintException {
-        throw new UnsupportedOperationException("Not yet implemented: print"); // TODO implement: print
+        throw new UnsupportedOperationException("Not yet implemented: print orders"); // TODO implement: print orders
+    }
+
+    @Override
+    public void print(SummaryDto summary) throws PrintException {
+        throw new UnsupportedOperationException("Not yet implemented: print summary"); // TODO implement: print summary
     }
 
     // TODO repair

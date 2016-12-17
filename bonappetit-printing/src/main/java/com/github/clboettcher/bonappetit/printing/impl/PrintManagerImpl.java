@@ -23,6 +23,7 @@ import com.github.clboettcher.bonappetit.printing.api.PrintManager;
 import com.github.clboettcher.bonappetit.printing.conversion.BonConverter;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class PrintManagerImpl implements PrintManager {
     private BonStringConverter bonStringConverter;
 
     /**
+     * Converts summaries into printable strings.
+     */
+    private SummaryStringConverter summaryStringConverter;
+
+    /**
      * Bean that wraps talking to the physical printer.
      */
     private PhysicalPrinter physicalPrinter;
@@ -55,16 +61,19 @@ public class PrintManagerImpl implements PrintManager {
     /**
      * Constructor setting the specified properties.
      *
-     * @param bonConverter       see {@link #bonConverter}.
-     * @param bonStringConverter see {@link #bonStringConverter}.
-     * @param physicalPrinter    see {@link #physicalPrinter}.
+     * @param bonConverter           see {@link #bonConverter}.
+     * @param bonStringConverter     see {@link #bonStringConverter}.
+     * @param summaryStringConverter see {@link #summaryStringConverter}.
+     * @param physicalPrinter        see {@link #physicalPrinter}.
      */
     @Autowired
     public PrintManagerImpl(BonConverter bonConverter,
                             BonStringConverter bonStringConverter,
+                            SummaryStringConverter summaryStringConverter,
                             PhysicalPrinter physicalPrinter) {
         this.bonConverter = bonConverter;
         this.bonStringConverter = bonStringConverter;
+        this.summaryStringConverter = summaryStringConverter;
         this.physicalPrinter = physicalPrinter;
     }
 
@@ -76,59 +85,11 @@ public class PrintManagerImpl implements PrintManager {
         physicalPrinter.print(output);
     }
 
-    // TODO repair
-//    /**
-//     * // TODO THIS IS A FUCKING HACK; PLEASE FUTURE ME; REPAIR IT!!!
-//     *
-//     * @param orders
-//     * @return
-//     */
-//    private String toSummaryString(Set<ItemOrderDto> orders) {
-//        BonStringBuilder builder = BonStringBuilder.newInstance(new ControlCharProviderCITIZENCTS310IIImpl());
-//
-//        PriceCalculator priceCalculator = new PriceCalculatorImpl();
-//        builder.doubleWidthDoubleHeight("Alle Bestellungen");
-//        builder.doubleWidthDoubleHeight(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
-//        builder.newline();
-//        BigDecimal grandTotal = BigDecimal.ZERO;
-//        for (ItemOrderDto order : orders) {
-    // // TODO MappingHelper has been removed since we dont need separate entities for price calcualtion anymore
-//            final ItemOrderDtoPrices orderPrices = de.bonappetit.posprinter.util.MappingHelper.mapToItemOrderDtoForPriceCalculation(order);
-//            final BigDecimal totalPrice = priceCalculator.calculateTotalPrice(orderPrices);
-//            grandTotal = grandTotal.add(totalPrice);
-//            builder.appendLine(String.format("%s %s %s EUR", order.getItem().getName(), getEmphasisedOptionsString(order), totalPrice));
-//            builder.appendLine("---");
-//        }
-//        builder.newline();
-//        builder.appendLine(String.format("Total: %s EUR", grandTotal));
-//        builder.appendLineFeed().appendLineFeed().newline().appendPartialCut();
-//        return builder.build();
-//    }
-//
-//    private String getEmphasisedOptionsString(ItemOrderDto order) {
-//        List<String> emph = new ArrayList<>();
-//        for (OrderOption orderOption : (Set<OrderOption>)InvokerHelper.invokeMethod(order, "getOrderOptions", InvokerHelper.EMPTY_ARGS)) {
-//            if (orderOption instanceof IntegerOrderOption) {
-//                IntegerOrderOption integerOrderOption = (IntegerOrderOption) orderOption;
-//                if (integerOrderOption.getValue() > 0 && integerOrderOption.getOption().getPrintStrategy() == PrintStrategy.EMPHASISE) {
-//                    emph.add(integerOrderOption.getOption().getName());
-//                }
-//            } else if (orderOption instanceof CheckboxOrderOption) {
-//                CheckboxOrderOption checkboxOrderOption = (CheckboxOrderOption) orderOption;
-//                if (checkboxOrderOption.getChecked() && checkboxOrderOption.getOption().getPrintStrategy() == PrintStrategy.EMPHASISE) {
-//                    emph.add(checkboxOrderOption.getOption().getName());
-//                }
-//            } else if (orderOption instanceof RadioOrderOption) {
-//                RadioOrderOption radioOrderOption = (RadioOrderOption) orderOption;
-//                if (radioOrderOption.getSelectedItem().getPrintStrategy() == PrintStrategy.EMPHASISE) {
-//                    emph.add(radioOrderOption.getSelectedItem().getName());
-//                }
-//            } else {
-//                throw new IllegalStateException("Unsup option type: " + orderOption.getClass().getName());
-//            }
-//        }
-//
-//        return Joiner.on(" ").join(emph);
-//    }
+    @Override
+    public void print(SummaryDto summary) throws PrintException {
+        Preconditions.checkNotNull(summary, "summary");
+        String output = summaryStringConverter.toString(summary);
+        physicalPrinter.print(output);
+    }
 }
 

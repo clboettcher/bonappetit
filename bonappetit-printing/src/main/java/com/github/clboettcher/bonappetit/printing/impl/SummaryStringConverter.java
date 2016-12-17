@@ -17,27 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.github.clboettcher.bonappetit.printing.api;
+package com.github.clboettcher.bonappetit.printing.impl;
 
-
-import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 
-import javax.print.PrintException;
-import java.util.List;
-
-/**
- * Contract for the connection to the bon printer.
- */
-public interface PrintManager {
-
-    /**
-     * Prints the given {@code orders}.
-     *
-     * @param orders The orders to print.
-     * @throws PrintException If printing fails.
-     */
-    void print(List<ItemOrderDto> orders) throws PrintException;
-
-    void print(SummaryDto summary) throws PrintException;
+public interface SummaryStringConverter {
+    String toString(SummaryDto summary);
 }

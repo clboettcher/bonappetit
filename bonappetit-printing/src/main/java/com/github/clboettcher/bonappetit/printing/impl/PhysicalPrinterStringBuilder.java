@@ -24,7 +24,7 @@ import com.google.common.base.Preconditions;
 /**
  * Builds strings that can be printed using a physical device.
  */
-public class BonStringBuilder {
+public class PhysicalPrinterStringBuilder {
 
     /**
      * Enumerates possible alignments for text.
@@ -59,14 +59,14 @@ public class BonStringBuilder {
     private StringBuilder builder;
 
     /**
-     * Creates a new {@link BonStringBuilder} instance using the given {@code controlCharProvider}.
+     * Creates a new {@link PhysicalPrinterStringBuilder} instance using the given {@code controlCharProvider}.
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
-     * @return A new instance of {@link BonStringBuilder}.
+     * @return A new instance of {@link PhysicalPrinterStringBuilder}.
      */
-    public static BonStringBuilder newInstance(ControlCharProvider controlCharProvider,
-                                               SpecialCharEncoder specialCharEncoder) {
-        return new BonStringBuilder(controlCharProvider, specialCharEncoder);
+    public static PhysicalPrinterStringBuilder newInstance(ControlCharProvider controlCharProvider,
+                                                           SpecialCharEncoder specialCharEncoder) {
+        return new PhysicalPrinterStringBuilder(controlCharProvider, specialCharEncoder);
     }
 
     /**
@@ -75,7 +75,7 @@ public class BonStringBuilder {
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
      */
-    private BonStringBuilder(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder) {
+    private PhysicalPrinterStringBuilder(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
         this.specialCharEncoder = specialCharEncoder;
@@ -91,7 +91,7 @@ public class BonStringBuilder {
      * @param string The string to append.
      * @return This builder.
      */
-    public BonStringBuilder appendLine(String string) {
+    public PhysicalPrinterStringBuilder appendLine(String string) {
         return this.appendLine(string, Align.LEFT);
     }
 
@@ -102,7 +102,7 @@ public class BonStringBuilder {
      * @param alignment The alignment to print the string at.
      * @return This builder.
      */
-    public BonStringBuilder appendLine(String string, Align alignment) {
+    public PhysicalPrinterStringBuilder appendLine(String string, Align alignment) {
         switch (alignment) {
             case CENTER:
                 builder.append(centered(string));
@@ -127,7 +127,7 @@ public class BonStringBuilder {
      * @param string The heading text.
      * @return This builder.
      */
-    public BonStringBuilder heading(String string) {
+    public PhysicalPrinterStringBuilder heading(String string) {
         this.appendLine(centered(doubleWidthDoubleHeight(string)));
         this.appendLineFeed();
         return this;
@@ -150,7 +150,7 @@ public class BonStringBuilder {
      *
      * @return This builder.
      */
-    public BonStringBuilder appendLineFeed() {
+    public PhysicalPrinterStringBuilder appendLineFeed() {
         builder.append(controlCharProvider.getLineFeedChar());
         return this;
     }
@@ -160,7 +160,7 @@ public class BonStringBuilder {
      *
      * @return This builder.
      */
-    public BonStringBuilder appendPartialCut() {
+    public PhysicalPrinterStringBuilder appendPartialCut() {
         builder.append(controlCharProvider.getPartialCutString());
         return this;
     }

@@ -63,29 +63,29 @@ public class BonStringConverterImpl implements BonStringConverter {
     @Override
     public String toString(List<Bon> bons) {
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(bons), "bons empty");
-        BonStringBuilder bonStringBuilder = BonStringBuilder.newInstance(
+        PhysicalPrinterStringBuilder physicalPrinterStringBuilder = PhysicalPrinterStringBuilder.newInstance(
                 controlCharProvider,
                 specialCharEncoder);
         sortByItemTypeAndTime(bons);
         for (Bon bon : bons) {
-            appendBon(bon, bonStringBuilder);
+            appendBon(bon, physicalPrinterStringBuilder);
         }
 
-        return bonStringBuilder.build();
+        return physicalPrinterStringBuilder.build();
     }
 
     /**
-     * Appends the given {@code bon} to the given {@code bonStringBuilder}.
+     * Appends the given {@code bon} to the given {@code physicalPrinterStringBuilder}.
      *
-     * @param bon              The bon.
-     * @param bonStringBuilder The builder to append the {@code bon} to.
+     * @param bon                          The bon.
+     * @param physicalPrinterStringBuilder The builder to append the {@code bon} to.
      */
-    private void appendBon(Bon bon, BonStringBuilder bonStringBuilder) {
+    private void appendBon(Bon bon, PhysicalPrinterStringBuilder physicalPrinterStringBuilder) {
         Optional<String> emphOptionsOpt = sortAndJoin(bon.getEmphasisedOptions());
-        bonStringBuilder
+        physicalPrinterStringBuilder
                 .appendLine(String.format("Kunde: %s",
                         bon.getDeliverTo()),
-                        BonStringBuilder.Align.CENTER)
+                        PhysicalPrinterStringBuilder.Align.CENTER)
                 .heading(StringUtils.trim(String.format("%s %s",
                         bon.getItemTitle(),
                         emphOptionsOpt.or(""))))
@@ -94,19 +94,19 @@ public class BonStringConverterImpl implements BonStringConverter {
         // Append separate line for default options only if present
         Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions(), ", ");
         if (defaultOptionsOpt.isPresent()) {
-            bonStringBuilder.appendLine(defaultOptionsOpt.get());
+            physicalPrinterStringBuilder.appendLine(defaultOptionsOpt.get());
         }
 
         // Append a separate line for the note only if present
         if (StringUtils.isNotBlank(bon.getNote())) {
-            bonStringBuilder.appendLine(String.format("Bemerkung: %s", bon.getNote()));
+            physicalPrinterStringBuilder.appendLine(String.format("Bemerkung: %s", bon.getNote()));
         }
 
         // Separate staff member + order time from the order to enhance readability
-        bonStringBuilder.appendLineFeed();
+        physicalPrinterStringBuilder.appendLineFeed();
 
         // Staff member name + order time
-        bonStringBuilder.appendLine(String.format("Bedienung: %s, %s",
+        physicalPrinterStringBuilder.appendLine(String.format("Bedienung: %s, %s",
                 bon.getStaffMemberName(),
                 DateUtils.formatDayMonthHourMinuteShort(bon.getOrderTime())))
                 .appendLineFeed()
