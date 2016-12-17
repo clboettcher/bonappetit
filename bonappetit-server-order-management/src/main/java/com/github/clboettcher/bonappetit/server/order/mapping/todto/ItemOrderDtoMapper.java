@@ -28,7 +28,6 @@ import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrder
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
-import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,18 +49,13 @@ public abstract class ItemOrderDtoMapper {
         ItemEntity item = itemOrder.getItem();
         StaffMemberEntity staffMember = itemOrder.getStaffMember();
 
-        List<AbstractOptionOrderEntity> optionOrders = Lists.newArrayList();
-        optionOrders.addAll(itemOrder.getCheckboxOptionOrders());
-        optionOrders.addAll(itemOrder.getValueOptionOrders());
-        optionOrders.addAll(itemOrder.getRadioOptionOrders());
-
         return ItemOrderDto.builder()
                 .id(itemOrder.getId())
                 .itemId(item.getId())
                 .itemTitle(itemOrder.getItemTitle())
                 .itemPrice(itemOrder.getItemPrice())
                 .itemType(itemDtoMapper.mapToItemDtoType(itemOrder.getItemType()))
-                .optionOrders(this.mapToOptionOrderDtos(optionOrders))
+                .optionOrders(this.mapToOptionOrderDtos(itemOrder.getAllOptionOrders()))
                 .deliverTo(itemOrder.getDeliverTo())
                 .staffMemberId(staffMember.getId())
                 .staffMemberFirstName(itemOrder.getStaffMemberFirstName())
