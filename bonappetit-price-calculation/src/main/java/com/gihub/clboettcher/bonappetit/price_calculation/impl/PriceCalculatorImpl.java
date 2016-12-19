@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gihub.clboettcher.price_calculation.impl;
+package com.gihub.clboettcher.bonappetit.price_calculation.impl;
 
-import com.gihub.clboettcher.price_calculation.api.PriceCalculator;
+import com.gihub.clboettcher.bonappetit.price_calculation.api.PriceCalculator;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
@@ -32,6 +33,14 @@ import java.util.List;
  * Default impl of {@link PriceCalculator}.
  */
 public class PriceCalculatorImpl implements PriceCalculator {
+
+    private BigDecimal foodDiscount;
+    private BigDecimal drinkDiscount;
+
+    public PriceCalculatorImpl(BigDecimal foodDiscount, BigDecimal drinkDiscount) {
+        this.foodDiscount = foodDiscount;
+        this.drinkDiscount = drinkDiscount;
+    }
 
     @Override
     public BigDecimal calculateTotalPrice(ItemOrderDto itemOrder) {
@@ -60,6 +69,15 @@ public class PriceCalculatorImpl implements PriceCalculator {
                             "order with unknown type %s", (optionOrder != null
                             ? optionOrder.getClass().getSimpleName() : "<null>")));
                 }
+            }
+        }
+
+        // Check for discounts and apply.
+        if (itemOrder.getCustomer() instanceof StaffMemberCustomerDto) {
+            if (ItemDtoType.isFood(itemOrder.getItemType())) {
+                result = result.multiply(foodDiscount);
+            } else if (ItemDtoType.isDrink(itemOrder.getItemType())) {
+                result = result.multiply(drinkDiscount);
             }
         }
 

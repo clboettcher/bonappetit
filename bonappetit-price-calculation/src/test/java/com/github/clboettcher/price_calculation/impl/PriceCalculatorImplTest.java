@@ -19,7 +19,8 @@
  */
 package com.github.clboettcher.price_calculation.impl;
 
-import com.gihub.clboettcher.price_calculation.impl.PriceCalculatorImpl;
+import com.gihub.clboettcher.bonappetit.price_calculation.impl.PriceCalculatorImpl;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -44,7 +45,9 @@ public class PriceCalculatorImplTest {
 
     @Before
     public void setUp() throws Exception {
-        this.priceCalculator = new PriceCalculatorImpl();
+        BigDecimal foodDiscount = new BigDecimal("0.75");
+        BigDecimal drinkDiscount = new BigDecimal("0.5");
+        priceCalculator = new PriceCalculatorImpl(foodDiscount, drinkDiscount);
     }
 
     @Test
@@ -121,5 +124,61 @@ public class PriceCalculatorImplTest {
                 .build();
         expectedException.expect(IllegalArgumentException.class);
         priceCalculator.calculateTotalPrice(itemOrder);
+    }
+
+    @Test
+    public void testFoodDiscountForStaffMembers() throws Exception {
+        BigDecimal actual = priceCalculator.calculateTotalPrice(ItemOrderDto.builder()
+                .itemType(ItemDtoType.FOOD)
+                .itemPrice(BigDecimal.TEN)
+                .customer(StaffMemberCustomerDto.builder().build())
+                .build());
+        assertThat(actual, is(new BigDecimal("7.50")));
+    }
+
+    @Test
+    public void testDrinkDiscountForStaffMembers() throws Exception {
+        ItemOrderDto input = ItemOrderDto.builder()
+                .itemType(ItemDtoType.DRINK_ALCOHOLIC)
+                .itemPrice(BigDecimal.TEN)
+                .customer(StaffMemberCustomerDto.builder().build())
+                .build();
+        BigDecimal actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("5.00")));
+
+        input.setItemType(ItemDtoType.DRINK_NON_ALCOHOLIC);
+        actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("5.00")));
+    }
+
+    @Test
+    public void testNoFoodDiscountsForOtherCustomers() throws Exception {
+        ItemOrderDto input = ItemOrderDto.builder()
+                .itemType(ItemDtoType.FOOD)
+                .itemPrice(BigDecimal.TEN)
+                .customer(FreeTextCustomerDto.builder().build())
+                .build();
+        BigDecimal actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("10.00")));
+
+        input.setCustomer(TableCustomerDto.builder().build());
+        actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("10.00")));
+    }
+
+    @Test
+    public void testNoDrinkDiscountsForOtherCustomers() throws Exception {
+        ItemOrderDto input = ItemOrderDto.builder()
+                .itemType(ItemDtoType.DRINK_ALCOHOLIC)
+                .itemPrice(BigDecimal.TEN)
+                .customer(FreeTextCustomerDto.builder().build())
+                .build();
+        BigDecimal actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("10.00")));
+
+        input.setCustomer(TableCustomerDto.builder().build());
+        input.setItemType(ItemDtoType.DRINK_NON_ALCOHOLIC);
+        actual = priceCalculator.calculateTotalPrice(input);
+        assertThat(actual, is(new BigDecimal("10.00")));
     }
 }

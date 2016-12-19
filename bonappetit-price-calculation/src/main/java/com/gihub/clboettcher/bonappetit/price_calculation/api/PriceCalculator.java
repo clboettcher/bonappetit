@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BonAppetit.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gihub.clboettcher.price_calculation.api;
+package com.gihub.clboettcher.bonappetit.price_calculation.api;
 
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 

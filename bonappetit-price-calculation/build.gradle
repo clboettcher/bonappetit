@@ -12,5 +12,7 @@ dependencies {
 
     testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
+    // https://mvnrepository.com/artifact/org.springframework/spring-test
+    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
     testCompile "junit:junit:${junitVersion}"
 }

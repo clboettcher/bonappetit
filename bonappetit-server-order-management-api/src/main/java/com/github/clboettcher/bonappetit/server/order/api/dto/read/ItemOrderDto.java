@@ -53,8 +53,7 @@ public class ItemOrderDto {
     @ApiModelProperty(value = "The ordered options of the ordered item")
     private List<OptionOrderDto> optionOrders;
 
-    @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
-            example = "Table 4")
+    @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true)
     private CustomerDto customer;
 
     @ApiModelProperty(value = "The ID of the staff member who took this order", required = true)

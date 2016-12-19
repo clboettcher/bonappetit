@@ -1,6 +1,6 @@
 package com.github.clboettcher.bonappetit.server.order.mapping.todto;
 
-import com.gihub.clboettcher.price_calculation.api.PriceCalculator;
+import com.gihub.clboettcher.bonappetit.price_calculation.api.PriceCalculator;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryEntryDto;

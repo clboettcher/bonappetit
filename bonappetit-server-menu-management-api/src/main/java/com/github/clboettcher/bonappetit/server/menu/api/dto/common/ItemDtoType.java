@@ -65,5 +65,13 @@ public enum ItemDtoType {
     /**
      * A side dish, e.g. 'Ketchup'.
      */
-    SIDE_DISH
+    SIDE_DISH;
+
+    public static boolean isFood(ItemDtoType type) {
+        return type == FOOD;
+    }
+
+    public static boolean isDrink(ItemDtoType type) {
+        return type == DRINK_ALCOHOLIC || type == DRINK_NON_ALCOHOLIC;
+    }
 }
