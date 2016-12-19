@@ -123,8 +123,9 @@ public class ItemOrderEntity {
     /**
      * The person or place (eg table) that the order should be delivered to.
      */
-    @Column(name = "DELIVER_TO", nullable = false)
-    private String deliverTo;
+    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    private CustomerEntity customer;
 
     /**
      * The staff member who took the order.
@@ -180,7 +181,7 @@ public class ItemOrderEntity {
      * @param itemPrice            see {@link #itemPrice}.
      * @param itemType             see {@link #itemType}.
      * @param checkboxOptionOrders see {@link #checkboxOptionOrders}.
-     * @param deliverTo            see {@link #deliverTo}.
+     * @param customer             see {@link #customer}.
      * @param staffMember          see {@link #staffMember}.
      * @param orderTime            see {@link #orderTime}.
      * @param note                 see {@link #note}.
@@ -194,7 +195,7 @@ public class ItemOrderEntity {
                            List<CheckboxOptionOrderEntity> checkboxOptionOrders,
                            List<ValueOptionOrderEntity> valueOptionOrders,
                            List<RadioOptionOrderEntity> radioOptionOrders,
-                           String deliverTo,
+                           CustomerEntity customer,
                            StaffMemberEntity staffMember,
                            String staffMemberFirstName,
                            String staffMemberLastName,
@@ -208,7 +209,7 @@ public class ItemOrderEntity {
         this.checkboxOptionOrders = checkboxOptionOrders;
         this.valueOptionOrders = valueOptionOrders;
         this.radioOptionOrders = radioOptionOrders;
-        this.deliverTo = deliverTo;
+        this.customer = customer;
         this.staffMember = staffMember;
         this.staffMemberFirstName = staffMemberFirstName;
         this.staffMemberLastName = staffMemberLastName;

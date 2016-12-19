@@ -74,13 +74,44 @@ public class OrderManagementValidator {
         assertOrderedOptionsValid(orderDto.getOptionOrders(), orderedItem);
         assertOrderingStaffMemberValid(orderDto.getStaffMemberId());
 
-        if (StringUtils.isBlank(orderDto.getDeliverTo())) {
-            throw new BadRequestException("Property 'deliverTo' may not be blank.");
-        }
+        assertValid(orderDto.getCustomer());
 
         if (orderDto.getOrderTime() == null) {
             throw new BadRequestException("Property 'orderTime' may not be missing.");
         }
+    }
+
+    private void assertValid(CustomerCreationDto customerCreationDto) {
+        if (customerCreationDto == null) {
+            throw new BadRequestException("Customer may not be missing.");
+        }
+
+        if (customerCreationDto instanceof FreeTextCustomerCreationDto) {
+            FreeTextCustomerCreationDto dto = (FreeTextCustomerCreationDto) customerCreationDto;
+            if (StringUtils.isBlank(dto.getValue())) {
+                throw new BadRequestException("Customer free text value may not be blank.");
+            }
+        } else if (customerCreationDto instanceof TableCustomerCreationDto) {
+            TableCustomerCreationDto dto = (TableCustomerCreationDto) customerCreationDto;
+            if (dto.getTableNumber() == null) {
+                throw new BadRequestException("Table number may not be null for table customer.");
+            }
+        } else if (customerCreationDto instanceof StaffMemberCustomerCreationDto) {
+            StaffMemberCustomerCreationDto dto = (StaffMemberCustomerCreationDto) customerCreationDto;
+            if (dto.getStaffMemberId() == null) {
+                throw new BadRequestException("Staff member id may not be null for a staff member customer.");
+            }
+            if (!staffMemberDao.exists(dto.getStaffMemberId())) {
+                throw new BadRequestException(String.format("Order for staff member with id %s cannot be taken " +
+                                "because the staff member does not exist.",
+                        dto.getStaffMemberId()));
+            }
+        } else {
+            throw new BadRequestException(String.format("Unknown subtype of %s: %s",
+                    CustomerCreationDto.class.getName(),
+                    customerCreationDto.getClass().getName()));
+        }
+
     }
 
     private void assertOrderedItemValid(Long orderedItemId) {

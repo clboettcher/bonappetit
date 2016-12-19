@@ -45,6 +45,9 @@ public abstract class ItemOrderEntityMapper {
     @Autowired
     private StaffMemberDao staffMemberDao;
 
+    @Autowired
+    private CustomerEntityMapper customerEntityMapper;
+
     public abstract Collection<ItemOrderEntity> mapToItemOrderEntities(Collection<ItemOrderCreationDto> orderDtos);
 
     ItemOrderEntity mapToItemOrderEntity(ItemOrderCreationDto itemOrderCreationDto) {
@@ -85,7 +88,7 @@ public abstract class ItemOrderEntityMapper {
                 .checkboxOptionOrders(checkboxOptionOrderEntities)
                 .valueOptionOrders(valueOptionOrderEntities)
                 .radioOptionOrders(radioOptionOrderEntities)
-                .deliverTo(itemOrderCreationDto.getDeliverTo())
+                .customer(customerEntityMapper.mapToCustomerEntity(itemOrderCreationDto.getCustomer()))
                 .staffMember(staffMember)
                 .staffMemberFirstName(staffMember.getFirstName())
                 .staffMemberLastName(staffMember.getLastName())

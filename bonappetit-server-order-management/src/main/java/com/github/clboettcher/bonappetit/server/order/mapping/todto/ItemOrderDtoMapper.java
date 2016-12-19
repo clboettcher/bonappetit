@@ -42,6 +42,9 @@ public abstract class ItemOrderDtoMapper {
     @Autowired
     private ItemDtoMapper itemDtoMapper;
 
+    @Autowired
+    private CustomerDtoMapper customerDtoMapper;
+
     public abstract List<ItemOrderDto> mapToItemOrderDtos(List<ItemOrderEntity> orderEntities);
 
     public ItemOrderDto mapToItemOrderDto(ItemOrderEntity itemOrder) {
@@ -56,7 +59,7 @@ public abstract class ItemOrderDtoMapper {
                 .itemPrice(itemOrder.getItemPrice())
                 .itemType(itemDtoMapper.mapToItemDtoType(itemOrder.getItemType()))
                 .optionOrders(this.mapToOptionOrderDtos(itemOrder.getAllOptionOrders()))
-                .deliverTo(itemOrder.getDeliverTo())
+                .customer(customerDtoMapper.mapToCustomerDto(itemOrder.getCustomer()))
                 .staffMemberId(staffMember.getId())
                 .staffMemberFirstName(itemOrder.getStaffMemberFirstName())
                 .staffMemberLastName(itemOrder.getStaffMemberLastName())

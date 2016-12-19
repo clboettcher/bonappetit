@@ -24,8 +24,7 @@ import com.github.clboettcher.bonappetit.printing.config.ConfigProvider;
 import com.github.clboettcher.bonappetit.printing.config.ConfigProviderImpl;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
-import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
-import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -52,7 +51,7 @@ import static org.junit.Assert.assertThat;
 public class BonConverterTests extends AbstractConverterTest {
 
     @Autowired
-    private BonConverter converter;
+    private BonConverterImpl converter;
 
     /**
      * Item order for item without options
@@ -68,7 +67,7 @@ public class BonConverterTests extends AbstractConverterTest {
                 .itemPrice(new BigDecimal("9.99"))
                 .itemType(ItemDtoType.FOOD)
                 .itemTitle("Testitem")
-                .deliverTo("Testcustomer")
+                .customer(FreeTextCustomerDto.builder().value("Testcustomer").build())
                 .note("Note")
                 .orderTime(orderTime)
                 .staffMemberFirstName("John")
@@ -127,6 +126,28 @@ public class BonConverterTests extends AbstractConverterTest {
         assertThat(actual.get(1).getItemTitle(), is("1+1/2 (Speise-Bon)"));
     }
 
+    @Test
+    public void testDeliverToFreeText() throws Exception {
+        String actual = converter.getDeliverTo(FreeTextCustomerDto.builder().value("freeTextValue").build());
+        assertThat(actual, is("freeTextValue"));
+    }
+
+    @Test
+    public void testDeliverToTable() throws Exception {
+        String actual = converter.getDeliverTo(TableCustomerDto.builder().tableNumber(12L).build());
+        assertThat(actual, is("Tisch 12"));
+    }
+
+
+    @Test
+    public void testDeliverToStaffMember() throws Exception {
+        String actual = converter.getDeliverTo(StaffMemberCustomerDto.builder()
+                .staffMemberFirstName("John")
+                .staffMemberLastName("Smith")
+                .build());
+        assertThat(actual, is("John Smith (MA)"));
+    }
+
     @Configuration
     @PropertySource({
             "classpath:/config/printing-test.properties"
@@ -150,7 +171,7 @@ public class BonConverterTests extends AbstractConverterTest {
         }
 
         @Bean
-        public BonConverter bonConverter() {
+        public BonConverterImpl bonConverter() {
             return new BonConverterImpl();
         }
     }

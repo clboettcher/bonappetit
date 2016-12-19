@@ -55,7 +55,7 @@ public class ItemOrderDto {
 
     @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
             example = "Table 4")
-    private String deliverTo;
+    private CustomerDto customer;
 
     @ApiModelProperty(value = "The ID of the staff member who took this order", required = true)
     private Long staffMemberId;
@@ -84,7 +84,7 @@ public class ItemOrderDto {
                         BigDecimal itemPrice,
                         ItemDtoType itemType,
                         List<OptionOrderDto> optionOrders,
-                        String deliverTo,
+                        CustomerDto customer,
                         Long staffMemberId,
                         String staffMemberFirstName,
                         String staffMemberLastName,
@@ -95,7 +95,7 @@ public class ItemOrderDto {
         this.id = id;
         this.itemId = itemId;
         this.optionOrders = optionOrders;
-        this.deliverTo = deliverTo;
+        this.customer = customer;
         this.staffMemberId = staffMemberId;
         this.staffMemberFirstName = staffMemberFirstName;
         this.staffMemberLastName = staffMemberLastName;

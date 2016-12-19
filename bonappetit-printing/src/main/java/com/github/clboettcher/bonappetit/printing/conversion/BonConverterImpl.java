@@ -21,7 +21,7 @@ package com.github.clboettcher.bonappetit.printing.conversion;
 
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.printing.entity.OptionOrderStrings;
-import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
+import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -60,7 +60,7 @@ public class BonConverterImpl implements BonConverter {
         bon.setStaffMemberName(String.format("%s %s",
                 order.getStaffMemberFirstName(),
                 order.getStaffMemberLastName()));
-        bon.setDeliverTo(order.getDeliverTo());
+        bon.setDeliverTo(getDeliverTo(order.getCustomer()));
         bon.setNote(order.getNote());
         bon.setOrderTime(order.getOrderTime());
 
@@ -89,5 +89,26 @@ public class BonConverterImpl implements BonConverter {
         }
 
         return result;
+    }
+
+    /* package-private */ String getDeliverTo(CustomerDto customerDto) {
+        if (customerDto == null) {
+            return null;
+        }
+
+        if (customerDto instanceof FreeTextCustomerDto) {
+            FreeTextCustomerDto dto = (FreeTextCustomerDto) customerDto;
+            return dto.getValue();
+        } else if (customerDto instanceof TableCustomerDto) {
+            TableCustomerDto dto = (TableCustomerDto) customerDto;
+            return String.format("Tisch %d", dto.getTableNumber());
+        } else if (customerDto instanceof StaffMemberCustomerDto) {
+            StaffMemberCustomerDto dto = (StaffMemberCustomerDto) customerDto;
+            return String.format("%s %s (MA)", dto.getStaffMemberFirstName(), dto.getStaffMemberLastName());
+        } else {
+            throw new IllegalArgumentException(String.format("Unknown subtype of %s: %s",
+                    CustomerDto.class.getName(),
+                    customerDto.getClass().getName()));
+        }
     }
 }

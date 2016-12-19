@@ -63,7 +63,7 @@ public abstract class AbstractConverterTest {
     protected ItemOrderDto orderForItem(Long itemId, String note, OptionOrderDto... optionOrders) {
         return ItemOrderDto.builder()
                 .itemId(itemId)
-                .deliverTo("Tisch 12")
+                .customer(TableCustomerDto.builder().tableNumber(12L).build())
                 .note(note)
                 .staffMemberFirstName("John")
                 .staffMemberLastName("Smith")

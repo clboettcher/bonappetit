@@ -33,17 +33,16 @@ import java.util.List;
 @ApiModel(description = "An order for an item")
 public class ItemOrderCreationDto {
 
-    @ApiModelProperty(value = "The ID of the ordered item", required = true)
+    @ApiModelProperty(value = "The ID of the ordered item", required = true, example = "1")
     private Long itemId;
 
     @ApiModelProperty(value = "The ordered options of the ordered item")
     private List<OptionOrderCreationDto> optionOrders;
 
-    @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true,
-            example = "Table 4")
-    private String deliverTo;
+    @ApiModelProperty(value = "The person or location that this order should be delivered to", required = true)
+    private CustomerCreationDto customer;
 
-    @ApiModelProperty(value = "The ID of the staff member who took this order", required = true)
+    @ApiModelProperty(value = "The ID of the staff member who took this order", required = true, example = "1")
     private Long staffMemberId;
 
     @ApiModelProperty(value = "The time this order was taken", required = true)
@@ -53,11 +52,15 @@ public class ItemOrderCreationDto {
     private String note;
 
     @Builder
-    public ItemOrderCreationDto(Long itemId, List<OptionOrderCreationDto> optionOrders, String deliverTo,
-                                Long staffMemberId, DateTime orderTime, String note) {
+    public ItemOrderCreationDto(Long itemId,
+                                List<OptionOrderCreationDto> optionOrders,
+                                CustomerCreationDto customer,
+                                Long staffMemberId,
+                                DateTime orderTime,
+                                String note) {
         this.itemId = itemId;
         this.optionOrders = optionOrders;
-        this.deliverTo = deliverTo;
+        this.customer = customer;
         this.staffMemberId = staffMemberId;
         this.orderTime = orderTime;
         this.note = note;

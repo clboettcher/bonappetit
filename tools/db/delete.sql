@@ -25,4 +25,6 @@ drop table `bonappetit-local`.option_order;
 drop table `bonappetit-local`.radio_item;
 drop table `bonappetit-local`.schema_version;
 drop table `bonappetit-local`.staff_member;
+drop table `bonappetit-local`.user;
+drop table `bonappetit-local`.customer;
 SET FOREIGN_KEY_CHECKS = 1;
