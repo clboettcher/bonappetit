@@ -19,9 +19,12 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Implementation of {@link ControlCharProvider} for the CITIZEN CT-S 310 II physical printer.
  */
+@Component
 public class ControlCharProviderCITIZENCTS310IIImpl implements ControlCharProvider {
 
     /**

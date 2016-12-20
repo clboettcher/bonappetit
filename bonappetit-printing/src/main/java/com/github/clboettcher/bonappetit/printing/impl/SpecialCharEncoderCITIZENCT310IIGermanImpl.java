@@ -21,11 +21,13 @@ package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * Implementation of {@link SpecialCharEncoder} that encodes german characters
  * for the CITIZEN CT-S 310 II printer.
  */
+@Component
 public class SpecialCharEncoderCITIZENCT310IIGermanImpl implements SpecialCharEncoder {
     
     /**
