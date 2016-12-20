@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.jersey;
 
+import com.github.clboettcher.bonappetit.server.ProjectProperties;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberManagement;
@@ -51,7 +52,7 @@ public class JerseyConfig extends ResourceConfig {
      * Constructor registering the application components.
      */
     @Autowired
-    public JerseyConfig(ApplicationContext context) {
+    public JerseyConfig(ApplicationContext context, ProjectProperties projectProperties) {
         LOGGER.info("Initializing jersey application.");
         register(ExceptionMapper.class);
 
@@ -61,18 +62,20 @@ public class JerseyConfig extends ResourceConfig {
         register(context.getBean(UserManagement.class));
 
         register(ObjectMapperProvider.class);
-        initSwagger();
+        initSwagger(projectProperties);
     }
 
     /**
      * Initializes the swagger {@link BeanConfig} and registers swagger related providers.
+     *
+     * @param projectProperties Metadata properties.
      */
-    private void initSwagger() {
+    private void initSwagger(ProjectProperties projectProperties) {
         BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setTitle("BonAppetit Server");
-        beanConfig.setVersion("0.0.1-SNAPSHOT");
+        beanConfig.setTitle(projectProperties.getTitle());
+        beanConfig.setVersion(projectProperties.getVersion());
         beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:8080");
+        beanConfig.setHost(projectProperties.getHost() + ":" + projectProperties.getPort());
         beanConfig.setBasePath("/api");
         // Setup classes that will swagger pick up
         beanConfig.setResourcePackage("com.github.clboettcher.bonappetit");
@@ -83,8 +86,8 @@ public class JerseyConfig extends ResourceConfig {
 
         Info info = new Info();
         Contact contact = new Contact();
-        contact.setEmail("pos.bonappetit@gmail.com");
-        contact.setName("Claudius Böttcher");
+        contact.setEmail(projectProperties.getContact().getMail());
+        contact.setName(projectProperties.getContact().getName());
         info.setContact(contact);
         beanConfig.setInfo(info);
 
