@@ -105,13 +105,15 @@ public class PhysicalPrinterStringBuilder {
     public PhysicalPrinterStringBuilder appendLine(String string, Align alignment) {
         switch (alignment) {
             case CENTER:
-                builder.append(centered(string));
-                // No need to append line feed since centering implies that
+                builder.append(controlCharProvider.getAlignCenterString())
+                        .append(controlCharProvider.getNormalWidthNormalHeightString())
+                        .append(string);
                 break;
             case LEFT:
-                // No need to append any alignment controlling chars, left is default.
-                builder.append(string);
-                this.appendLineFeed();
+                builder.append(controlCharProvider.getAlignLeftString())
+                        .append(controlCharProvider.getNormalWidthNormalHeightString())
+                        .append(string);
+
                 break;
             default:
                 throw new UnsupportedOperationException(String.format("%s %s is not supported.",
@@ -119,6 +121,7 @@ public class PhysicalPrinterStringBuilder {
                         alignment
                 ));
         }
+        this.appendLineFeed();
         return this;
     }
 
@@ -129,26 +132,10 @@ public class PhysicalPrinterStringBuilder {
      * @return This builder.
      */
     public PhysicalPrinterStringBuilder heading(String string) {
-        this.appendLine(centered(doubleWidthDoubleHeight(string)));
-        return this;
-    }
-
-    public String centered(String string) {
-        return controlCharProvider.getAlignCenterString()
-                + string
-                // Don't forget line feed so the align left char is on the same line as the following content.
-                // Otherwise the left alignment does not work.
-                + controlCharProvider.getLineFeedChar()
-                + controlCharProvider.getAlignLeftString();
-    }
-
-    public String doubleWidthDoubleHeight(String s) {
-        return controlCharProvider.getDoubleWidthDoubleHeightString()
-                + s
-                // Don't forget line feed so the normal with normal height char is on the same line as the
-                // following content. Otherwise the normal height/width does not work.
-                + controlCharProvider.getLineFeedChar()
-                + controlCharProvider.getNormalWidthNormalHeightString();
+        builder.append(controlCharProvider.getAlignCenterString())
+                .append(controlCharProvider.getDoubleWidthDoubleHeightString())
+                .append(string);
+        return this.appendLineFeed();
     }
 
     /**

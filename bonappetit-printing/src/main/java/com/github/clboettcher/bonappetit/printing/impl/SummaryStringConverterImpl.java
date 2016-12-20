@@ -80,6 +80,7 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
         List<SummaryEntryDto> orderSummaries = summary.getOrderSummaries();
         builder
                 .heading("Zusammenfassung")
+                .appendLineFeed()
                 .appendLine(String.format("Erste Bestellung:  %s", summary.getOldestOrderTime() != null ?
                         DateUtils.formatDayMonthYearTime(summary.getOldestOrderTime()) :
                         "--"))

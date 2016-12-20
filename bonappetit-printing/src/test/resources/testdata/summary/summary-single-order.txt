@@ -1,34 +1,33 @@
-<init/>
-    <center><strong>Zusammenfassung
-</strong>
-</center>
-Erste Bestellung:  15.12.2016, 09:38 Uhr
-Letzte Bestellung: 16.12.2016, 01:45 Uhr
-Bestellungen: 1
+[INIT]
+[CENTER][STRONG]Zusammenfassung
 
-1x Pommes je 2,50 EUR
+[LEFT][NORMAL]Erste Bestellung:  15.12.2016, 09:38 Uhr
+[LEFT][NORMAL]Letzte Bestellung: 16.12.2016, 01:45 Uhr
+[LEFT][NORMAL]Bestellungen: 1
 
-Einnahmen laut BonAppetit: 2,50 EUR
+[LEFT][NORMAL]1x Pommes je 2,50 EUR
 
-Tatsaechliches Bargeld (ohne Wechselgeld):
+[LEFT][NORMAL]Einnahmen laut BonAppetit: 2,50 EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Tatsaechliches Bargeld (ohne Wechselgeld):
 
-Umbuchungsbelege:
+[LEFT][NORMAL]_____________________________ EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Umbuchungsbelege:
 
-Summe:
+[LEFT][NORMAL]_____________________________ EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Summe:
 
-Unterschrift KuechenmitarbeiterIn:
+[LEFT][NORMAL]_____________________________ EUR
 
-_________________________________
+[LEFT][NORMAL]Unterschrift KuechenmitarbeiterIn:
 
-Unterschrift ServicemitarbeiterIn:
+[LEFT][NORMAL]_________________________________
 
-_________________________________
+[LEFT][NORMAL]Unterschrift ServicemitarbeiterIn:
+
+[LEFT][NORMAL]_________________________________
 
 
 

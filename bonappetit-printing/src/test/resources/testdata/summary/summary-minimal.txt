@@ -1,33 +1,32 @@
-<init/>
-    <center><strong>Zusammenfassung
-</strong>
-</center>
-Erste Bestellung:  --
-Letzte Bestellung: --
-Bestellungen: 0
+[INIT]
+[CENTER][STRONG]Zusammenfassung
+
+[LEFT][NORMAL]Erste Bestellung:  --
+[LEFT][NORMAL]Letzte Bestellung: --
+[LEFT][NORMAL]Bestellungen: 0
 
 
-Einnahmen laut BonAppetit: 0,00 EUR
+[LEFT][NORMAL]Einnahmen laut BonAppetit: 0,00 EUR
 
-Tatsaechliches Bargeld (ohne Wechselgeld):
+[LEFT][NORMAL]Tatsaechliches Bargeld (ohne Wechselgeld):
 
-_____________________________ EUR
+[LEFT][NORMAL]_____________________________ EUR
 
-Umbuchungsbelege:
+[LEFT][NORMAL]Umbuchungsbelege:
 
-_____________________________ EUR
+[LEFT][NORMAL]_____________________________ EUR
 
-Summe:
+[LEFT][NORMAL]Summe:
 
-_____________________________ EUR
+[LEFT][NORMAL]_____________________________ EUR
 
-Unterschrift KuechenmitarbeiterIn:
+[LEFT][NORMAL]Unterschrift KuechenmitarbeiterIn:
 
-_________________________________
+[LEFT][NORMAL]_________________________________
 
-Unterschrift ServicemitarbeiterIn:
+[LEFT][NORMAL]Unterschrift ServicemitarbeiterIn:
 
-_________________________________
+[LEFT][NORMAL]_________________________________
 
 
 

@@ -1,36 +1,35 @@
-<init/>
-    <center><strong>Zusammenfassung
-</strong>
-</center>
-Erste Bestellung:  15.12.2016, 09:38 Uhr
-Letzte Bestellung: 16.12.2016, 01:45 Uhr
-Bestellungen: 20
+[INIT]
+[CENTER][STRONG]Zusammenfassung
 
-2x Pommes (Gross, Ketchup, Mayonnaise) je 2,50 EUR
-8x Mineralwasser je 1,50 EUR
-10x Cola (Gross) je 2,20 EUR
+[LEFT][NORMAL]Erste Bestellung:  15.12.2016, 09:38 Uhr
+[LEFT][NORMAL]Letzte Bestellung: 16.12.2016, 01:45 Uhr
+[LEFT][NORMAL]Bestellungen: 20
 
-Einnahmen laut BonAppetit: 39,00 EUR
+[LEFT][NORMAL]2x Pommes (Gross, Ketchup, Mayonnaise) je 2,50 EUR
+[LEFT][NORMAL]8x Mineralwasser je 1,50 EUR
+[LEFT][NORMAL]10x Cola (Gross) je 2,20 EUR
 
-Tatsaechliches Bargeld (ohne Wechselgeld):
+[LEFT][NORMAL]Einnahmen laut BonAppetit: 39,00 EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Tatsaechliches Bargeld (ohne Wechselgeld):
 
-Umbuchungsbelege:
+[LEFT][NORMAL]_____________________________ EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Umbuchungsbelege:
 
-Summe:
+[LEFT][NORMAL]_____________________________ EUR
 
-_____________________________ EUR
+[LEFT][NORMAL]Summe:
 
-Unterschrift KuechenmitarbeiterIn:
+[LEFT][NORMAL]_____________________________ EUR
 
-_________________________________
+[LEFT][NORMAL]Unterschrift KuechenmitarbeiterIn:
 
-Unterschrift ServicemitarbeiterIn:
+[LEFT][NORMAL]_________________________________
 
-_________________________________
+[LEFT][NORMAL]Unterschrift ServicemitarbeiterIn:
+
+[LEFT][NORMAL]_________________________________
 
 
 

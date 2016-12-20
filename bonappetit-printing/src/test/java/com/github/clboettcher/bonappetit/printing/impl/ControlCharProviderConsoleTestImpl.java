@@ -22,17 +22,17 @@ package com.github.clboettcher.bonappetit.printing.impl;
 public class ControlCharProviderConsoleTestImpl implements ControlCharProvider {
     @Override
     public String getInit() {
-        return "<init/>\n";
+        return "[INIT]\n";
     }
 
     @Override
     public String getAlignCenterString() {
-        return "    <center>";
+        return "[CENTER]";
     }
 
     @Override
     public String getDoubleWidthDoubleHeightString() {
-        return "<strong>";
+        return "[STRONG]";
     }
 
     @Override
@@ -42,12 +42,12 @@ public class ControlCharProviderConsoleTestImpl implements ControlCharProvider {
 
     @Override
     public String getAlignLeftString() {
-        return "</center>";
+        return "[LEFT]";
     }
 
     @Override
     public String getNormalWidthNormalHeightString() {
-        return "</strong>";
+        return "[NORMAL]";
     }
 
     @Override

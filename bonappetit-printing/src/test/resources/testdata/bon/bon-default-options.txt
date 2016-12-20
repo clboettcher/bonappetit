@@ -1,11 +1,10 @@
-<init/>
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Nachos
-</strong>
-</center>
-Cheese-Sauce, Chilli-Dip
+[INIT]
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Nachos
 
-Bedienung: John Smith, 06.12., 21:33
+[LEFT][NORMAL]Cheese-Sauce, Chilli-Dip
+
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:33
 
 
 

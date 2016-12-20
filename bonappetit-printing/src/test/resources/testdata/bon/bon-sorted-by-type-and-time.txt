@@ -1,60 +1,48 @@
-<init/>
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_1
-</strong>
-</center>
+[INIT]
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_1
 
-Bedienung: John Smith, 06.12., 19:00
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 19:00
 
 
 
 ----------------------- ** -----------------------
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_2
-</strong>
-</center>
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_2
 
-Bedienung: John Smith, 06.12., 21:02
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:02
 
 
 
 ----------------------- ** -----------------------
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_3
-</strong>
-</center>
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_3
 
-Bedienung: John Smith, 06.12., 21:01
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:01
 
 
 
 ----------------------- ** -----------------------
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_4
-</strong>
-</center>
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_4
 
-Bedienung: John Smith, 06.12., 21:00
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:00
 
 
 
 ----------------------- ** -----------------------
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_5
-</strong>
-</center>
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_5
 
-Bedienung: John Smith, 06.12., 20:01
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 20:01
 
 
 
 ----------------------- ** -----------------------
-    <center>Kunde: Tisch 12
-</center>    <center><strong>Bon_6
-</strong>
-</center>
+[CENTER][NORMAL]Kunde: Tisch 12
+[CENTER][STRONG]Bon_6
 
-Bedienung: John Smith, 06.12., 20:00
+[LEFT][NORMAL]Bedienung: John Smith, 06.12., 20:00
 
 
 

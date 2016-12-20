@@ -93,11 +93,17 @@ public class BonStringConverterImpl implements BonStringConverter {
         // Append separate line for default options only if present
         Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions(), ", ");
         if (defaultOptionsOpt.isPresent()) {
-            physicalPrinterStringBuilder.appendLine(defaultOptionsOpt.get());
+            physicalPrinterStringBuilder
+                    .appendLineFeed()
+                    .appendLine(defaultOptionsOpt.get());
         }
 
         // Append a separate line for the note only if present
         if (StringUtils.isNotBlank(bon.getNote())) {
+            if (!defaultOptionsOpt.isPresent()) {
+                // Separator line is only needed if we have no default options
+                physicalPrinterStringBuilder.appendLineFeed();
+            }
             physicalPrinterStringBuilder.appendLine(String.format("Bemerkung: %s", bon.getNote()));
         }
 
