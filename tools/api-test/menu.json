@@ -8,82 +8,113 @@
     },
     {
       "title": "Drink alc w/o options",
-      "price": "1.5",
+      "price": "2.0",
       "type": "DRINK_ALCOHOLIC"
     },
     {
       "title": "Drink non alc w/o options",
-      "price": "1.5",
+      "price": "2.0",
       "type": "DRINK_NON_ALCOHOLIC"
+    },
+    {
+      "title": "Food w/ value option",
+      "price": "2.0",
+      "type": "FOOD",
+      "options": [
+        {
+          "type": "valueOption",
+          "index": 0,
+          "title": "Test value option",
+          "priceDiff": 0.5,
+          "defaultValue": 2
+        }
+      ]
+    },
+    {
+      "title": "Food w/ checkbox option",
+      "price": "2.0",
+      "type": "FOOD",
+      "options": [
+        {
+          "type": "checkboxOption",
+          "title": "Test checkbox option",
+          "priceDiff": 1.0,
+          "defaultChecked": true,
+          "index": 0
+        }
+      ]
+    },
+    {
+      "title": "Food w/ radio option",
+      "price": "2.0",
+      "type": "FOOD",
+      "options": [
+        {
+          "type": "radioOption",
+          "index": 0,
+          "title": "Test radio option",
+          "defaultSelected": {
+            "title": "Test radio item 1 (initially selected)",
+            "priceDiff": 1.5,
+            "index": 0
+          },
+          "radioItems": [
+            {
+              "title": "Test radio item 1 (initially selected)",
+              "priceDiff": 1.5,
+              "index": 0
+            },
+            {
+              "title": "Test radio item 2",
+              "priceDiff": 1.5,
+              "index": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Drink non alc w/ all options",
+      "price": "2.0",
+      "type": "DRINK_NON_ALCOHOLIC",
+      "options": [
+        {
+          "type": "radioOption",
+          "index": 0,
+          "title": "Test radio option",
+          "defaultSelected": {
+            "title": "Test radio item 1 (initially selected)",
+            "priceDiff": 1.5,
+            "index": 0
+          },
+          "radioItems": [
+            {
+              "title": "Test radio item 1 (initially selected)",
+              "priceDiff": 1.5,
+              "index": 0
+            },
+            {
+              "title": "Test radio item 2",
+              "priceDiff": 1.5,
+              "index": 1
+            }
+          ]
+        },
+        {
+          "type": "valueOption",
+          "index": 1,
+          "title": "Test value option",
+          "priceDiff": 0.5,
+          "defaultValue": 2
+        },
+        {
+          "type": "checkboxOption",
+          "title": "Test checkbox option",
+          "priceDiff": 1.0,
+          "defaultChecked": true,
+          "index": 2
+        }
+      ]
     }
-    //    {
-    //      "title": "Nachos",
-    //      "price": 2.0,
-    //      "type": "FOOD",
-    //      "options": [
-    //        {
-    //          "type": "checkboxOption",
-    //          "title": "Käsesoße",
-    //          "priceDiff": 0.5,
-    //          "defaultChecked": true,
-    //          "index": 0
-    //        }
-    //      ]
-    //    },
-    //    {
-    //      "title": "Augustinger",
-    //      "price": 2.2,
-    //      "type": "DRINK_ALCOHOLIC",
-    //      "options": [
-    //        {
-    //          "type": "radioOption",
-    //          "index": 0,
-    //          "title": "Größe",
-    //          "defaultSelected": {
-    //            "title": "groß",
-    //            "priceDiff": 0,
-    //            "index": 0
-    //          },
-    //          "radioItems": [
-    //            {
-    //              "title": "groß",
-    //              "priceDiff": 0,
-    //              "index": 0
-    //            },
-    //            {
-    //              "title": "klein",
-    //              "priceDiff": 0.5,
-    //              "index": 1
-    //            }
-    //          ]
-    //        }
-    //      ]
-    //    },
-    //    {
-    //      "title": "Mineralwasser",
-    //      "price": 1.9,
-    //      "type": "DRINK_NON_ALCOHOLIC"
-    //    },
-    //    {
-    //      "title": "Pommes",
-    //      "price": 2.5,
-    //      "type": "FOOD",
-    //      "options": [
-    //        {
-    //          "type": "checkboxOption",
-    //          "index": 0,
-    //          "title": "Extra Salz",
-    //          "priceDiff": 0,
-    //          "defaultChecked": false
-    //        },
-    //        {
-    //          "type": "valueOption",
-    //          "index": 1,
-    //          "title": "Ketchup",
-    //          "priceDiff": 0,
-    //          "defaultValue": 2
-    //        }
-    //      ]
-    //    }
   ]
 }
