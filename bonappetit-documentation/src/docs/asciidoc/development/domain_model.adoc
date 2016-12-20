@@ -22,7 +22,6 @@ enum ItemType {
     FOOD
     DRINK_ALCOHOLIC
     DRINK_NON_ALCOHOLIC
-    SIDE_DISH
 }
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -89,7 +88,6 @@ class StaffMember {
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 MenuConfig --> "1" Menu : active
 Menu --> "1..n" Item
-Item --> "0..m" Item : sideDishes
 Item --> ItemType : type
 Item --> "0..n" Option : options
 

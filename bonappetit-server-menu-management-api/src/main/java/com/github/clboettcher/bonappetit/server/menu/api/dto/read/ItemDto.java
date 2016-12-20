@@ -69,21 +69,16 @@ public class ItemDto {
     @ApiModelProperty(value = "The options available for this item")
     private List<OptionDto> options;
 
-    @ApiModelProperty(value = "The side dishes available for this item")
-    private List<ItemDto> sideDishes;
-
     @Builder
     public ItemDto(Long id,
                    String title,
                    BigDecimal price,
                    ItemDtoType type,
-                   List<OptionDto> options,
-                   List<ItemDto> sideDishes) {
+                   List<OptionDto> options) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.type = type;
         this.options = options;
-        this.sideDishes = sideDishes;
     }
 }

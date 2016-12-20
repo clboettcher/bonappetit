@@ -18,7 +18,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 drop table `bonappetit-local`.item;
 drop table `bonappetit-local`.item_option;
 drop table `bonappetit-local`.item_order;
-drop table `bonappetit-local`.item_side_dish;
 drop table `bonappetit-local`.menu;
 drop table `bonappetit-local`.menu_config;
 drop table `bonappetit-local`.option_order;

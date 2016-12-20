@@ -60,12 +60,7 @@ public enum ItemDtoType {
      * <p>
      * E.g. juice.
      */
-    DRINK_NON_ALCOHOLIC,
-
-    /**
-     * A side dish, e.g. 'Ketchup'.
-     */
-    SIDE_DISH;
+    DRINK_NON_ALCOHOLIC;
 
     public static boolean isFood(ItemDtoType type) {
         return type == FOOD;

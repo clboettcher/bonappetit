@@ -90,15 +90,6 @@ public class ItemEntity {
     private List<AbstractOptionEntity> options;
 
     /**
-     * The side dishes available for this item (optional).
-     */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "ITEM_SIDE_DISH",
-            joinColumns = @JoinColumn(name = "ITEM_ID"),
-            inverseJoinColumns = @JoinColumn(name = "SIDE_DISH_ID", referencedColumnName = "ITEM_ID"))
-    private List<ItemEntity> sideDishes;
-
-    /**
      * Constructor setting the specified properties.
      *
      * @param id         see {@link #id}.
@@ -106,21 +97,18 @@ public class ItemEntity {
      * @param price      see {@link #price}.
      * @param type       see {@link #type}.
      * @param options    see {@link #options}.
-     * @param sideDishes see {@link #sideDishes}.
      */
     @Builder
     public ItemEntity(Long id,
                       String title,
                       BigDecimal price,
                       ItemEntityType type,
-                      List<AbstractOptionEntity> options,
-                      List<ItemEntity> sideDishes) {
+                      List<AbstractOptionEntity> options) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.type = type;
         this.options = options;
-        this.sideDishes = sideDishes;
     }
 
     public Long getId() {
@@ -161,14 +149,6 @@ public class ItemEntity {
 
     public void setOptions(List<AbstractOptionEntity> options) {
         this.options = options;
-    }
-
-    public List<ItemEntity> getSideDishes() {
-        return sideDishes;
-    }
-
-    public void setSideDishes(List<ItemEntity> sideDishes) {
-        this.sideDishes = sideDishes;
     }
 
     public boolean hasOptions() {
