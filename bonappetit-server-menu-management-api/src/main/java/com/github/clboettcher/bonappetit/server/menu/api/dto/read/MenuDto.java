@@ -43,6 +43,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import java.util.Set;
 
@@ -57,12 +58,19 @@ public class MenuDto {
     @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
     private Long id;
 
+    @ApiModelProperty(value = "The title of this menu", example = "My awesome menu")
+    private String title;
+
+    @ApiModelProperty(value = "The timestamp that the menu was created")
+    private DateTime creationTimestamp;
+
     @ApiModelProperty(value = "The items that this menu consists of")
     private Set<ItemDto> items;
 
     @Builder
-    public MenuDto(Long id, Set<ItemDto> items) {
+    public MenuDto(Long id, String title, Set<ItemDto> items) {
         this.id = id;
+        this.title = title;
         this.items = items;
     }
 }

@@ -43,6 +43,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +64,19 @@ public class MenuEntity {
     private Long id;
 
     /**
+     * The timestamp that the menu was taken.
+     */
+    @Column(name = "CREATION_TIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTimestamp;
+
+    /**
+     * The timestamp that the menu was created.
+     */
+    @Column(name = "TITLE", nullable = false)
+    private String title;
+
+    /**
      * The items that this menu consists of.
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -72,11 +86,15 @@ public class MenuEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param items see {@link #items}.
+     * @param title             see {@link #title}.
+     * @param creationTimestamp see {@link #creationTimestamp}.
+     * @param items             see {@link #items}.
      */
     @Builder
-    public MenuEntity(Long id, List<ItemEntity> items) {
+    public MenuEntity(Long id, String title, Date creationTimestamp, List<ItemEntity> items) {
         this.id = id;
+        this.creationTimestamp = creationTimestamp;
+        this.title = title;
         this.items = items;
     }
 
@@ -86,6 +104,22 @@ public class MenuEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(Date creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<ItemEntity> getItems() {

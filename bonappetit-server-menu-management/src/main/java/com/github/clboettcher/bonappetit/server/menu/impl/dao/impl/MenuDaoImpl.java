@@ -26,6 +26,8 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,7 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public MenuEntity create(MenuEntity menuEntity) {
         entityValidator.assertNewMenuValid(menuEntity);
+        menuEntity.setCreationTimestamp(DateTime.now(DateTimeZone.UTC).toDate());
         List<ItemEntity> items = menuEntity.getItems();
         items.stream().forEach(preprocessor::prepareOptions);
         return menuRepository.save(menuEntity);

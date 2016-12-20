@@ -9,7 +9,11 @@
 ' Menu & Item
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 class MenuConfig
-class Menu
+class Menu {
+    title : String
+    creationTimestamp : DateTime
+}
+
 class Item {
     title : String
     price : BigDecimal

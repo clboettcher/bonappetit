@@ -57,8 +57,12 @@ public class MenuCreationDto {
     @ApiModelProperty(value = "The items that this menu consists of")
     private List<ItemCreationDto> items;
 
+    @ApiModelProperty(value = "The title of this menu", example = "My awesome menu")
+    private String title;
+
     @Builder
-    public MenuCreationDto(List<ItemCreationDto> items) {
+    public MenuCreationDto(String title, List<ItemCreationDto> items) {
+        this.title = title;
         this.items = items;
     }
 }
