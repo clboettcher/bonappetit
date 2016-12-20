@@ -42,17 +42,17 @@ public interface MenuManagement {
     /**
      * Relative path of the current menu resource.
      */
-    String CURRENT_MENU_PATH = "/currentMenu";
+    String CURRENT_MENU_PATH = "currentMenu";
 
     /**
      * Relative path of the menu resource.
      */
-    String MENUS_PATH = "/menus";
+    String MENUS_PATH = "menus";
 
     /**
      * Relative path of the item resource.
      */
-    String ITEMS_PATH = "/items";
+    String ITEMS_PATH = "items";
 
     /**
      * Returns the currently active menu.
@@ -60,7 +60,7 @@ public interface MenuManagement {
      * @return A menu.
      */
     @GET
-    @Path(CURRENT_MENU_PATH)
+    @Path("/" + CURRENT_MENU_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the currently active menu.", tags = {MenuManagement.TAG})
     @ApiResponses(
@@ -78,7 +78,7 @@ public interface MenuManagement {
      * @return A list of menus, may be empty.
      */
     @GET
-    @Path(MENUS_PATH)
+    @Path("/" + MENUS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns all stored menus.", tags = {MenuManagement.TAG})
     List<MenuDto> getAllMenus();
@@ -90,7 +90,7 @@ public interface MenuManagement {
      * @return A menu.
      */
     @GET
-    @Path(MENUS_PATH + "/{id}")
+    @Path("/" + MENUS_PATH + "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the menu with the given ID.", tags = {MenuManagement.TAG})
     @ApiResponses({
@@ -114,7 +114,7 @@ public interface MenuManagement {
      * @return A response indicating the success of the operation.
      */
     @POST
-    @Path(MENUS_PATH)
+    @Path("/" + MENUS_PATH)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates the given menu in the database.", tags = {MenuManagement.TAG})
     @ApiResponses(
@@ -127,7 +127,7 @@ public interface MenuManagement {
     Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuCreationDto menuDto);
 
     @PUT
-    @Path(CURRENT_MENU_PATH + "/{menuId}")
+    @Path("/" + CURRENT_MENU_PATH + "/{menuId}")
     @ApiOperation(value = "Update the currently active menu.", tags = {MenuManagement.TAG})
     @ApiResponses(@ApiResponse(code = 400,
             message = "Param menuId was blank or no menu was found for the given menuId.",
@@ -142,7 +142,7 @@ public interface MenuManagement {
      * @return An item.
      */
     @GET
-    @Path(ITEMS_PATH + "/{id}")
+    @Path("/" + ITEMS_PATH + "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns the item with the given ID.", tags = {MenuManagement.TAG})
     @ApiResponses({
