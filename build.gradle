@@ -1,13 +1,15 @@
 plugins {
     id "com.github.hierynomus.license" version "0.13.1"
+    id 'net.researchgate.release' version '2.4.0'
 }
 
+apply plugin: 'java'
 apply from: "scripts/dependencyVersions.gradle"
 
 // Config for all bonappetit projects
 allprojects {
-    group = 'com.github.clboettcher.bonappetit'
-    version = '0.0.1-SNAPSHOT'
+    group = group
+    version = version
 }
 
 // Config for all bonappetit subprojects
