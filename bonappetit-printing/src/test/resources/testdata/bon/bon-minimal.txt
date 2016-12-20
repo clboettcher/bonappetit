@@ -1,6 +1,9 @@
 <init/>
-    <center>Kunde: Tisch 12</center>
-    <center><strong>Mineralwasser</strong></center>
+    <center>Kunde: Tisch 12
+</center>
+    <center><strong>Mineralwasser
+</strong>
+</center>
 
 
 

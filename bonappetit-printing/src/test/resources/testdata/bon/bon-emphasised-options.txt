@@ -1,6 +1,9 @@
 <init/>
-    <center>Kunde: Tisch 12</center>
-    <center><strong>Weissbier Alkoholfrei Klein</strong></center>
+    <center>Kunde: Tisch 12
+</center>
+    <center><strong>Weissbier Alkoholfrei Klein
+</strong>
+</center>
 
 
 

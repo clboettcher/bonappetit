@@ -1,6 +1,9 @@
 <init/>
-    <center>Kunde: Tisch 12</center>
-    <center><strong>Nachos</strong></center>
+    <center>Kunde: Tisch 12
+</center>
+    <center><strong>Nachos
+</strong>
+</center>
 
 
 Cheese-Sauce, Chilli-Dip

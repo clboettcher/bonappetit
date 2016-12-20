@@ -108,6 +108,7 @@ public class PhysicalPrinterStringBuilder {
                 builder.append(centered(string));
                 break;
             case LEFT:
+                // No need to append any alignment controlling chars, left is default.
                 builder.append(string);
                 break;
             default:
@@ -136,12 +137,18 @@ public class PhysicalPrinterStringBuilder {
     public String centered(String string) {
         return controlCharProvider.getAlignCenterString()
                 + string
+                // Don't forget line feed so the align left char is on the same line as the following content.
+                // Otherwise the left alignment does not work.
+                + controlCharProvider.getLineFeedChar()
                 + controlCharProvider.getAlignLeftString();
     }
 
     public String doubleWidthDoubleHeight(String s) {
         return controlCharProvider.getDoubleWidthDoubleHeightString()
                 + s
+                // Don't forget line feed so the normal with normal height char is on the same line as the
+                // following content. Otherwise the normal height/width does not work.
+                + controlCharProvider.getLineFeedChar()
                 + controlCharProvider.getNormalWidthNormalHeightString();
     }
 
