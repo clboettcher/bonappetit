@@ -160,11 +160,6 @@ public class MenuDaoMockImpl implements MenuDao {
                 .build();
     }
 
-    @Override
-    public MenuEntity update(MenuEntity menuEntity) {
-        throw new UnsupportedOperationException("Not yet implemented: ");
-    }
-
     private Long getNewMenuId() {
         return this.currentMenuId++;
     }

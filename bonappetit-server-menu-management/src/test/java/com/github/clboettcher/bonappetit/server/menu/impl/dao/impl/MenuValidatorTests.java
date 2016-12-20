@@ -47,7 +47,8 @@ public class MenuValidatorTests {
         validator.assertNewMenuValid(menu);
 
         menu.setId(1L);
-        validator.assertMenuUpdateValid(menu);
+        exception.expect(IllegalArgumentException.class);
+        validator.assertNewMenuValid(menu);
     }
 
     @Test
@@ -66,7 +67,8 @@ public class MenuValidatorTests {
         menu.setId(1L);
         menu.getItems().get(0).setId(1L);
         menu.getItems().get(1).setId(2L);
-        validator.assertMenuUpdateValid(menu);
+        exception.expect(IllegalArgumentException.class);
+        validator.assertNewMenuValid(menu);
     }
 
     @Test
@@ -92,7 +94,8 @@ public class MenuValidatorTests {
         menu.getItems().get(0).setId(2L);
         menu.getItems().get(0).getOptions().get(0).setId(3L);
         menu.getItems().get(0).getOptions().get(0).setId(4L);
-        validator.assertMenuUpdateValid(menu);
+        exception.expect(IllegalArgumentException.class);
+        validator.assertNewMenuValid(menu);
     }
 
     @Test
@@ -127,27 +130,7 @@ public class MenuValidatorTests {
         radioOption.setId(3L);
         radioOption.getRadioItems().get(0).setId(4L);
         radioOption.getRadioItems().get(1).setId(5L);
-        validator.assertMenuUpdateValid(menu);
-    }
-
-    @Test
-    public void testItemUpdate() throws Exception {
-        ItemEntity input = ItemEntity.builder()
-                .id(1L)
-                .title("Pommes")
-                .options(Lists.newArrayList(
-                        ValueOptionEntity.builder()
-                                .title("Ketchup")
-                                .build(),
-                        CheckboxOptionEntity.builder()
-                                .title("Extra Salz")
-                                .build()
-                ))
-                .build();
-
-        validator.assertItemUpdateValid(input);
-        input.setId(null);
         exception.expect(IllegalArgumentException.class);
-        validator.assertItemUpdateValid(input);
+        validator.assertNewMenuValid(menu);
     }
 }

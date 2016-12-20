@@ -91,14 +91,6 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
-    public MenuEntity update(MenuEntity menuEntity) {
-        entityValidator.assertMenuUpdateValid(menuEntity);
-//        return menuRepository.save(menuEntity);
-        throw new UnsupportedOperationException("Currently not supported. We support only updating menu items " +
-                "individually");
-    }
-
-    @Override
     public boolean exists(Long id) {
         return menuRepository.exists(id);
     }

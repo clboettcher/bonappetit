@@ -104,20 +104,4 @@ public class EntityValidator {
                     "Found at least one offending entity referenced from menu %s", menuEntity));
         }
     }
-
-    void assertMenuUpdateValid(MenuEntity menuEntity) {
-        // Make sure that we do not create new entities by checking if the ID fields of
-        // all reachable entities is set.
-        if (!MENU_HAS_ID_PREDICATE.test(menuEntity)) {
-            throw new IllegalArgumentException(String.format("Updated entity must contain an id. " +
-                    "Offending entity:  %s", menuEntity));
-        }
-    }
-
-    public void assertItemUpdateValid(ItemEntity itemEntity) {
-        if (!ITEM_HAS_ID_PREDICATE.test(itemEntity)) {
-            throw new IllegalArgumentException(String.format("Updated entity must contain an id. " +
-                    "Offending entity:  %s", itemEntity));
-        }
-    }
 }

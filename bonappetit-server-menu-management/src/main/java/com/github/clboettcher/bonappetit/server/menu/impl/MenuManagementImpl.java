@@ -163,22 +163,6 @@ public class MenuManagementImpl implements MenuManagement {
         return itemDtoMapper.mapToItemDto(item);
     }
 
-    @Override
-    public Response updateItem(Long id, ItemDto itemDto) {
-        if (!itemDao.exists(id)) {
-            throw new NotFoundException(String.format("Item with ID %d does not exist.", id));
-        }
-
-        if (!id.equals(itemDto.getId())) {
-            throw new BadRequestException(String.format("Param id (%d) and id of the item data in " +
-                    "the request body (%d) must be equal", id, itemDto.getId()));
-        }
-        ItemEntity updateEntity = itemEntityMapper.mapToItemEntity(itemDto);
-        ItemEntity saved = itemDao.update(updateEntity);
-
-        return okWithLocationHeader(ITEMS_PATH, saved.getId());
-    }
-
     private Response okWithLocationHeader(String path, Long id) {
         String location = String.format("%s/%d", path, id);
         UriBuilder baseUriBuilder = uri.getBaseUriBuilder().path(location);

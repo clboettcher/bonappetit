@@ -158,37 +158,4 @@ public interface MenuManagement {
             )}
     )
     ItemDto getItemById(@ApiParam(value = "The item ID to look for.") @PathParam("id") Long id);
-
-    /**
-     * Updates the item with the given id with the given properties.
-     *
-     * @param id      The id of the item to update.
-     * @param itemDto The item properties to use.
-     * @return A response indicating the success of the operation.
-     */
-    @PUT
-    @Path(ITEMS_PATH + "/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Update an item.", tags = {MenuManagement.TAG})
-    @ApiResponses({
-            @ApiResponse(
-                    code = 400,
-                    message = "Param id is blank.",
-                    response = ErrorResponse.class
-            ),
-            @ApiResponse(
-                    code = 404,
-                    message = "The requested item does not exist.",
-                    response = ErrorResponse.class
-            ),
-            @ApiResponse(
-                    code = 400,
-                    message = "The request did not contain a valid item.",
-                    response = ErrorResponse.class
-            )
-    })
-    Response updateItem(
-            @ApiParam(value = "The id of the item to update") @PathParam("id") Long id,
-            @ApiParam(value = "The item data to update the item with.", required = true) ItemDto itemDto);
-
 }

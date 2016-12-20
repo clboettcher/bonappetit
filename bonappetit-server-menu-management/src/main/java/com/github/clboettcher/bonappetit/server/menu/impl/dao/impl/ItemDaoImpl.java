@@ -36,22 +36,11 @@ public class ItemDaoImpl implements ItemDao {
     private ItemRepository repository;
 
     @Autowired
-    private EntityValidator validator;
-
-    @Autowired
     private EntityPreprocessor preprocessor;
 
     @Override
     public ItemEntity getItem(Long id) {
         return repository.findOne(id);
-    }
-
-    @Override
-    public ItemEntity update(ItemEntity item) {
-        validator.assertItemUpdateValid(item);
-        preprocessor.prepareOptions(item);
-
-        return repository.save(item);
     }
 
     @Override
