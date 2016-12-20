@@ -50,6 +50,11 @@ public enum OrderEntityStatus {
     CREATED,
 
     /**
+     * Printing the order failed.
+     */
+    PRINT_FAILED,
+
+    /**
      * The order has been printed.
      */
     PRINTED,

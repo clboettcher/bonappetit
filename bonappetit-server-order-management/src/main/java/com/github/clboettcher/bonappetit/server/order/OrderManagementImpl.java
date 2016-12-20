@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.server.order;
 
+import com.github.clboettcher.bonappetit.printing.api.PrintManager;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderDto;
@@ -41,6 +42,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.print.PrintException;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
@@ -66,7 +69,7 @@ public class OrderManagementImpl implements OrderManagement {
     private ItemOrderEntityMapper toEntityMapper;
 
     @Autowired
-    private ItemOrderDtoMapper toDtoMapper;
+    private ItemOrderDtoMapper toDtitemOrderDtoMapperMapper;
 
     @Autowired
     private ItemOrderSummaryDtoMapper itemOrderSummaryDtoMapper;
@@ -77,8 +80,10 @@ public class OrderManagementImpl implements OrderManagement {
     @Autowired
     private OrderManagementParamParser paramParser;
 
-    @Override
+    @Autowired
+    private PrintManager printManager;
 
+    @Override
     public Response createOrders(Collection<ItemOrderCreationDto> orderDtos) {
         validator.assertValid(orderDtos);
         LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
@@ -93,26 +98,30 @@ public class OrderManagementImpl implements OrderManagement {
         LOGGER.info(String.format("Saved %d order(s) in state %s",
                 saved.size(), OrderEntityStatus.CREATED));
         // Print
-        // TODO: Print orders
-        LOGGER.info(String.format("Printing %d order(s)", saved.size()));
+        LOGGER.info(String.format("Trying to print %d order(s)", saved.size()));
+        try {
+            printManager.print(toDtitemOrderDtoMapperMapper.mapToItemOrderDtos(saved));
+        } catch (PrintException e) {
+            LOGGER.error(String.format("Printing bons for %d order(s) failed", saved.size()), e);
+            // Update status
+            saved.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.PRINT_FAILED));
+            return Response.noContent().build();
+        }
 
         // Update status
         saved.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.PRINTED));
         List<ItemOrderEntity> updated = orderDao.update(saved);
 
-        LOGGER.info(String.format("Updating the order status to %s for %d printed orders.",
+        LOGGER.info(String.format("Updated the order status to %s for %d orders.",
                 OrderEntityStatus.PRINTED, updated.size()));
 
-        LOGGER.info(String.format("Creating order history entries for %d order(s)", updated.size()));
-        // Save order history
-        // TODO: save in history
         return Response.noContent().build();
     }
 
     @Override
     public List<ItemOrderDto> getAllOrders(String orderedBefore, String orderedAfter, String orderedAt) {
         List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
-        return this.toDtoMapper.mapToItemOrderDtos(filtered);
+        return this.toDtitemOrderDtoMapperMapper.mapToItemOrderDtos(filtered);
     }
 
     @Override
@@ -124,7 +133,7 @@ public class OrderManagementImpl implements OrderManagement {
                     id));
         }
 
-        return this.toDtoMapper.mapToItemOrderDto(orderById);
+        return this.toDtitemOrderDtoMapperMapper.mapToItemOrderDto(orderById);
     }
 
     @Override
@@ -160,9 +169,18 @@ public class OrderManagementImpl implements OrderManagement {
     @Override
     public Response createPrintSummaryRequest(String orderedBefore, String orderedAfter, String orderedAt) {
         List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
-        throw new UnsupportedOperationException("Not yet implemented: print summary"); // TODO implement: print summary
-//        return Response.noContent().build();
+
+        try {
+            printManager.print(itemOrderSummaryDtoMapper.mapToSummaryDto(filtered));
+        } catch (PrintException e) {
+            LOGGER.error(String.format("Printing the summary for %d order(s) failed", filtered.size()), e);
+            throw new InternalServerErrorException(String.format("Printing the summary for %d " +
+                    "order(s) failed: %s", filtered.size(), e.getMessage()));
+        }
+
+        return Response.noContent().build();
     }
+
 
     private List<ItemOrderEntity> getOrdersFilterBy(String orderedBefore, String orderedAfter, String orderedAt) {
         Optional<DateTime> orderedBeforeTimeOpt = paramParser.parseOrderedBound(orderedBefore, "orderedBefore");

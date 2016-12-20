@@ -16,6 +16,7 @@ dependencies {
     compile project(":bonappetit-server-menu-management")
     compile project(":bonappetit-server-staff-management")
     compile project(":bonappetit-price-calculation")
+    compile project(":bonappetit-printing")
 
     // Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
