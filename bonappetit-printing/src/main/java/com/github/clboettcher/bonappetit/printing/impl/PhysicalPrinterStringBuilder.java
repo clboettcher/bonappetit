@@ -106,10 +106,12 @@ public class PhysicalPrinterStringBuilder {
         switch (alignment) {
             case CENTER:
                 builder.append(centered(string));
+                // No need to append line feed since centering implies that
                 break;
             case LEFT:
                 // No need to append any alignment controlling chars, left is default.
                 builder.append(string);
+                this.appendLineFeed();
                 break;
             default:
                 throw new UnsupportedOperationException(String.format("%s %s is not supported.",
@@ -117,8 +119,6 @@ public class PhysicalPrinterStringBuilder {
                         alignment
                 ));
         }
-
-        this.appendLineFeed();
         return this;
     }
 
@@ -130,7 +130,6 @@ public class PhysicalPrinterStringBuilder {
      */
     public PhysicalPrinterStringBuilder heading(String string) {
         this.appendLine(centered(doubleWidthDoubleHeight(string)));
-        this.appendLineFeed();
         return this;
     }
 

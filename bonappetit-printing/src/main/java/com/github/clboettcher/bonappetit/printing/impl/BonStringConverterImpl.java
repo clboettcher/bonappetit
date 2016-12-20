@@ -88,8 +88,7 @@ public class BonStringConverterImpl implements BonStringConverter {
                         PhysicalPrinterStringBuilder.Align.CENTER)
                 .heading(StringUtils.trim(String.format("%s %s",
                         bon.getItemTitle(),
-                        emphOptionsOpt.or(""))))
-                .appendLineFeed();
+                        emphOptionsOpt.or(""))));
 
         // Append separate line for default options only if present
         Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions(), ", ");

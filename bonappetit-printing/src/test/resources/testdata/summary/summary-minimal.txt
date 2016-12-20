@@ -2,7 +2,6 @@
     <center><strong>Zusammenfassung
 </strong>
 </center>
-
 Erste Bestellung:  --
 Letzte Bestellung: --
 Bestellungen: 0

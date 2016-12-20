@@ -1,11 +1,8 @@
 <init/>
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_1
+</center>    <center><strong>Bon_1
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 19:00
 
@@ -13,12 +10,9 @@ Bedienung: John Smith, 06.12., 19:00
 
 ----------------------- ** -----------------------
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_2
+</center>    <center><strong>Bon_2
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 21:02
 
@@ -26,12 +20,9 @@ Bedienung: John Smith, 06.12., 21:02
 
 ----------------------- ** -----------------------
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_3
+</center>    <center><strong>Bon_3
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 21:01
 
@@ -39,12 +30,9 @@ Bedienung: John Smith, 06.12., 21:01
 
 ----------------------- ** -----------------------
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_4
+</center>    <center><strong>Bon_4
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 21:00
 
@@ -52,12 +40,9 @@ Bedienung: John Smith, 06.12., 21:00
 
 ----------------------- ** -----------------------
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_5
+</center>    <center><strong>Bon_5
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 20:01
 
@@ -65,12 +50,9 @@ Bedienung: John Smith, 06.12., 20:01
 
 ----------------------- ** -----------------------
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Bon_6
+</center>    <center><strong>Bon_6
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 20:00
 

@@ -1,11 +1,8 @@
 <init/>
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Mineralwasser
+</center>    <center><strong>Mineralwasser
 </strong>
 </center>
-
-
 
 Bedienung: John Smith, 06.12., 21:33
 

@@ -1,11 +1,8 @@
 <init/>
     <center>Kunde: Tisch 12
-</center>
-    <center><strong>Weissbier Alkoholfrei Klein
+</center>    <center><strong>Weissbier Alkoholfrei Klein
 </strong>
 </center>
-
-
 im Tonkrug, mit Orangenscheibe
 Bemerkung: mit wenig Schaum
 
