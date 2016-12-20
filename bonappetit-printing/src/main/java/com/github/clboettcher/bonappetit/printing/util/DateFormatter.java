@@ -20,13 +20,14 @@
 package com.github.clboettcher.bonappetit.printing.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Provides commonly used functionality for working with dates.
  */
-public final class DateUtils {
+public class DateFormatter {
 
     /**
      * Format for day month year hour minute.
@@ -34,69 +35,29 @@ public final class DateUtils {
     private static final DateTimeFormatter DAY_MONTH_YEAR_HOUR_MINUTE = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm 'Uhr'");
 
     /**
-     * Format for day month year.
-     */
-    private static final DateTimeFormatter DAY_MONTH_YEAR = DateTimeFormat.forPattern("dd.MM.yyyy");
-
-    /**
-     * Format for day month hour minute.
-     */
-    private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE = DateTimeFormat.forPattern("dd.MM., HH:mm 'Uhr'");
-
-    /**
      * Short format for day month hour minute.
      */
     private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE_SHORT = DateTimeFormat.forPattern("dd.MM., HH:mm");
 
+    private DateTimeZone timeZone;
 
-    /**
-     * Format for day month hour minute second.
-     */
-    private static final DateTimeFormatter DAY_MONTH_HOUR_MINUTE_SECOND = DateTimeFormat.forPattern("dd.MM., HH:mm:ss 'Uhr'");
-
-    /**
-     * No instances.
-     */
-    private DateUtils() {
-    }
-
-    /**
-     * @param dateTime A {@link DateTime}.
-     * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE}.
-     */
-    public static String formatDayMonthTime(DateTime dateTime) {
-        return dateTime.toString(DAY_MONTH_HOUR_MINUTE);
+    public DateFormatter(DateTimeZone dateTimeZone) {
+        this.timeZone = dateTimeZone;
     }
 
     /**
      * @param dateTime A {@link DateTime}.
      * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE_SHORT}.
      */
-    public static String formatDayMonthHourMinuteShort(DateTime dateTime) {
-        return dateTime.toString(DAY_MONTH_HOUR_MINUTE_SHORT);
+    public String formatDayMonthHourMinuteShort(DateTime dateTime) {
+        return dateTime.toDateTime(timeZone).toString(DAY_MONTH_HOUR_MINUTE_SHORT);
     }
 
     /**
      * @param dateTime A {@link DateTime}.
      * @return The date time as string following the format {@link #DAY_MONTH_YEAR_HOUR_MINUTE}.
      */
-    public static String formatDayMonthYearTime(DateTime dateTime) {
-        return dateTime.toString(DAY_MONTH_YEAR_HOUR_MINUTE);
-    }
-
-    /**
-     * @param dateTime A {@link DateTime}.
-     * @return The date time as string following the format {@link #DAY_MONTH_YEAR}.
-     */
-    public static String formatDayMonthYear(DateTime dateTime) {
-        return dateTime.toString(DAY_MONTH_YEAR);
-    }
-
-    /**
-     * @param dateTime A {@link DateTime}.
-     * @return The date time as string following the format {@link #DAY_MONTH_HOUR_MINUTE_SECOND}.
-     */
-    public static String formatDayMonthTimeWithSeconds(DateTime dateTime) {
-        return dateTime.toString(DAY_MONTH_HOUR_MINUTE_SECOND);
+    public String formatDayMonthYearTime(DateTime dateTime) {
+        return dateTime.toDateTime(timeZone).toString(DAY_MONTH_YEAR_HOUR_MINUTE);
     }
 }

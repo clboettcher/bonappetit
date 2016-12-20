@@ -1,4 +1,5 @@
 /*
+
  * Copyright (c) 2016 Claudius Boettcher (pos.bonappetit@gmail.com)
  *
  * This file is part of BonAppetit. BonAppetit is an Android based
@@ -19,8 +20,13 @@
  */
 package com.github.clboettcher.bonappetit.printing.spring;
 
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
+import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 /**
  * The spring config for the module.
@@ -31,4 +37,15 @@ import org.springframework.context.annotation.PropertySource;
         "classpath:/config/printing-${BONAPPETIT_ENV:PROD}.properties"
 })
 public class PrintingConfiguration {
+
+    /**
+     * The spring environment providing access to configuration properties.
+     */
+    @Autowired
+    private Environment env;
+
+    @Bean
+    public DateFormatter dateFormatter() {
+        return new DateFormatter(DateTimeZone.forID(env.getRequiredProperty("printing.timeZone.id")));
+    }
 }

@@ -21,9 +21,11 @@ package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,8 +48,8 @@ public class BonStringConverterImplTests {
     public void setUp() throws Exception {
         this.converter = new BonStringConverterImpl(
                 new ControlCharProviderConsoleTestImpl(),
-                new SpecialCharEncoderCITIZENCT310IIGermanImpl()
-        );
+                new SpecialCharEncoderCITIZENCT310IIGermanImpl(),
+                new DateFormatter(DateTimeZone.UTC));
         this.orderTime = DateTime.parse("2016-12-06T21:33:00.000Z");
     }
 

@@ -19,7 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
-import com.github.clboettcher.bonappetit.printing.util.DateUtils;
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryEntryDto;
@@ -58,17 +58,25 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
     private DecimalFormat priceFormat = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY));
 
     /**
+     * The bean that formattes dates according to a configured locale.
+     */
+    private DateFormatter dateFormatter;
+
+    /**
      * Constructor setting the specified properties.
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
+     * @param dateFormatter       see {@link #dateFormatter}.
      */
     @Autowired
-    public SummaryStringConverterImpl(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder) {
+    public SummaryStringConverterImpl(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder, DateFormatter dateFormatter) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
+        Preconditions.checkNotNull(dateFormatter, "dateFormatter");
         this.controlCharProvider = controlCharProvider;
         this.specialCharEncoder = specialCharEncoder;
+        this.dateFormatter = dateFormatter;
     }
 
     @Override
@@ -82,10 +90,10 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
                 .heading("Zusammenfassung")
                 .appendLineFeed()
                 .appendLine(String.format("Erste Bestellung:  %s", summary.getOldestOrderTime() != null ?
-                        DateUtils.formatDayMonthYearTime(summary.getOldestOrderTime()) :
+                        dateFormatter.formatDayMonthYearTime(summary.getOldestOrderTime()) :
                         "--"))
                 .appendLine(String.format("Letzte Bestellung: %s", summary.getNewestOrderTime() != null ?
-                        DateUtils.formatDayMonthYearTime(summary.getNewestOrderTime()) :
+                        dateFormatter.formatDayMonthYearTime(summary.getNewestOrderTime()) :
                         "--"))
                 .appendLine(String.format("Bestellungen: %d", orderSummaries.stream()
                         .mapToLong(SummaryEntryDto::getCount)

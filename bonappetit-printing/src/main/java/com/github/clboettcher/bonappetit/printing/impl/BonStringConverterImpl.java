@@ -20,13 +20,14 @@
 package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
-import com.github.clboettcher.bonappetit.printing.util.DateUtils;
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,17 +48,27 @@ public class BonStringConverterImpl implements BonStringConverter {
     private SpecialCharEncoder specialCharEncoder;
 
     /**
+     * The bean that formattes dates according to a configured locale.
+     */
+    private DateFormatter dateFormatter;
+
+    /**
      * Constructor setting the specified properties.
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
+     * @param dateFormatter       see {@link #dateFormatter}.
      */
     @Autowired
-    public BonStringConverterImpl(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder) {
+    public BonStringConverterImpl(ControlCharProvider controlCharProvider,
+                                  SpecialCharEncoder specialCharEncoder,
+                                  DateFormatter dateFormatter) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
+        Preconditions.checkNotNull(dateFormatter, "dateFormatter");
         this.controlCharProvider = controlCharProvider;
         this.specialCharEncoder = specialCharEncoder;
+        this.dateFormatter = dateFormatter;
     }
 
     @Override
@@ -113,7 +124,8 @@ public class BonStringConverterImpl implements BonStringConverter {
         // Staff member name + order time
         physicalPrinterStringBuilder.appendLine(String.format("Bedienung: %s, %s",
                 bon.getStaffMemberName(),
-                DateUtils.formatDayMonthHourMinuteShort(bon.getOrderTime())))
+                dateFormatter.formatDayMonthHourMinuteShort(bon.getOrderTime()
+                        .toDateTime(DateTimeZone.forID("Europe/Berlin")))))
                 .appendLineFeed()
                 .appendLineFeed()
                 .appendLineFeed()

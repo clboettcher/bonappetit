@@ -20,12 +20,14 @@
 package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryEntryDto;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,8 +48,8 @@ public class SummaryStringConverterImplTests {
     public void setUp() throws Exception {
         this.converter = new SummaryStringConverterImpl(
                 new ControlCharProviderConsoleTestImpl(),
-                new SpecialCharEncoderCITIZENCT310IIGermanImpl()
-        );
+                new SpecialCharEncoderCITIZENCT310IIGermanImpl(),
+                new DateFormatter(DateTimeZone.UTC));
     }
 
     @Test
