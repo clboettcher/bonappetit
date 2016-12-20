@@ -26,7 +26,6 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryEntryD
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -79,7 +78,8 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
                 specialCharEncoder);
 
         List<SummaryEntryDto> orderSummaries = summary.getOrderSummaries();
-        builder.heading(StringUtils.trim("Zusammenfassung"))
+        builder
+                .heading("Zusammenfassung")
                 .appendLine(String.format("Erste Bestellung:  %s", summary.getOldestOrderTime() != null ?
                         DateUtils.formatDayMonthYearTime(summary.getOldestOrderTime()) :
                         "--"))
