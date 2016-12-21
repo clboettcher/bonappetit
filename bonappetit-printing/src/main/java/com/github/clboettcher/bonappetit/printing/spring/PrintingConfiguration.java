@@ -1,5 +1,4 @@
 /*
-
  * Copyright (c) 2016 Claudius Boettcher (pos.bonappetit@gmail.com)
  *
  * This file is part of BonAppetit. BonAppetit is an Android based
