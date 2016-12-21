@@ -119,6 +119,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<ItemOrderEntity> getOrdersByIds(List<Long> orderIds) {
+        return Lists.newArrayList(repository.findAll(orderIds));
+    }
+
+    @Override
     public void delete(List<ItemOrderEntity> orderEntities) {
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(orderEntities), "orderEntities empty");
         orderEntityValidator.assertDeletable(orderEntities);
@@ -126,4 +131,9 @@ public class OrderDaoImpl implements OrderDao {
         repository.delete(orderEntities);
     }
 
+    @Override
+    public boolean exists(Long orderId) {
+        Preconditions.checkNotNull(orderId, "orderId");
+        return repository.exists(orderId);
+    }
 }

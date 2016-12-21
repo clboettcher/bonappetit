@@ -24,6 +24,7 @@ import com.github.clboettcher.bonappetit.server.menu.impl.dao.OptionDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.RadioItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import com.github.clboettcher.bonappetit.server.order.api.dto.write.*;
+import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -57,6 +59,9 @@ public class OrderManagementValidator {
 
     @Autowired
     private RadioItemDao radioItemDao;
+
+    @Autowired
+    private OrderDao orderDao;
 
 
     void assertValid(Collection<ItemOrderCreationDto> orderDtos) {
@@ -249,6 +254,19 @@ public class OrderManagementValidator {
                                 "parameter orderedAfter (%s)",
                         orderedBeforeTimeOpt.get(),
                         orderedAfterTimeOpt.get()
+                ));
+            }
+        }
+    }
+
+    public void assertOrdersExist(List<Long> orderIds) {
+        for (Long orderId : orderIds) {
+            if (!this.orderDao.exists(orderId)) {
+                throw new NotFoundException(String.format("List of order ids contained entry %d for " +
+                                "which no order exists. " +
+                                "Full list: %s",
+                        orderId,
+                        orderIds
                 ));
             }
         }

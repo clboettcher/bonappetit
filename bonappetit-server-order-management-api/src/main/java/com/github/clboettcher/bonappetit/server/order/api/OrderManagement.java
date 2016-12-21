@@ -30,7 +30,6 @@ import io.swagger.annotations.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collection;
 import java.util.List;
 
 @Api
@@ -41,6 +40,7 @@ public interface OrderManagement {
     String ORDERS_ROOT_PATH = "orders";
     String OPTION_ORDERS_ROOT_PATH = "optionOrders";
     String PRINT_SUMMARY_REQUESTS_ROOT_PATH = "printSummaryRequests";
+    String CANCEL_ORDERS_REQUESTS_ROOT_PATH = "cancelOrdersRequests";
     String SUMMARY_ROOT_PATH = "summary";
 
     @POST
@@ -58,7 +58,8 @@ public interface OrderManagement {
             message = "A required property is missing or a referenced entity " +
                     "(ordered item, ordered option, staff member) does not exist in the database.",
             response = ErrorResponse.class))
-    Response createOrders(Collection<ItemOrderCreationDto> orders);
+    Response createOrders(@ApiParam(value = "The orders to create",
+            required = true)List<ItemOrderCreationDto> orders);
 
     /**
      * Returns all orders.
@@ -175,7 +176,7 @@ public interface OrderManagement {
      * Create a request to print a summary.
      * <p>
      * The summary is created and printed synchronously. Therefore the
-     * create summary request cannot be fetched or canceled. The endpoints returns 204.
+     * create summary request cannot be fetched or canceled. The endpoint returns 204.
      *
      * @param orderedBefore Summary should only contain orders at or before this time (RFC 3339 formatted date-time value).
      * @param orderedAfter  Summary should only contain orders at or after this time (RFC 3339 formatted date-time value).
@@ -210,5 +211,23 @@ public interface OrderManagement {
                     "can be used together. The orderedAt param must be used without orderedBefore and " +
                     "orderedAfter.", required = false)
             @FormParam("orderedAt") String orderedAt
+    );
+
+    /**
+     * Create a request to cancel a list of orders.
+     * <p>
+     * The orders are updated synchronously. Therefore the
+     * create cancel orders request cannot be fetched or canceled. The endpoint returns 204.
+     *
+     * @return A response indicating the success of the operation.
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Create a request to cancel a list of orders.", tags = {TAG})
+    @Path(CANCEL_ORDERS_REQUESTS_ROOT_PATH)
+    Response createCancelOrdersRequest(
+            @ApiParam(value = "The ids of the orders that should be cancelled",
+                    required = true)
+            List<Long> orderIds
     );
 }

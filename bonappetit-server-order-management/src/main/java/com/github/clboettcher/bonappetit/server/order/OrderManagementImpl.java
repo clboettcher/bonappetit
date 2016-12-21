@@ -84,7 +84,7 @@ public class OrderManagementImpl implements OrderManagement {
     private PrintManager printManager;
 
     @Override
-    public Response createOrders(Collection<ItemOrderCreationDto> orderDtos) {
+    public Response createOrders(List<ItemOrderCreationDto> orderDtos) {
         LOGGER.info(String.format("Attempting to create %d order(s): %s", orderDtos.size(), orderDtos));
         validator.assertValid(orderDtos);
 
@@ -180,6 +180,26 @@ public class OrderManagementImpl implements OrderManagement {
         return Response.noContent().build();
     }
 
+
+    @Override
+    public Response createCancelOrdersRequest(List<Long> orderIds) {
+        LOGGER.info(String.format("Attempting to cancel %d order(s) with id(s): %s",
+                orderIds.size(),
+                orderIds
+        ));
+        validator.assertOrdersExist(orderIds);
+        List<ItemOrderEntity> orders = orderDao.getOrdersByIds(orderIds);
+        // Update status
+        orders.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.CANCELED));
+        List<ItemOrderEntity> updated = orderDao.update(orders);
+
+        LOGGER.info(String.format("Updated the state of %d order(s) to %s",
+                updated.size(),
+                updated.get(0).getStatus()
+        ));
+
+        return Response.noContent().build();
+    }
 
     private List<ItemOrderEntity> getOrdersFilterBy(String orderedBefore, String orderedAfter, String orderedAt) {
         Optional<DateTime> orderedBeforeTimeOpt = paramParser.parseOrderedBound(orderedBefore, "orderedBefore");

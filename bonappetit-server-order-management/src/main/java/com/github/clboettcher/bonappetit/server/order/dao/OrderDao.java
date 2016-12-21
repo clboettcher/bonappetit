@@ -58,6 +58,14 @@ public interface OrderDao {
     ItemOrderEntity getOrderById(Long id);
 
     /**
+     * Returns the orders with the given ids.
+     *
+     * @param orderIds The ids.
+     * @return The orders with the given ids.
+     */
+    List<ItemOrderEntity> getOrdersByIds(List<Long> orderIds);
+
+    /**
      * Deletes the given orders in the database.
      * <p>
      * Only orders with status {@link OrderEntityStatus#CREATED} can be deleted.
@@ -65,4 +73,12 @@ public interface OrderDao {
      * @param orderEntities The orders to delete.
      */
     void delete(List<ItemOrderEntity> orderEntities);
+
+    /**
+     * Returns whether an order exists in the db with the given id.
+     *
+     * @param orderId The id.
+     * @return True, if an order exists in the db, false otherwise.
+     */
+    boolean exists(Long orderId);
 }
