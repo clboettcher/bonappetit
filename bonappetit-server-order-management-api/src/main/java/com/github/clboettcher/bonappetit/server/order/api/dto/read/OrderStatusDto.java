@@ -55,7 +55,7 @@ public enum OrderStatusDto {
     PRINTED,
 
     /**
-     * The order has been canceled.
+     * The order has been cancelled.
      */
-    CANCELED
+    CANCELLED
 }

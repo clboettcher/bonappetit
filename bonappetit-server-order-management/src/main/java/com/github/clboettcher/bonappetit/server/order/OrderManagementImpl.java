@@ -193,7 +193,7 @@ public class OrderManagementImpl implements OrderManagement {
         validator.assertOrdersExist(orderIds);
         List<ItemOrderEntity> orders = orderDao.getOrdersByIds(orderIds);
         // Update status
-        orders.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.CANCELED));
+        orders.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.CANCELLED));
         List<ItemOrderEntity> updated = orderDao.update(orders);
 
         LOGGER.info(String.format("Updated the state of %d order(s) to %s",

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public abstract class ItemOrderSummaryDtoMapper {
 
     private static final Predicate<ItemOrderEntity> PREDICATE_CANCELLED = itemOrder ->
-            itemOrder.getStatus().equals(OrderEntityStatus.CANCELED);
+            itemOrder.getStatus().equals(OrderEntityStatus.CANCELLED);
     @Autowired
     private PriceCalculator priceCalculator;
 
