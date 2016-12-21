@@ -93,11 +93,11 @@ public class ItemEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param id         see {@link #id}.
-     * @param title      see {@link #title}.
-     * @param price      see {@link #price}.
-     * @param type       see {@link #type}.
-     * @param options    see {@link #options}.
+     * @param id      see {@link #id}.
+     * @param title   see {@link #title}.
+     * @param price   see {@link #price}.
+     * @param type    see {@link #type}.
+     * @param options see {@link #options}.
      */
     @Builder
     public ItemEntity(Long id,
