@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.server.order.api.dto.write;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,9 @@ public class FreeTextCustomerCreationDto extends CustomerCreationDto {
 
     @ApiModelProperty(value = "The text that represents this customer", required = true, example = "Rezeption")
     private String value;
+
+    @Builder
+    public FreeTextCustomerCreationDto(String value) {
+        this.value = value;
+    }
 }

@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.server.order.api.dto.write;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,9 @@ public class StaffMemberCustomerCreationDto extends CustomerCreationDto {
 
     @ApiModelProperty(value = "The id of the staff member", required = true, example = "1")
     private Long staffMemberId;
+
+    @Builder
+    public StaffMemberCustomerCreationDto(Long staffMemberId) {
+        this.staffMemberId = staffMemberId;
+    }
 }
