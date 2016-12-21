@@ -50,19 +50,9 @@ public enum OrderEntityStatus {
     CREATED,
 
     /**
-     * Printing the order failed.
-     */
-    PRINT_FAILED,
-
-    /**
      * The order has been printed.
      */
     PRINTED,
-
-    /**
-     * The order has been paid.
-     */
-    PAID,
 
     /**
      * The order has been canceled.

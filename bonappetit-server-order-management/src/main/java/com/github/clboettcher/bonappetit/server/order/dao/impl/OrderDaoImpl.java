@@ -22,6 +22,8 @@ package com.github.clboettcher.bonappetit.server.order.dao.impl;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -47,6 +49,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<ItemOrderEntity> create(Collection<ItemOrderEntity> orders) {
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(orders), "orders empty");
         // Make sure that we do not update existing entities by checking if the ID field is set.
         orders.forEach(itemOrderEntity -> {
             if (itemOrderEntity.getId() != null) {
@@ -73,6 +76,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<ItemOrderEntity> update(Collection<ItemOrderEntity> itemOrderEntities) {
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(itemOrderEntities), "itemOrderEntities empty");
         // Make sure that we don't create entities by checking if all id values are set.
         itemOrderEntities.forEach(itemOrderEntity -> {
             if (itemOrderEntity.getId() == null) {
@@ -108,6 +112,20 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public ItemOrderEntity getOrderById(Long id) {
+        Preconditions.checkNotNull(id, "id");
         return repository.findOne(id);
+    }
+
+    @Override
+    public void delete(List<ItemOrderEntity> orderEntities) {
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(orderEntities), "orderEntities empty");
+        if (orderEntities.stream().anyMatch(itemOrderEntity -> !itemOrderEntity.getStatus()
+                .equals(OrderEntityStatus.CREATED))) {
+            throw new IllegalArgumentException(String.format("Deleting orders with state other than CREATED is " +
+                            "not permitted. Offending orders: %s",
+                    orderEntities));
+        }
+        LOGGER.info(String.format("Deleting %d order(s).", orderEntities.size()));
+        repository.delete(orderEntities);
     }
 }

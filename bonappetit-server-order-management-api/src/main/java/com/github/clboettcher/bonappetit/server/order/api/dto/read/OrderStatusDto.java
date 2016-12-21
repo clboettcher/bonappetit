@@ -55,16 +55,6 @@ public enum OrderStatusDto {
     PRINTED,
 
     /**
-     * Printing the order failed.
-     */
-    PRINT_FAILED,
-
-    /**
-     * The order has been paid.
-     */
-    PAID,
-
-    /**
      * The order has been canceled.
      */
     CANCELED

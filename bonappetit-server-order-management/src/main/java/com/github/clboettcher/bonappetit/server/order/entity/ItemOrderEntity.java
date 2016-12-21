@@ -123,7 +123,7 @@ public class ItemOrderEntity {
     /**
      * The person or place (eg table) that the order should be delivered to.
      */
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     private CustomerEntity customer;
 
@@ -171,6 +171,7 @@ public class ItemOrderEntity {
      * The status of this order.
      */
     @Column(name = "STATUS", nullable = false)
+//    @Enumerated(EnumType.STRING)
     private OrderEntityStatus status;
 
     /**

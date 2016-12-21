@@ -69,7 +69,7 @@ public class OrderManagementImpl implements OrderManagement {
     private ItemOrderEntityMapper toEntityMapper;
 
     @Autowired
-    private ItemOrderDtoMapper toDtitemOrderDtoMapperMapper;
+    private ItemOrderDtoMapper toItemOrderDtoMapper;
 
     @Autowired
     private ItemOrderSummaryDtoMapper itemOrderSummaryDtoMapper;
@@ -100,12 +100,11 @@ public class OrderManagementImpl implements OrderManagement {
         // Print
         LOGGER.info(String.format("Trying to print %d order(s)", saved.size()));
         try {
-            printManager.print(toDtitemOrderDtoMapperMapper.mapToItemOrderDtos(saved));
-        } catch (PrintException e) {
-            LOGGER.error(String.format("Printing bons for %d order(s) failed", saved.size()), e);
-            // Update status
-            saved.forEach(itemOrderEntity -> itemOrderEntity.setStatus(OrderEntityStatus.PRINT_FAILED));
-            return Response.noContent().build();
+            printManager.print(toItemOrderDtoMapper.mapToItemOrderDtos(saved));
+        } catch (Exception e) {
+            orderDao.delete(saved);
+            throw new InternalServerErrorException(String.format("Printing bons for %d order(s) failed",
+                    saved.size()));
         }
 
         // Update status
@@ -121,7 +120,7 @@ public class OrderManagementImpl implements OrderManagement {
     @Override
     public List<ItemOrderDto> getAllOrders(String orderedBefore, String orderedAfter, String orderedAt) {
         List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
-        return this.toDtitemOrderDtoMapperMapper.mapToItemOrderDtos(filtered);
+        return this.toItemOrderDtoMapper.mapToItemOrderDtos(filtered);
     }
 
     @Override
@@ -133,7 +132,7 @@ public class OrderManagementImpl implements OrderManagement {
                     id));
         }
 
-        return this.toDtitemOrderDtoMapperMapper.mapToItemOrderDto(orderById);
+        return this.toItemOrderDtoMapper.mapToItemOrderDto(orderById);
     }
 
     @Override

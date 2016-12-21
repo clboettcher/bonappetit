@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.order.dao;
 
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,6 +37,7 @@ public interface OrderDao {
 
     /**
      * Updates the given orders in in the database.
+     *
      * @param itemOrderEntities The orders to update.
      */
     List<ItemOrderEntity> update(Collection<ItemOrderEntity> itemOrderEntities);
@@ -54,4 +56,13 @@ public interface OrderDao {
      * @return The order, may be null, if it does not exist.
      */
     ItemOrderEntity getOrderById(Long id);
+
+    /**
+     * Deletes the given orders in the database.
+     * <p>
+     * Only orders with status {@link OrderEntityStatus#CREATED} can be deleted.
+     *
+     * @param orderEntities The orders to delete.
+     */
+    void delete(List<ItemOrderEntity> orderEntities);
 }

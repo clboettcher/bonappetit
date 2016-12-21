@@ -50,7 +50,7 @@ public interface OrderManagement {
             value = "Creates and prints the given orders.",
             notes = "Creates the given orders in the database. " +
                     "After the orders have been saved they are printed. If printing " +
-                    "fails, the orders are not deleted from the database.",
+                    "fails, the orders are deleted from the database.",
             tags = {TAG}
     )
     @ApiResponses(@ApiResponse(
