@@ -47,6 +47,7 @@ import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -118,8 +119,10 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     @Override
-    public List<ItemOrderDto> getAllOrders(String orderedBefore, String orderedAfter, String orderedAt) {
-        List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt);
+    public List<ItemOrderDto> getAllOrders(String orderedBefore, String orderedAfter, String orderedAt,
+                                           String statusString) {
+        EnumSet<OrderEntityStatus> status = paramParser.parseToOrderEntityStatus(Optional.ofNullable(statusString));
+        List<ItemOrderEntity> filtered = getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt, status);
         return this.toItemOrderDtoMapper.mapToItemOrderDtos(filtered);
     }
 
@@ -202,6 +205,13 @@ public class OrderManagementImpl implements OrderManagement {
     }
 
     private List<ItemOrderEntity> getOrdersFilterBy(String orderedBefore, String orderedAfter, String orderedAt) {
+        return getOrdersFilterBy(orderedBefore, orderedAfter, orderedAt, EnumSet.allOf(OrderEntityStatus.class));
+    }
+
+    private List<ItemOrderEntity> getOrdersFilterBy(String orderedBefore,
+                                                    String orderedAfter,
+                                                    String orderedAt,
+                                                    EnumSet<OrderEntityStatus> status) {
         Optional<DateTime> orderedBeforeTimeOpt = paramParser.parseOrderedBound(orderedBefore, "orderedBefore");
         Optional<DateTime> orderedAfterTimeOpt = paramParser.parseOrderedBound(orderedAfter, "orderedAfter");
         Optional<LocalDate> orderedAtDateOpt = paramParser.parseOrderedAt(orderedAt, "orderedAt");
@@ -212,6 +222,7 @@ public class OrderManagementImpl implements OrderManagement {
                 .filter(OrderManagementUtils.getOrderedAtPredicate(orderedAtDateOpt))
                 .filter(OrderManagementUtils.getOrderedBeforePredicate(orderedBeforeTimeOpt))
                 .filter(OrderManagementUtils.getOrderedAfterPredicate(orderedAfterTimeOpt))
+                .filter(itemOrderEntity -> status.contains(itemOrderEntity.getStatus()))
                 .collect(Collectors.toList());
 
         LOGGER.info(String.format("Working with %d out of a total of %d order(s) filtered by orderedBefore: %s, " +

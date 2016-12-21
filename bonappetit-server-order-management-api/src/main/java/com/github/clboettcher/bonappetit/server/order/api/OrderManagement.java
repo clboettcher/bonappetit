@@ -59,7 +59,7 @@ public interface OrderManagement {
                     "(ordered item, ordered option, staff member) does not exist in the database.",
             response = ErrorResponse.class))
     Response createOrders(@ApiParam(value = "The orders to create",
-            required = true)List<ItemOrderCreationDto> orders);
+            required = true) List<ItemOrderCreationDto> orders);
 
     /**
      * Returns all orders.
@@ -95,7 +95,11 @@ public interface OrderManagement {
                     "key word. Supported key words are: today. Only orderedBefore and orderedAfter " +
                     "can be used together. The orderedAt param must be used without orderedBefore and " +
                     "orderedAfter.", required = false)
-            @QueryParam("orderedAt") String orderedAt
+            @QueryParam("orderedAt") String orderedAt,
+
+            @ApiParam(value = "The status filter param can be used to filter the result by status. " +
+                    "Multiple values can be separated by comma.", required = false)
+            @QueryParam("status") String status
     );
 
     /**

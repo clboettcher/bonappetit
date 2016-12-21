@@ -19,6 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.server.order;
 
+import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
+import com.google.common.base.Splitter;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -26,7 +28,11 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderManagementParamParser {
@@ -70,6 +76,30 @@ public class OrderManagementParamParser {
                     orderedAt,
                     e.getMessage()
             ));
+        }
+    }
+
+    public EnumSet<OrderEntityStatus> parseToOrderEntityStatus(Optional<String> status) {
+        if (!status.isPresent()) {
+            return EnumSet.allOf(OrderEntityStatus.class);
+        } else {
+            List<String> statusStrings = Splitter.on(',')
+                    .omitEmptyStrings()
+                    .trimResults()
+                    .splitToList(status.get());
+            Set<OrderEntityStatus> statusEnums = statusStrings.stream()
+                    .map((name) -> {
+                        try {
+                            return OrderEntityStatus.valueOf(name);
+                        } catch (Exception e) {
+                            throw new BadRequestException(String.format("Invalid param status with value '%s': %s",
+                                    status.get(),
+                                    e.getMessage()));
+                        }
+                    })
+
+                    .collect(Collectors.toSet());
+            return EnumSet.copyOf(statusEnums);
         }
     }
 }
