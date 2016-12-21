@@ -80,6 +80,7 @@ public class ItemEntity {
      * The type of this item.
      */
     @Column(name = "TYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ItemEntityType type;
 
     /**

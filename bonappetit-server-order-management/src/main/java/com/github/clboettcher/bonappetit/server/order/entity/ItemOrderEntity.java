@@ -92,6 +92,7 @@ public class ItemOrderEntity {
      * the order was created.
      */
     @Column(name = "ITEM_TYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ItemEntityType itemType;
 
     // We need to model the ordered options for each type separately so that hibernate
@@ -171,7 +172,7 @@ public class ItemOrderEntity {
      * The status of this order.
      */
     @Column(name = "STATUS", nullable = false)
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private OrderEntityStatus status;
 
     /**
