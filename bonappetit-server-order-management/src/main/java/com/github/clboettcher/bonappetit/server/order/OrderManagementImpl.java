@@ -85,8 +85,8 @@ public class OrderManagementImpl implements OrderManagement {
 
     @Override
     public Response createOrders(Collection<ItemOrderCreationDto> orderDtos) {
+        LOGGER.info(String.format("Attempting to create %d order(s): %s", orderDtos.size(), orderDtos));
         validator.assertValid(orderDtos);
-        LOGGER.info(String.format("Creating %d order(s): %s", orderDtos.size(), orderDtos));
 
         // Map
         Collection<ItemOrderEntity> itemOrderEntities = toEntityMapper.mapToItemOrderEntities(orderDtos);
