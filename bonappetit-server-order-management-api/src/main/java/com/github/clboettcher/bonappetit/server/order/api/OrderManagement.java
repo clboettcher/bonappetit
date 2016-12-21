@@ -38,10 +38,10 @@ import java.util.List;
 public interface OrderManagement {
 
     String TAG = "orders";
-    String ORDERS_ROOT_PATH = "/orders";
-    String OPTION_ORDERS_ROOT_PATH = "/optionOrders";
-    String PRINT_SUMMARY_REQUESTS_ROOT_PATH = "/printSummaryRequests";
-    String SUMMARY_ROOT_PATH = "/summary";
+    String ORDERS_ROOT_PATH = "orders";
+    String OPTION_ORDERS_ROOT_PATH = "optionOrders";
+    String PRINT_SUMMARY_REQUESTS_ROOT_PATH = "printSummaryRequests";
+    String SUMMARY_ROOT_PATH = "summary";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
