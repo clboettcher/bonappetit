@@ -5,6 +5,7 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderSumm
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryEntryDto;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
+import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import org.joda.time.DateTime;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class ItemOrderSummaryDtoMapper {
 
+    private static final Predicate<ItemOrderEntity> PREDICATE_CANCELLED = itemOrder ->
+            itemOrder.getStatus().equals(OrderEntityStatus.CANCELED);
     @Autowired
     private PriceCalculator priceCalculator;
 
@@ -46,6 +50,10 @@ public abstract class ItemOrderSummaryDtoMapper {
             return null;
         }
 
+        // Include only entities that are not cancelled
+        itemOrderEntities = itemOrderEntities.stream().filter(PREDICATE_CANCELLED.negate())
+                .collect(Collectors.toList());
+
         SummaryDto result = new SummaryDto();
         BigDecimal totalPrice = BigDecimal.ZERO;
         List<ItemOrderSummaryDto> orderSummaryDtos = new ArrayList<>();
@@ -55,7 +63,7 @@ public abstract class ItemOrderSummaryDtoMapper {
         DateTime newestOrderTime = null;
         for (ItemOrderEntity itemOrderEntity : itemOrderEntities) {
             ItemOrderSummaryDto orderSummaryDto = mapToItemOrderSummaryDto(itemOrderEntity);
-            
+
             totalPrice = totalPrice.add(orderSummaryDto.getTotalPrice());
             orderSummaryDtos.add(orderSummaryDto);
 
