@@ -22,7 +22,6 @@ package com.github.clboettcher.bonappetit.server.order.dao.impl;
 import com.github.clboettcher.bonappetit.server.order.dao.OrderDao;
 import com.github.clboettcher.bonappetit.server.order.entity.AbstractOptionOrderEntity;
 import com.github.clboettcher.bonappetit.server.order.entity.ItemOrderEntity;
-import com.github.clboettcher.bonappetit.server.order.entity.OrderEntityStatus;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,6 +45,9 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private ItemOrderRepository repository;
+
+    @Autowired
+    private OrderEntityValidator orderEntityValidator;
 
     @Override
     public List<ItemOrderEntity> create(Collection<ItemOrderEntity> orders) {
@@ -119,13 +121,9 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void delete(List<ItemOrderEntity> orderEntities) {
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(orderEntities), "orderEntities empty");
-        if (orderEntities.stream().anyMatch(itemOrderEntity -> !itemOrderEntity.getStatus()
-                .equals(OrderEntityStatus.CREATED))) {
-            throw new IllegalArgumentException(String.format("Deleting orders with state other than CREATED is " +
-                            "not permitted. Offending orders: %s",
-                    orderEntities));
-        }
+        orderEntityValidator.assertDeletable(orderEntities);
         LOGGER.info(String.format("Deleting %d order(s).", orderEntities.size()));
         repository.delete(orderEntities);
     }
+
 }
