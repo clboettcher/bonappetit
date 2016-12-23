@@ -42,34 +42,29 @@ public class PhysicalPrinterImpl implements PhysicalPrinter {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(PhysicalPrinterImpl.class);
 
-    private final String printServiceName;
+    private final DocFlavor docFlavor;
+    private final PrintService printService;
 
     @Autowired
     public PhysicalPrinterImpl(Environment environment) {
-        this.printServiceName = environment.getRequiredProperty("printing.printService.name");
+        String printServiceName = environment.getRequiredProperty("printing.printService.name");
+        this.docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Optional<PrintService> printServiceOpt = lookupPrintService(docFlavor, printServiceName);
+        this.printService = printServiceOpt.orElseThrow(() ->
+                new IllegalStateException(String.format("Could not find print service for name '%s'. " +
+                        "Is a printer with this name connected?", printServiceName))
+        );
     }
 
     @Override
     public void print(String output) throws PrintException {
-        DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-
         InputStream inputStream = new ByteArrayInputStream(
                 output.getBytes(Charset.forName("UTF-8")));
-        Doc doc = new SimpleDoc(inputStream, docFlavor, null);
+        Doc doc = new SimpleDoc(inputStream, this.docFlavor, null);
 
-
-        Optional<PrintService> printServiceOpt = lookupPrintService(docFlavor, printServiceName);
-
-        if (!printServiceOpt.isPresent()) {
-            throw new IllegalStateException(String.format("Could not find print service for name '%s'. " +
-                    "Is a printer with this name connected?", this.printServiceName));
-        } else {
-            PrintService printService = printServiceOpt.get();
-
-            LOGGER.info(String.format("Trying to print to service '%s'", printService.getName()));
-            DocPrintJob job = printService.createPrintJob();
-            job.print(doc, null);
-        }
+        LOGGER.info(String.format("Trying to print to service '%s'", printService.getName()));
+        DocPrintJob job = printService.createPrintJob();
+        job.print(doc, null);
     }
 
     private Optional<PrintService> lookupPrintService(DocFlavor docFlavor, String printServiceName) {
