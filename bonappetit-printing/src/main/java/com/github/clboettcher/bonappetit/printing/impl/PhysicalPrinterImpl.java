@@ -26,6 +26,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.print.*;
+import javax.print.attribute.Attribute;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.PrinterIsAcceptingJobs;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -54,6 +57,18 @@ public class PhysicalPrinterImpl implements PhysicalPrinter {
                 new IllegalStateException(String.format("Could not find print service for name '%s'. " +
                         "Is a printer with this name connected?", printServiceName))
         );
+        PrintServiceAttributeSet attributes = this.printService.getAttributes();
+        for (Attribute attribute : attributes.toArray()) {
+            LOGGER.info(String.format("Printer has attribute '%s' with value '%s' in category '%s'",
+                    attribute.getName(),
+                    attribute.toString(),
+                    attribute.getCategory()));
+        }
+        PrinterIsAcceptingJobs isAcceptingJobsAttr = printService.getAttribute(PrinterIsAcceptingJobs.class);
+        if (PrinterIsAcceptingJobs.NOT_ACCEPTING_JOBS.equals(isAcceptingJobsAttr)) {
+            throw new IllegalStateException(String.format("Printer '%s' is not accepting jobs. " +
+                    "Make sure the printer is connected and running.", printServiceName));
+        }
     }
 
     @Override
@@ -62,8 +77,9 @@ public class PhysicalPrinterImpl implements PhysicalPrinter {
                 output.getBytes(Charset.forName("UTF-8")));
         Doc doc = new SimpleDoc(inputStream, this.docFlavor, null);
 
-        LOGGER.info(String.format("Trying to print to service '%s'", printService.getName()));
+        LOGGER.info(String.format("Trying to print to service '%s'", this.printService.getName()));
         DocPrintJob job = printService.createPrintJob();
+        job.addPrintJobListener(new LoggingPrintJobListener());
         job.print(doc, null);
     }
 
