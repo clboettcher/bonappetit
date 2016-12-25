@@ -24,6 +24,6 @@ public class PhysicalPrinterLoggerImpl implements PhysicalPrinter {
 
     @Override
     public void print(String output) throws PrintException {
-        LOGGER.info(String.format("Printing output: %s", output));
+        LOGGER.info(String.format("Printing output:\n%s", output));
     }
 }
