@@ -103,9 +103,10 @@ public class OrderManagementImpl implements OrderManagement {
         try {
             printManager.print(toItemOrderDtoMapper.mapToItemOrderDtos(saved));
         } catch (Exception e) {
+            LOGGER.info(String.format("Printing failed, deleting %d order(s)", saved.size()));
             orderDao.delete(saved);
-            throw new InternalServerErrorException(String.format("Printing bons for %d order(s) failed",
-                    saved.size()));
+            throw new InternalServerErrorException(String.format("Printing bons for %d order(s) failed: %s",
+                    saved.size(), e.getMessage()), e);
         }
 
         // Update status
