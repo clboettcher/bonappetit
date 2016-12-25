@@ -18,6 +18,10 @@ public class PhysicalPrinterLoggerImpl implements PhysicalPrinter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PhysicalPrinterLoggerImpl.class);
 
+    public PhysicalPrinterLoggerImpl() {
+        LOGGER.info(String.format("Using %s as printer implementation.", this.getClass().getSimpleName()));
+    }
+
     @Override
     public void print(String output) throws PrintException {
         LOGGER.info(String.format("Printing output: %s", output));
