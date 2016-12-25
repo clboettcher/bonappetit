@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.printing.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,7 @@ import java.util.Optional;
  * Default impl of {@link PhysicalPrinter}.
  */
 @Component
+@Profile("!mockPrinter")
 public class PhysicalPrinterImpl implements PhysicalPrinter {
 
     /**
