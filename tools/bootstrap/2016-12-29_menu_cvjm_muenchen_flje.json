@@ -121,7 +121,7 @@
             },
             {
               "index": 2,
-              "title": "Wasser",
+              "title": "Mineralwasser",
               "priceDiff": 0
             },
             {
@@ -465,7 +465,7 @@
       "price": 2.8
     },
     {
-      "title": "Wasser",
+      "title": "Mineralwasser",
       "type": "DRINK_NON_ALCOHOLIC",
       "price": 2,
       "options": [
