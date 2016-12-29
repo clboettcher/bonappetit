@@ -138,6 +138,14 @@ public class BonConverterTests extends AbstractConverterTest {
         assertThat(actual, is("Tisch 12"));
     }
 
+    @Test
+    public void testDeliverToTableWithDisplayValue() throws Exception {
+        String actual = converter.getDeliverTo(TableCustomerDto.builder()
+                .tableNumber(20L)
+                .displayValue("Bar")
+                .build());
+        assertThat(actual, is("Bar"));
+    }
 
     @Test
     public void testDeliverToStaffMember() throws Exception {

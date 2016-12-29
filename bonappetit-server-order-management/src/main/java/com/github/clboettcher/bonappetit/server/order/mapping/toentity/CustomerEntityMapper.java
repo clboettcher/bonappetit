@@ -33,6 +33,7 @@ public class CustomerEntityMapper {
             TableCustomerCreationDto dto = (TableCustomerCreationDto) customerCreationDto;
             return TableCustomerEntity.builder()
                     .tableNumber(dto.getTableNumber())
+                    .displayValue(dto.getDisplayValue())
                     .build();
         } else if (customerCreationDto instanceof StaffMemberCustomerCreationDto) {
             StaffMemberCustomerCreationDto dto = (StaffMemberCustomerCreationDto) customerCreationDto;

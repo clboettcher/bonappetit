@@ -35,9 +35,14 @@ public class TableCustomerDto extends CustomerDto {
     @ApiModelProperty(value = "The table number", required = true, example = "12")
     private Long tableNumber;
 
+    @ApiModelProperty(value = "The value that is displayed to the user. If missing, the table number is used.",
+            required = false, example = "Bar vorne")
+    private String displayValue;
+
     @Builder
-    public TableCustomerDto(Long id, Long tableNumber) {
+    public TableCustomerDto(Long id, Long tableNumber, String displayValue) {
         super(id);
         this.tableNumber = tableNumber;
+        this.displayValue = displayValue;
     }
 }

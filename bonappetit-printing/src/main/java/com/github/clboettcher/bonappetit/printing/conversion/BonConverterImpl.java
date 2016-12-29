@@ -25,6 +25,7 @@ import com.github.clboettcher.bonappetit.server.order.api.dto.read.*;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -101,7 +102,11 @@ public class BonConverterImpl implements BonConverter {
             return dto.getValue();
         } else if (customerDto instanceof TableCustomerDto) {
             TableCustomerDto dto = (TableCustomerDto) customerDto;
-            return String.format("Tisch %d", dto.getTableNumber());
+            if (StringUtils.isBlank(dto.getDisplayValue())) {
+                return String.format("Tisch %d", dto.getTableNumber());
+            } else {
+                return dto.getDisplayValue();
+            }
         } else if (customerDto instanceof StaffMemberCustomerDto) {
             StaffMemberCustomerDto dto = (StaffMemberCustomerDto) customerDto;
             return String.format("%s %s (MA)", dto.getStaffMemberFirstName(), dto.getStaffMemberLastName());

@@ -4,6 +4,7 @@ TRUNCATE TABLE `bonappetit-local`.menu;
 TRUNCATE TABLE `bonappetit-local`.item;
 TRUNCATE TABLE `bonappetit-local`.item_option;
 TRUNCATE TABLE `bonappetit-local`.radio_item;
+TRUNCATE TABLE `bonappetit-local`.customer;
 SET FOREIGN_KEY_CHECKS = 1;
 
 # Delete all orders

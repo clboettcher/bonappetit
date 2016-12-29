@@ -27,6 +27,7 @@ public class CustomerDtoMapper {
             TableCustomerEntity entity = (TableCustomerEntity) customerEntity;
             return TableCustomerDto.builder()
                     .tableNumber(entity.getTableNumber())
+                    .displayValue(entity.getDisplayValue())
                     .build();
         } else if (customerEntity instanceof StaffMemberCustomerEntity) {
             StaffMemberCustomerEntity entity = (StaffMemberCustomerEntity) customerEntity;

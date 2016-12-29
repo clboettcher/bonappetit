@@ -71,7 +71,6 @@ public class BonStringConverterImplTests {
         assertThat(actual, is(expected));
     }
 
-
     @Test
     public void testBonsAreSortedByTypeThenByOrderTime() throws Exception {
         List<Bon> input = Lists.newArrayList(

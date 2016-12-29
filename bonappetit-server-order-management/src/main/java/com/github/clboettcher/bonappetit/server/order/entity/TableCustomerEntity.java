@@ -36,9 +36,16 @@ public class TableCustomerEntity extends CustomerEntity {
     @Column(name = "TABLE_NUMBER", nullable = true)
     private Long tableNumber;
 
+    /**
+     * The value that is displayed to the user. If missing, the table number is used.
+     */
+    @Column(name = "TABLE_DISPLAY_VALUE", nullable = true)
+    private String displayValue;
+
     @Builder
-    public TableCustomerEntity(Long id, Long tableNumber) {
+    public TableCustomerEntity(Long id, Long tableNumber, String displayValue) {
         super(id);
         this.tableNumber = tableNumber;
+        this.displayValue = displayValue;
     }
 }
