@@ -86,7 +86,7 @@ public class ParamValidator {
         }
     }
 
-    private void assertValid(OptionCreationDto dto, String itemTitle) {
+    void assertValid(OptionCreationDto dto, String itemTitle) {
         if (StringUtils.isBlank(dto.getTitle())) {
             throw new BadRequestException(String.format("Property title of option of item with title '%s' " +
                     "must not be blank.", itemTitle));
@@ -104,7 +104,7 @@ public class ParamValidator {
         } else {
             throw new BadRequestException(String.format("Unknown option type on item with title '%s': %s",
                     itemTitle,
-                    dto.getClass().getSimpleName()));
+                    dto.getClass().getName()));
         }
     }
 
