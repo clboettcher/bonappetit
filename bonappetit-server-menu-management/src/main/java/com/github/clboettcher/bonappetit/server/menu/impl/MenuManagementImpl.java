@@ -29,9 +29,7 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
-import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.ItemEntityMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
-import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +77,7 @@ public class MenuManagementImpl implements MenuManagement {
     private ItemDtoMapper itemDtoMapper;
 
     @Autowired
-    private ItemEntityMapper itemEntityMapper;
+    private ParamValidator validator;
 
     /**
      * The dto to entity mapper.
@@ -121,10 +119,8 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
-    public Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuCreationDto menuDto) {
-        if (menuDto == null) {
-            throw new BadRequestException("Menu that should be created must be present");
-        }
+    public Response createMenu(MenuCreationDto menuDto) {
+        validator.assertValid(menuDto);
 
         LOGGER.info(String.format("Creating menu from DTO %s", menuDto));
 
