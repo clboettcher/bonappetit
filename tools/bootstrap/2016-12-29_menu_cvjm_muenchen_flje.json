@@ -494,6 +494,11 @@
       ]
     },
     {
+      "title": "Leitungswasser",
+      "type": "DRINK_NON_ALCOHOLIC",
+      "price": 0
+    },
+    {
       "title": "Coca-Cola",
       "type": "DRINK_NON_ALCOHOLIC",
       "price": 2.2,
