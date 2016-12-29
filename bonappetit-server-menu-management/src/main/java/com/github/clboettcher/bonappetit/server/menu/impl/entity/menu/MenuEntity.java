@@ -79,8 +79,10 @@ public class MenuEntity {
     /**
      * The items that this menu consists of.
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "MENU_ID", nullable = false)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "MENU_ITEM",
+            joinColumns = @JoinColumn(name = "MENU_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
     private List<ItemEntity> items;
 
     /**
