@@ -40,7 +40,7 @@ public class ValueOptionCreationDto extends OptionCreationDto {
 
     @ApiModelProperty(value = "The default value for this option. That is the initial ordered count.",
             required = true, example = "2")
-    private int defaultValue;
+    private Integer defaultValue;
 
     /**
      * Constructor setting the specified properties.
@@ -51,7 +51,7 @@ public class ValueOptionCreationDto extends OptionCreationDto {
      * @param defaultValue see {@link  #getDefaultValue()}.
      */
     @Builder
-    public ValueOptionCreationDto(String title, Integer index, BigDecimal priceDiff, int defaultValue) {
+    public ValueOptionCreationDto(String title, Integer index, BigDecimal priceDiff, Integer defaultValue) {
         super(title, index);
         this.priceDiff = priceDiff;
         this.defaultValue = defaultValue;
