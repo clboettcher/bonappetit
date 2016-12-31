@@ -23,7 +23,6 @@ import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -33,7 +32,6 @@ import java.util.List;
  * Default impl of {@link StaffMemberDao}.
  */
 @Component
-@Profile("default")
 public class StaffMemberDaoImpl implements StaffMemberDao {
 
     /**
@@ -62,7 +60,7 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     }
 
     @Override
-    public StaffMemberEntity getStaffMember(long id) {
+    public StaffMemberEntity getStaffMember(Long id) {
         return staffMemberEntityRepository.findOne(id);
     }
 

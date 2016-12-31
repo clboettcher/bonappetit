@@ -20,12 +20,15 @@
 package com.github.clboettcher.bonappetit.server.staff.dao;
 
 import com.github.clboettcher.bonappetit.server.staff.dao.impl.StaffMemberEntityRepository;
-import com.github.clboettcher.bonappetit.server.staff.dao.mock.StaffMemberDaoMockImpl;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class bootstraps some testdata into the db and will be deleted at some point.
@@ -39,6 +42,20 @@ public class StaffMembersBootstrap {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(StaffMembersBootstrap.class);
 
+
+    public static final List<StaffMemberEntity> TEST_DATA = Arrays.asList(
+            StaffMemberEntity.builder()
+                    .id(1L)
+                    .firstName("John")
+                    .lastName("Smith")
+                    .build(),
+            StaffMemberEntity.builder()
+                    .id(2L)
+                    .firstName("Jane")
+                    .lastName("Smith")
+                    .build()
+    );
+
     /**
      * Constructor that saves some testdata in the db.
      *
@@ -47,6 +64,6 @@ public class StaffMembersBootstrap {
     @Autowired
     public StaffMembersBootstrap(StaffMemberEntityRepository staffMemberEntityRepository) {
         LOGGER.info("Saving test staff members in the DB.");
-        staffMemberEntityRepository.save(StaffMemberDaoMockImpl.TEST_DATA);
+        staffMemberEntityRepository.save(TEST_DATA);
     }
 }

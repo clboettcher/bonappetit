@@ -41,7 +41,7 @@ public interface StaffMemberDao {
      * @param id The id.
      * @return The staff member, or null if it does not exist.
      */
-    StaffMemberEntity getStaffMember(long id);
+    StaffMemberEntity getStaffMember(Long id);
 
     /**
      * Returns whether a staff member exists in the db with the specified id.
