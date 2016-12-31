@@ -32,6 +32,8 @@ import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoM
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.ItemEntityMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,12 +145,13 @@ public class MenuManagementImpl implements MenuManagement {
         }
         validator.assertValid(menuCreationDto);
 
-        LOGGER.info(String.format("Creating menu with id %d from DTO %s", id, menuCreationDto));
+        LOGGER.info(String.format("Updating menu with id %d from DTO %s", id, menuCreationDto));
         MenuEntity toUpdate = this.menuDao.getMenuById(id);
         MenuEntity updateValues = this.menuEntityMapper.mapToMenuEntity(menuCreationDto);
 
         toUpdate.setItems(updateValues.getItems());
         toUpdate.setTitle(updateValues.getTitle());
+        toUpdate.setLastUpdateTimestamp(DateTime.now(DateTimeZone.UTC).toDate());
 
         this.menuDao.update(toUpdate);
         return Response.noContent().build();
@@ -160,6 +163,8 @@ public class MenuManagementImpl implements MenuManagement {
         LOGGER.info(String.format("Creating %d item(s) from dto list: %s", itemCreationDtos.size(), itemCreationDtos));
 
         List<ItemEntity> itemEntities = this.itemEntityMapper.mapToItemEntity(itemCreationDtos);
+        DateTime now = DateTime.now(DateTimeZone.UTC);
+        itemEntities.stream().forEach(itemEntity -> itemEntity.setCreationTimestamp(now.toDate()));
         this.itemDao.create(itemEntities);
 
         return Response.noContent().build();

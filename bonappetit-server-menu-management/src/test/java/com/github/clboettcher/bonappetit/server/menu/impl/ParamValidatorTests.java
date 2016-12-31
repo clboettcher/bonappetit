@@ -81,7 +81,7 @@ public class ParamValidatorTests {
                 .build();
         exception.expect(BadRequestException.class);
         exception.expectMessage("Property title of item must not be " +
-                "blank. Dto: ItemCreationDto(title=  , price=null, type=null, options=null)");
+                "blank. Dto: ItemCreationDto(title=  , price=null, type=null, options=null, note=null)");
         this.validator.assertValid(input);
     }
 

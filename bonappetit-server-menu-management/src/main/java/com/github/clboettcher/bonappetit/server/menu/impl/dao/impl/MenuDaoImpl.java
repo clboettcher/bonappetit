@@ -21,7 +21,6 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.config.MenuConfig;
-import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -55,9 +54,6 @@ public class MenuDaoImpl implements MenuDao {
     @Autowired
     private EntityValidator entityValidator;
 
-    @Autowired
-    private EntityPreprocessor preprocessor;
-
     @Override
     public MenuEntity getCurrentMenu() {
         Iterable<MenuConfig> all = menuConfigRepository.findAll();
@@ -85,9 +81,10 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public MenuEntity create(MenuEntity menuEntity) {
         entityValidator.assertNewMenuValid(menuEntity);
-        menuEntity.setCreationTimestamp(DateTime.now(DateTimeZone.UTC).toDate());
-        List<ItemEntity> items = menuEntity.getItems();
-        items.stream().forEach(preprocessor::prepareOptions);
+        DateTime now = DateTime.now(DateTimeZone.UTC);
+        menuEntity.setCreationTimestamp(now.toDate());
+        menuEntity.setLastUpdateTimestamp(now.toDate());
+
         return menuRepository.save(menuEntity);
     }
 
@@ -126,6 +123,9 @@ public class MenuDaoImpl implements MenuDao {
         if (menuEntity.getId() == null) {
             throw new IllegalArgumentException(String.format("Cannot update menu without id: %s", menuEntity));
         }
+
+        DateTime now = DateTime.now(DateTimeZone.UTC);
+        menuEntity.setLastUpdateTimestamp(now.toDate());
 
         return this.menuRepository.save(menuEntity);
     }

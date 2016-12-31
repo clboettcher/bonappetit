@@ -58,7 +58,7 @@ public class MenuDto {
     @ApiModelProperty(value = "The technical ID", required = true, example = "1337")
     private Long id;
 
-    @ApiModelProperty(value = "The title of this menu", example = "My awesome menu")
+    @ApiModelProperty(value = "The title of this menu", example = "My awesome menu", required = true)
     private String title;
 
     @ApiModelProperty(value = "The timestamp that the menu was created")
@@ -67,10 +67,17 @@ public class MenuDto {
     @ApiModelProperty(value = "The items that this menu consists of")
     private Set<ItemDto> items;
 
+    @ApiModelProperty(value = "The timestamp that this menu was last updated.", required = true)
+    private DateTime lastUpdateTimestamp;
+
     @Builder
-    public MenuDto(Long id, String title, Set<ItemDto> items) {
+    public MenuDto(Long id,
+                   String title,
+                   Set<ItemDto> items,
+                   DateTime lastUpdateTimestamp) {
         this.id = id;
         this.title = title;
         this.items = items;
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
 }

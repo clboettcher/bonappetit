@@ -22,6 +22,7 @@ drop table `bonappetit-local`.item;
 drop table `bonappetit-local`.item_option;
 drop table `bonappetit-local`.item_order;
 drop table `bonappetit-local`.menu;
+drop table `bonappetit-local`.menu_item;
 drop table `bonappetit-local`.menu_config;
 drop table `bonappetit-local`.option_order;
 drop table `bonappetit-local`.radio_item;

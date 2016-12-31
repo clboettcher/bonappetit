@@ -66,14 +66,19 @@ public class ItemCreationDto {
     @ApiModelProperty(value = "The options available for this item")
     private List<OptionCreationDto> options;
 
+    @ApiModelProperty(value = "An optional note")
+    private String note;
+
     @Builder
     public ItemCreationDto(String title,
                            BigDecimal price,
                            ItemDtoType type,
-                           List<OptionCreationDto> options) {
+                           List<OptionCreationDto> options,
+                           String note) {
         this.title = title;
         this.price = price;
         this.type = type;
         this.options = options;
+        this.note = note;
     }
 }

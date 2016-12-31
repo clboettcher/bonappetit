@@ -44,6 +44,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -69,16 +70,26 @@ public class ItemDto {
     @ApiModelProperty(value = "The options available for this item")
     private List<OptionDto> options;
 
+    @ApiModelProperty(value = "The timestamp that the item was created.", required = true)
+    private DateTime creationTimestamp;
+
+    @ApiModelProperty(value = "An optional note")
+    private String note;
+
     @Builder
     public ItemDto(Long id,
                    String title,
                    BigDecimal price,
                    ItemDtoType type,
-                   List<OptionDto> options) {
+                   List<OptionDto> options,
+                   DateTime creationTimestamp,
+                   String note) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.type = type;
         this.options = options;
+        this.creationTimestamp = creationTimestamp;
+        this.note = note;
     }
 }

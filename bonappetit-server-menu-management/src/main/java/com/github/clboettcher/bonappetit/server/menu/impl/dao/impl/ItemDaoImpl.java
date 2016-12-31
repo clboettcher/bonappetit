@@ -41,6 +41,9 @@ public class ItemDaoImpl implements ItemDao {
     @Autowired
     private EntityValidator entityValidator;
 
+    @Autowired
+    private EntityPreprocessor preprocessor;
+
     @Override
     public ItemEntity getItem(Long id) {
         return repository.findOne(id);
@@ -66,6 +69,7 @@ public class ItemDaoImpl implements ItemDao {
         Preconditions.checkNotNull(itemEntities, "itemEntities");
         Preconditions.checkArgument(CollectionUtils.isNotEmpty(itemEntities), "itemEntities empty");
         this.entityValidator.assertNewItemsValid(itemEntities);
+        itemEntities.stream().forEach(preprocessor::prepareOptions);
         return Lists.newArrayList(this.repository.save(itemEntities));
     }
 }

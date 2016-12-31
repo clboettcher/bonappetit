@@ -64,11 +64,19 @@ public class MenuEntity {
     private Long id;
 
     /**
-     * The timestamp that the menu was taken.
+     * The timestamp that the menu was created.
      */
     @Column(name = "CREATION_TIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTimestamp;
+
+    /**
+     * The timestamp that the menu was taken.
+     */
+    @Column(name = "LAST_UPDATE_TIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdateTimestamp;
+
 
     /**
      * The timestamp that the menu was created.
@@ -88,14 +96,20 @@ public class MenuEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param title             see {@link #title}.
-     * @param creationTimestamp see {@link #creationTimestamp}.
-     * @param items             see {@link #items}.
+     * @param title                   see {@link #title}.
+     * @param creationTimestamp       see {@link #creationTimestamp}.
+     * @param lastUpdateTimestampList see {@link #lastUpdateTimestamp}.
+     * @param items                   see {@link #items}.
      */
     @Builder
-    public MenuEntity(Long id, String title, Date creationTimestamp, List<ItemEntity> items) {
+    public MenuEntity(Long id,
+                      String title,
+                      Date creationTimestamp,
+                      Date lastUpdateTimestampList,
+                      List<ItemEntity> items) {
         this.id = id;
         this.creationTimestamp = creationTimestamp;
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
         this.title = title;
         this.items = items;
     }
@@ -114,6 +128,14 @@ public class MenuEntity {
 
     public void setCreationTimestamp(Date creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public Date getLastUpdateTimestamp() {
+        return lastUpdateTimestamp;
+    }
+
+    public void setLastUpdateTimestamp(Date lastUpdateTimestamp) {
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
 
     public String getTitle() {

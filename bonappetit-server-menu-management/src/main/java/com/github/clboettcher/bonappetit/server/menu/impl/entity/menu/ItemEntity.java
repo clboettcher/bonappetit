@@ -26,6 +26,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,25 +73,44 @@ public class ItemEntity {
     private List<AbstractOptionEntity> options;
 
     /**
+     * The timestamp that the item was created.
+     */
+    @Column(name = "CREATION_TIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTimestamp;
+
+    /**
+     * An optional note.
+     */
+    @Column(name = "NOTE")
+    private String note;
+
+    /**
      * Constructor setting the specified properties.
      *
-     * @param id      see {@link #id}.
-     * @param title   see {@link #title}.
-     * @param price   see {@link #price}.
-     * @param type    see {@link #type}.
-     * @param options see {@link #options}.
+     * @param id                see {@link #id}.
+     * @param title             see {@link #title}.
+     * @param price             see {@link #price}.
+     * @param type              see {@link #type}.
+     * @param options           see {@link #options}.
+     * @param creationTimestamp see {@link #creationTimestamp}.
+     * @param note              see {@link #note}.
      */
     @Builder
     public ItemEntity(Long id,
                       String title,
                       BigDecimal price,
                       ItemEntityType type,
-                      List<AbstractOptionEntity> options) {
+                      List<AbstractOptionEntity> options,
+                      Date creationTimestamp,
+                      String note) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.type = type;
         this.options = options;
+        this.creationTimestamp = creationTimestamp;
+        this.note = note;
     }
 
     public Long getId() {
@@ -135,5 +155,21 @@ public class ItemEntity {
 
     public boolean hasOptions() {
         return CollectionUtils.isNotEmpty(this.options);
+    }
+
+    public Date getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(Date creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
