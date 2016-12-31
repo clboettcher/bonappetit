@@ -64,7 +64,7 @@ public class RadioOptionEntity extends AbstractOptionEntity {
      * @param radioItems      see {@link #getRadioItems()}.
      */
     @Builder
-    public RadioOptionEntity(long id,
+    public RadioOptionEntity(Long id,
                              String title,
                              Integer index,
                              RadioItemEntity defaultSelected,

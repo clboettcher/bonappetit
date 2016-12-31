@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
@@ -29,6 +30,7 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.ItemEntityMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +87,9 @@ public class MenuManagementImpl implements MenuManagement {
     @Autowired
     private MenuEntityMapper menuEntityMapper;
 
+    @Autowired
+    private ItemEntityMapper itemEntityMapper;
+
     @Override
     public MenuDto getCurrentMenu() {
         MenuEntity currentMenu = menuDao.getCurrentMenu();
@@ -128,6 +133,36 @@ public class MenuManagementImpl implements MenuManagement {
         MenuEntity saved = menuDao.create(menuEntity);
 
         return okWithLocationHeader(MENUS_PATH, saved.getId());
+    }
+
+    @Override
+    public Response updateMenu(Long id, MenuCreationDto menuCreationDto) {
+        if (!this.menuDao.exists(id)) {
+            throw new BadRequestException(String.format("Menu with id %d cannot be updated " +
+                    "because it does not exist.", id));
+        }
+        validator.assertValid(menuCreationDto);
+
+        LOGGER.info(String.format("Creating menu with id %d from DTO %s", id, menuCreationDto));
+        MenuEntity toUpdate = this.menuDao.getMenuById(id);
+        MenuEntity updateValues = this.menuEntityMapper.mapToMenuEntity(menuCreationDto);
+
+        toUpdate.setItems(updateValues.getItems());
+        toUpdate.setTitle(updateValues.getTitle());
+
+        this.menuDao.update(toUpdate);
+        return Response.noContent().build();
+    }
+
+    @Override
+    public Response createItems(List<ItemCreationDto> itemCreationDtos) {
+        this.validator.assertValid(itemCreationDtos);
+        LOGGER.info(String.format("Creating %d item(s) from dto list: %s", itemCreationDtos.size(), itemCreationDtos));
+
+        List<ItemEntity> itemEntities = this.itemEntityMapper.mapToItemEntity(itemCreationDtos);
+        this.itemDao.create(itemEntities);
+
+        return Response.noContent().build();
     }
 
     @Override

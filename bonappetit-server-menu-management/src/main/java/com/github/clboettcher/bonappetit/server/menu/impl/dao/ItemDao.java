@@ -22,6 +22,8 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 
+import java.util.List;
+
 /**
  * Provides access to stored {@link ItemEntity}s.
  */
@@ -36,10 +38,25 @@ public interface ItemDao {
     ItemEntity getItem(Long id);
 
     /**
+     * Returns the items with the given ids.
+     *
+     * @param itemIds The ids.
+     * @return The items, may contain null elements.
+     */
+    List<ItemEntity> getAll(List<Long> itemIds);
+
+    /**
      * Returns whether an item exists in the db with the given id.
      *
      * @param id The id.
      * @return true, if an item exists with the given id.
      */
     boolean exists(Long id);
+
+    /**
+     * Creates the given entities in the db.
+     *
+     * @param itemEntities The items to create, may not contain null values or entities with the id property set.
+     */
+    List<ItemEntity> create(List<ItemEntity> itemEntities);
 }

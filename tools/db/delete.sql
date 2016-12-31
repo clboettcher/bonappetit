@@ -1,6 +1,8 @@
 # Deleting all menus
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `bonappetit-local`.menu;
+TRUNCATE TABLE `bonappetit-local`.menu_item;
+TRUNCATE TABLE `bonappetit-local`.menu_config;
 TRUNCATE TABLE `bonappetit-local`.item;
 TRUNCATE TABLE `bonappetit-local`.item_option;
 TRUNCATE TABLE `bonappetit-local`.radio_item;

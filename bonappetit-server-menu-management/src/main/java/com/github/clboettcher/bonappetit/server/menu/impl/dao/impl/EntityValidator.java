@@ -23,31 +23,24 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 @Component
 public class EntityValidator {
 
-    /**
-     * Predicate that resolves to true, if the tested {@link RadioItemEntity} has a non null ID property.
-     */
     private static final Predicate<RadioItemEntity> RADIO_ITEM_HAS_ID_PREDICATE = radioItemEntity ->
             radioItemEntity.getId() != null;
 
-    /**
-     * Predicate that resolves to true, if the tested {@link AbstractOptionEntity}
-     * and all referenced entities have non null ID properties.
-     */
-    public static final Predicate<AbstractOptionEntity> OPTION_REFS_HAVE_IDS_PREDICATE = optionEntity -> {
-        // Check if all entities referenced by a radio option have ids set to non null.
+    public static final Predicate<AbstractOptionEntity> ANY_OPTION_REF_HAS_ID_PREDICATE = optionEntity -> {
         if (optionEntity instanceof RadioOptionEntity) {
             RadioOptionEntity radioOptionEntity = (RadioOptionEntity) optionEntity;
             boolean defaultSelectedHasId = RADIO_ITEM_HAS_ID_PREDICATE.test(radioOptionEntity.getDefaultSelected());
-            boolean radioItemsHaveIds = radioOptionEntity.getRadioItems()
+            boolean anyRadioItemsHasId = radioOptionEntity.getRadioItems()
                     .stream()
-                    .allMatch(RADIO_ITEM_HAS_ID_PREDICATE);
-            if (!defaultSelectedHasId || !radioItemsHaveIds) {
-                return false;
+                    .anyMatch(RADIO_ITEM_HAS_ID_PREDICATE);
+            if (defaultSelectedHasId || anyRadioItemsHasId) {
+                return true;
             }
         }
 
@@ -57,51 +50,34 @@ public class EntityValidator {
 
     private static final Predicate<ItemEntity> ITEM_HAS_ID_PREDICATE = itemEntity -> itemEntity.getId() != null;
 
-    private static final Predicate<ItemEntity> ALL_OPTIONS_HAVE_ID_PREDICATES = itemEntity -> {
-        if (CollectionUtils.isNotEmpty(itemEntity.getOptions())) {
-            return itemEntity.getOptions().stream().allMatch(OPTION_REFS_HAVE_IDS_PREDICATE);
-        }
+    private static final Predicate<ItemEntity> ANY_OPTIONS_HAVE_ID_PREDICATES = itemEntity ->
+            CollectionUtils.isNotEmpty(itemEntity.getOptions())
+                    && itemEntity.getOptions().stream().anyMatch(ANY_OPTION_REF_HAS_ID_PREDICATE);
 
-        return true;
-    };
-
-    /**
-     * Predicate that resolves to true, if the tested {@link ItemEntity}
-     * and all referenced entities have non null ID properties.
-     */
-    private static final Predicate<ItemEntity> ITEM_REFS_HAVE_IDS_PREDICATE = itemEntity ->
+    private static final Predicate<ItemEntity> ANY_ITEM_REF_HAS_ID_PREDICATE = itemEntity ->
             ITEM_HAS_ID_PREDICATE
-                    .and(ALL_OPTIONS_HAVE_ID_PREDICATES)
+                    .or(ANY_OPTIONS_HAVE_ID_PREDICATES)
                     .test(itemEntity);
 
+    private static final Predicate<List<ItemEntity>> ANY_ITEMS_REF_HAS_ID_PREDICATE = itemEntities ->
+            CollectionUtils.isNotEmpty(itemEntities)
+                    && itemEntities.stream().anyMatch(ANY_ITEM_REF_HAS_ID_PREDICATE);
 
-    /**
-     * Predicate that resolves to true, if the tested {@link MenuEntity} has
-     * a non null ID property.
-     */
     private static final Predicate<MenuEntity> MENU_HAS_ID_PREDICATE = menuEntity -> menuEntity.getId() != null;
-
-    /**
-     * Predicate that resolves to true, if the tested {@link MenuEntity}
-     * and all referenced entities have non null ID properties.
-     */
-    private static final Predicate<MenuEntity> MENU_REFS_HAVE_IDS_PREDICATE = menuEntity -> {
-        if (CollectionUtils.isNotEmpty(menuEntity.getItems())) {
-            boolean allItemRefsHaveIds = menuEntity.getItems().stream().allMatch(ITEM_REFS_HAVE_IDS_PREDICATE);
-            if (!allItemRefsHaveIds) {
-                return false;
-            }
-
-        }
-        return MENU_HAS_ID_PREDICATE.test(menuEntity);
-    };
 
     void assertNewMenuValid(MenuEntity menuEntity) {
         // Make sure that we do not update existing entities by checking if the ID fields are not
         // set on all entities reachable from the given menu entity.
-        if (MENU_REFS_HAVE_IDS_PREDICATE.test(menuEntity)) {
+        if (MENU_HAS_ID_PREDICATE.test(menuEntity)) {
             throw new IllegalArgumentException(String.format("New entities to be saved must not contain ids. " +
-                    "Found at least one offending entity referenced from menu %s", menuEntity));
+                    "Offending entity: %s", menuEntity));
+        }
+    }
+
+    public void assertNewItemsValid(List<ItemEntity> items) {
+        if (ANY_ITEMS_REF_HAS_ID_PREDICATE.test(items)) {
+            throw new IllegalArgumentException(String.format("New entities to be saved must not contain ids. " +
+                    "Found at least one offending entity referenced from items %s", items));
         }
     }
 }

@@ -7,6 +7,7 @@ SELECT * FROM `bonappetit-local`.user;
 select * from `bonappetit-local`.menu_config;
 select * from `bonappetit-local`.menu;
 select * from `bonappetit-local`.item;
+select * from `bonappetit-local`.menu_item;
 select * from `bonappetit-local`.item_option;
 select * from `bonappetit-local`.radio_item;
 SELECT * FROM `bonappetit-local`.item_order;

@@ -21,11 +21,13 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.*;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import javax.ws.rs.BadRequestException;
 import java.math.BigDecimal;
@@ -39,7 +41,7 @@ public class ParamValidatorTests {
 
     @Before
     public void setUp() throws Exception {
-        this.validator = new ParamValidator();
+        this.validator = new ParamValidator(Mockito.mock(ItemDao.class));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class ParamValidatorTests {
     public void testMenuNoItems() throws Exception {
         MenuCreationDto input = MenuCreationDto.builder()
                 .title("My menu")
-                .items(Lists.newArrayList())
+                .itemIds(Lists.newArrayList())
                 .build();
 
         exception.expect(BadRequestException.class);

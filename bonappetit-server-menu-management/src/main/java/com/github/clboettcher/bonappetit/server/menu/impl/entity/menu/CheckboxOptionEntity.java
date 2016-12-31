@@ -65,7 +65,7 @@ public class CheckboxOptionEntity extends AbstractOptionEntity {
      * @param defaultChecked see {@link #defaultChecked}.
      */
     @Builder
-    public CheckboxOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
+    public CheckboxOptionEntity(Long id, String title, Integer index, BigDecimal priceDiff, Boolean defaultChecked) {
         super(id, title, index);
         this.priceDiff = priceDiff;
         this.defaultChecked = defaultChecked;

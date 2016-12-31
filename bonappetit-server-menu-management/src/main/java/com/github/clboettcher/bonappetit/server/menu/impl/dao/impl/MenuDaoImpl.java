@@ -31,7 +31,6 @@ import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,7 +39,6 @@ import java.util.List;
  * Default impl of {@link MenuDao}.
  */
 @Component
-@Profile("default")
 public class MenuDaoImpl implements MenuDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuDaoImpl.class);
@@ -120,5 +118,15 @@ public class MenuDaoImpl implements MenuDao {
         }
 
         this.menuConfigRepository.save(cfg);
+    }
+
+    @Override
+    public MenuEntity update(MenuEntity menuEntity) {
+        Preconditions.checkNotNull(menuEntity, "menuEntity");
+        if (menuEntity.getId() == null) {
+            throw new IllegalArgumentException(String.format("Cannot update menu without id: %s", menuEntity));
+        }
+
+        return this.menuRepository.save(menuEntity);
     }
 }

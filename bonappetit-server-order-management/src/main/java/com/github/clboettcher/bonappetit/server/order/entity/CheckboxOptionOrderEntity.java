@@ -63,7 +63,7 @@ public class CheckboxOptionOrderEntity extends AbstractOptionOrderEntity {
      * @param checkboxOption  see {@link #checkboxOption}.
      */
     @Builder
-    public CheckboxOptionOrderEntity(long id,
+    public CheckboxOptionOrderEntity(Long id,
                                      String optionTitle,
                                      BigDecimal optionPriceDiff,
                                      Boolean checked,

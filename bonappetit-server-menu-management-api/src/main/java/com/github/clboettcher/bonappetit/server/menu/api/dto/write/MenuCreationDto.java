@@ -47,22 +47,22 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * The menu represents the items that can be ordered.
+ * The menu contains the items that can be ordered along some meta information.
  */
 @NoArgsConstructor
 @Data
 @ApiModel(description = "The menu contains the items that can be ordered")
 public class MenuCreationDto {
 
-    @ApiModelProperty(value = "The items that this menu consists of")
-    private List<ItemCreationDto> items;
+    @ApiModelProperty(value = "The ids of the items that this menu consists of")
+    private List<Long> itemIds;
 
     @ApiModelProperty(value = "The title of this menu", example = "My awesome menu")
     private String title;
 
     @Builder
-    public MenuCreationDto(String title, List<ItemCreationDto> items) {
+    public MenuCreationDto(String title, List<Long> itemIds) {
         this.title = title;
-        this.items = items;
+        this.itemIds = itemIds;
     }
 }

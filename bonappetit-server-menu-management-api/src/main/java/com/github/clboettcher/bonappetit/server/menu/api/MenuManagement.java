@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.api;
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import io.swagger.annotations.*;
 
@@ -120,11 +121,39 @@ public interface MenuManagement {
     @ApiResponses(
             @ApiResponse(
                     code = 400,
-                    message = "The request did not contain a menu to create.",
+                    message = "The request did not contain a menu to create or the menu dto was invalid",
                     response = ErrorResponse.class
             )
     )
     Response createMenu(@ApiParam(value = "The menu to create.", required = true) MenuCreationDto menuDto);
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/" + MENUS_PATH + "/{id}")
+    @ApiOperation(value = "Updates the given menu in the database.", tags = {MenuManagement.TAG})
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "The request did not contain a menu to create or the menu dto was invalid",
+                    response = ErrorResponse.class
+            )
+    )
+    Response updateMenu(
+            @ApiParam(value = "The id of the menu that should be updated") @PathParam("id") Long id,
+            @ApiParam(value = "The menu data to update the menu with", required = true) MenuCreationDto menuCreationDto);
+
+    @POST
+    @Path("/" + ITEMS_PATH)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Creates the given items in the database.", tags = {MenuManagement.TAG})
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "The request did not contain items to create or any of the items were invalid",
+                    response = ErrorResponse.class
+            )
+    )
+    Response createItems(@ApiParam(value = "The items to create.", required = true) List<ItemCreationDto> itemCreationDtos);
 
     @PUT
     @Path("/" + CURRENT_MENU_PATH + "/{menuId}")

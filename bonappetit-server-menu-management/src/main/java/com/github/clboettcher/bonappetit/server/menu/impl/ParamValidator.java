@@ -20,8 +20,10 @@
 package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.*;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
@@ -33,6 +35,13 @@ import java.util.stream.Collectors;
 @Component
 public class ParamValidator {
 
+    private ItemDao itemDao;
+
+    @Autowired
+    public ParamValidator(ItemDao itemDao) {
+        this.itemDao = itemDao;
+    }
+
     void assertValid(MenuCreationDto menuDto) {
         if (menuDto == null) {
             throw new BadRequestException("Menu that should be created must be present");
@@ -40,10 +49,20 @@ public class ParamValidator {
         if (StringUtils.isBlank(menuDto.getTitle())) {
             throw new BadRequestException("Menu must have a non blank title.");
         }
-        assertValid(menuDto.getItems());
+        if (CollectionUtils.isEmpty(menuDto.getItemIds())) {
+            throw new BadRequestException("Menu must have at least one item.");
+        }
+        // Verify: all item ids exist
+        List<Long> nonExistentItems = menuDto.getItemIds()
+                .stream()
+                .filter(itemId -> !itemDao.exists(itemId)).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(nonExistentItems)) {
+            throw new BadRequestException(String.format("Menu cannot be created because not all items exist. " +
+                    "Missing item ids: %s", nonExistentItems));
+        }
     }
 
-    private void assertValid(List<ItemCreationDto> items) {
+    public void assertValid(List<ItemCreationDto> items) {
         if (CollectionUtils.isEmpty(items)) {
             throw new BadRequestException("Menu must have at least one item.");
         }

@@ -44,7 +44,7 @@ public class MenuConfig {
     @Id
     @GeneratedValue
     @Column(name = "MENU_CONFIG_ID")
-    private long id;
+    private Long id;
 
     /**
      * The currently active menu.
@@ -60,7 +60,7 @@ public class MenuConfig {
      * @param current see {@link #current}.
      */
     @Builder
-    public MenuConfig(long id, MenuEntity current) {
+    public MenuConfig(Long id, MenuEntity current) {
         this.id = id;
         this.current = current;
     }

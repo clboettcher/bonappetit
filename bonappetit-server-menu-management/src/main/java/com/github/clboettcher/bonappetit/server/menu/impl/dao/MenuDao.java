@@ -73,4 +73,12 @@ public interface MenuDao {
      * @param menuEntity The menu to set as current.
      */
     void setCurrent(MenuEntity menuEntity);
+
+    /**
+     * Updates the given menu in the database.
+     *
+     * @param menuEntity The menu to update.
+     * @return The updated entity.
+     */
+    MenuEntity update(MenuEntity menuEntity);
 }

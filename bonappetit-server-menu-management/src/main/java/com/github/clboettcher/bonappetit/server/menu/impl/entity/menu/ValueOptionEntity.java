@@ -84,7 +84,7 @@ public class ValueOptionEntity extends AbstractOptionEntity {
      * @param defaultValue see {@link #getDefaultValue()}.
      */
     @Builder
-    public ValueOptionEntity(long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
+    public ValueOptionEntity(Long id, String title, Integer index, BigDecimal priceDiff, int defaultValue) {
         super(id, title, index);
         this.priceDiff = priceDiff;
         this.defaultValue = defaultValue;

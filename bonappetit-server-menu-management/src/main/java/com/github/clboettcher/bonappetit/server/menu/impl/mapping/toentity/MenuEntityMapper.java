@@ -20,11 +20,29 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(uses = ItemEntityMapper.class, componentModel = "spring")
-public interface MenuEntityMapper {
+public abstract class MenuEntityMapper {
 
-    MenuEntity mapToMenuEntity(MenuCreationDto menu);
+    @Autowired
+    private ItemDao itemDao;
+
+    public MenuEntity mapToMenuEntity(MenuCreationDto menu) {
+        return MenuEntity.builder()
+                .title(menu.getTitle())
+                .items(fetchItems(menu.getItemIds()))
+                .build();
+    }
+
+    private List<ItemEntity> fetchItems(List<Long> itemIds) {
+        return itemDao.getAll(itemIds);
+    }
+
 }

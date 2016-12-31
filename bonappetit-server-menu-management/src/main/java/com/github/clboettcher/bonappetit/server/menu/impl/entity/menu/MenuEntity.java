@@ -79,7 +79,7 @@ public class MenuEntity {
     /**
      * The items that this menu consists of.
      */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "MENU_ITEM",
             joinColumns = @JoinColumn(name = "MENU_ID"),
             inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))

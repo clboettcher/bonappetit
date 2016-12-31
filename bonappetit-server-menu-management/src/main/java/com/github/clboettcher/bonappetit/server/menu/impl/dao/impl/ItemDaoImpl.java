@@ -21,9 +21,14 @@ package com.github.clboettcher.bonappetit.server.menu.impl.dao.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Default impl of {@link ItemDao}.
@@ -38,13 +43,29 @@ public class ItemDaoImpl implements ItemDao {
     @Autowired
     private EntityPreprocessor preprocessor;
 
+    @Autowired
+    private EntityValidator entityValidator;
+
     @Override
     public ItemEntity getItem(Long id) {
         return repository.findOne(id);
     }
 
     @Override
+    public List<ItemEntity> getAll(List<Long> itemIds) {
+        return Lists.newArrayList(repository.findAll(itemIds));
+    }
+
+    @Override
     public boolean exists(Long id) {
         return repository.exists(id);
+    }
+
+    @Override
+    public List<ItemEntity> create(List<ItemEntity> itemEntities) {
+        Preconditions.checkNotNull(itemEntities, "itemEntities");
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(itemEntities), "itemEntities empty");
+        this.entityValidator.assertNewItemsValid(itemEntities);
+        return Lists.newArrayList(this.repository.save(itemEntities));
     }
 }
