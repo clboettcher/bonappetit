@@ -164,6 +164,18 @@ public interface MenuManagement {
     Response setCurrentMenu(
             @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
 
+
+    /**
+     * Returns all items.
+     *
+     * @return An item list.
+     */
+    @GET
+    @Path("/" + ITEMS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns all items", tags = {MenuManagement.TAG})
+    List<ItemDto> getItems();
+
     /**
      * Returns the item with the given ID.
      *

@@ -38,12 +38,19 @@ public interface ItemDao {
     ItemEntity getItem(Long id);
 
     /**
+     * Returns all stored items.
+     *
+     * @return An item list, may be empty.
+     */
+    List<ItemEntity> getAll();
+
+    /**
      * Returns the items with the given ids.
      *
      * @param itemIds The ids.
      * @return The items, may contain null elements.
      */
-    List<ItemEntity> getAll(List<Long> itemIds);
+    List<ItemEntity> getItemsByIdList(List<Long> itemIds);
 
     /**
      * Returns whether an item exists in the db with the given id.

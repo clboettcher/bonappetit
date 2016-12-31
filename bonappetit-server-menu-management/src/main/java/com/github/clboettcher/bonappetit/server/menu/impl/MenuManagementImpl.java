@@ -184,6 +184,11 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
+    public List<ItemDto> getItems() {
+        return this.itemDtoMapper.mapToItemDtos(this.itemDao.getAll());
+    }
+
+    @Override
     public ItemDto getItemById(Long id) {
         ItemEntity item = itemDao.getItem(id);
 

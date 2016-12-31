@@ -42,7 +42,7 @@ public abstract class MenuEntityMapper {
     }
 
     private List<ItemEntity> fetchItems(List<Long> itemIds) {
-        return itemDao.getAll(itemIds);
+        return itemDao.getItemsByIdList(itemIds);
     }
 
 }

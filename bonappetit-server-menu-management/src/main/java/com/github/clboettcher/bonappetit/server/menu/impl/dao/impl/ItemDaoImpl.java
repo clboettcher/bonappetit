@@ -25,7 +25,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,14 +33,10 @@ import java.util.List;
  * Default impl of {@link ItemDao}.
  */
 @Component
-@Profile("default")
 public class ItemDaoImpl implements ItemDao {
 
     @Autowired
     private ItemRepository repository;
-
-    @Autowired
-    private EntityPreprocessor preprocessor;
 
     @Autowired
     private EntityValidator entityValidator;
@@ -52,7 +47,12 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<ItemEntity> getAll(List<Long> itemIds) {
+    public List<ItemEntity> getAll() {
+        return Lists.newArrayList(this.repository.findAll());
+    }
+
+    @Override
+    public List<ItemEntity> getItemsByIdList(List<Long> itemIds) {
         return Lists.newArrayList(repository.findAll(itemIds));
     }
 
