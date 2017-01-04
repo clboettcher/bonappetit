@@ -4,52 +4,6 @@
     <meta charset="UTF-8">
     <title>BonAppetit Server</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript">
-        baseUrl = `${window.location.protocol}//${window.location.host}`;
-        docUrl = baseUrl + "/doc/index.html#!";
-        function toSwaggerUi() {
-            window.location = docUrl;
-        }
-        function toCurrentMenu() {
-            window.location = baseUrl + "/api/currentMenu";
-        }
-        function toAllMenus() {
-            window.location = baseUrl + "/api/menus";
-        }
-        function toTodayOrders() {
-            window.location = baseUrl + "/api/orders?orderedAt=today";
-        }
-        function toAllOrders() {
-            window.location = baseUrl + "/api/orders";
-        }
-        function toAllStaffMembers() {
-            window.location = baseUrl + "/api/staffMembers";
-        }
-        function toCreateStaffMember() {
-            window.location = docUrl + "/staffMembers/createStaffMember";
-        }
-        function toEnv() {
-            window.location = baseUrl + "/env";
-        }
-        function toHealth() {
-            window.location = baseUrl + "/health";
-        }
-        function toLogs() {
-            window.location = baseUrl + "/logfile";
-        }
-        function toMetrics() {
-            window.location = baseUrl + "/metrics";
-        }
-        function toThreadDump() {
-            window.location = baseUrl + "/dump";
-        }
-        function toFlyway() {
-            window.location = baseUrl + "/flyway";
-        }
-        function toTrace() {
-            window.location = baseUrl + "/trace";
-        }
-    </script>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -59,35 +13,35 @@
     <section class="pure-u-1-2">
         <h2>Speisekarten</h2>
         <ul>
-            <li><a class="nav-link" href="javascript:toCurrentMenu()">Aktuelle Speisekarte</a></li>
-            <li><a class="nav-link" href="javascript:toAllMenus()">Alle Speisekarten</a></li>
+            <li><a class="nav-link" href="/api/currentMenu">Aktuelle Speisekarte</a></li>
+            <li><a class="nav-link" href="/api/menus">Alle Speisekarten</a></li>
         </ul>
     </section>
     <section class="pure-u-1-2">
         <h2>Bestellungen</h2>
         <ul>
-            <li><a class="nav-link" href="javascript:toTodayOrders()">Bestellungen von heute</a></li>
-            <li><a class="nav-link" href="javascript:toAllOrders()">Alle Bestellungen</a></li>
+            <li><a class="nav-link" href="/api/orders?orderedAt=today">Bestellungen von heute</a></li>
+            <li><a class="nav-link" href="/api/orders">Alle Bestellungen</a></li>
         </ul>
     </section>
     <section class="pure-u-1-2">
         <h2>Mitarbeiter</h2>
         <ul>
-            <li><a class="nav-link" href="javascript:toAllStaffMembers()">Alle Mitarbeiter</a></li>
-            <li><a class="nav-link" href="javascript:toCreateStaffMember()">Mitarbeiter anlegen</a></li>
+            <li><a class="nav-link" href="/api/staffMembers">Alle Mitarbeiter</a></li>
+            <li><a class="nav-link" href="/doc/index.html#!/staffMembers/createStaffMember">Mitarbeiter anlegen</a></li>
         </ul>
     </section>
     <section class="pure-u-1-2">
         <h2>Administration</h2>
         <ul>
-            <li><a class="nav-link" href="javascript:toSwaggerUi()">API Dokumentation</a></li>
-            <li><a class="nav-link" href="javascript:toEnv()">Environment</a></li>
-            <li><a class="nav-link" href="javascript:toHealth()">Health</a></li>
-            <li><a class="nav-link" href="javascript:toLogs()">Logs</a></li>
-            <li><a class="nav-link" href="javascript:toMetrics()">Metrics</a></li>
-            <li><a class="nav-link" href="javascript:toThreadDump()">Thread Dump</a></li>
-            <li><a class="nav-link" href="javascript:toFlyway()">Flyway Migrations</a></li>
-            <li><a class="nav-link" href="javascript:toTrace()">Request Trace</a></li>
+            <li><a class="nav-link" href="/doc/index.html#!">API Dokumentation</a></li>
+            <li><a class="nav-link" href="/env">Environment</a></li>
+            <li><a class="nav-link" href="/health">Health</a></li>
+            <li><a class="nav-link" href="/logfile">Logs</a></li>
+            <li><a class="nav-link" href="/metrics">Metrics</a></li>
+            <li><a class="nav-link" href="/dump">Thread Dump</a></li>
+            <li><a class="nav-link" href="/flyway">Flyway Migrations</a></li>
+            <li><a class="nav-link" href="/trace">Request Trace</a></li>
         </ul>
     </section>
 </div>
