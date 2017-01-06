@@ -101,8 +101,38 @@ production database. Instead: Do a dry run of the migration on a copy of your pr
 always contains surprises). Then apply the migration manually to the production database.
 |false (profile PROD), true (profile LOCAL), see <<Profiles>>
 |true, false
+
+|printing.printService.name
+|true
+|The name to use when looking up the `javax.print.PrintService` to use. This is usually the display name of the
+printer.
+|-
+|CITIZEN CT-S310II
+
+|printing.timeZone.id
+|true
+|The timezone id to use for formatting dates when printing. Internally all dates are processed in UTC.
+|-
+|Europe/Berlin
 |====
 
+|printing.options.emphasised
+|false
+|Comma separated list of the titles of the options or radio items which should be printed in an emphasised way.
+At the moment to emphasize an option means to print it big and bold next to the item title. E.g. if you configure
+an item with the title "Pizza" and a Radio-Option with title "sort" and two radio items with the titles "Hawaii" and "Capricciosa"
+you can set this property to "Hawaii,Capricciosa" to make the printer print "Pizza Hawaii" as item title instead
+of printing "Pizza" as item title and "Hawaii" as standard option below the title.
+|<empty>
+|small,Hawaii,light
+
+|printing.options.notPrinted
+|false
+|Comma separated list of the titles of the options or radio items which should not be printed at all. Some options
+like size have to be selectable when taking an order but they do not have to be printed. E.g. the default for
+the size of a drink might be "big" so we don't hve to print it.
+|<empty>
+|big
 ==== Profiles
 
 Profiles  control what configuration the BonAppetit Server is run in. If you are just using (and not developing) the
