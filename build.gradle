@@ -12,6 +12,12 @@ allprojects {
     version = version
 }
 
+release {
+    tagCommitMessage = '#13 Gradle Release Plugin - creating tag: '
+    newVersionCommitMessage = '#13 Gradle Release Plugin - new version commit: '
+    tagTemplate = 'v${version}'
+}
+
 // Config for all bonappetit subprojects
 subprojects {
     apply plugin: 'com.github.hierynomus.license'
