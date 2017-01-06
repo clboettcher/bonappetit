@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
+import com.github.clboettcher.bonappetit.printing.config.ConfigProvider;
 import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.SummaryDto;
@@ -67,16 +68,18 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
-     * @param dateFormatter       see {@link #dateFormatter}.
+     * @param configProvider      The bean that provides the module config.
      */
     @Autowired
-    public SummaryStringConverterImpl(ControlCharProvider controlCharProvider, SpecialCharEncoder specialCharEncoder, DateFormatter dateFormatter) {
+    public SummaryStringConverterImpl(ControlCharProvider controlCharProvider,
+                                      SpecialCharEncoder specialCharEncoder,
+                                      ConfigProvider configProvider) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
-        Preconditions.checkNotNull(dateFormatter, "dateFormatter");
+        Preconditions.checkNotNull(configProvider, "configProvider");
         this.controlCharProvider = controlCharProvider;
         this.specialCharEncoder = specialCharEncoder;
-        this.dateFormatter = dateFormatter;
+        this.dateFormatter = configProvider.getDateFormatter();
     }
 
     @Override

@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.printing.impl;
 
 import com.github.clboettcher.bonappetit.common.BonAppetitResourceUtils;
+import com.github.clboettcher.bonappetit.printing.config.ConfigProvider;
 import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.ItemOrderSummaryDto;
 import com.github.clboettcher.bonappetit.server.order.api.dto.read.OptionOrderSummaryDto;
@@ -30,6 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -46,10 +48,13 @@ public class SummaryStringConverterImplTests {
 
     @Before
     public void setUp() throws Exception {
+        ConfigProvider configProvider = Mockito.mock(ConfigProvider.class);
+        Mockito.when(configProvider.getDateFormatter()).thenReturn(new DateFormatter(DateTimeZone.UTC));
+
         this.converter = new SummaryStringConverterImpl(
                 new ControlCharProviderConsoleTestImpl(),
                 new SpecialCharEncoderCITIZENCT310IIGermanImpl(),
-                new DateFormatter(DateTimeZone.UTC));
+                configProvider);
     }
 
     @Test

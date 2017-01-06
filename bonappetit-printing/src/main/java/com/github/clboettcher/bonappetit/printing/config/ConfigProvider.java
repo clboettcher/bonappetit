@@ -19,6 +19,8 @@
  */
 package com.github.clboettcher.bonappetit.printing.config;
 
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
+
 import java.util.List;
 
 /**
@@ -36,4 +38,8 @@ public interface ConfigProvider {
      */
     List<String> getNotPrintedOptionTitles();
 
+    /**
+     * @return A formatter for the configured timezone.
+     */
+    DateFormatter getDateFormatter();
 }

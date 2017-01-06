@@ -19,6 +19,7 @@
  */
 package com.github.clboettcher.bonappetit.printing.impl;
 
+import com.github.clboettcher.bonappetit.printing.config.ConfigProvider;
 import com.github.clboettcher.bonappetit.printing.entity.Bon;
 import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
@@ -57,18 +58,18 @@ public class BonStringConverterImpl implements BonStringConverter {
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
-     * @param dateFormatter       see {@link #dateFormatter}.
+     * @param configProvider       The bean that provides the module config.
      */
     @Autowired
     public BonStringConverterImpl(ControlCharProvider controlCharProvider,
                                   SpecialCharEncoder specialCharEncoder,
-                                  DateFormatter dateFormatter) {
+                                  ConfigProvider configProvider) {
         Preconditions.checkNotNull(controlCharProvider, "controlCharProvider");
         Preconditions.checkNotNull(specialCharEncoder, "specialCharEncoder");
-        Preconditions.checkNotNull(dateFormatter, "dateFormatter");
+        Preconditions.checkNotNull(configProvider, "configProvider");
         this.controlCharProvider = controlCharProvider;
         this.specialCharEncoder = specialCharEncoder;
-        this.dateFormatter = dateFormatter;
+        this.dateFormatter = configProvider.getDateFormatter();
     }
 
     @Override

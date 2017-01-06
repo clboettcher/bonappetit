@@ -19,10 +19,16 @@
  */
 package com.github.clboettcher.bonappetit.printing.config;
 
+import com.github.clboettcher.bonappetit.printing.util.DateFormatter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -37,15 +43,21 @@ import java.util.stream.Collectors;
 @Component
 public class ConfigProviderImpl implements ConfigProvider {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigProviderImpl.class);
+
     /**
      * The titles of the options or radio items which should be printed in an emphasised way.
      */
     private List<String> emphasisedOptionTitles;
-
     /**
      * The titles of the options or radio items which should not be printed at all.
      */
     private List<String> notPrintedOptionTitles;
+
+    /**
+     * The date formatter for the configured timezone.
+     */
+    private final DateFormatter dateFormatter;
 
 
     /**
@@ -57,9 +69,15 @@ public class ConfigProviderImpl implements ConfigProvider {
     public ConfigProviderImpl(Environment environment) {
         Preconditions.checkNotNull(environment, "environment");
         this.emphasisedOptionTitles = splitAndLowercase
-                (environment.getRequiredProperty("printing.options.emphasised"));
+                (environment.getProperty("printing.options.emphasised", ""));
         this.notPrintedOptionTitles = splitAndLowercase(
-                environment.getRequiredProperty("printing.options.notPrinted"));
+                environment.getProperty("printing.options.notPrinted", ""));
+
+        this.dateFormatter = new DateFormatter(DateTimeZone.forID(
+                environment.getRequiredProperty("printing.timeZone.id")));
+
+        LOGGER.info(String.format("%s initialized with %s", this.getClass().getSimpleName(),
+                this.toString()));
     }
 
     /**
@@ -91,5 +109,19 @@ public class ConfigProviderImpl implements ConfigProvider {
     @Override
     public List<String> getNotPrintedOptionTitles() {
         return notPrintedOptionTitles;
+    }
+
+    @Override
+    public DateFormatter getDateFormatter() {
+        return this.dateFormatter;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("emphasisedOptionTitles", emphasisedOptionTitles)
+                .append("notPrintedOptionTitles", notPrintedOptionTitles)
+                .append("dateFormatter", dateFormatter)
+                .toString();
     }
 }
