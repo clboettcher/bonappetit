@@ -52,10 +52,10 @@ public interface StaffMemberDao {
     boolean exists(Long id);
 
     /**
-     * Saves the given staff member in the db.
+     * Saves the given staff members in the db.
      *
-     * @param staffMember The staff member.
-     * @return The saved staff member (with IDs not null).
+     * @param staffMember The staff members.
+     * @return The saved staff members (with IDs not null).
      */
-    StaffMemberEntity save(StaffMemberEntity staffMember);
+    List<StaffMemberEntity> save(List<StaffMemberEntity> staffMember);
 }

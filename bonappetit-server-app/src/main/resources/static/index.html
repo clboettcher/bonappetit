@@ -15,12 +15,13 @@
                 console.log('createStaffMemberSubmitButton clicked');
 
                 var formData = $('form#createStaffMemberForm').serializeObject();
-                console.log('Creating staff member from form data ', formData);
+                var requestPayload = [formData];
+                console.log('Sending request payload ', requestPayload);
 
                 $.ajax('/api/staffMembers', {
                     method: 'POST',
                     contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(formData),
+                    data: JSON.stringify(requestPayload),
                     // 200 Success does not return valid json, so fall back to text
                     dataType: 'json',
                     error: function (jqXHR, textStatus, errorThrown) {

@@ -29,11 +29,11 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
@@ -73,18 +73,21 @@ public class StaffMemberManagementImpl implements StaffMemberManagement {
     }
 
     @Override
-    public Response createStaffMember(StaffMemberCreationDto staffMemberDto) {
-        assertValid(staffMemberDto);
+    public Response createStaffMembers(List<StaffMemberCreationDto> staffMemberDtos) {
+        assertValid(staffMemberDtos);
 
-        StaffMemberEntity entity = toEntityMapper.mapToStaffMemberEntity(staffMemberDto);
-        StaffMemberEntity saved = staffMemberDao.save(entity);
+        List<StaffMemberEntity> entities = toEntityMapper.mapToStaffMemberEntities(staffMemberDtos);
+        staffMemberDao.save(entities);
 
-        String location = String.format("%s/%d", ROOT_PATH, saved.getId());
-        UriBuilder baseUriBuilder = uriInfo.getBaseUriBuilder().path(location);
+        return Response.noContent().build();
+    }
 
-        return Response.noContent()
-                .location(baseUriBuilder.build())
-                .build();
+    private void assertValid(List<StaffMemberCreationDto> staffMemberCreationDtos) {
+        if (CollectionUtils.isEmpty(staffMemberCreationDtos)) {
+            throw new BadRequestException("At least one staff member must be provided.");
+        }
+
+        staffMemberCreationDtos.forEach(this::assertValid);
     }
 
     private void assertValid(StaffMemberCreationDto staffMemberDto) {

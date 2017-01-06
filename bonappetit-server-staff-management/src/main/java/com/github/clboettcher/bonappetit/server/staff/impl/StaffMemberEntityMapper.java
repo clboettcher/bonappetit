@@ -23,8 +23,12 @@ import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberCreatio
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface StaffMemberEntityMapper {
+
+    List<StaffMemberEntity> mapToStaffMemberEntities(List<StaffMemberCreationDto> staffMember);
 
     StaffMemberEntity mapToStaffMemberEntity(StaffMemberCreationDto staffMember);
 

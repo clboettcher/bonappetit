@@ -58,7 +58,7 @@ public interface StaffMemberManagement {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Creates a staff member.", tags = {TAG})
-    Response createStaffMember(@ApiParam(value = "The staff member to create.", required = true)
-                               StaffMemberCreationDto staffMemberDto);
+    @ApiOperation(value = "Creates a list of staff members.", tags = {TAG})
+    Response createStaffMembers(@ApiParam(value = "The staff members to create.", required = true)
+                               List<StaffMemberCreationDto> staffMemberDto);
 }

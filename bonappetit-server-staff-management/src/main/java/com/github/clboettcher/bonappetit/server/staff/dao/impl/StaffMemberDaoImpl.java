@@ -70,7 +70,7 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     }
 
     @Override
-    public StaffMemberEntity save(StaffMemberEntity staffMember) {
-        return staffMemberEntityRepository.save(staffMember);
+    public List<StaffMemberEntity> save(List<StaffMemberEntity> staffMembers) {
+        return Lists.newArrayList(staffMemberEntityRepository.save(staffMembers));
     }
 }
