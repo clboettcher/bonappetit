@@ -685,14 +685,47 @@ especially important:</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether flyway migration is performed on server startup. Warning: do not enable this option when working with a
 production database. Instead: Do a dry run of the migration on a copy of your production database (Production databases
 always contains surprises). Then apply the migration manually to the production database.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false (profile PROD), true (profile LOCAL), see <a href="#profiles">Profiles</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false (profile PROD), true (profile LOCAL), see <a href="#table_profiles">Profiles</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true, false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printing.printService.name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name to use when looking up the <code>javax.print.PrintService</code> to use. This is usually the display name of the
+printer.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CITIZEN CT-S310II</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printing.timeZone.id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timezone id to use for formatting dates when printing. Internally all dates are processed in UTC.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Europe/Berlin</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>|printing.options.emphasised
+|false
+|Comma separated list of the titles of the options or radio items which should be printed in an emphasised way.
+At the moment to emphasize an option means to print it big and bold next to the item title. E.g. if you configure
+an item with the title "Pizza" and a Radio-Option with title "sort" and two radio items with the titles "Hawaii" and "Capricciosa"
+you can set this property to "Hawaii,Capricciosa" to make the printer print "Pizza Hawaii" as item title instead
+of printing "Pizza" as item title and "Hawaii" as standard option below the title.
+|&lt;empty&gt;
+|small,Hawaii,light</p>
 </div>
-<div class="sect3">
-<h4 id="profiles">Profiles</h4>
+<div class="paragraph">
+<p>|printing.options.notPrinted
+|false
+|Comma separated list of the titles of the options or radio items which should not be printed at all. Some options
+like size have to be selectable when taking an order but they do not have to be printed. E.g. the default for
+the size of a drink might be "big" so we don&#8217;t hve to print it.
+|&lt;empty&gt;
+|big
+==== Profiles</p>
+</div>
 <div class="paragraph">
 <p>Profiles  control what configuration the BonAppetit Server is run in. If you are just using (and not developing) the
 BonAppetit server you don&#8217;t need to bother much with profiles.</p>
@@ -803,7 +836,7 @@ that contains only test data.</p></td>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-20 13:11:56 +01:00
+Last updated 2017-01-06 19:43:51 +01:00
 </div>
 </div>
 </body>
