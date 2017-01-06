@@ -114,7 +114,6 @@ printer.
 |The timezone id to use for formatting dates when printing. Internally all dates are processed in UTC.
 |-
 |Europe/Berlin
-|====
 
 |printing.options.emphasised
 |false
@@ -133,6 +132,8 @@ like size have to be selectable when taking an order but they do not have to be 
 the size of a drink might be "big" so we don't hve to print it.
 |<empty>
 |big
+|====
+
 ==== Profiles
 
 Profiles  control what configuration the BonAppetit Server is run in. If you are just using (and not developing) the
