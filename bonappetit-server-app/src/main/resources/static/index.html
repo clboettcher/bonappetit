@@ -4,8 +4,48 @@
     <meta charset="UTF-8">
     <title>BonAppetit Server</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/pure-extras.css">
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.serializeObject.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input#createStaffMemberSubmitButton').click(function (event) {
+                console.log('createStaffMemberSubmitButton clicked');
+
+                var formData = $('form#createStaffMemberForm').serializeObject();
+                console.log('Creating staff member from form data ', formData);
+
+                $.ajax('/api/staffMembers', {
+                    method: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(formData),
+                    // 200 Success does not return valid json, so fall back to text
+                    dataType: 'json',
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('Creating staff member failed.', jqXHR);
+                        var errorMsg = `Creating staff member failed with code ${jqXHR.status} (${jqXHR.statusText}): ${jqXHR.responseJSON.message}`
+                        $('.staff-members-creation-result')
+                                .html(errorMsg)
+                                .removeClass('pure-alert-success pure-alert-error')
+                                .addClass('pure-alert-error')
+                                .css('visibility', 'visible');
+                    },
+                    success: function (data) {
+                        console.log('Creating staff member successful', data);
+                        $('.staff-members-creation-result')
+                                .html('Staff member created successful')
+                                .removeClass('pure-alert-success pure-alert-error')
+                                .addClass('pure-alert-success')
+                                .css('visibility', 'visible');
+                    }
+                });
+                event.preventDefault();
+            });
+        })
+        ;
+    </script>
 </head>
 <body>
 <div class="pure-g content-wrapper">
@@ -30,6 +70,23 @@
             <li><a class="nav-link" href="/api/staffMembers">Alle Mitarbeiter</a></li>
             <li><a class="nav-link" href="/doc/index.html#!/staffMembers/createStaffMember">Mitarbeiter anlegen</a></li>
         </ul>
+        <form id="createStaffMemberForm"
+              class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>Mitarbeiter anlegen</legend>
+                <!--<label for="firstName">Vorname</label>-->
+                <input id="firstName" type="text" name="firstName" placeholder="Vorname">
+
+                <!--<label for="lastName">Nachname</label>-->
+                <input id="lastName" type="text" name="lastName" placeholder="Nachname">
+
+                <input type="submit"
+                       id="createStaffMemberSubmitButton"
+                       value="Mitarbeiter anlegen"
+                       class="pure-button pure-button-primary">
+            </fieldset>
+        </form>
+        <div class="staff-members-creation-result pure-alert"></div>
     </section>
     <section class="pure-u-1-2">
         <h2>Administration</h2>
