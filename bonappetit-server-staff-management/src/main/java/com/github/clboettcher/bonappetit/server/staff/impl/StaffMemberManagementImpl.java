@@ -82,7 +82,7 @@ public class StaffMemberManagementImpl implements StaffMemberManagement {
         String location = String.format("%s/%d", ROOT_PATH, saved.getId());
         UriBuilder baseUriBuilder = uriInfo.getBaseUriBuilder().path(location);
 
-        return Response.ok()
+        return Response.noContent()
                 .location(baseUriBuilder.build())
                 .build();
     }
