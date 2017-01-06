@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Default impl of {@link ConfigProvider}.
@@ -55,8 +56,10 @@ public class ConfigProviderImpl implements ConfigProvider {
     @Autowired
     public ConfigProviderImpl(Environment environment) {
         Preconditions.checkNotNull(environment, "environment");
-        this.emphasisedOptionTitles = split(environment.getRequiredProperty("printing.options.emphasised"));
-        this.notPrintedOptionTitles = split(environment.getRequiredProperty("printing.options.notPrinted"));
+        this.emphasisedOptionTitles = splitAndLowercase
+                (environment.getRequiredProperty("printing.options.emphasised"));
+        this.notPrintedOptionTitles = splitAndLowercase(
+                environment.getRequiredProperty("printing.options.notPrinted"));
     }
 
     /**
@@ -65,15 +68,19 @@ public class ConfigProviderImpl implements ConfigProvider {
      * @param string The string to split, may be null or empty.
      * @return The splitted string.
      */
-    private List<String> split(String string) {
+    private List<String> splitAndLowercase(String string) {
         if (StringUtils.isBlank(string)) {
             return Collections.emptyList();
         }
 
-        return Lists.newArrayList(Splitter.on(',')
+        List<String> result = Lists.newArrayList(Splitter.on(',')
                 .omitEmptyStrings()
                 .trimResults()
                 .split(string));
+
+        return result.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
     }
 
     @Override

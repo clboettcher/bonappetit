@@ -78,7 +78,7 @@ public class OptionOrderStringsConverterImpl implements OptionOrderStringsConver
             String printed = asPrintedString(optionOrder);
             // Add the string according to the configuration.
             String title = StringUtils.trim(optionOrder.getOptionTitle());
-            if (emphasisedOptionTitles.contains(title)) {
+            if (emphasisedOptionTitles.contains(title.toLowerCase())) {
                 emphasisedOptions.add(printed);
             } else {
                 defaultOptions.add(printed);
@@ -93,7 +93,7 @@ public class OptionOrderStringsConverterImpl implements OptionOrderStringsConver
 
     private boolean isPrinted(OptionOrderDto optionOrder) {
         String title = StringUtils.trim(optionOrder.getOptionTitle());
-        if (notPrintedOptionTitles.contains(title)) {
+        if (notPrintedOptionTitles.contains(title.toLowerCase())) {
             return false;
         }
 
