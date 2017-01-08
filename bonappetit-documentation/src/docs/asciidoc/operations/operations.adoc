@@ -73,14 +73,14 @@ especially important:
 |true
 |The salted password hash of the admin user (see `security.admin.username`). Must be computed using the open source library https://github.com/qaware/heimdall[Heimdall]
 |-
-|1:1:unf6gJNOOlayrKyEQgfEk7K4RvwhW9WI:i=4e20:gH613KUcJOtL1UcPUadsVvAUoUfvPBoS
+|1:1:unf6gJNOOlayrKyEQgfEk7 K4RvwhW9WI:i=4e20:gH613KUcJ OtL1UcPUadsVvAUoUfvPBoS
 
 |spring.datasource.url
 |false
 |The URL of the database where all data (staff members, orders, etc.) is stored. Per default the server is configured to use a
 https://www.mysql.de/[MySQL database] with a schema named `bonappetit` running at `localhost:3306`.
 |jdbc:mysql://localhost/bonappetit
-|jdbc:mysql://localhost/bonappetit,jdbc:mysql://localhost/my-fancy-restaurant
+|jdbc:mysql://localhost/bonappetit, jdbc:mysql://localhost/my-restaurant
 
 |spring.datasource.username
 |false
