@@ -75,17 +75,17 @@ especially important:
 |1:1:unf6gJNOOlayrKyEQgfEk7K4RvwhW9WI:i=4e20:gH613KUcJOtL1UcPUadsVvAUoUfvPBoS
 
 |spring.datasource.url
-|true
+|false
 |The URL of the database where all data (staff members, orders, etc.) is stored. Per default the server is configured to use a
 https://www.mysql.de/[MySQL database] with a schema named `bonappetit` running at `localhost:3306`.
-|-
 |jdbc:mysql://localhost/bonappetit
+|jdbc:mysql://localhost/bonappetit,jdbc:mysql://localhost/my-fancy-restaurant
 
 |spring.datasource.username
-|true
+|false
 |The database user that is used to access the database
-|-
 |bonappetit
+|bonappetit,peter
 
 |spring.datasource.password
 |true
