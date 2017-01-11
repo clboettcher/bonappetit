@@ -21,6 +21,7 @@ For instructions on how to operate and develop BonAppetit, please see the [Refer
 In order of appearance.
 
 * [Christine Böttcher](https://github.com/ChristineBoettcher)
+* Benjamin Pfauth
 * Sybille Steinberger
 * [Manuel Huber](https://github.com/nelo112)
 * [Alexander Lannes](https://github.com/alexander-lannes)
