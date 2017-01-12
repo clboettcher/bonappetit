@@ -9,6 +9,10 @@ JAR_LOCATION=.
 BONAPPETIT_BASE_DIR="M:\BONAPPETIT_BASE"
 BONAPPETIT_PROPERTIES_LOCATION="${BONAPPETIT_BASE_DIR}\config\bonappetit.properties"
 
-java -jar -DBONAPPETIT_BASE=${BONAPPETIT_BASE_DIR} -Dspring.profiles.active=${PROFILES} ${JAR_LOCATION}/${BASE_NAME}-${VERSION}.jar --spring.config.location ${BONAPPETIT_PROPERTIES_LOCATION}
+java -jar \
+    -DBONAPPETIT_BASE=${BONAPPETIT_BASE_DIR} \
+    -Dspring.profiles.active=${PROFILES} \
+    -Dspring.config.location=${BONAPPETIT_PROPERTIES_LOCATION} \
+    ${JAR_LOCATION}/${BASE_NAME}-${VERSION}.jar
 
 exit 0
