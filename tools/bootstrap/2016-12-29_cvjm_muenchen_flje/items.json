@@ -56,27 +56,6 @@
     "options": [
       {
         "index": 0,
-        "type": "valueOption",
-        "title": "Ketchup",
-        "priceDiff": 0,
-        "defaultValue": 1
-      },
-      {
-        "index": 1,
-        "type": "valueOption",
-        "title": "Mayonnaise",
-        "priceDiff": 0,
-        "defaultValue": 1
-      },
-      {
-        "index": 2,
-        "type": "valueOption",
-        "title": "Kräuterbutter",
-        "priceDiff": 0,
-        "defaultValue": 0
-      },
-      {
-        "index": 3,
         "type": "radioOption",
         "title": "Kombination",
         "defaultSelected": {
@@ -98,111 +77,132 @@
         ]
       },
       {
-        "index": 4,
+        "index": 1,
         "type": "radioOption",
         "title": "Getränk",
         "defaultSelected": {
-          "index": 0,
+          "index": 6,
           "title": "Coca-Cola",
           "priceDiff": 0
         },
         "radioItems": [
           {
             "index": 0,
-            "title": "Coca-Cola",
-            "priceDiff": 0
-          },
-          {
-            "index": 1,
-            "title": "Coca-Cola light",
-            "priceDiff": 0
-          },
-          {
-            "index": 2,
-            "title": "Mineralwasser",
-            "priceDiff": 0
-          },
-          {
-            "index": 3,
-            "title": "Spezi",
-            "priceDiff": 0
-          },
-          {
-            "index": 4,
-            "title": "Orangenlimo",
-            "priceDiff": 0
-          },
-          {
-            "index": 5,
-            "title": "Zitronenlimo",
-            "priceDiff": 0
-          },
-          {
-            "index": 6,
-            "title": "Bitter Lemon",
-            "priceDiff": 0
-          },
-          {
-            "index": 7,
             "title": "Apfelsaft",
             "priceDiff": 0
           },
           {
-            "index": 8,
+            "index": 1,
             "title": "Apfelschorle",
             "priceDiff": 0
           },
           {
-            "index": 9,
-            "title": "Orangensaft",
-            "priceDiff": 0
-          },
-          {
-            "index": 10,
-            "title": "Orangensaftschorle",
-            "priceDiff": 0
-          },
-          {
-            "index": 11,
-            "title": "Johannisbeerschorle",
-            "priceDiff": 0
-          },
-          {
-            "index": 12,
+            "index": 2,
             "title": "Bionade",
             "priceDiff": 0
           },
           {
-            "index": 13,
-            "title": "Tee",
+            "index": 3,
+            "title": "Bitter Lemon",
             "priceDiff": 0
           },
           {
-            "index": 14,
-            "title": "Tasse Kaffee",
-            "priceDiff": 0
-          },
-          {
-            "index": 15,
+            "index": 4,
             "title": "Cappuccino",
             "priceDiff": 0
           },
           {
-            "index": 16,
-            "title": "Latte Macchiato",
+            "index": 5,
+            "title": "Clausthaler Alkoholfrei",
             "priceDiff": 0
           },
           {
-            "index": 17,
+            "index": 6,
+            "title": "Coca-Cola",
+            "priceDiff": 0
+          },
+          {
+            "index": 7,
+            "title": "Coca-Cola light",
+            "priceDiff": 0
+          },
+          {
+            "index": 8,
             "title": "Espresso",
             "priceDiff": 0
           },
           {
+            "index": 9,
+            "title": "Johannisbeerschorle",
+            "priceDiff": 0
+          },
+          {
+            "index": 10,
+            "title": "Latte Macchiato",
+            "priceDiff": 0
+          },
+          {
+            "index": 11,
+            "title": "Mineralwasser",
+            "priceDiff": 0
+          },
+          {
+            "index": 12,
+            "title": "Orangenlimo",
+            "priceDiff": 0
+          },
+          {
+            "index": 13,
+            "title": "Orangensaft",
+            "priceDiff": 0
+          },
+          {
+            "index": 14,
+            "title": "Orangensaftschorle",
+            "priceDiff": 0
+          },
+          {
+            "index": 15,
+            "title": "Spezi",
+            "priceDiff": 0
+          },
+          {
+            "index": 16,
+            "title": "Tasse Kaffee",
+            "priceDiff": 0
+          },
+          {
+            "index": 17,
+            "title": "Tee",
+            "priceDiff": 0
+          },
+          {
             "index": 18,
-            "title": "Clausthaler Alkoholfrei",
+            "title": "Zitronenlimo",
             "priceDiff": 0
           }
         ]
+      },
+      {
+        "index": 2,
+        "type": "valueOption",
+        "title": "Ketchup",
+        "priceDiff": 0,
+        "defaultValue": 1
+      },
+      {
+        "index": 3,
+        "type": "valueOption",
+        "title": "Mayonnaise",
+        "priceDiff": 0,
+        "defaultValue": 1
+      },
+      {
+        "index": 4,
+        "type": "valueOption",
+        "title": "Kräuterbutter",
+        "priceDiff": 0,
+        "defaultValue": 0
       }
     ]
   },
