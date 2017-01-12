@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
+# Helpful aliases for developing bonappetit.
+# Expects this project to sit in /m/codebase/bonappetit-server.
+
+SERVER_BASE=/m/codebase/bonappetit-server
+
 # documentation
-alias doc="/m/codebase/bonappetit-server/gradlew publishGhPages"
+alias doc="${SERVER_BASE}/gradlew publishGhPages"
 
 # git
 alias g="git"
