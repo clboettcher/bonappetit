@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,10 +51,14 @@ public class MenuBootstrap {
      * @param menuConfigRepository The bean used to access the stored menu config.
      */
     @Autowired
-    public MenuBootstrap(MenuConfigRepository menuConfigRepository, MenuRepository menuRepository) {
+    public MenuBootstrap(MenuConfigRepository menuConfigRepository,
+                         MenuRepository menuRepository,
+                         ItemRepository itemRepository
+    ) {
         LOGGER.info("Saving test data in the DB.");
 
         MenuEntity menuEntity = createMenu();
+        itemRepository.save(menuEntity.getItems());
         MenuConfig menuConfig = new MenuConfig();
         menuConfig.setCurrent(menuEntity);
         menuRepository.save(menuEntity);
@@ -62,11 +67,15 @@ public class MenuBootstrap {
 
     private MenuEntity createMenu() {
         return MenuEntity.builder()
+                .title("My awesome menu")
+                .creationTimestamp(new Date())
+                .lastUpdateTimestamp(new Date())
                 .items(Lists.newArrayList(
                         ItemEntity.builder()
                                 .title("Pommes")
                                 .price(new BigDecimal("2.5"))
                                 .type(ItemEntityType.FOOD)
+                                .creationTimestamp(new Date())
                                 .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .title("Extra Salz")
@@ -86,6 +95,7 @@ public class MenuBootstrap {
                                 .title("Nachos")
                                 .price(new BigDecimal("2.0"))
                                 .type(ItemEntityType.FOOD)
+                                .creationTimestamp(new Date())
                                 .options(Lists.newArrayList(
                                         CheckboxOptionEntity.builder()
                                                 .title("Käsesoße")
@@ -99,11 +109,13 @@ public class MenuBootstrap {
                                 .title("Mineralwasser")
                                 .price(new BigDecimal("1.9"))
                                 .type(ItemEntityType.DRINK_NON_ALCOHOLIC)
+                                .creationTimestamp(new Date())
                                 .build(),
                         ItemEntity.builder()
                                 .title("Augustinger")
                                 .price(new BigDecimal("2.2"))
                                 .type(ItemEntityType.DRINK_ALCOHOLIC)
+                                .creationTimestamp(new Date())
                                 .options(Lists.newArrayList(
                                         createRadioOption("Größe", 0,
                                                 RadioItemEntity.builder()
