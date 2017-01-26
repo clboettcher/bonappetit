@@ -1,9 +1,8 @@
 [INIT]
 [CENTER][NORMAL]Kunde: Tisch 12
-[CENTER][STRONG]Weissbier Alkoholfrei Klein
+[CENTER][STRONG]Weissbier Alkoholfrei Klein mit wenig Schaum
 
 [LEFT][NORMAL]im Tonkrug, mit Orangenscheibe
-[LEFT][NORMAL]Bemerkung: mit wenig Schaum
 
 [LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:33
 

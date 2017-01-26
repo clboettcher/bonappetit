@@ -58,7 +58,7 @@ public class BonStringConverterImpl implements BonStringConverter {
      *
      * @param controlCharProvider see {@link #controlCharProvider}.
      * @param specialCharEncoder  see {@link #specialCharEncoder}.
-     * @param configProvider       The bean that provides the module config.
+     * @param configProvider      The bean that provides the module config.
      */
     @Autowired
     public BonStringConverterImpl(ControlCharProvider controlCharProvider,
@@ -94,13 +94,17 @@ public class BonStringConverterImpl implements BonStringConverter {
      */
     private void appendBon(Bon bon, PhysicalPrinterStringBuilder physicalPrinterStringBuilder) {
         Optional<String> emphOptionsOpt = sortAndJoin(bon.getEmphasisedOptions());
+
+        String itemTitleLine = String.format("%s%s%s",
+                bon.getItemTitle(),
+                emphOptionsOpt.isPresent() ? " " + emphOptionsOpt.get() : "",
+                StringUtils.isNotBlank(bon.getNote()) ? " " + bon.getNote() : "");
+
         physicalPrinterStringBuilder
                 .appendLine(String.format("Kunde: %s",
                         bon.getDeliverTo()),
                         PhysicalPrinterStringBuilder.Align.CENTER)
-                .heading(StringUtils.trim(String.format("%s %s",
-                        bon.getItemTitle(),
-                        emphOptionsOpt.or(""))));
+                .heading(StringUtils.trim(itemTitleLine));
 
         // Append separate line for default options only if present
         Optional<String> defaultOptionsOpt = sortAndJoin(bon.getDefaultOptions(), ", ");
@@ -108,15 +112,6 @@ public class BonStringConverterImpl implements BonStringConverter {
             physicalPrinterStringBuilder
                     .appendLineFeed()
                     .appendLine(defaultOptionsOpt.get());
-        }
-
-        // Append a separate line for the note only if present
-        if (StringUtils.isNotBlank(bon.getNote())) {
-            if (!defaultOptionsOpt.isPresent()) {
-                // Separator line is only needed if we have no default options
-                physicalPrinterStringBuilder.appendLineFeed();
-            }
-            physicalPrinterStringBuilder.appendLine(String.format("Bemerkung: %s", bon.getNote()));
         }
 
         // Separate staff member + order time from the order to enhance readability

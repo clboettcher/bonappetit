@@ -1,8 +1,6 @@
 [INIT]
 [CENTER][NORMAL]Kunde: Tisch 12
-[CENTER][STRONG]Burger
-
-[LEFT][NORMAL]Bemerkung: ohne Zwiebeln
+[CENTER][STRONG]Burger ohne Zwiebeln
 
 [LEFT][NORMAL]Bedienung: John Smith, 06.12., 21:33
 
