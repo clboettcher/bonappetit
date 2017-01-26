@@ -96,16 +96,16 @@ public class MenuEntity {
     /**
      * Constructor setting the specified properties.
      *
-     * @param title                   see {@link #title}.
-     * @param creationTimestamp       see {@link #creationTimestamp}.
-     * @param lastUpdateTimestampList see {@link #lastUpdateTimestamp}.
-     * @param items                   see {@link #items}.
+     * @param title               see {@link #title}.
+     * @param creationTimestamp   see {@link #creationTimestamp}.
+     * @param lastUpdateTimestamp see {@link #lastUpdateTimestamp}.
+     * @param items               see {@link #items}.
      */
     @Builder
     public MenuEntity(Long id,
                       String title,
                       Date creationTimestamp,
-                      Date lastUpdateTimestampList,
+                      Date lastUpdateTimestamp,
                       List<ItemEntity> items) {
         this.id = id;
         this.creationTimestamp = creationTimestamp;
