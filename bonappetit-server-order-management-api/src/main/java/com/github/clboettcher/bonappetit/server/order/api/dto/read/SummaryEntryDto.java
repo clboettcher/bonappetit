@@ -24,6 +24,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 public class SummaryEntryDto {
@@ -34,10 +36,15 @@ public class SummaryEntryDto {
     @ApiModelProperty(value = "The order summary", required = true)
     private ItemOrderSummaryDto orderSummary;
 
+    @ApiModelProperty(value = "The total price of all orders in this entry", required = true)
+    private BigDecimal totalPrice;
+
     @Builder
     public SummaryEntryDto(Long count,
-                           ItemOrderSummaryDto orderSummary) {
+                           ItemOrderSummaryDto orderSummary,
+                           BigDecimal totalPrice) {
         this.count = count;
         this.orderSummary = orderSummary;
+        this.totalPrice = totalPrice;
     }
 }

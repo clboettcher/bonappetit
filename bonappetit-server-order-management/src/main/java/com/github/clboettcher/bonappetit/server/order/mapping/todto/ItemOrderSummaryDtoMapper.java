@@ -93,8 +93,13 @@ public abstract class ItemOrderSummaryDtoMapper {
                 .map(entry -> SummaryEntryDto.builder()
                         .count(entry.getValue())
                         .orderSummary(entry.getKey())
+                        .totalPrice(this.calculateSummaryEntryTotalPrice(entry.getKey(), entry.getValue()))
                         .build()
                 )
                 .collect(Collectors.toList());
+    }
+
+    protected BigDecimal calculateSummaryEntryTotalPrice(ItemOrderSummaryDto summaryDto, Long count) {
+        return summaryDto.getTotalPrice().multiply(BigDecimal.valueOf(count));
     }
 }
