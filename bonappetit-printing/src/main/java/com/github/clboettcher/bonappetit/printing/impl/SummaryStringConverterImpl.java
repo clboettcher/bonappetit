@@ -98,10 +98,7 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
                 .appendLine(String.format("Letzte Bestellung: %s", summary.getNewestOrderTime() != null ?
                         dateFormatter.formatDayMonthYearTime(summary.getNewestOrderTime()) :
                         "--"))
-                .appendLine(String.format("Bestellungen: %d", orderSummaries.stream()
-                        .mapToLong(SummaryEntryDto::getCount)
-                        .sum()
-                ))
+                .appendLine(String.format("Bestellungen: %d", summary.getOrderCount()))
                 .appendLineFeed();
 
         Collections.sort(orderSummaries, COUNT_COMPARATOR);

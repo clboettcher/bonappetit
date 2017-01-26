@@ -78,11 +78,15 @@ public abstract class ItemOrderSummaryDtoMapper {
 
         Map<ItemOrderSummaryDto, Long> orderSummaryToCount = orderSummaryDtos.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        List<SummaryEntryDto> orderSummaries = this.createOrderSummaries(orderSummaryToCount);
 
         result.setTotalPrice(totalPrice);
-        result.setOrderSummaries(this.createOrderSummaries(orderSummaryToCount));
+        result.setOrderSummaries(orderSummaries);
         result.setOldestOrderTime(oldestOrderTime);
         result.setNewestOrderTime(newestOrderTime);
+        result.setOrderCount(orderSummaries.stream()
+                .mapToLong(SummaryEntryDto::getCount)
+                .sum());
 
         return result;
     }

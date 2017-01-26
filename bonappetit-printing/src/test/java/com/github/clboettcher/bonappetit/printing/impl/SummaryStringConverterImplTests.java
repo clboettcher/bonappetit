@@ -62,6 +62,7 @@ public class SummaryStringConverterImplTests {
         SummaryDto input = SummaryDto.builder()
                 .totalPrice(BigDecimal.ZERO)
                 .orderSummaries(new ArrayList<>())
+                .orderCount(0L)
                 .build();
 
         String actual = converter.toString(input);
@@ -82,6 +83,7 @@ public class SummaryStringConverterImplTests {
                                         .build())
                                 .build()
                 ))
+                .orderCount(1L)
                 .oldestOrderTime(DateTime.parse("2016-12-15T09:38:00.000Z"))
                 .newestOrderTime(DateTime.parse("2016-12-16T01:45:00.000Z"))
                 .build();
@@ -126,6 +128,7 @@ public class SummaryStringConverterImplTests {
                                         .build())
                                 .build()
                 ))
+                .orderCount(20L)
                 .oldestOrderTime(DateTime.parse("2016-12-15T09:38:00.000Z"))
                 .newestOrderTime(DateTime.parse("2016-12-16T01:45:00.000Z"))
                 .build();

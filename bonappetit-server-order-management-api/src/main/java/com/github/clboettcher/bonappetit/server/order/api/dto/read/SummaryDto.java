@@ -45,14 +45,14 @@ public class SummaryDto {
     private BigDecimal totalPrice;
 
     @ApiModelProperty(value = "The count of all orders in this summary", required = true)
-    private Integer orderCount;
+    private Long orderCount;
 
     @Builder
     public SummaryDto(List<SummaryEntryDto> orderSummaries,
                       DateTime oldestOrderTime,
                       DateTime newestOrderTime,
                       BigDecimal totalPrice,
-                      Integer orderCount) {
+                      Long orderCount) {
         this.orderSummaries = orderSummaries;
         this.oldestOrderTime = oldestOrderTime;
         this.newestOrderTime = newestOrderTime;
