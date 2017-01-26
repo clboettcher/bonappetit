@@ -147,17 +147,19 @@ public class SummaryStringConverterImpl implements SummaryStringConverter {
         if (CollectionUtils.isNotEmpty(optionOrders)) {
             List<String> titles = optionOrders.stream()
                     .map(OptionOrderSummaryDto::getOptionTitle)
+                    .sorted(String::compareTo)
                     .collect(Collectors.toList());
             optionsString = " (" + Joiner.on(", ").join(titles) + ")";
         } else {
             optionsString = "";
         }
 
-        builder.appendLine(String.format("%dx %s%s je %s EUR",
+        builder.appendLine(String.format("%dx %s%s je %s EUR = %s EUR",
                 summaryEntryDto.getCount(),
                 summaryEntryDto.getOrderSummary().getItemTitle(),
                 optionsString,
-                priceFormat.format(summaryEntryDto.getOrderSummary().getTotalPrice())
+                priceFormat.format(summaryEntryDto.getOrderSummary().getTotalPrice()),
+                priceFormat.format(summaryEntryDto.getTotalPrice())
         ));
     }
 }

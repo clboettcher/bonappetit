@@ -81,6 +81,7 @@ public class SummaryStringConverterImplTests {
                                         .itemTitle("Pommes")
                                         .totalPrice(new BigDecimal("2.5"))
                                         .build())
+                                .totalPrice(new BigDecimal("2.5"))
                                 .build()
                 ))
                 .orderCount(1L)
@@ -109,6 +110,7 @@ public class SummaryStringConverterImplTests {
                                                 OptionOrderSummaryDto.builder().optionTitle("Mayonnaise").build()
                                         ))
                                         .build())
+                                .totalPrice(new BigDecimal("5"))
                                 .build(),
                         SummaryEntryDto.builder()
                                 .count(10L)
@@ -119,6 +121,7 @@ public class SummaryStringConverterImplTests {
                                                 OptionOrderSummaryDto.builder().optionTitle("Gross").build()
                                         ))
                                         .build())
+                                .totalPrice(new BigDecimal("22"))
                                 .build(),
                         SummaryEntryDto.builder()
                                 .count(8L)
@@ -126,6 +129,7 @@ public class SummaryStringConverterImplTests {
                                         .itemTitle("Mineralwasser")
                                         .totalPrice(new BigDecimal("1.5"))
                                         .build())
+                                .totalPrice(new BigDecimal("12"))
                                 .build()
                 ))
                 .orderCount(20L)

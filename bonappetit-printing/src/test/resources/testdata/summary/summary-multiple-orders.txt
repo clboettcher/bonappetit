@@ -5,9 +5,9 @@
 [LEFT][NORMAL]Letzte Bestellung: 16.12.2016, 01:45 Uhr
 [LEFT][NORMAL]Bestellungen: 20
 
-[LEFT][NORMAL]2x Pommes (Gross, Ketchup, Mayonnaise) je 2,50 EUR
-[LEFT][NORMAL]8x Mineralwasser je 1,50 EUR
-[LEFT][NORMAL]10x Cola (Gross) je 2,20 EUR
+[LEFT][NORMAL]2x Pommes (Gross, Ketchup, Mayonnaise) je 2,50 EUR = 5,00 EUR
+[LEFT][NORMAL]8x Mineralwasser je 1,50 EUR = 12,00 EUR
+[LEFT][NORMAL]10x Cola (Gross) je 2,20 EUR = 22,00 EUR
 
 [LEFT][NORMAL]Einnahmen laut BonAppetit: 39,00 EUR
 

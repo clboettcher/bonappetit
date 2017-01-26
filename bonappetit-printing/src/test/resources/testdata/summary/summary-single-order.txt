@@ -5,7 +5,7 @@
 [LEFT][NORMAL]Letzte Bestellung: 16.12.2016, 01:45 Uhr
 [LEFT][NORMAL]Bestellungen: 1
 
-[LEFT][NORMAL]1x Pommes je 2,50 EUR
+[LEFT][NORMAL]1x Pommes je 2,50 EUR = 2,50 EUR
 
 [LEFT][NORMAL]Einnahmen laut BonAppetit: 2,50 EUR
 
