@@ -4,7 +4,7 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.clboettcher.bonappetit.server.BonappetitServerApplication" />
     <option name="ACTIVE_PROFILES" value="INMEM" />
     <option name="VM_PARAMETERS" value="-DBONAPPETIT_BASE=&quot;M:\BONAPPETIT_BASE&quot;" />
-    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=&quot;M:\BONAPPETIT_BASE\content\config\bonappetit.properties&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=&quot;M:\BONAPPETIT_BASE\config\bonappetit.properties&quot;" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <module name="bonappetit-server-app" />
     <envs />
