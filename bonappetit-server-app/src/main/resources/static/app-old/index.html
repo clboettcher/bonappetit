@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>BonAppetit Server</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/pure-extras.css">
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.serializeObject.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input#createStaffMemberSubmitButton').click(function (event) {
+                console.log('createStaffMemberSubmitButton clicked');
+
+                var formData = $('form#createStaffMemberForm').serializeObject();
+                var requestPayload = [formData];
+                console.log('Sending request payload ', requestPayload);
+
+                $.ajax('/api/staffMembers', {
+                    method: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(requestPayload),
+                    // 200 Success does not return valid json, so fall back to text
+                    dataType: 'json',
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('Creating staff member failed.', jqXHR);
+                        var errorMsg = `Creating staff member failed with code ${jqXHR.status} (${jqXHR.statusText}): ${jqXHR.responseJSON.message}`
+                        $('.staff-members-creation-result')
+                                .html(errorMsg)
+                                .removeClass('pure-alert-success pure-alert-error')
+                                .addClass('pure-alert-error')
+                                .css('visibility', 'visible');
+                    },
+                    success: function (data) {
+                        console.log('Creating staff member successful', data);
+                        $('.staff-members-creation-result')
+                                .html('Staff member created successful')
+                                .removeClass('pure-alert-success pure-alert-error')
+                                .addClass('pure-alert-success')
+                                .css('visibility', 'visible');
+                    }
+                });
+                event.preventDefault();
+            });
+        })
+        ;
+    </script>
+</head>
+<body>
+<div class="pure-g content-wrapper">
+    <h1 class="pure-u-1-1">BonAppetit Server</h1>
+    <section class="pure-u-1-2">
+        <h2>Speisekarten</h2>
+        <ul>
+            <li><a class="nav-link" href="/api/currentMenu">Aktuelle Speisekarte</a></li>
+            <li><a class="nav-link" href="/api/menus">Alle Speisekarten</a></li>
+        </ul>
+    </section>
+    <section class="pure-u-1-2">
+        <h2>Bestellungen</h2>
+        <ul>
+            <li><a class="nav-link" href="/api/orders?orderedAt=today">Bestellungen von heute</a></li>
+            <li><a class="nav-link" href="/api/orders">Alle Bestellungen</a></li>
+        </ul>
+    </section>
+    <section class="pure-u-1-2">
+        <h2>Mitarbeiter</h2>
+        <ul>
+            <li><a class="nav-link" href="/api/staffMembers">Alle Mitarbeiter</a></li>
+            <li><a class="nav-link" href="/doc/index.html#!/staffMembers/createStaffMember">Mitarbeiter anlegen</a></li>
+        </ul>
+        <form id="createStaffMemberForm"
+              class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>Mitarbeiter anlegen</legend>
+                <!--<label for="firstName">Vorname</label>-->
+                <input id="firstName" type="text" name="firstName" placeholder="Vorname">
+
+                <!--<label for="lastName">Nachname</label>-->
+                <input id="lastName" type="text" name="lastName" placeholder="Nachname">
+
+                <input type="submit"
+                       id="createStaffMemberSubmitButton"
+                       value="Mitarbeiter anlegen"
+                       class="pure-button pure-button-primary">
+            </fieldset>
+        </form>
+        <div class="staff-members-creation-result pure-alert"></div>
+    </section>
+    <section class="pure-u-1-2">
+        <h2>Administration</h2>
+        <ul>
+            <li><a class="nav-link" href="/doc/index.html#!">API Dokumentation</a></li>
+            <li><a class="nav-link" href="/env">Environment</a></li>
+            <li><a class="nav-link" href="/health">Health</a></li>
+            <li><a class="nav-link" href="/logfile">Logs</a></li>
+            <li><a class="nav-link" href="/metrics">Metrics</a></li>
+            <li><a class="nav-link" href="/dump">Thread Dump</a></li>
+            <li><a class="nav-link" href="/flyway">Flyway Migrations</a></li>
+            <li><a class="nav-link" href="/trace">Request Trace</a></li>
+            <li><a class="nav-link" href="/app/app.html">Admin App</a></li>
+        </ul>
+    </section>
+</div>
+</body>
+</html>
