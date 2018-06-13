@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bonappetit-server PROD" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="true">
+  <configuration default="false" name="bonappetit-server INMEM,mockPrinter" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.clboettcher.bonappetit.server.BonappetitServerApplication" />
     <option name="SHOW_IN_DASHBOARD" value="true" />
-    <option name="ACTIVE_PROFILES" value="PROD" />
+    <option name="ACTIVE_PROFILES" value="INMEM,mockPrinter" />
     <option name="VM_PARAMETERS" value="-DBONAPPETIT_BASE=&quot;$USER_HOME$/.config/BONAPPETIT_BASE&quot;" />
-    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=&quot;$USER_HOME$/.config/BONAPPETIT_BASE/bonappetit.properties&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=$USER_HOME$/.config/BONAPPETIT_BASE/bonappetit.properties" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <module name="bonappetit-server-app_main" />
     <envs />

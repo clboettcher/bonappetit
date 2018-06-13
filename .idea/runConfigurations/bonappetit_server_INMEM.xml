@@ -2,11 +2,12 @@
   <configuration default="false" name="bonappetit-server INMEM" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.clboettcher.bonappetit.server.BonappetitServerApplication" />
+    <option name="SHOW_IN_DASHBOARD" value="true" />
     <option name="ACTIVE_PROFILES" value="INMEM" />
-    <option name="VM_PARAMETERS" value="-DBONAPPETIT_BASE=&quot;M:\BONAPPETIT_BASE&quot;" />
-    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=&quot;M:\BONAPPETIT_BASE\config\bonappetit.properties&quot;" />
+    <option name="VM_PARAMETERS" value="-DBONAPPETIT_BASE=&quot;$USER_HOME$/.config/BONAPPETIT_BASE&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.config.location=&quot;$USER_HOME$/.config/BONAPPETIT_BASE/bonappetit.properties&quot;" />
     <option name="ALTERNATIVE_JRE_PATH" />
-    <module name="bonappetit-server-app" />
+    <module name="bonappetit-server-app_main" />
     <envs />
     <method />
   </configuration>
