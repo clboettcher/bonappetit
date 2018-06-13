@@ -1,0 +1,1 @@
+* Swagger UI under `static/doc/index.html`
