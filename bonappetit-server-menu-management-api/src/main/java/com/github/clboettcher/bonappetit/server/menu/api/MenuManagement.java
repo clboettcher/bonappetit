@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.api;
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuRefDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import io.swagger.annotations.*;
@@ -81,13 +82,15 @@ public interface MenuManagement {
     @GET
     @Path("/" + MENUS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns all stored menus.", tags = {MenuManagement.TAG})
-    List<MenuDto> getAllMenus();
+    @ApiOperation(value = "Returns a list of references for all stored menus. " +
+            "Fetch a menu by id (GET /menus/{id}) to get full details.", tags = {MenuManagement.TAG})
+    List<MenuRefDto> getAllMenus();
 
     /**
      * Returns the menu with the given ID.
      *
      * @param id The ID to look for.
+     *
      * @return A menu.
      */
     @GET
@@ -112,6 +115,7 @@ public interface MenuManagement {
      * Creates a menu from the given data.
      *
      * @param menuDto The menu transfer object.
+     *
      * @return A response indicating the success of the operation.
      */
     @POST
@@ -140,7 +144,8 @@ public interface MenuManagement {
     )
     Response updateMenu(
             @ApiParam(value = "The id of the menu that should be updated") @PathParam("id") Long id,
-            @ApiParam(value = "The menu data to update the menu with", required = true) MenuCreationDto menuCreationDto);
+            @ApiParam(value = "The menu data to update the menu with", required = true) MenuCreationDto
+                    menuCreationDto);
 
     @POST
     @Path("/" + ITEMS_PATH)
@@ -153,7 +158,8 @@ public interface MenuManagement {
                     response = ErrorResponse.class
             )
     )
-    Response createItems(@ApiParam(value = "The items to create.", required = true) List<ItemCreationDto> itemCreationDtos);
+    Response createItems(@ApiParam(value = "The items to create.", required = true) List<ItemCreationDto>
+                                 itemCreationDtos);
 
     @PUT
     @Path("/" + CURRENT_MENU_PATH + "/{menuId}")
@@ -180,6 +186,7 @@ public interface MenuManagement {
      * Returns the item with the given ID.
      *
      * @param id The ID to look for.
+     *
      * @return An item.
      */
     @GET

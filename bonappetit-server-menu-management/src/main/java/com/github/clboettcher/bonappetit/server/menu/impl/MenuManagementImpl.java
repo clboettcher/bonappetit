@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
+import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuRefDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
@@ -30,6 +31,7 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.ItemDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
+import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuRefDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.ItemEntityMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
 import org.joda.time.DateTime;
@@ -78,6 +80,9 @@ public class MenuManagementImpl implements MenuManagement {
     private MenuDtoMapper menuDtoMapper;
 
     @Autowired
+    private MenuRefDtoMapper menuRefDtoMapper;
+
+    @Autowired
     private ItemDtoMapper itemDtoMapper;
 
     @Autowired
@@ -104,10 +109,10 @@ public class MenuManagementImpl implements MenuManagement {
     }
 
     @Override
-    public List<MenuDto> getAllMenus() {
+    public List<MenuRefDto> getAllMenus() {
         List<MenuEntity> allMenus = menuDao.getAllMenus();
-        LOGGER.info(String.format("Returning %d menu(s)", allMenus.size()));
-        return menuDtoMapper.mapToMenuDtos(allMenus);
+        LOGGER.info(String.format("Returning ref(s) for %d menu(s)", allMenus.size()));
+        return menuRefDtoMapper.mapToMenuRefDtos(allMenus);
     }
 
     @Override
