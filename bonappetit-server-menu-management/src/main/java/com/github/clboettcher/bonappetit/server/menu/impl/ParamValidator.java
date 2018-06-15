@@ -62,44 +62,51 @@ public class ParamValidator {
         }
     }
 
-    public void assertValid(List<ItemCreationDto> items) {
+    void assertValid(List<ItemCreationDto> items) {
         if (CollectionUtils.isEmpty(items)) {
             throw new BadRequestException("Menu must have at least one item.");
         }
-        items.stream().forEach(this::assertValid);
+        items.forEach(this::assertValid);
     }
 
     void assertValid(ItemCreationDto dto) {
         if (StringUtils.isBlank(dto.getTitle())) {
-            throw new BadRequestException(String.format("Property title of item must not be blank. Dto: %s",
-                    dto));
+            throw new BadRequestException(String.format(
+                    "Property title of item must not be blank. Dto: %s",
+                    dto
+            ));
         }
         if (dto.getType() == null) {
-            throw new BadRequestException(String.format("Property type of item with title '%s' must be present",
-                    dto.getTitle()));
+            throw new BadRequestException(String.format(
+                    "Property type of item with title '%s' must be present",
+                    dto.getTitle()
+            ));
         }
         if (dto.getPrice() == null || dto.getPrice().compareTo(BigDecimal.ZERO) < 0) {
             throw new BadRequestException(String.format("Property price of item with title '%s' must be present and " +
                     "greater or equal to zero.", dto.getTitle()));
         }
         if (CollectionUtils.isNotEmpty(dto.getOptions())) {
-            dto.getOptions().stream().forEach(optionDto -> assertValid(optionDto, dto.getTitle()));
+            dto.getOptions().forEach(optionDto -> assertValid(optionDto, dto.getTitle()));
             Set<Integer> indices = dto.getOptions().stream().map(OptionCreationDto::getIndex)
                     .collect(Collectors.toSet());
             if (dto.getOptions().size() != indices.size()) {
-                throw new BadRequestException(String.format("The number of distinct option indices must be " +
+                throw new BadRequestException(String.format(
+                        "The number of distinct option indices must be " +
                                 "equal to the number of options on item with title '%s'. " +
                                 "Number of options: %d, Number of distinct indices: %d. Indices: %s",
                         dto.getTitle(),
                         dto.getOptions().size(),
                         indices.size(),
-                        indices));
+                        indices
+                ));
             }
             for (int i = 0; i < dto.getOptions().size(); i++) {
                 if (!indices.contains(i)) {
                     throw new BadRequestException(String.format("Item with title '%s' contains no option with " +
                                     "required index %d", dto.getTitle(),
-                            i));
+                            i
+                    ));
                 }
             }
         }
@@ -121,9 +128,11 @@ public class ParamValidator {
         } else if (dto instanceof RadioOptionCreationDto) {
             assertValidRadioOption((RadioOptionCreationDto) dto, itemTitle);
         } else {
-            throw new BadRequestException(String.format("Unknown option type on item with title '%s': %s",
+            throw new BadRequestException(String.format(
+                    "Unknown option type on item with title '%s': %s",
                     itemTitle,
-                    dto.getClass().getName()));
+                    dto.getClass().getName()
+            ));
         }
     }
 
@@ -150,41 +159,49 @@ public class ParamValidator {
                     "item with title '%s' must be present and not empty.", itemTitle));
         }
         // Assert radio items have all required properties
-        radioOptionDto.getRadioItems().stream().forEach(radioItem -> this.assertValid(radioItem, itemTitle));
+        radioOptionDto.getRadioItems().forEach(radioItem -> this.assertValid(radioItem, itemTitle));
         // Validate: Default selected in radio items
         if (radioOptionDto.getDefaultSelected() == null) {
-            throw new BadRequestException(String.format("Property defaultSelected of radioOptionCreationDto " +
+            throw new BadRequestException(String.format(
+                    "Property defaultSelected of radioOptionCreationDto " +
                             "with title '%s' of item with title '%s' must be present",
                     radioOptionDto.getTitle(),
-                    itemTitle));
+                    itemTitle
+            ));
         }
         if (!radioOptionDto.getRadioItems().contains(radioOptionDto.getDefaultSelected())) {
-            throw new BadRequestException(String.format("The default selected radio item is not contained in the " +
+            throw new BadRequestException(String.format(
+                    "The default selected radio item is not contained in the " +
                             "radio items on option with title '%s' of item with title '%s'",
                     radioOptionDto.getTitle(),
-                    itemTitle));
+                    itemTitle
+            ));
         }
 
         // Validate indices
         Set<Integer> indices = radioOptionDto.getRadioItems().stream().map(RadioItemCreationDto::getIndex)
                 .collect(Collectors.toSet());
         if (radioOptionDto.getRadioItems().size() != indices.size()) {
-            throw new BadRequestException(String.format("The number of distinct radio item indices must be " +
+            throw new BadRequestException(String.format(
+                    "The number of distinct radio item indices must be " +
                             "equal to the number of radio items on option with title '%s' of item with title '%s'. " +
                             "Number of radio items: %d, Number of distinct indices: %d. Indices: %s",
                     radioOptionDto.getTitle(),
                     itemTitle,
                     radioOptionDto.getRadioItems().size(),
                     indices.size(),
-                    indices));
+                    indices
+            ));
         }
         for (int i = 0; i < radioOptionDto.getRadioItems().size(); i++) {
             if (!indices.contains(i)) {
-                throw new BadRequestException(String.format("Option with title '%s' of item with title '%s' " +
+                throw new BadRequestException(String.format(
+                        "Option with title '%s' of item with title '%s' " +
                                 "contains no radio item with required index %d",
                         radioOptionDto.getTitle(),
                         itemTitle,
-                        i));
+                        i
+                ));
             }
         }
     }
@@ -192,11 +209,15 @@ public class ParamValidator {
     private void assertValid(RadioItemCreationDto dto, String itemTitle) {
 
         if (StringUtils.isBlank(dto.getTitle())) {
-            throw new BadRequestException(String.format("Property title of radioItemCreationDto of item with title '%s' " +
-                    "must not be blank.", itemTitle));
+            throw new BadRequestException(String.format(
+                    "Property title of radioItemCreationDto of item with title '%s' " +
+                            "must not be blank.",
+                    itemTitle
+            ));
         }
         if (dto.getIndex() == null || dto.getIndex() < 0) {
-            throw new BadRequestException(String.format("Property index of radioItemCreationDto of item with title '%s'" +
+            throw new BadRequestException(String.format("Property index of radioItemCreationDto of item with title " +
+                    "'%s'" +
                     " must be present and greater than or equal to zero", itemTitle));
         }
         this.assertValidPriceDiff(dto.getPriceDiff(), itemTitle, "radioItemCreationDto");
