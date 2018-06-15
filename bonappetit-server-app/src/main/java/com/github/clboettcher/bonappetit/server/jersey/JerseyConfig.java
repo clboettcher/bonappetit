@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.jersey;
 
 import com.github.clboettcher.bonappetit.server.ProjectProperties;
+import com.github.clboettcher.bonappetit.server.menu.api.ItemManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
 import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberManagement;
@@ -58,6 +59,7 @@ public class JerseyConfig extends ResourceConfig {
 
         register(context.getBean(StaffMemberManagement.class));
         register(context.getBean(MenuManagement.class));
+        register(context.getBean(ItemManagement.class));
         register(context.getBean(OrderManagement.class));
         register(context.getBean(UserManagement.class));
 

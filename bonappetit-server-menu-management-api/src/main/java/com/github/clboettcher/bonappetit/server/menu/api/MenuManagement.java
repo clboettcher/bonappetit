@@ -20,10 +20,8 @@
 package com.github.clboettcher.bonappetit.server.menu.api;
 
 import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.read.ItemDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.read.MenuRefDto;
-import com.github.clboettcher.bonappetit.server.menu.api.dto.write.ItemCreationDto;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.MenuCreationDto;
 import io.swagger.annotations.*;
 
@@ -50,11 +48,6 @@ public interface MenuManagement {
      * Relative path of the menu resource.
      */
     String MENUS_PATH = "menus";
-
-    /**
-     * Relative path of the item resource.
-     */
-    String ITEMS_PATH = "items";
 
     /**
      * Returns the currently active menu.
@@ -147,20 +140,6 @@ public interface MenuManagement {
             @ApiParam(value = "The menu data to update the menu with", required = true) MenuCreationDto
                     menuCreationDto);
 
-    @POST
-    @Path("/" + ITEMS_PATH)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Creates the given items in the database.", tags = {MenuManagement.TAG})
-    @ApiResponses(
-            @ApiResponse(
-                    code = 400,
-                    message = "The request did not contain items to create or any of the items were invalid",
-                    response = ErrorResponse.class
-            )
-    )
-    Response createItems(@ApiParam(value = "The items to create.", required = true) List<ItemCreationDto>
-                                 itemCreationDtos);
-
     @PUT
     @Path("/" + CURRENT_MENU_PATH + "/{menuId}")
     @ApiOperation(value = "Update the currently active menu.", tags = {MenuManagement.TAG})
@@ -170,40 +149,4 @@ public interface MenuManagement {
     Response setCurrentMenu(
             @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
 
-
-    /**
-     * Returns all items.
-     *
-     * @return An item list.
-     */
-    @GET
-    @Path("/" + ITEMS_PATH)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns all items", tags = {MenuManagement.TAG})
-    List<ItemDto> getItems();
-
-    /**
-     * Returns the item with the given ID.
-     *
-     * @param id The ID to look for.
-     *
-     * @return An item.
-     */
-    @GET
-    @Path("/" + ITEMS_PATH + "/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns the item with the given ID.", tags = {MenuManagement.TAG})
-    @ApiResponses({
-            @ApiResponse(
-                    code = 400,
-                    message = "If param id is blank.",
-                    response = ErrorResponse.class
-            ),
-            @ApiResponse(
-                    code = 404,
-                    message = "The requested item does not exist.",
-                    response = ErrorResponse.class
-            )}
-    )
-    ItemDto getItemById(@ApiParam(value = "The item ID to look for.") @PathParam("id") Long id);
 }
