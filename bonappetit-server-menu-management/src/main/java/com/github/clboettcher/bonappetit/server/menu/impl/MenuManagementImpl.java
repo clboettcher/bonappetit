@@ -30,7 +30,6 @@ import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.todto.MenuRefDtoMapper;
 import com.github.clboettcher.bonappetit.server.menu.impl.mapping.toentity.MenuEntityMapper;
-import com.google.common.collect.Sets;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -47,7 +46,6 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Default impl of the {@link MenuManagement}.
@@ -107,11 +105,10 @@ public class MenuManagementImpl implements MenuManagement {
             throw new BadRequestException("Param menuId may not be blank.");
         }
 
-        if (!menuDao.exists(menuId)) {
-            throw new BadRequestException(String.format("Menu with ID %d cannot be set as current because " +
-                    "it does not exist.", menuId
-            ));
-        }
+        validator.assertMenuExists(
+                menuId,
+                String.format("Menu with ID %d cannot be set as current because it does not exist.", menuId)
+        );
 
         MenuEntity newCurrent = menuDao.getMenuById(menuId);
         menuDao.setCurrent(newCurrent);
@@ -155,10 +152,7 @@ public class MenuManagementImpl implements MenuManagement {
 
     @Override
     public Response updateMenu(Long id, MenuCreationDto menuCreationDto) {
-        if (!this.menuDao.exists(id)) {
-            throw new BadRequestException(String.format("Menu with id %d cannot be updated " +
-                    "because it does not exist.", id));
-        }
+        validator.assertMenuExists(id);
         validator.assertValid(menuCreationDto);
 
         LOGGER.info(String.format("Updating menu with id %d from DTO %s", id, menuCreationDto));
@@ -175,86 +169,31 @@ public class MenuManagementImpl implements MenuManagement {
 
     @Override
     public MenuDto addItemsToMenu(Long menuId, Set<Long> idsToAdd) {
-        if (!this.menuDao.exists(menuId)) {
-            throw new BadRequestException(String.format("Menu with id %d cannot be updated " +
-                    "because it does not exist.", menuId));
-        }
-        if (idsToAdd == null || idsToAdd.isEmpty()) {
-            throw new BadRequestException(String.format(
-                    "Menu with id %d cannot be updated with empty item list.",
-                    menuId
-            ));
-        }
+        this.validator.assertAddItemsPreconditions(menuId, idsToAdd);
+
+        LOGGER.info(String.format("Adding %d item(s) to menu with id %d", idsToAdd.size(), menuId));
 
         MenuEntity menuToUpdate = this.menuDao.getMenuById(menuId);
         List<ItemEntity> itemsToUpdate = menuToUpdate.getItems();
 
-        // Check if the menu already contains at least one of the items
-        Set<Long> currentItems = itemsToUpdate.stream().map(ItemEntity::getId).collect(Collectors.toSet());
-        Sets.SetView<Long> intersection = Sets.intersection(currentItems, idsToAdd);
-        if (!intersection.isEmpty()) {
-            throw new BadRequestException(String.format(
-                    "Could not add %d item(s) to menu with id %d: Some of the items from the request are already " +
-                            "associated with this menu. Intersection: %s.",
-                    idsToAdd.size(),
-                    menuId,
-                    intersection
-            ));
-        }
-
-        LOGGER.info(String.format("Adding %d item(s) to menu with id %d", idsToAdd.size(), menuId));
-
         // Resolve items to add.
         List<ItemEntity> itemsToAdd = this.itemDao.getItemsByIdList(idsToAdd);
-        Set<Long> existingIdsToAdd = itemsToAdd.stream().map(ItemEntity::getId).collect(Collectors.toSet());
-        Sets.SetView<Long> diffRequestedExistingIds = Sets.difference(idsToAdd, existingIdsToAdd);
-        if (!diffRequestedExistingIds.isEmpty()) {
-            throw new BadRequestException(String.format(
-                    "Could not add %d item(s) to menu with id %d: Could not find item(s) for " +
-                            "at least one of the id(s) from the request. Difference: %s.",
-                    idsToAdd.size(),
-                    menuId,
-                    diffRequestedExistingIds
-            ));
-        }
-
 
         itemsToUpdate.addAll(itemsToAdd);
 
         menuToUpdate.setItems(itemsToUpdate);
         menuToUpdate.setLastUpdateTimestamp(DateTime.now(DateTimeZone.UTC).toDate());
         this.menuDao.update(menuToUpdate);
+
         return this.menuDtoMapper.mapToMenuDto(menuToUpdate);
     }
 
     @Override
     public MenuDto removeItemsFromMenu(Long menuId, Set<Long> idsToRemove) {
-        if (!this.menuDao.exists(menuId)) {
-            throw new BadRequestException(String.format("Menu with id %d cannot be updated " +
-                    "because it does not exist.", menuId));
-        }
-        if (idsToRemove == null || idsToRemove.isEmpty()) {
-            throw new BadRequestException(String.format(
-                    "Menu with id %d cannot be updated with empty item list.",
-                    menuId
-            ));
-        }
+        this.validator.assertRemoveItemsPreconditions(menuId, idsToRemove);
 
         MenuEntity menuToUpdate = this.menuDao.getMenuById(menuId);
         List<ItemEntity> itemsToUpdate = menuToUpdate.getItems();
-
-        // Check if the menu contains all of the requested items.
-        Set<Long> currentItemIds = itemsToUpdate.stream().map(ItemEntity::getId).collect(Collectors.toSet());
-        Sets.SetView<Long> difference = Sets.difference(idsToRemove, currentItemIds);
-        if (!difference.isEmpty()) {
-            throw new BadRequestException(String.format(
-                    "Could not remove %d item(s) from menu with id %d: Some of the items from the request are not " +
-                            "associated with this menu. Difference of toRemoveIds - containedIds = %s.",
-                    idsToRemove.size(),
-                    menuId,
-                    difference
-            ));
-        }
 
         LOGGER.info(String.format("Removing %d item(s) from menu with id %d", idsToRemove.size(), menuId));
 

@@ -21,6 +21,10 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.*;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.ItemEntity;
+import com.github.clboettcher.bonappetit.server.menu.impl.entity.menu.MenuEntity;
+import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +39,12 @@ import java.util.stream.Collectors;
 @Component
 public class ParamValidator {
 
+    private MenuDao menuDao;
     private ItemDao itemDao;
 
     @Autowired
-    public ParamValidator(ItemDao itemDao) {
+    public ParamValidator(MenuDao menuDao, ItemDao itemDao) {
+        this.menuDao = menuDao;
         this.itemDao = itemDao;
     }
 
@@ -133,6 +139,82 @@ public class ParamValidator {
                     itemTitle,
                     dto.getClass().getName()
             ));
+        }
+    }
+
+    void assertAddItemsPreconditions(Long menuId, Set<Long> idsToAdd) {
+        assertMenuExists(menuId);
+        if (idsToAdd == null || idsToAdd.isEmpty()) {
+            throw new BadRequestException(String.format(
+                    "Menu with id %d cannot be updated with empty item list.",
+                    menuId
+            ));
+        }
+
+        MenuEntity menuToUpdate = this.menuDao.getMenuById(menuId);
+        List<ItemEntity> itemsToUpdate = menuToUpdate.getItems();
+
+        // Check if the menu already contains at least one of the items
+        Set<Long> currentItems = itemsToUpdate.stream().map(ItemEntity::getId).collect(Collectors.toSet());
+        Sets.SetView<Long> intersection = Sets.intersection(currentItems, idsToAdd);
+        if (!intersection.isEmpty()) {
+            throw new BadRequestException(String.format(
+                    "Could not add %d item(s) to menu with id %d: Some of the items from the request are already " +
+                            "associated with this menu. Intersection: %s.",
+                    idsToAdd.size(),
+                    menuId,
+                    intersection
+            ));
+        }
+
+        // Resolve items to add.
+        List<ItemEntity> itemsToAdd = this.itemDao.getItemsByIdList(idsToAdd);
+        Set<Long> existingIdsToAdd = itemsToAdd.stream().map(ItemEntity::getId).collect(Collectors.toSet());
+        Sets.SetView<Long> diffRequestedExistingIds = Sets.difference(idsToAdd, existingIdsToAdd);
+        if (!diffRequestedExistingIds.isEmpty()) {
+            throw new BadRequestException(String.format(
+                    "Could not add %d item(s) to menu with id %d: Could not find item(s) for " +
+                            "at least one of the id(s) from the request. Difference: %s.",
+                    idsToAdd.size(),
+                    menuId,
+                    diffRequestedExistingIds
+            ));
+        }
+    }
+
+    void assertRemoveItemsPreconditions(Long menuId, Set<Long> idsToRemove) {
+        assertMenuExists(menuId);
+        if (idsToRemove == null || idsToRemove.isEmpty()) {
+            throw new BadRequestException(String.format(
+                    "Menu with id %d cannot be updated with empty item list.",
+                    menuId
+            ));
+        }
+
+        MenuEntity menuToUpdate = this.menuDao.getMenuById(menuId);
+        List<ItemEntity> itemsToUpdate = menuToUpdate.getItems();
+
+        // Check if the menu contains all of the requested items.
+        Set<Long> currentItemIds = itemsToUpdate.stream().map(ItemEntity::getId).collect(Collectors.toSet());
+        Sets.SetView<Long> difference = Sets.difference(idsToRemove, currentItemIds);
+        if (!difference.isEmpty()) {
+            throw new BadRequestException(String.format(
+                    "Could not remove %d item(s) from menu with id %d: Some of the items from the request are not " +
+                            "associated with this menu. Difference of toRemoveIds - containedIds = %s.",
+                    idsToRemove.size(),
+                    menuId,
+                    difference
+            ));
+        }
+    }
+
+    void assertMenuExists(Long menuId) {
+        assertMenuExists(menuId, String.format("Menu with id %d does not exist.", menuId));
+    }
+
+    void assertMenuExists(Long menuId, String errorMsg) {
+        if (!this.menuDao.exists(menuId)) {
+            throw new BadRequestException(errorMsg);
         }
     }
 

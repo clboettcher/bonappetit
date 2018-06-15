@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.menu.impl;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.common.ItemDtoType;
 import com.github.clboettcher.bonappetit.server.menu.api.dto.write.*;
 import com.github.clboettcher.bonappetit.server.menu.impl.dao.ItemDao;
+import com.github.clboettcher.bonappetit.server.menu.impl.dao.MenuDao;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +42,7 @@ public class ParamValidatorTests {
 
     @Before
     public void setUp() throws Exception {
-        this.validator = new ParamValidator(Mockito.mock(ItemDao.class));
+        this.validator = new ParamValidator(Mockito.mock(MenuDao.class), Mockito.mock(ItemDao.class));
     }
 
     @Test
