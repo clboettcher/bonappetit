@@ -29,6 +29,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Public rest interface to manage menus.
@@ -66,6 +67,15 @@ public interface MenuManagement {
             )
     )
     MenuDto getCurrentMenu();
+
+    @PUT
+    @Path("/" + CURRENT_MENU_PATH + "/{menuId}")
+    @ApiOperation(value = "Update the currently active menu.", tags = {MenuManagement.TAG})
+    @ApiResponses(@ApiResponse(code = 400,
+            message = "Param menuId was blank or no menu was found for the given menuId.",
+            response = ErrorResponse.class))
+    Response setCurrentMenu(
+            @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
 
     /**
      * Returns all menus.
@@ -140,13 +150,39 @@ public interface MenuManagement {
             @ApiParam(value = "The menu data to update the menu with", required = true) MenuCreationDto
                     menuCreationDto);
 
-    @PUT
-    @Path("/" + CURRENT_MENU_PATH + "/{menuId}")
-    @ApiOperation(value = "Update the currently active menu.", tags = {MenuManagement.TAG})
-    @ApiResponses(@ApiResponse(code = 400,
-            message = "Param menuId was blank or no menu was found for the given menuId.",
-            response = ErrorResponse.class))
-    Response setCurrentMenu(
-            @ApiParam(value = "The ID of the menu to set as current") @PathParam("menuId") Long menuId);
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/" + MENUS_PATH + "/{id}/items/addItemsRequest")
+    @ApiOperation(value = "Adds the given items to the menu.", tags = {MenuManagement.TAG})
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "The request did not contain a valid update or the menu or a referenced item does not " +
+                            "exist.",
+                    response = ErrorResponse.class
+            )
+    )
+    MenuDto addItemsToMenu(@ApiParam(value = "The id of the menu that should be updated") @PathParam("id") Long id,
+                           @ApiParam(value = "The ids of the items that should be added", required = true) Set<Long>
+                                   itemIds);
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/" + MENUS_PATH + "/{id}/items/removeItemsRequest")
+    @ApiOperation(value = "Removes the given items from the menu.", tags = {MenuManagement.TAG})
+    @ApiResponses(
+            @ApiResponse(
+                    code = 400,
+                    message = "The request did not contain a valid update or the menu or a referenced item does not " +
+                            "exist.",
+                    response = ErrorResponse.class
+            )
+    )
+    MenuDto removeItemsFromMenu(@ApiParam(value = "The id of the menu that should be updated") @PathParam("id") Long
+                                        id,
+                                @ApiParam(value = "The ids of the items that should be removed", required = true)
+                                        Set<Long> itemIds);
 
 }

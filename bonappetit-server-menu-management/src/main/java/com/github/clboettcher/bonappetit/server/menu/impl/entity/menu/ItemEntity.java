@@ -20,6 +20,7 @@
 package com.github.clboettcher.bonappetit.server.menu.impl.entity.menu;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
@@ -36,6 +37,7 @@ import java.util.List;
 @Table(name = "ITEM")
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode(of = "id")
 public class ItemEntity {
 
     @Id

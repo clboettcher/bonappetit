@@ -55,7 +55,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<ItemEntity> getItemsByIdList(List<Long> itemIds) {
+    public List<ItemEntity> getItemsByIdList(Iterable<Long> itemIds) {
         return Lists.newArrayList(repository.findAll(itemIds));
     }
 

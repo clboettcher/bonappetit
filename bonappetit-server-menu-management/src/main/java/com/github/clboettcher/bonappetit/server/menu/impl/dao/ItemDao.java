@@ -50,7 +50,7 @@ public interface ItemDao {
      * @param itemIds The ids.
      * @return The items, may contain null elements.
      */
-    List<ItemEntity> getItemsByIdList(List<Long> itemIds);
+    List<ItemEntity> getItemsByIdList(Iterable<Long> itemIds);
 
     /**
      * Returns whether an item exists in the db with the given id.
