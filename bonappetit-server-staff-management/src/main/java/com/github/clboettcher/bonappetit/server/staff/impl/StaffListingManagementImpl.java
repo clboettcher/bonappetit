@@ -31,13 +31,11 @@ import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Default impl of {@link StaffListingManagement}.
@@ -56,6 +54,14 @@ public class StaffListingManagementImpl implements StaffListingManagement {
 
     @Autowired
     private StaffListingDtoMapper staffListingDtoMapper;
+
+    @Override
+    public List<StaffListingDto> getStaffListing(boolean showInactive) {
+        List<StaffListingEntity> all = this.staffListingDao.findAll();
+
+        List<StaffListingEntity> result = showInactive ? all : this.removeInactive(all);
+        return this.staffListingDtoMapper.mapToStaffListingDtos(result);
+    }
 
     @Override
     public StaffListingDto getStaffListing(String title) {
@@ -118,5 +124,12 @@ public class StaffListingManagementImpl implements StaffListingManagement {
                 .build();
 
         return this.staffListingDao.save(staffListing);
+    }
+
+
+    private List<StaffListingEntity> removeInactive(List<StaffListingEntity> all) {
+        return all.stream()
+                .filter(staffListingEntity -> staffListingEntity.getValidUntil() == null)
+                .collect(Collectors.toList());
     }
 }

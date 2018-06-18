@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.Set;
 
 @Path("/" + StaffListingManagement.ROOT_PATH)
@@ -34,6 +35,13 @@ public interface StaffListingManagement {
 
     String TAG = "staff";
     String ROOT_PATH = "staffListings";
+
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns all stored staff listings", tags = {TAG})
+    List<StaffListingDto> getStaffListing(@ApiParam(value = "Whether to include old inactive versions in the output.")
+                                    @QueryParam("showInactive") @DefaultValue("false") final boolean showInactive);
 
     @GET
     @Path("/{title}")
@@ -64,5 +72,6 @@ public interface StaffListingManagement {
                                        @PathParam("title") final String title,
                                        @ApiParam(value = "The ids of the staff members to put into this staff listing",
                                                required = true) final Set<Long> staffMemberIds);
+
 
 }

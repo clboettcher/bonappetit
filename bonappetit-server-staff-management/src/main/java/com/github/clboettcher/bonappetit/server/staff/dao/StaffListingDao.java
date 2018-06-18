@@ -21,6 +21,8 @@ package com.github.clboettcher.bonappetit.server.staff.dao;
 
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingEntity;
 
+import java.util.List;
+
 public interface StaffListingDao {
 
     StaffListingEntity findCurrentVersionByTitle(String title);
@@ -28,4 +30,6 @@ public interface StaffListingDao {
     StaffListingEntity save(StaffListingEntity staffListingEntity);
 
     StaffListingEntity update(StaffListingEntity currentVersion);
+
+    List<StaffListingEntity> findAll();
 }

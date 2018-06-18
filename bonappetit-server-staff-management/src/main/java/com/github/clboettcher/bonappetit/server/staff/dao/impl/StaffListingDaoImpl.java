@@ -22,9 +22,12 @@ package com.github.clboettcher.bonappetit.server.staff.dao.impl;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffListingDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingEntity;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingId;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class StaffListingDaoImpl implements StaffListingDao {
@@ -62,5 +65,10 @@ public class StaffListingDaoImpl implements StaffListingDao {
             throw new IllegalArgumentException("Update requires id: " + staffListingEntity);
         }
         return staffListingEntityRepository.save(staffListingEntity);
+    }
+
+    @Override
+    public List<StaffListingEntity> findAll() {
+        return Lists.newArrayList(staffListingEntityRepository.findAll());
     }
 }

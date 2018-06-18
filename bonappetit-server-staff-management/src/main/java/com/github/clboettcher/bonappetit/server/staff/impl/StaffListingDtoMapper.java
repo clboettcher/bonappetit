@@ -25,8 +25,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = StaffMemberDtoMapper.class)
 public interface StaffListingDtoMapper {
+
+    List<StaffListingDto> mapToStaffListingDtos(List<StaffListingEntity> staffListingEntity);
 
     @Mappings({
             @Mapping(source = "id.title", target = "title"),
