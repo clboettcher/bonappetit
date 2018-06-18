@@ -13,6 +13,9 @@ dependencies {
     // API
     compile project(":bonappetit-server-staff-management-api")
 
+    // Cross dependencies to other server modules.
+    compile project(":bonappetit-server-event-management")
+
     // Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}")

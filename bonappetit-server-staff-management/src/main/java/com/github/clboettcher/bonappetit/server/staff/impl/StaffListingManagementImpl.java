@@ -21,6 +21,7 @@ package com.github.clboettcher.bonappetit.server.staff.impl;
 
 import com.github.clboettcher.bonappetit.server.staff.api.StaffListingManagement;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffListingDto;
+import com.github.clboettcher.bonappetit.server.staff.dao.EventDao;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffListingDao;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingEntity;
@@ -52,10 +53,13 @@ public class StaffListingManagementImpl implements StaffListingManagement {
     private StaffListingDao staffListingDao;
 
     @Autowired
+    private EventDao eventDao;
+
+    @Autowired
     private StaffListingDtoMapper staffListingDtoMapper;
 
     @Override
-    public List<StaffListingDto> getStaffListing(boolean showInactive) {
+    public List<StaffListingDto> getAllStaffListings(boolean showInactive) {
 
         List<StaffListingEntity> result = showInactive
                 ? this.staffListingDao.findAll()
@@ -65,7 +69,7 @@ public class StaffListingManagementImpl implements StaffListingManagement {
     }
 
     @Override
-    public StaffListingDto getStaffListing(String title) {
+    public StaffListingDto getAllStaffListings(String title) {
         StaffListingEntity result = this.staffListingDao.findCurrentVersionByTitle(title);
 
         if (result == null) {
@@ -73,6 +77,12 @@ public class StaffListingManagementImpl implements StaffListingManagement {
         }
 
         return this.staffListingDtoMapper.mapToStaffListingDto(result);
+    }
+
+    @Override
+    public StaffListingDto getCurrentStaffListing() {
+        String currentEvent = this.eventDao.getCurrentEvent();
+        return this.getAllStaffListings(currentEvent);
     }
 
     @Override

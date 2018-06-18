@@ -29,29 +29,41 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Set;
 
-@Path("/" + StaffListingManagement.ROOT_PATH)
+@Path("/")
 @Api
 public interface StaffListingManagement {
 
     String TAG = "staff";
     String ROOT_PATH = "staffListings";
+    String CURRENT_STAFF_LISTING_ROOT = "currentStaffListing";
 
     @GET
-    @Path("/")
+    @Path("/" + StaffListingManagement.ROOT_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Returns all stored staff listings", tags = {TAG})
-    List<StaffListingDto> getStaffListing(@ApiParam(value = "Whether to include old inactive versions in the output.")
-                                    @QueryParam("showInactive") @DefaultValue("false") final boolean showInactive);
+    List<StaffListingDto> getAllStaffListings(@ApiParam(value = "Whether to include old inactive versions in the " +
+            "output.")
+                                              @QueryParam("showInactive") @DefaultValue("false") final boolean
+                                                      showInactive);
 
     @GET
-    @Path("/{title}")
+    @Path("/" + CURRENT_STAFF_LISTING_ROOT)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns the current version of the staff listing with the given title.", tags = {TAG})
-    StaffListingDto getStaffListing(@ApiParam(value = "The title of the staff listing to get.")
-                                    @PathParam("title") final String title);
+    @ApiOperation(value = "Returns the currently active staff listing.", notes = "This is the only endpoint that the " +
+            "app should use directly. The server should decive which staff listing is currently active to make sure " +
+            "all apps work with the same data.", tags = {TAG})
+    StaffListingDto getCurrentStaffListing();
+
+    @GET
+    @Path("/" + StaffListingManagement.ROOT_PATH + "/{title}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the current version of the staff listing with the given title.", tags =
+            {TAG})
+    StaffListingDto getAllStaffListings(@ApiParam(value = "The title of the staff listing to get.")
+                                        @PathParam("title") final String title);
 
     @POST
-    @Path("/{title}")
+    @Path("/" + StaffListingManagement.ROOT_PATH + "/{title}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates a new staff listing", tags = {TAG})
@@ -61,7 +73,7 @@ public interface StaffListingManagement {
                                                required = true) final Set<Long> staffMemberIds);
 
     @PUT
-    @Path("/{title}")
+    @Path("/" + StaffListingManagement.ROOT_PATH + "/{title}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Update the staff listing with the given title.", notes = "Since all persistent " +
