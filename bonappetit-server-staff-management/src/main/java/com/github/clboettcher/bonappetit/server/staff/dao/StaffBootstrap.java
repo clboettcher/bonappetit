@@ -19,8 +19,14 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.dao;
 
+import com.github.clboettcher.bonappetit.server.staff.dao.impl.StaffListingEntityRepository;
 import com.github.clboettcher.bonappetit.server.staff.dao.impl.StaffMemberEntityRepository;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingEntity;
+import com.github.clboettcher.bonappetit.server.staff.entity.StaffListingId;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
+import com.google.common.collect.Lists;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +41,15 @@ import java.util.List;
  */
 @Component
 @Profile("INMEM")
-public class StaffMembersBootstrap {
+public class StaffBootstrap {
 
     /**
      * The logger for this class.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(StaffMembersBootstrap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaffBootstrap.class);
 
 
-    public static final List<StaffMemberEntity> TEST_DATA = Arrays.asList(
+    private static final List<StaffMemberEntity> STAFF_MEMBERS_TEST_DATA = Arrays.asList(
             StaffMemberEntity.builder()
                     .id(1L)
                     .firstName("John")
@@ -62,8 +68,17 @@ public class StaffMembersBootstrap {
      * @param staffMemberEntityRepository The bean used to save the staff members.
      */
     @Autowired
-    public StaffMembersBootstrap(StaffMemberEntityRepository staffMemberEntityRepository) {
+    public StaffBootstrap(StaffMemberEntityRepository staffMemberEntityRepository,
+                          StaffListingEntityRepository staffListingEntityRepository) {
         LOGGER.info("Saving test staff members in the DB.");
-        staffMemberEntityRepository.save(TEST_DATA);
+        Iterable<StaffMemberEntity> saved = staffMemberEntityRepository.save(STAFF_MEMBERS_TEST_DATA);
+
+        StaffListingEntity staffListing = StaffListingEntity.builder()
+                .validFrom(DateTime.now(DateTimeZone.UTC).toDate())
+                .staffMembers(Lists.newArrayList(saved))
+                .id(new StaffListingId("Friday Lounge", 1))
+                .build();
+
+        staffListingEntityRepository.save(staffListing);
     }
 }
