@@ -88,11 +88,29 @@ public class StaffMemberManagementImpl implements StaffMemberManagement {
         if (staffMemberDto == null) {
             throw new BadRequestException("Request body must contain a valid staff member.");
         }
-        if (StringUtils.isBlank(staffMemberDto.getFirstName())) {
+
+        String firstName = staffMemberDto.getFirstName();
+        if (StringUtils.isBlank(firstName)) {
             throw new BadRequestException("Staff member first name may not be blank.");
         }
-        if (StringUtils.isBlank(staffMemberDto.getLastName())) {
+
+        String lastName = staffMemberDto.getLastName();
+        if (StringUtils.isBlank(lastName)) {
             throw new BadRequestException("Staff member last name may not be blank.");
+        }
+
+        // Make sure this combination of first and last name does not exist.
+        StaffMemberEntity result = staffMemberDao.findByFirstNameAndLastName(
+                firstName,
+                lastName
+        );
+
+        if (result != null) {
+            throw new BadRequestException(String.format(
+                    "Staff member named '%s %s' already exists.",
+                    firstName,
+                    lastName
+            ));
         }
     }
 }

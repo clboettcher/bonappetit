@@ -64,4 +64,6 @@ public interface StaffMemberDao {
     List<StaffMemberEntity> save(List<StaffMemberEntity> staffMember);
 
     List<StaffMemberEntity> findAllByIds(Set<Long> staffMemberIds);
+
+    StaffMemberEntity findByFirstNameAndLastName(String firstName, String lastName);
 }

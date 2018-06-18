@@ -24,4 +24,7 @@ import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface StaffMemberEntityRepository extends CrudRepository<StaffMemberEntity, Long> {
+
+    StaffMemberEntity findByFirstNameAndLastNameAllIgnoreCase(String firstName, String lastName);
+
 }

@@ -79,4 +79,9 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     public List<StaffMemberEntity> findAllByIds(Set<Long> staffMemberIds) {
         return Lists.newArrayList(this.staffMemberEntityRepository.findAll(staffMemberIds));
     }
+
+    @Override
+    public StaffMemberEntity findByFirstNameAndLastName(String firstName, String lastName) {
+        return this.staffMemberEntityRepository.findByFirstNameAndLastNameAllIgnoreCase(firstName, lastName);
+    }
 }

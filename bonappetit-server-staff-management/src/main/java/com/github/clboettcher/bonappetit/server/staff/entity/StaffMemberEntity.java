@@ -48,7 +48,9 @@ import javax.persistence.*;
  * Represents a staff member of the restaurant.
  */
 @Entity
-@Table(name = "STAFF_MEMBER")
+@Table(name = "STAFF_MEMBER",
+        // Combination of first and last name must be unique.
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"FIRST_NAME", "LAST_NAME"})})
 @NoArgsConstructor
 @ToString
 public class StaffMemberEntity {
