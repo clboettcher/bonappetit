@@ -31,6 +31,8 @@ import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.util.Date;
@@ -42,9 +44,6 @@ import java.util.Set;
  */
 @Component
 public class StaffListingManagementImpl implements StaffListingManagement {
-
-    @Context
-    private UriInfo uriInfo;
 
     @Autowired
     private StaffRequestValidator validator;
@@ -58,6 +57,16 @@ public class StaffListingManagementImpl implements StaffListingManagement {
     @Autowired
     private StaffListingDtoMapper staffListingDtoMapper;
 
+    @Override
+    public StaffListingDto getStaffListing(String title) {
+        StaffListingEntity result = this.staffListingDao.findCurrentVersionByTitle(title);
+
+        if (result == null) {
+            throw new NotFoundException(String.format("Staff listing with title '%s' does not exist.", title));
+        }
+
+        return this.staffListingDtoMapper.mapToStaffListingDto(result);
+    }
 
     @Override
     public StaffListingDto createStaffListing(String title, Set<Long> staffMemberIds) {

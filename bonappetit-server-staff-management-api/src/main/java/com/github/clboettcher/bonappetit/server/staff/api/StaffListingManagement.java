@@ -35,6 +35,13 @@ public interface StaffListingManagement {
     String TAG = "staff";
     String ROOT_PATH = "staffListings";
 
+    @GET
+    @Path("/{title}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the current version of the staff listing with the given title.", tags = {TAG})
+    StaffListingDto getStaffListing(@ApiParam(value = "The title of the staff listing to get.")
+                                    @PathParam("title") final String title);
+
     @POST
     @Path("/{title}")
     @Consumes(MediaType.APPLICATION_JSON)
