@@ -25,7 +25,6 @@ import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
 import com.github.clboettcher.bonappetit.server.staff.dao.StaffMemberDao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 import com.google.common.collect.Lists;
-import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,11 +64,6 @@ public class StaffMemberManagementImpl implements StaffMemberManagement {
     public List<StaffMemberDto> getStaffMembers() {
         List<StaffMemberEntity> result = staffMemberDao.getStaffMembers();
         return Lists.newArrayList(toDtoMapper.mapToStaffMemberDtos(result));
-    }
-
-    @Override
-    public StaffMemberDto getStaffMember(@ApiParam(value = "The ID to look for.") Long id) {
-        return toDtoMapper.mapToStaffMemberDto(staffMemberDao.getStaffMember(id));
     }
 
     @Override

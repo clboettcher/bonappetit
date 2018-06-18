@@ -19,10 +19,11 @@
  */
 package com.github.clboettcher.bonappetit.server.staff.api;
 
-import com.github.clboettcher.bonappetit.server.core.error.ErrorResponse;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberCreationDto;
 import com.github.clboettcher.bonappetit.server.staff.api.dto.StaffMemberDto;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,7 +34,7 @@ import java.util.List;
 @Api
 public interface StaffMemberManagement {
 
-    String TAG = "staffMembers";
+    String TAG = "staff";
     String ROOT_PATH = "staffMembers";
 
     /**
@@ -46,19 +47,9 @@ public interface StaffMemberManagement {
     @ApiOperation(value = "Returns a list of staff members.", tags = {TAG})
     List<StaffMemberDto> getStaffMembers();
 
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Returns the staff member with the given ID.", tags = {TAG})
-    @ApiResponses(
-            @ApiResponse(code = 404, message = "No staff member was found for the given ID.",
-                    response = ErrorResponse.class)
-    )
-    StaffMemberDto getStaffMember(@ApiParam(value = "The ID to look for.") @PathParam("id") Long id);
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates a list of staff members.", tags = {TAG})
     Response createStaffMembers(@ApiParam(value = "The staff members to create.", required = true)
-                               List<StaffMemberCreationDto> staffMemberDto);
+                                        List<StaffMemberCreationDto> staffMemberDto);
 }

@@ -23,6 +23,7 @@ import com.github.clboettcher.bonappetit.server.ProjectProperties;
 import com.github.clboettcher.bonappetit.server.menu.api.ItemManagement;
 import com.github.clboettcher.bonappetit.server.menu.api.MenuManagement;
 import com.github.clboettcher.bonappetit.server.order.api.OrderManagement;
+import com.github.clboettcher.bonappetit.server.staff.api.StaffListingManagement;
 import com.github.clboettcher.bonappetit.server.staff.api.StaffMemberManagement;
 import com.github.clboettcher.bonappetit.server.users.api.UserManagement;
 import io.swagger.jaxrs.config.BeanConfig;
@@ -58,6 +59,7 @@ public class JerseyConfig extends ResourceConfig {
         register(ExceptionMapper.class);
 
         register(context.getBean(StaffMemberManagement.class));
+        register(context.getBean(StaffListingManagement.class));
         register(context.getBean(MenuManagement.class));
         register(context.getBean(ItemManagement.class));
         register(context.getBean(OrderManagement.class));

@@ -22,6 +22,7 @@ package com.github.clboettcher.bonappetit.server.staff.dao;
 import com.github.clboettcher.bonappetit.server.staff.entity.StaffMemberEntity;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Provides access to stored {@link StaffMemberEntity}s.
@@ -39,6 +40,7 @@ public interface StaffMemberDao {
      * Returns the staff member with the givern id.
      *
      * @param id The id.
+     *
      * @return The staff member, or null if it does not exist.
      */
     StaffMemberEntity getStaffMember(Long id);
@@ -47,6 +49,7 @@ public interface StaffMemberDao {
      * Returns whether a staff member exists in the db with the specified id.
      *
      * @param id the ID.
+     *
      * @return true, if a staff member exists with the given id.
      */
     boolean exists(Long id);
@@ -55,7 +58,10 @@ public interface StaffMemberDao {
      * Saves the given staff members in the db.
      *
      * @param staffMember The staff members.
+     *
      * @return The saved staff members (with IDs not null).
      */
     List<StaffMemberEntity> save(List<StaffMemberEntity> staffMember);
+
+    List<StaffMemberEntity> findAllByIds(Set<Long> staffMemberIds);
 }

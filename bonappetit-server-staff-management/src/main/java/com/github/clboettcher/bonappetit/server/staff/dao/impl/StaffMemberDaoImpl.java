@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Default impl of {@link StaffMemberDao}.
@@ -72,5 +73,10 @@ public class StaffMemberDaoImpl implements StaffMemberDao {
     @Override
     public List<StaffMemberEntity> save(List<StaffMemberEntity> staffMembers) {
         return Lists.newArrayList(staffMemberEntityRepository.save(staffMembers));
+    }
+
+    @Override
+    public List<StaffMemberEntity> findAllByIds(Set<Long> staffMemberIds) {
+        return Lists.newArrayList(this.staffMemberEntityRepository.findAll(staffMemberIds));
     }
 }
