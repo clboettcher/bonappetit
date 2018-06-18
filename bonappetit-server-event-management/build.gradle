@@ -1,0 +1,73 @@
+buildscript {
+    ext {
+        generatedMapperSourcesDir = "${buildDir}/generated-src/mapstruct/main"
+    }
+}
+
+configurations {
+    providedRuntime
+    mapstruct
+}
+
+dependencies {
+    // API
+    compile project(":bonappetit-server-event-management-api")
+
+    // Web
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}")
+
+    // DB
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+
+    // Documentation
+    compile "io.swagger:swagger-jersey2-jaxrs:${swaggerVersion}"
+
+    // Object mapping
+    compile("org.mapstruct:mapstruct:${mapstructVersion}")
+    mapstruct("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+    // Utils
+    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    // Testing
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+sourceSets {
+    main {
+        ext.originalJavaSrcDirs = java.srcDirs
+        java.srcDir "${generatedMapperSourcesDir}"
+    }
+}
+
+task generateMainMapperClasses(type: JavaCompile) {
+    ext.aptDumpDir = file("${buildDir}/tmp/apt/mapstruct")
+    destinationDir = aptDumpDir
+
+    classpath = compileJava.classpath + configurations.mapstruct
+    source = sourceSets.main.originalJavaSrcDirs
+    ext.sourceDestDir = file("$generatedMapperSourcesDir")
+
+    options.define(
+        compilerArgs: [
+            "-nowarn",
+            "-proc:only",
+            "-encoding", "UTF-8",
+            "-processor", "org.mapstruct.ap.MappingProcessor",
+            "-s", sourceDestDir.absolutePath,
+            "-source", sourceCompatibility,
+            "-target", targetCompatibility
+        ]
+    );
+
+    inputs.dir source
+    outputs.dir generatedMapperSourcesDir;
+    doFirst {
+        sourceDestDir.mkdirs()
+    }
+    doLast {
+        aptDumpDir.delete()
+    }
+}
+compileJava.dependsOn generateMainMapperClasses

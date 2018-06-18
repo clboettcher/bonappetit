@@ -19,6 +19,10 @@ include 'bonappetit-server-menu-management'
 
 include 'bonappetit-server-order-management-api'
 include 'bonappetit-server-order-management'
+
 include 'bonappetit-server-user-management'
 include 'bonappetit-server-user-management-api'
+
+include 'bonappetit-server-event-management'
+include 'bonappetit-server-event-management-api'
 
