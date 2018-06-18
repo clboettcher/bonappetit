@@ -35,7 +35,6 @@ import javax.ws.rs.NotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Default impl of {@link StaffListingManagement}.
@@ -57,9 +56,11 @@ public class StaffListingManagementImpl implements StaffListingManagement {
 
     @Override
     public List<StaffListingDto> getStaffListing(boolean showInactive) {
-        List<StaffListingEntity> all = this.staffListingDao.findAll();
 
-        List<StaffListingEntity> result = showInactive ? all : this.removeInactive(all);
+        List<StaffListingEntity> result = showInactive
+                ? this.staffListingDao.findAll()
+                : this.staffListingDao.findAllActive();
+
         return this.staffListingDtoMapper.mapToStaffListingDtos(result);
     }
 
@@ -124,12 +125,5 @@ public class StaffListingManagementImpl implements StaffListingManagement {
                 .build();
 
         return this.staffListingDao.save(staffListing);
-    }
-
-
-    private List<StaffListingEntity> removeInactive(List<StaffListingEntity> all) {
-        return all.stream()
-                .filter(staffListingEntity -> staffListingEntity.getValidUntil() == null)
-                .collect(Collectors.toList());
     }
 }

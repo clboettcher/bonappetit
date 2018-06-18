@@ -32,4 +32,6 @@ public interface StaffListingDao {
     StaffListingEntity update(StaffListingEntity currentVersion);
 
     List<StaffListingEntity> findAll();
+
+    List<StaffListingEntity> findAllActive();
 }

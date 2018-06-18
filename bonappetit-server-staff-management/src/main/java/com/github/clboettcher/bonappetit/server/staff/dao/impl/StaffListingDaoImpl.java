@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class StaffListingDaoImpl implements StaffListingDao {
@@ -70,5 +71,16 @@ public class StaffListingDaoImpl implements StaffListingDao {
     @Override
     public List<StaffListingEntity> findAll() {
         return Lists.newArrayList(staffListingEntityRepository.findAll());
+    }
+
+    @Override
+    public List<StaffListingEntity> findAllActive() {
+        return this.removeInactive(this.findAll());
+    }
+
+    private List<StaffListingEntity> removeInactive(List<StaffListingEntity> all) {
+        return all.stream()
+                .filter(staffListingEntity -> staffListingEntity.getValidUntil() == null)
+                .collect(Collectors.toList());
     }
 }
